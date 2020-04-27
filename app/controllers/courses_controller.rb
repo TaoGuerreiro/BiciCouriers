@@ -16,13 +16,12 @@ class CoursesController < ApplicationController
   end
 
   def new
-    @favorite_address = FavoriteAddress.new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
 
     @course = Course.new
-    drop = @course.drops.build
+    @drop = @course.drops.build
     pickup = @course.pickups.build
-    authorize drop
+    authorize @drop
     authorize pickup
     @carnet = current_user.carnets.where('remaining_tickets > ?', 0).first
 
@@ -33,13 +32,15 @@ class CoursesController < ApplicationController
   end
 
   def create
+    @user = current_user
+
     @course = Course.new(course_params)
     @course.bike_id = Bike.first.id if @course.bike_id.nil?
-    @user = current_user
     @carnet = @user.carnets.where('remaining_tickets > ?', 0).first
     @course.user = @user
     @course.carnet = @carnet
     authorize @course
+
     if @course.save
       add_course_to_carnet(@carnet, @course, @user)
       @carnet.save
@@ -54,6 +55,10 @@ private
 
   def course_params
         params.require(:course).permit(:ticket_nb, :tickets_volume, :tickets_urgence, :tickets_distance, :distance, :details, :status, :price, :urgence, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour])
+  end
+
+  def pickup_params
+        params.require(:pickup).permit(:id, :details, :date, :address, :start_hour, :end_hour)
   end
 
   def add_course_to_carnet(carnet, course, user)

@@ -5,7 +5,7 @@
       <div class="index-content center"> <p><strong> <%= address.title %></strong> </p> </div>
       <div class="index-content center"> <p> <%= address.address.first(30) %>... </p> </div>
       <div class="index-content center"> <p> <%= address.details.first(30) %>... </p> </div>
-      <div class="index-content center"> <%= link_to "delete", address, method: :delete%></div>
+      <!-- <div class="index-content center"> <%#= link_to "delete", address, method: :delete %></div> LIGNE BUGGE JE SAIS PAS PK-->
     <% end %>
   <% end %>
 </div>

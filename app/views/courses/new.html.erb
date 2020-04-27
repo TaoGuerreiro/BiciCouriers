@@ -1,17 +1,27 @@
 <div class="course-main-container">
+
 <%= simple_form_for @course, remote: true do |f| %>
 
 <div class="first-container">
   <div class="rammassage">
-    <%= f.fields_for :pickups do |pickup| %>
+
+    <%= f.fields_for :pickups, remote: true do |pickup| %>
+      <%= pickup.input :favorite_address, collection: @favorite_addresses, value: current_user.address, label: false, class: 'inline-form address-input' %>
+    <% end %>
+
+    <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
-        <%= pickup.text_field :address, value: current_user.address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
-        <%= pickup.input :favorite_address, label: false, placeholder: 'Mes addresses favorites', collection: @favorite_addresses, class: 'contacts' %>
+
+          <%= pickup.text_field :address, value: current_user.address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
+
       </div>
       <%= pickup.date_field :date, value: Date.today, label: false, required: true, placeholder: 'Date', class: 'inline-form' %>
       <%= pickup.text_area :details, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
+
+
+
   </div>
   <div class="livraison">
     <%= f.fields_for :drops do |drop| %>

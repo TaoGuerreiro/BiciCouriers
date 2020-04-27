@@ -12,8 +12,10 @@ class FavoriteAddressesController < ApplicationController
   end
   def destroy
     @favorite_address = FavoriteAddress.find(params[:id])
+    @favorite_address.destroy
     redirect_to favorite_addresses_path
     authorize @favorite_address
+
   end
 
   def show
