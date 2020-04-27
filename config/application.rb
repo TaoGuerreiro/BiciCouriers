@@ -6,8 +6,11 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
+
 module BiciCouriers
   class Application < Rails::Application
+    config.action_view.embed_authenticity_token_in_remote_forms = true
     config.assets.paths << "#{Rails.root}/app/assets/videos"
     config.generators do |generate|
           generate.assets false

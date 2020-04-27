@@ -3,6 +3,17 @@
   width: 80%;
   // height: 3000px;
   margin-top: 100px;
+  .favorite_address_title {
+    width: 17px;
+    .form-control {
+      background-color: $light-blue;
+      border: none;
+      color: $yellow;
+    }
+  }
+  .one-line-address-contact {
+    display: flex;
+  }
   .center {
     text-align: center;
   }

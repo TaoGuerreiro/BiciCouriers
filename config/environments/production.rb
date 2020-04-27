@@ -8,6 +8,7 @@ Rails.application.configure do
       UsersController.layout "commandes"
       CoursesController.layout "commandes"
       CarnetsController.layout "commandes"
+      FavoriteAddressesController.layout "commandes"
   end
 
   config.action_mailer.default_url_options = { host: "http://TODO_PUT_YOUR_DOMAIN_HERE" }
@@ -15,6 +16,8 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
+
+  config.i18n.available_locales = :fr
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers

@@ -17,8 +17,9 @@
   }
   .form-actions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    color:white !important;
   }
   .button_second {
     color: $white;

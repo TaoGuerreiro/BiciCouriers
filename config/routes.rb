@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
+
   resources :carnets, only: [:new, :create, :index, :show] do
     collection do
       get :inprogress

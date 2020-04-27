@@ -1,3 +1,4 @@
+require("turbolinks").start()
 import "bootstrap";
 import 'nouislider/distribute/nouislider.css';
 

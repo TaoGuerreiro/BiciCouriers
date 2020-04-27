@@ -1,0 +1,14 @@
+<div class="index-contents">
+  <% favorite_addresses.each do |address|  %>
+
+    <%= link_to favorite_address_path(address), class: "index-column index-addresses" do %>
+      <div class="index-content center"> <p><strong> <%= address.title %></strong> </p> </div>
+      <div class="index-content center"> <p> <%= address.address.first(30) %>... </p> </div>
+      <div class="index-content center"> <p> <%= address.details.first(30) %>... </p> </div>
+      <div class="index-content center"> <%= link_to "delete", address, method: :delete%></div>
+    <% end %>
+  <% end %>
+</div>
+
+
+
