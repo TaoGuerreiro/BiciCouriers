@@ -6,18 +6,23 @@
   <div class="rammassage">
 
     <%#= f.fields_for :pickups, remote: true do |pickup| %>
-      <%#= pickup.input :favorite_address, collection: @favorite_addresses, label: false, required: false, class: 'inline-form address-input' %>
       <%#= pickup.submit "ok" %>
     <%# end %>
 
-    <%= f.fields_for :pickups, remote: true do |pickup| %>
+
+
+<!-- Essai de render un partial avec les nouvelle valeur
+ -->    <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
 
-          <%= pickup.text_field :address, value: current_user.address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
-
+        <!-- <div class="hidden"><%= address_pickup = (@pool.nil? ? current_user.address : @pool.last.pickups.last.favorite_address.address) %></div> -->
+        <%= pickup.text_field :address, as: :dropdown_options, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
+        <%= pickup.input :favorite_address_id, collection: @favorite_addresses, label: false, required: false, class: 'inline-form address-input' %>
       </div>
+
       <%= pickup.date_field :date,    value: Date.today,  placeholder: 'Date',                        label: false, required: true,             class: 'inline-form' %>
       <%= pickup.text_area  :details, as: :text,          placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
+      <%= pickup.submit %>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
 

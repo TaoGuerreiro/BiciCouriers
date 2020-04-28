@@ -45,15 +45,22 @@ class CoursesController < ApplicationController
 
     authorize @course
     @pool = []
+    if @course.valid?
+    else
+      @pool << @course
+      render :new, :pickups[0] => {:address => "yes"}
+      # render :js => "alert('hello')"
+      # raise
+    end
     if @course.save
       @pool << @course
+      # raise
       add_course_to_carnet(@carnet, @course, @user)
       @carnet.save
       @user.save
       redirect_to courses_path
-      # raise
     else
-      render :new
+      # render :new
       # raise
     end
   end
