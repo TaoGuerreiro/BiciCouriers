@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_151828) do
+ActiveRecord::Schema.define(version: 2020_04_27_124513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,21 @@ ActiveRecord::Schema.define(version: 2020_04_22_151828) do
     t.date "date"
     t.float "latitude"
     t.float "longitude"
+    t.bigint "favorite_address_id"
     t.index ["course_id"], name: "index_drops_on_course_id"
+    t.index ["favorite_address_id"], name: "index_drops_on_favorite_address_id"
+  end
+
+  create_table "favorite_addresses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "address"
+    t.string "details"
+    t.integer "start_hour"
+    t.integer "end_hour"
+    t.string "title"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_favorite_addresses_on_user_id"
   end
 
   create_table "pickups", force: :cascade do |t|
@@ -91,7 +105,9 @@ ActiveRecord::Schema.define(version: 2020_04_22_151828) do
     t.date "date"
     t.float "latitude"
     t.float "longitude"
+    t.bigint "favorite_address_id"
     t.index ["course_id"], name: "index_pickups_on_course_id"
+    t.index ["favorite_address_id"], name: "index_pickups_on_favorite_address_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -130,5 +146,8 @@ ActiveRecord::Schema.define(version: 2020_04_22_151828) do
   add_foreign_key "courses", "carnets"
   add_foreign_key "courses", "users"
   add_foreign_key "drops", "courses"
+  add_foreign_key "drops", "favorite_addresses"
+  add_foreign_key "favorite_addresses", "users"
   add_foreign_key "pickups", "courses"
+  add_foreign_key "pickups", "favorite_addresses"
 end

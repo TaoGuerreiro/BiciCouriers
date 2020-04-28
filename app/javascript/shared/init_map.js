@@ -1,55 +1,58 @@
-import  { counter, price } from '../shared/counter.js';
+import  { counter } from '../shared/counter.js';
 
 let distanceTickets = 0
 const initMap = () => {
 
-  const pickupInput = document.getElementById('course_pickups_attributes_0_address');
-  const dropInput = document.getElementById('course_drops_attributes_0_address');
-  if (dropInput === null) {
-    return
-  }
-  counter();
 
-  const directionsService = new google.maps.DirectionsService();
-  const directionsDisplay = new google.maps.DirectionsRenderer();
-  const nantes = {lat: 47.2173, lng: -1.5534};
+  document.addEventListener("turbolinks:load", () => {
+    distanceTickets = 0
+    const pickupInput = document.getElementById('course_pickups_attributes_0_address');
+    const dropInput = document.getElementById('course_drops_attributes_0_address');
+    if (dropInput === null) {
+      return
+    }
+    const totalContainer = document.querySelector('.total-container')
+    const price = totalContainer.dataset.carnetPrice;
 
-  const myOptions = {
-    zoom:13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    center: nantes
-  }
-
-  const map = new google.maps.Map(document.getElementById("map-container"), myOptions);
-  if (map === null) {
-    return
-  }
-  directionsDisplay.setMap(map);
-
-  dropInput.addEventListener("change", (event) => {
-  let distance = 0
-    const request = {
-        origin: pickupInput.value,
-        destination: dropInput.value,
-        travelMode: google.maps.DirectionsTravelMode.WALKING
-    };
-    // console.log(distance + "m")
-    directionsService.route(request, function(response, status) {
-       if (status == google.maps.DirectionsStatus.OK) {
+    counter();
+    const directionsService = new google.maps.DirectionsService();
+    const directionsDisplay = new google.maps.DirectionsRenderer();
+    const nantes = {lat: 47.2173, lng: -1.5534};
+    const myOptions = {
+      zoom:13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      center: nantes
+    }
+    const map = new google.maps.Map(document.getElementById("map-container"), myOptions);
+    if (map === null) {
+      return
+    }
+    directionsDisplay.setMap(map);
+      dropInput.addEventListener("change", (event) => {
+        let distance = 0
+        const request = {
+          origin: pickupInput.value,
+          destination: dropInput.value,
+          travelMode: google.maps.DirectionsTravelMode.WALKING
+        };
+        directionsService.route(request, function(response, status) {
+         if (status == google.maps.DirectionsStatus.OK) {
           distance = response.routes[0].legs[0].distance.value;
           directionsDisplay.setDirections(response);
           distanceTickets = Math.ceil(distance / 3500)
-          console.log(distanceTickets);
+          // console.log(distanceTickets);
           const distanceDiv = document.getElementById('distance-t');
           const distanceDivPrice = document.getElementById('distance-e');
           distanceDiv.innerHTML = distanceTickets
-          console.log(distanceDivPrice);
+          // console.log(distanceDivPrice);
           distanceDivPrice.innerHTML = `${(distanceTickets * price /100).toFixed(2)} €`
-          counter();
           const distanceFormInput = document.querySelector('.distance-input');
           distanceFormInput.value = distance;
-       }
+          counter();
+        }
+      });
     });
+
   });
 }
 

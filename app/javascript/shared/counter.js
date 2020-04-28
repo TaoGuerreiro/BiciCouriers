@@ -3,27 +3,41 @@ import  { urgenceToggle, urgenceTickets } from '../shared/urgence.js';
 import  { bikeToggle, volumeTickets } from '../shared/volume.js';
 
 let price = 0
-const counter = () => {
-  const totalContainer = document.querySelector('.total-container')
-  if (totalContainer === null) {
-    return
-  }
-  price = totalContainer.dataset.carnetPrice;
 
-  // console.log(volumeTickets);
-  const sum = volumeTickets + urgenceTickets + distanceTickets
-  const totalDiv = document.getElementById('total-t');
-  const totalDivPrice = document.getElementById('total-e');
-  totalDiv.innerHTML = sum
-  totalDivPrice.innerHTML = `${(sum * price / 100).toFixed(2)} €`;
-  const ticketsFormInput = document.querySelector('.tickets-input');
-  const ticketsUrgenceInput = document.querySelector('.tickets-urgence');
-  const ticketsVolumeInput = document.querySelector('.tickets-volume');
+
+
+const counter = () => {
+    let sum = 0
+    const totalContainer = document.querySelector('.total-container')
+    if (totalContainer === null) {
+      return
+    }
+    price = totalContainer.dataset.carnetPrice;
+  // Distance
   const ticketsDistanceInput = document.querySelector('.tickets-distance');
-  ticketsFormInput.value = sum;
-  ticketsUrgenceInput.value = urgenceTickets;
-  ticketsVolumeInput.value = volumeTickets;
   ticketsDistanceInput.value = distanceTickets;
+  console.log("distance" + distanceTickets);
+  // Volume
+  const ticketsVolumeInput = document.querySelector('.tickets-volume');
+  ticketsVolumeInput.value = volumeTickets;
+  console.log("volume" + volumeTickets);
+  // Urgence
+  const ticketsUrgenceInput = document.querySelector('.tickets-urgence');
+  ticketsUrgenceInput.value = urgenceTickets;
+  console.log("urgence" + urgenceTickets);
+
+  // TOTAL
+   sum = volumeTickets + urgenceTickets + distanceTickets
+  console.log(sum);
+
+  const totalDiv = document.getElementById('total-t');
+  totalDiv.innerHTML = sum
+
+  const totalDivPrice = document.getElementById('total-e');
+  totalDivPrice.innerHTML = `${(sum * price / 100).toFixed(2)} €`;
+
+  const ticketsFormInput = document.querySelector('.tickets-input');
+  ticketsFormInput.value = sum;
 }
 
 export { counter, price }

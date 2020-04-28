@@ -23,44 +23,8 @@
   <div class="side-oeuf-1">
     <%= image_tag 'navbar/oeuf-side-1.svg' %>
   </div>
-  <% if current_user.carnets != [] %>
-    <% if current_user.pool >= 0 %>
-    <%#= raise %>
-      <div id="myItem1"
-        class="ldBar label-center ticket-counter"
-        data-transition-in=""
-        data-max="
-        <% max_tickets = 0 %>
-        <% current_user.carnets.map do |carnet| %>
-          <% (max_tickets = max_tickets + carnet.carnet_template.ticket_nb) if carnet.remaining_tickets > 0 %>
-        <% end %>
-        <%= max_tickets %>"
-        data-stroke="#FFCC00"
-        data-preset="circle"
-        data-duration="1000"
-        data-value="
-        <% left_tickets = 0 %>
-        <% current_user.carnets.map do |carnet| %>
-          <% left_tickets = left_tickets + carnet.remaining_tickets %>
-        <% end %>
-        <%= left_tickets %>">
-      </div>
-      <% else %>
-      <div id="myItem2"
-        class="ldBar label-center ticket-counter"
-        data-transition-in=""
-        data-max="<%=current_user.pool%>"
-        data-stroke="red"
-        data-preset="circle"
-        data-duration="1000"
-        data-value="
-        <% left_tickets = 0 %>
-        <% current_user.carnets.map do |carnet| %>
-          <% left_tickets = left_tickets + carnet.remaining_tickets %>
-        <% end %>
-        <%= left_tickets > 0 ? left_tickets : current_user.pool %>">
-      </div>
-    <% end %>
-  <% end %>
+  <div class="myBar label-center"></div>
+
+  <%= render 'shared/sidebar_counter', remote: true %>
 
 </div>

@@ -1,0 +1,34 @@
+<div class="favorite_addresses-main-container">
+  <div class="addresses">
+    <h1>Mes adresses favorites</h1>
+    <div class="index-titles index-column">
+      <div class="index-title title center">  <p>Nom</p>      </div>
+      <div class="index-title title center">  <p>Adresse</p>  </div>
+      <div class="index-title title center">  <p>Details</p>  </div>
+      <div class="index-title title center">                  </div>
+
+    </div>
+    <%= render 'shared/index_favorite_addresses', favorite_addresses: @favorite_addresses, remote: true %>
+  </div>
+  <div class="address">
+    <h1>Ajouter une adresse</h1>
+    <div class="favorite-address-main-container">
+      <%= simple_form_for @favorite_address, remote: true do |f| %>
+        <div class="first-container">
+          <div class="address">
+            <%= f.text_field :title, label: false, :required => true, :placeholder => 'Nom de cette adresse', class: 'inline-form' %>
+            <%= f.text_field :address, :required => true, value: current_user.address, label: false, :required => true, :placeholder => 'Adresse', class: 'inline-form address-input' %>
+            <%= f.text_area :details, :as => :text, :placeholder => "Rendez un coursier heureux, donnez un max d'infos sur cette adresse !
+            Interphone,
+            Digicode,
+            Etage,
+            Etc.", class: 'inline-form' %>
+            <div class="slider-container hidden-trans"><div id="slider-fav-address"></div><span id="slider-pickup-value" class="hidden"></span></div>
+            <%= f.submit "Ajouter cette adresse aux favoris", class: 'bici-button' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

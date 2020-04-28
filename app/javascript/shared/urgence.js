@@ -1,9 +1,10 @@
-import  { counter, price } from '../shared/counter.js';
+import  { counter } from '../shared/counter.js';
 
 let urgenceTickets = 0
 let urgenceRange = 11
 const urgenceToggle = () => {
-
+  document.addEventListener("turbolinks:load", (event) => {
+  urgenceTickets = 0
   const urgence1 = document.querySelector('.urgence-1');
   const urgence2 = document.querySelector('.urgence-2');
   const urgence3 = document.querySelector('.urgence-3');
@@ -18,6 +19,8 @@ const urgenceToggle = () => {
       urg.classList.remove('active');
     });
   }
+  const totalContainer = document.querySelector('.total-container')
+  const price = totalContainer.dataset.carnetPrice;
 
   urgence1.addEventListener('click', (event) => {
     resetUrgence();
@@ -77,6 +80,7 @@ const urgenceToggle = () => {
     urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
     urgenceTickets = 2
     counter();
+  });
   });
 }
 
