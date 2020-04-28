@@ -23,7 +23,7 @@ gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 gem 'devise-i18n'
 gem 'turbolinks', '~> 5.2.0'
 gem 'turbolinks_render'
-
+gem 'money-rails'
 
 
 
