@@ -2,6 +2,7 @@ import HorizontalScroll from '@oberon-amsterdam/horizontal';
 
 
 const movement = () => {
+  document.addEventListener("turbolinks:load", (event) => {
   if (document.querySelector('.long-container') === null) {
     return
   }
@@ -26,6 +27,7 @@ const movement = () => {
     lineDiv.style.width = lineSize + 'px';
     oeufDiv.style.left = EggLeft + 'px';
     }
+  });
   });
 };
 

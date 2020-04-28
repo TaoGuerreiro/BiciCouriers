@@ -10,6 +10,7 @@
     "places.js": "^1.18.1",
     "popper.js": "^1.16.1",
     "progressbar.js": "^1.1.0",
+    "stimulus": "^1.1.1",
     "strftime": "^0.10.0",
     "swup": "^2.0.9",
     "turbolinks": "^5.2.0",

@@ -1,6 +1,7 @@
 require("turbolinks").start()
 import "bootstrap";
 import 'nouislider/distribute/nouislider.css';
+import "controllers"
 
 
 
@@ -16,6 +17,10 @@ import  { slider } from '../shared/slider.js';
 import  { animations } from '../shared/animations.js';
 import  { counterCircle } from '../shared/loading_bar.js';
 import  { selectCarnet } from '../shared/select_carnet.js';
+import  { progressSidebar } from '../shared/progress_sidebar.js';
+import  { progressCarnet } from '../shared/progress_carnet.js';
+// import  { counter } from '../shared/counter.js';
+// import  turbo from '../shared/turbo.js';
 
 
 
@@ -34,3 +39,6 @@ animations();
 counterCircle();
 selectCarnet();
 
+
+progressSidebar();
+progressCarnet();

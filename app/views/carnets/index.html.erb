@@ -8,7 +8,7 @@
       <div class="index-title title center">  <p>Tickets restant</p>  </div>
     </div>
   </div>
-  <%= render 'shared/index_carnets', carnets: @inprogress %>
-  <%= render 'shared/index_carnets', carnets: @oldone %>
+  <%= render 'shared/index_carnets', carnets: @inprogress, state: "ip" %>
+  <%= render 'shared/index_carnets', carnets: @oldone, state: "do" %>
 </div>
 

@@ -5,9 +5,10 @@
 <div class="first-container">
   <div class="rammassage">
 
-    <%= f.fields_for :pickups, remote: true do |pickup| %>
-      <%= pickup.input :favorite_address, collection: @favorite_addresses, value: current_user.address, label: false, class: 'inline-form address-input' %>
-    <% end %>
+    <%#= f.fields_for :pickups, remote: true do |pickup| %>
+      <%#= pickup.input :favorite_address, collection: @favorite_addresses, label: false, required: false, class: 'inline-form address-input' %>
+      <%#= pickup.submit "ok" %>
+    <%# end %>
 
     <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
@@ -15,8 +16,8 @@
           <%= pickup.text_field :address, value: current_user.address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
 
       </div>
-      <%= pickup.date_field :date, value: Date.today, label: false, required: true, placeholder: 'Date', class: 'inline-form' %>
-      <%= pickup.text_area :details, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
+      <%= pickup.date_field :date,    value: Date.today,  placeholder: 'Date',                        label: false, required: true,             class: 'inline-form' %>
+      <%= pickup.text_area  :details, as: :text,          placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
 
@@ -27,7 +28,7 @@
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
         <%= drop.text_field :address, label: false, required: :true, placeholder: 'Adresse de livraison', class: 'inline-form address-input' %>
-        <%= drop.input :favorite_address, label: false, placeholder: 'Mes addresses favorites', collection: @favorite_addresses, class: 'contacts' %>
+        <%#= drop.input :favorite_address, label: false, placeholder: 'Mes addresses favorites', collection: @favorite_addresses, class: 'contacts' %>
       </div>
       <%= drop.date_field :date, value: Date.today, label: :false, required: :true, placeholder: 'Date', class: 'inline-form' %>
       <%= drop.text_area :details, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>

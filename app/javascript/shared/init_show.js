@@ -1,17 +1,18 @@
 
 const initShowMap = () => {
-  const pickupInput = document.getElementById('rec-address-pickup');
-  const dropInput = document.getElementById('rec-address-drop');
-  if (dropInput === null) {
-    return
-  }
-  const directionsService = new google.maps.DirectionsService();
-  const directionsDisplay = new google.maps.DirectionsRenderer();
+  document.addEventListener("turbolinks:load", (event) => {
+    const pickupInput = document.getElementById('rec-address-pickup');
+    const dropInput = document.getElementById('rec-address-drop');
+    if (dropInput === null) {
+      return
+    }
+    const directionsService = new google.maps.DirectionsService();
+    const directionsDisplay = new google.maps.DirectionsRenderer();
 
 
-  const myOptions = {
-    zoom:13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    const myOptions = {
+      zoom:13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
     // styles: [
     //   {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
     //   {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -99,18 +100,19 @@ const initShowMap = () => {
 
 
   let distance = 0
-    const request = {
-        origin: pickupInput.innerText,
-        destination: dropInput.innerText,
-        travelMode: google.maps.DirectionsTravelMode.WALKING
-    };
+  const request = {
+    origin: pickupInput.innerText,
+    destination: dropInput.innerText,
+    travelMode: google.maps.DirectionsTravelMode.WALKING
+  };
 
-    directionsService.route(request, function(response, status) {
-       if (status == google.maps.DirectionsStatus.OK) {
-          distance = response.routes[0].legs[0].distance.value;
-          directionsDisplay.setDirections(response);
-       }
-    });
+  directionsService.route(request, function(response, status) {
+   if (status == google.maps.DirectionsStatus.OK) {
+    distance = response.routes[0].legs[0].distance.value;
+    directionsDisplay.setDirections(response);
+  }
+});
+});
 }
 
 export { initShowMap };

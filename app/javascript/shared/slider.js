@@ -2,6 +2,7 @@ import noUiSlider from 'nouislider';
 import  { urgenceRange } from '../shared/urgence.js';
 
 const slider = () => {
+  document.addEventListener("turbolinks:load", (event) => {
   const sliderPickup = document.getElementById('slider-pickup');
   if (sliderPickup === null) {
     return
@@ -131,6 +132,7 @@ const slider = () => {
   sliders.forEach((slider) => {
     slider.classList.toggle('hidden-trans');
   });
+ });
  });
 
 }

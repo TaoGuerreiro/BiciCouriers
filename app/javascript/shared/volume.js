@@ -1,7 +1,9 @@
-import  { counter, price } from '../shared/counter.js';
+import  { counter } from '../shared/counter.js';
 
 let volumeTickets = 0
 const bikeToggle = () => {
+  document.addEventListener("turbolinks:load", (event) => {
+  volumeTickets = 0
   const bike1 = document.querySelector('.bike-1');
   const bike2 = document.querySelector('.bike-2');
   if (bike2 === null) {
@@ -15,6 +17,9 @@ const bikeToggle = () => {
       urg.classList.remove('active');
     });
   }
+
+  const totalContainer = document.querySelector('.total-container')
+  const price = totalContainer.dataset.carnetPrice;
 
   bike1.addEventListener('click', (event) => {
     resetBike();
@@ -44,6 +49,7 @@ const bikeToggle = () => {
     const cargo = document.querySelectorAll('.form-check');
     cargo[1].firstChild.checked = true;
     counter();
+  });
   });
 }
 
