@@ -4,13 +4,13 @@
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-inputs">
         <%= f.input :email,
-                    required: false,
+                    required: true,
                     placeholder: "Email",
                     label: false,
                     autofocus: true,
                     input_html: { autocomplete: "email" } %>
         <%= f.input :password,
-                    required: false,
+                    required: true,
                     placeholder: "Mot de passe",
                     label: false,
                     input_html: { autocomplete: "current-password" } %>
