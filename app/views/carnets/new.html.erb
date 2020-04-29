@@ -9,7 +9,7 @@
           <div class="content">
             <p class="description"> <%= carnet_template.description %> </p>
             <p class="counter"> <%= carnet_template.ticket_nb %> tickets</p>
-            <%= image_tag carnet_template.image %>
+            <%= image_tag carnet_template.image, alt: "ticket-de-carnet" %>
           </div>
           <%= f.submit "Acheter", class: "bici-button" %>
 

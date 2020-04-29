@@ -1,35 +1,35 @@
 <div class="avantages-main-container">
   <div class="a-oeuf-1">
-    <%= image_tag 'avantages/oeuf-1.svg' %>
+    <%= image_tag 'avantages/oeuf-1.svg', alt: "oeuf-sur-le-plat-design" %>
   </div>
 
   <div class="a-line">
-    <%= image_tag 'avantages/line.svg' %>
+    <%= image_tag 'avantages/line.svg', alt: "ligne-design" %>
   </div>
     <div class="dual-container">
       <div class="avantages-details">
         <h1>Nos Avantages</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio adipisci totam, recusandae, eaque enim molestias perspiciatis unde ea eum temporibus delectus cum quos optio quisquam animi, rem natus porro? Sequi!</p>
+        <p>Nous proposons tout un tas de services pour répondre au mieux à vos besoins. N'hésitez surtout pas à nous contacter car cette liste est loin d'être exhaustive !</p>
       </div>
 
       <div class="avantages-cards">
         <div class="back-card">
 
           <div class="a-oeuf-2">
-            <%= image_tag 'avantages/oeuf-2.svg' %>
+            <%= image_tag 'avantages/oeuf-2.svg', alt: "oeuf-sur-le-plat-design" %>
           </div>
 
           <div class="avantages-card back-card-one">
-            <div class="card-images"><%= image_tag "avantages/blue_1.svg" %></div>
+            <div class="card-images"><%= image_tag "avantages/blue_1.svg", alt: "carte-design" %></div>
           </div>
 
           <div class="avantages-card back-card-two">
-            <div class="card-images"><%= image_tag "avantages/blue_2.svg" %></div>
+            <div class="card-images"><%= image_tag "avantages/blue_2.svg", alt: "carte-design" %></div>
           </div>
 
           <% @avantages.each do |avantage| %>
           <div class="avantages-card">
-            <div class="card-images"><%= image_tag avantage.image_pour %></div>
+            <div class="card-images"><%= image_tag avantage.image_pour, alt: "les-avantages-de-bicicouriers" %></div>
           </div>
           <% end %>
         </div>
