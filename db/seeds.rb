@@ -110,7 +110,7 @@ Avantage.create(
 
 florent = User.create(
   {
-    email: "florent.guilbaud@gmail.com",
+    email: "kiki@bicicouriers.fr",
     password: "secret",
     phone: "0674236080",
     first_name: "Florent",
@@ -121,7 +121,7 @@ florent = User.create(
 
 admin = User.create(
   {
-    email: "bicicouriersnantes@gmail.com",
+    email: "florent@bicicouriers.fr",
     password: "secret",
     phone: "0781116670",
     first_name: "Florent",
