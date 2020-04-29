@@ -28,30 +28,36 @@ const initMap = () => {
       return
     }
     directionsDisplay.setMap(map);
-      dropInput.addEventListener("change", (event) => {
-        let distance = 0
-        const request = {
-          origin: pickupInput.value,
-          destination: dropInput.value,
-          travelMode: google.maps.DirectionsTravelMode.WALKING
-        };
-        directionsService.route(request, function(response, status) {
-         if (status == google.maps.DirectionsStatus.OK) {
-          distance = response.routes[0].legs[0].distance.value;
-          directionsDisplay.setDirections(response);
-          distanceTickets = Math.ceil(distance / 3500)
-          // console.log(distanceTickets);
-          const distanceDiv = document.getElementById('distance-t');
-          const distanceDivPrice = document.getElementById('distance-e');
-          distanceDiv.innerHTML = distanceTickets
-          // console.log(distanceDivPrice);
-          distanceDivPrice.innerHTML = `${(distanceTickets * price /100).toFixed(2)} €`
-          const distanceFormInput = document.querySelector('.distance-input');
-          distanceFormInput.value = distance;
-          counter();
+        const calculDistance = () => {
+          let distance = 0
+          const request = {
+            origin: pickupInput.value,
+            destination: dropInput.value,
+            travelMode: google.maps.DirectionsTravelMode.WALKING
+          };
+          directionsService.route(request, function(response, status) {
+           if (status == google.maps.DirectionsStatus.OK) {
+            distance = response.routes[0].legs[0].distance.value;
+            directionsDisplay.setDirections(response);
+            distanceTickets = Math.ceil(distance / 3500)
+            // console.log(distanceTickets);
+            const distanceDiv = document.getElementById('distance-t');
+            const distanceDivPrice = document.getElementById('distance-e');
+            distanceDiv.innerHTML = distanceTickets
+            // console.log(distanceDivPrice);
+            distanceDivPrice.innerHTML = `${(distanceTickets * price /100).toFixed(2)} €`
+            const distanceFormInput = document.querySelector('.distance-input');
+            distanceFormInput.value = distance;
+            counter();
+            }
+          });
         }
-      });
-    });
+      const pickupFavInput = document.querySelector('.favorite-pickup');
+      const dropFavInput = document.querySelector('.favorite-drop');
+      dropInput.addEventListener("change", calculDistance )
+      dropInput.addEventListener("change", calculDistance )
+      pickupFavInput.addEventListener("change", calculDistance )
+      dropFavInput.addEventListener("change", calculDistance )
 
   });
 }
