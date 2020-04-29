@@ -24,11 +24,12 @@ gem 'devise-i18n'
 gem 'turbolinks', '~> 5.2.0'
 gem 'turbolinks_render'
 gem 'money-rails'
-
+gem 'postmark-rails'
 
 
 group :development do
   gem 'web-console', '>= 3.3.0'
+  gem 'letter_opener'
 end
 
 group :development, :test do
