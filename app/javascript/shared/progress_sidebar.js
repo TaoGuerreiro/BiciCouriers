@@ -3,6 +3,9 @@
 const progressSidebar = () => {
   document.addEventListener("turbolinks:load", () => {
     const currentLeftTickets = document.querySelector('.myItem1');
+    if (currentLeftTickets === null) {
+      return
+    }
     const tickets = parseInt(currentLeftTickets.dataset.value, 10);
     const pool = parseInt(currentLeftTickets.dataset.pool, 10);
     const sum = (tickets + pool)
