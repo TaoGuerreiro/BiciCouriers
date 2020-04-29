@@ -11,7 +11,7 @@ class Contact < MailForm::Base
     {
       :subject => "Contact depuis le site !",
       :from => %("#{name}" <#{email}>),
-      :to => "contact@bicicourier.fr"
+      :to => "contact@bicicouriers.fr"
     }
   end
 end
