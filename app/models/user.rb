@@ -6,4 +6,13 @@ class User < ApplicationRecord
   has_many :carnets, :dependent => :destroy
   has_many :courses, :dependent => :destroy
   has_many :favorite_addresses, :dependent => :destroy
+
+  after_create :send_welcome_email
+
+  private
+
+  def send_welcome_email
+    UserMailer.with(user: self).welcome.deliver_now
+  end
+
 end
