@@ -17,7 +17,7 @@
       <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
         <%= pickup.text_field :address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
-        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', class: 'favorite-pickup' %>
+        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-pickup' %>
       </div>
       <%= pickup.date_field :date, value: Date.today, placeholder: 'Date', label: false, required: true, class: 'inline-form' %>
       <%= pickup.text_area :details, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
@@ -35,7 +35,7 @@
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
         <%= drop.text_field :address, label: false, required: :true, placeholder: 'Adresse de livraison', class: 'inline-form address-input' %>
-        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', class: 'favorite-drop' %>
+        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-drop' %>
       </div>
       <%= drop.date_field :date, value: Date.today, label: :false, required: :true, placeholder: 'Date', class: 'inline-form' %>
       <%= drop.text_area :details, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>

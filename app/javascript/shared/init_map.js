@@ -6,12 +6,18 @@ const initMap = () => {
 
   document.addEventListener("turbolinks:load", () => {
     distanceTickets = 0
+    // addresses input
     const pickupInput = document.getElementById('course_pickups_attributes_0_address');
     const dropInput = document.getElementById('course_drops_attributes_0_address');
-    if (dropInput === null) {
+    if (pickupInput === null) {
       return
     }
-    const totalContainer = document.querySelector('.total-container')
+
+    // favorites dropdown
+    const pickupFavInput = document.getElementById('favorite-pickup');
+    const dropFavInput = document.getElementById('favorite-drop');
+
+    const totalContainer = document.querySelector('.total-container');
     const price = totalContainer.dataset.carnetPrice;
 
     counter();
@@ -28,6 +34,7 @@ const initMap = () => {
       return
     }
     directionsDisplay.setMap(map);
+
         const calculDistance = () => {
           let distance = 0
           const request = {
@@ -52,13 +59,15 @@ const initMap = () => {
             }
           });
         }
-      const pickupFavInput = document.querySelector('.favorite-pickup');
-      const dropFavInput = document.querySelector('.favorite-drop');
-      dropInput.addEventListener("change", calculDistance )
-      dropInput.addEventListener("change", calculDistance )
-      pickupFavInput.addEventListener("change", calculDistance )
-      dropFavInput.addEventListener("change", calculDistance )
+      pickupInput.addEventListener('change', calculDistance );
+      dropInput.addEventListener('change', calculDistance );
 
+      pickupFavInput.addEventListener('change', () => {
+        setTimeout(calculDistance, 500);
+      });
+      dropFavInput.addEventListener('change', () => {
+        setTimeout(calculDistance, 500);
+      });
   });
 }
 
