@@ -9,4 +9,6 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
 
+
+
 end

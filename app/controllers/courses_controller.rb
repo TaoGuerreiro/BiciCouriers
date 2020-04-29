@@ -19,16 +19,16 @@ class CoursesController < ApplicationController
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
 
     @course = Course.new
-    drop = @course.drops.build
-    pickup = @course.pickups.build
+    @drop = @course.drops.build
+    @pickup = @course.pickups.build
     @carnet = current_user.carnets.where('remaining_tickets > ?', 0).first
 
 
     # @drop = Drop.geocoded
     # @drop_marker = [lat: @drop.first.latitude, lng: @drop.first.longitude]
 
-    authorize drop
-    authorize pickup
+    authorize @drop
+    authorize @pickup
   end
 
   def create
@@ -44,16 +44,24 @@ class CoursesController < ApplicationController
 
 
     authorize @course
+
     @pool = []
+    if @course.valid?
+    else
+      @pool << @course
+      render :new, :pickups[0] => {:address => "yes"}
+      # render :js => "alert('coucou')"
+      # raise
+    end
     if @course.save
       @pool << @course
+      # raise
       add_course_to_carnet(@carnet, @course, @user)
       @carnet.save
       @user.save
       redirect_to courses_path
-      # raise
     else
-      render :new
+      # render :new
       # raise
     end
   end

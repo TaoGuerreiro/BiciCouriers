@@ -19,8 +19,8 @@ import  { counterCircle } from '../shared/loading_bar.js';
 import  { selectCarnet } from '../shared/select_carnet.js';
 import  { progressSidebar } from '../shared/progress_sidebar.js';
 import  { progressCarnet } from '../shared/progress_carnet.js';
-// import  { counter } from '../shared/counter.js';
-// import  turbo from '../shared/turbo.js';
+import  { favoriteFill } from '../shared/favorite_fill.js';
+
 
 
 
@@ -38,7 +38,7 @@ slider();
 animations();
 counterCircle();
 selectCarnet();
-
+favoriteFill();
 
 progressSidebar();
 progressCarnet();

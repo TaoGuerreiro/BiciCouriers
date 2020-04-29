@@ -42,6 +42,23 @@
     // transform: scale(1.02);
     cursor: pointer;
   }
+
+  .favorite-pickup, .favorite-drop {
+    width: 40%;
+    height: 40px;
+  }
+  select {
+    background-color: $light-blue;
+    border: none;
+    color: $yellow;
+    &:active, &:focus {
+      outline: none !important;
+      border: none;
+    }
+  }
+  .one-line-address-contact {
+    display: flex;
+  }
 }
 
 .inline-form {

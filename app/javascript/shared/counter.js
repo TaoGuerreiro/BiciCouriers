@@ -16,19 +16,19 @@ const counter = () => {
   // Distance
   const ticketsDistanceInput = document.querySelector('.tickets-distance');
   ticketsDistanceInput.value = distanceTickets;
-  console.log("distance" + distanceTickets);
+  // console.log("distance" + distanceTickets);
   // Volume
   const ticketsVolumeInput = document.querySelector('.tickets-volume');
   ticketsVolumeInput.value = volumeTickets;
-  console.log("volume" + volumeTickets);
+  // console.log("volume" + volumeTickets);
   // Urgence
   const ticketsUrgenceInput = document.querySelector('.tickets-urgence');
   ticketsUrgenceInput.value = urgenceTickets;
-  console.log("urgence" + urgenceTickets);
+  // console.log("urgence" + urgenceTickets);
 
   // TOTAL
    sum = volumeTickets + urgenceTickets + distanceTickets
-  console.log(sum);
+  // console.log(sum);
 
   const totalDiv = document.getElementById('total-t');
   totalDiv.innerHTML = sum
