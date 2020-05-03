@@ -19,7 +19,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color:white !important;
+    justify-content: space-between;
+    height: 100px;
+    a {
+    color:white ;
+    font-weight: 600;
+    }
   }
   .button_second {
     color: $white;

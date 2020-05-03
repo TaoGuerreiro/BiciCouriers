@@ -8,6 +8,7 @@ const slider = () => {
     return
   }
   const sliderDrop = document.getElementById('slider-drop');
+
   const sliders = document.querySelectorAll('.slider-container');
 
   const sliderValuePickup = document.getElementById('slider-pickup-value');
@@ -50,7 +51,7 @@ const slider = () => {
   // VARIABLES
   const now = round(hm);
   const start = 8
-  const end = 22
+  const end = 23.99
 
   Qminutes.innerText = (hm + 0.75).toHHMMSS();
   Qheures.innerText = (hm + 4).toHHMMSS();
@@ -110,8 +111,31 @@ const slider = () => {
       }
   });
 
+
+  function timeStringToFloat(time) {
+    var hoursMinutes = time.split(/[.:]/);
+    var hours = parseInt(hoursMinutes[0], 10);
+    var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+    return hours + minutes / 60;
+  }
+
   sliderPickup.noUiSlider.on('update', (values, handle) => {
       sliderValuePickup.innerHTML = values[handle];
+      const pickupsValues = sliderPickup.noUiSlider.get()
+      const stPickupInput = document.querySelector('.st-pickup-input')
+      const ndPickupInput = document.querySelector('.nd-pickup-input')
+      stPickupInput.innerText = timeStringToFloat(pickupsValues[0]);
+      ndPickupInput.innerText = timeStringToFloat(pickupsValues[1]);
+  });
+
+  sliderDrop.noUiSlider.on('update', (values, handle) => {
+      sliderValueDrop.innerHTML = values[handle];
+      const dropsValues = sliderDrop.noUiSlider.get()
+      const stDropInput = document.querySelector('.st-drop-input')
+      const ndDropInput = document.querySelector('.nd-drop-input')
+      stDropInput.innerText = timeStringToFloat(dropsValues[0]);
+      ndDropInput.innerText = timeStringToFloat(dropsValues[1]);
+
   });
 
   urgences.forEach((urgence) => {

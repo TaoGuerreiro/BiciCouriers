@@ -18,8 +18,23 @@
     			<% when 'done' %>
     				Livrée
     			<% end %></p></div>
-    		<div class="index-content right"> <p> <%= course.distance.nil? ? 0 : course.distance/1000.to_f %>km</p> </div>
-    		<div class="index-content center"> <p> <%= course.ticket_nb.nil? ? 0 : (course.ticket_nb > 0 ? number_with_precision((course.carnet.carnet_template.price_cents/100.00) * course.ticket_nb, precision: 2)  : 0) %> ht</p> </div>
+    		<div class="index-content right"><p> <%= course.distance.nil? ? 0 : course.distance/1000.to_f %>km</p> </div>
+    		<div class="index-content center"><p>
+          <% if course.ticket_nb.nil? %>
+            0
+          <% else %>
+            <% if  course.ticket_nb > 0 %>
+              <% if course.carnet_id.nil? %>
+                <%= number_with_precision((7.00 * course.ticket_nb), precision: 2) %>
+              <% else %>
+                <%= number_with_precision((course.carnet.carnet_template.price) * course.ticket_nb, precision: 2) %>
+              <% end %>
+            <% else %>
+              0
+            <% end %>
+          <% end %>
+          €</p>
+        </div>
     		<div class="index-content center"> <p> <%= course.ticket_nb %> </p> </div>
     		<!-- <div class="index-content left"> <%= link_to "détails", course_path(course), class: "bici-button" %></div> -->
 

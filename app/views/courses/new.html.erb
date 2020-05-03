@@ -17,10 +17,18 @@
       <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
         <%= pickup.text_field :address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
-        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-pickup' %>
+        <% if @favorite_addresses == [] %>
+          <%= link_to 'Favoris', favorite_addresses_path, class: 'bici-button' %>
+        <% else %>
+          <% if @favorite_addresses != nil %>
+            <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-pickup' %>
+          <% end %>
+        <% end %>
       </div>
       <%= pickup.date_field :date, value: Date.today, placeholder: 'Date', label: false, required: true, class: 'inline-form' %>
       <%= pickup.text_area :details, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
+      <%= pickup.text_area :start_hour, class: 'inline-form st-pickup-input hidden' %>
+      <%= pickup.text_area :end_hour, class: 'inline-form nd-pickup-input hidden' %>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
 
@@ -35,10 +43,18 @@
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
         <%= drop.text_field :address, label: false, required: :true, placeholder: 'Adresse de livraison', class: 'inline-form address-input' %>
-        <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-drop' %>
+        <% if @favorite_addresses == [] %>
+          <%= link_to 'Favoris', new_favorite_address_path, class: 'bici-button' %>
+        <% else %>
+          <% if @favorite_addresses != nil %>
+            <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-drop' %>
+          <% end %>
+        <% end %>
       </div>
       <%= drop.date_field :date, value: Date.today, label: :false, required: :true, placeholder: 'Date', class: 'inline-form' %>
       <%= drop.text_area :details, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>
+      <%= drop.text_area :start_hour, class: 'inline-form st-drop-input hidden' %>
+      <%= drop.text_area :end_hour, class: 'inline-form nd-drop-input hidden' %>
       <div class="slider-container hidden-trans"><div id="slider-drop"></div><span id="slider-drop-value" class="hidden"></span></div>
     <% end %>
   </div>
@@ -115,8 +131,19 @@
       <%= f.input_field :tickets_distance, hint: "ticket distance", class: "hidden tickets-distance" %>
       <%= f.input_field :ticket_nb, hint: "ticket total", class: "hidden tickets-input" %>
       <%= f.input_field :status, value: "pending", class: "hidden" %>
+      <% if @carnet.nil? %>
+        <div class="carnet-diff">
+          <%= f.submit "Commander", class: "bici-button" %> <br>
 
-      <%= f.submit "Commander", class: "bici-button" %>
+          <p>Avec nos différents carnet économisez sur vos livraisons</p>
+          <p>Cette course pour seulement <strong><span id="best-price">0.00</span></strong> h.t avec un carnet de 100 tickets !</p>
+          <%= link_to "Nos carnets", new_carnet_path, class: "bici-button" %>
+        </div>
+      <% else %>
+        <div class="carnet-diff">
+          <%= f.submit "Commander", class: "bici-button" %> <br>
+        </div>
+      <% end %>
     </div>
 
   </div>

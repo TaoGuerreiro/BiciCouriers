@@ -33,8 +33,14 @@ const counter = () => {
   const totalDiv = document.getElementById('total-t');
   totalDiv.innerHTML = sum
 
+  const totalDivBestPrice = document.getElementById('best-price');
   const totalDivPrice = document.getElementById('total-e');
-  totalDivPrice.innerHTML = `${(sum * price / 100).toFixed(2)} €`;
+  if ( totalDivBestPrice == undefined) {
+    totalDivPrice.innerHTML = `${(sum * price / 100).toFixed(2)} €`;
+  } else {
+    totalDivBestPrice.innerHTML = `${(sum * 420 / 100).toFixed(2)} €`;
+    totalDivPrice.innerHTML = `${(sum * price / 100).toFixed(2)} €`;
+  }
 
   const ticketsFormInput = document.querySelector('.tickets-input');
   ticketsFormInput.value = sum;

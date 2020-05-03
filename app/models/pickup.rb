@@ -1,6 +1,6 @@
 class Pickup < ApplicationRecord
   belongs_to :course
-  belongs_to :favorite_address
+
 
   validates :address, presence: true
 

@@ -36,45 +36,70 @@ class CoursesController < ApplicationController
 
     @course = Course.new(course_params)
     @course.bike_id = Bike.first.id if @course.bike_id.nil?
-    @carnet = @user.carnets.where('remaining_tickets > ?', 0).first
     @course.user = @user
-    @course.carnet = @carnet
-    @course.pickups.first.favorite_address = FavoriteAddress.first
-    @course.drops.first.favorite_address = FavoriteAddress.first
-
-
     authorize @course
 
-    @pool = []
-    if @course.valid?
+    # parcour sans carnet ______________________________________________________
+    if @user.carnets == []
+      if @course.save
+        redirect_to courses_path
+      else
+        render :new
+        raise
+      end
+
+    # parcour avec carnet ______________________________________________________
     else
-      @pool << @course
-      render :new, :pickups[0] => {:address => "yes"}
-      # render :js => "alert('coucou')"
-      # raise
-    end
-    if @course.save
-      @pool << @course
-      # raise
-      add_course_to_carnet(@carnet, @course, @user)
-      @carnet.save
-      @user.save
-      redirect_to courses_path
-    else
-      # render :new
-      # raise
+      if is_enought_ticket?   # assez de ticket
+        @course.carnet = @carnet
+        if @course.save
+          add_course_to_carnet(@carnet, @course, @user)
+          @carnet.save
+          @user.save
+          redirect_to courses_path
+        else
+          render :new
+        end
+      elsif carnet_renewal? # pas assez, mais renouvellement auto
+        create_next_carnet
+        @ticket_to_actual = @carnet.remaining_tickets
+        @course.ticket_overflow = @ticket_to_actual
+        @carnet.remaining_tickets = 0
+        @ticket_to_next = (@course.ticket_nb - @ticket_to_actual)
+        @next_carnet.course_overflow = @ticket_to_next
+
+        @next_carnet.remaining_tickets = (@next_carnet.remaining_tickets - @ticket_to_next)
+        @next_carnet.save
+
+        @course.carnet = @carnet
+        if @course.save
+          add_course_to_carnet(@carnet, @course, @user)
+          @carnet.save
+          @next_carnet.save
+          @user.save
+          redirect_to courses_path
+        else
+          render :new
+        end
+      else # pas assez, et pas renouvellement auto
+        @course.carnet = @carnet
+        if @course.save
+          add_course_to_carnet(@carnet, @course, @user)
+          @carnet.save
+          @user.save
+          redirect_to courses_path
+        else
+          render :new
+        end
+      end
     end
   end
 
 private
 
   def course_params
-        params.require(:course).permit(:ticket_nb, :tickets_volume, :tickets_urgence, :tickets_distance, :distance, :details, :status, :price, :urgence, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
+    params.require(:course).permit(:ticket_nb, :tickets_volume, :tickets_urgence, :tickets_distance, :distance, :details, :status, :price, :urgence, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
   end
-
-  # def pickup_params
-  #       params.require(:pickup).permit(:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address)
-  # end
 
   def add_course_to_carnet(carnet, course, user)
     if carnet.remaining_tickets <= 0
@@ -90,4 +115,42 @@ private
       end
     end
   end
+
+  def is_enought_ticket?
+    @ticket_nb = @course.ticket_nb
+    @carnet = @user.carnets.where('remaining_tickets > ?', 0).first
+    @ticket_left = @carnet.remaining_tickets
+
+    @ticket_nb > @ticket_left ? false : true
+  end
+
+  def save_the_course
+
+  end
+
+  def carnet_renewal?
+    @user.carnet_renewal
+  end
+
+  def create_next_carnet
+    @next_carnet = Carnet.create(
+      {
+      carnet_template_id: @carnet.carnet_template.id,
+      user_id: @user.id,
+      remaining_tickets: @carnet.carnet_template.ticket_nb
+      }
+    )
+  end
+
+
+
+
+
+
+
+
+
+
+
+
 end

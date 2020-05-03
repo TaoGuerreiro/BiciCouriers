@@ -79,6 +79,7 @@ const urgenceToggle = () => {
     urgenceDiv.innerHTML = 2
     urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
     urgenceTickets = 2
+    urgenceRange = 0.75
     counter();
   });
   });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_124513) do
+ActiveRecord::Schema.define(version: 2020_05_03_133925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
     t.datetime "updated_at", null: false
     t.integer "remaining_tickets"
     t.bigint "carnet_template_id"
+    t.integer "course_overflow", default: 0
     t.index ["carnet_template_id"], name: "index_carnets_on_carnet_template_id"
     t.index ["user_id"], name: "index_carnets_on_user_id"
   end
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
     t.integer "tickets_urgence"
     t.integer "tickets_volume"
     t.integer "tickets_distance"
+    t.integer "ticket_overflow", default: 0
     t.index ["bike_id"], name: "index_courses_on_bike_id"
     t.index ["carnet_id"], name: "index_courses_on_carnet_id"
     t.index ["user_id"], name: "index_courses_on_user_id"
@@ -69,17 +71,15 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
   create_table "drops", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.integer "start_hour"
-    t.integer "end_hour"
+    t.float "start_hour"
+    t.float "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date"
     t.float "latitude"
     t.float "longitude"
-    t.bigint "favorite_address_id"
+    t.date "date"
     t.index ["course_id"], name: "index_drops_on_course_id"
-    t.index ["favorite_address_id"], name: "index_drops_on_favorite_address_id"
   end
 
   create_table "favorite_addresses", force: :cascade do |t|
@@ -97,17 +97,15 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
   create_table "pickups", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.integer "start_hour"
-    t.integer "end_hour"
+    t.float "start_hour"
+    t.float "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date"
     t.float "latitude"
     t.float "longitude"
-    t.bigint "favorite_address_id"
+    t.date "date"
     t.index ["course_id"], name: "index_pickups_on_course_id"
-    t.index ["favorite_address_id"], name: "index_pickups_on_favorite_address_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -117,6 +115,17 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
     t.datetime "updated_at", null: false
     t.string "details"
     t.string "images"
+  end
+
+  create_table "user_facturations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "facturation_address"
+    t.string "facturation_company"
+    t.string "facturation_first_name"
+    t.string "facturation_last_name"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_facturations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -133,9 +142,10 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
     t.string "company"
     t.string "address"
     t.string "billing_address"
-    t.boolean "paper_invoice"
+    t.boolean "paper_invoice", default: false
     t.boolean "admin", default: false
     t.integer "pool", default: 0
+    t.boolean "carnet_renewal", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -146,8 +156,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_124513) do
   add_foreign_key "courses", "carnets"
   add_foreign_key "courses", "users"
   add_foreign_key "drops", "courses"
-  add_foreign_key "drops", "favorite_addresses"
   add_foreign_key "favorite_addresses", "users"
   add_foreign_key "pickups", "courses"
-  add_foreign_key "pickups", "favorite_addresses"
+  add_foreign_key "user_facturations", "users"
 end
