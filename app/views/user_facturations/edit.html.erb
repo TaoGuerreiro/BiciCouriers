@@ -1,13 +1,9 @@
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= simple_form_for @user_facturation do |f| %>
 <div class="user-edit-main-container">
   <h2>Mes informations</h2>
   <div class="first-container">
     <div class="first-left">
-      <%= f.error_notification %>
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <p>On attend toujours la confirmation de ce mail : <%= resource.unconfirmed_email %></p>
-      <% end %>
       <div class="inline-input"> <p class="title"> Société :</p><div class="input"> <%=    f.input :company, required: false, autofocus: true, label: false %></div></div>
       <div class="inline-input"> <p class="title"> Prénom :</p><div class="input"> <%=     f.input :first_name, required: false, autofocus: true, label: false %></div></div>
       <div class="inline-input"> <p class="title"> Nom :</p><div class="input"> <%=        f.input :last_name, required: false, autofocus: true, label: false %></div></div>
@@ -17,8 +13,7 @@
     <div class="first-right">
       <div class="inline-input"> <p class="title"> Email :</p><div class="input"><%=              f.input :email, required: true, autofocus: true, label: false %></div></div>
       <div class="inline-input"> <p class="title"> Téléphone :</p><div class="input"><%=          f.input :phone, required: true, autofocus: true, label: false %></div></div>
-      <div class="inline-input"> <p class="title"> Facture par papier :</p><div class="input"><%=  f.input :paper_invoice, required: false, autofocus: true, label: false %></div></div>
-      <div class="inline-input"> <p class="title"> Renouvellement des carnets automatique :</p><div class="input"><%=  f.input :carnet_renewal, required: false, autofocus: true, label: false %></div></div>
+      <div class="inline-input"> <p class="title"> Facture par email :</p><div class="input"><%=  f.input :paper_invoice, required: false, autofocus: true, label: false %></div></div>
       <div class="inline-input"> <p class="title"> Mots de passe :</p><div class="input">
       <%= f.input :password,
                   placeholder: "Nouveau mot de passe ?",
@@ -48,10 +43,10 @@
       </div>
     </div>
     <% end %>
-    <p><%= link_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "white"  %></p>
   </div>
 
 
 </div>
+
 
 

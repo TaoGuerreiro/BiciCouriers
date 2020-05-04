@@ -8,7 +8,8 @@
       <p><span class="title"> Adresse :</span> <%=            current_user.address        %></p>
       <p><span class="title"> Email :</span> <%=              current_user.email          %></p>
       <p><span class="title"> Téléphone :</span> <%=          current_user.phone          %></p>
-      <p><span class="title"> Facture par email :</span> <%=  current_user.paper_invoice ? "Oui" : "Non"  %></p>
+      <p><span class="title"> Facture par papier :</span> <%=  current_user.paper_invoice ? "Oui" : "Non"  %></p>
+      <p><span class="title"> Renouvelement des carnets automatique :</span> <%=  current_user.carnet_renewal ? "Oui" : "Non"  %></p>
       <p><span class="title"> Mots de passe :</span> *******</p>
       <%= link_to "Modifier", edit_user_registration_path, class: "bici-button" %>
     </div>
@@ -18,7 +19,7 @@
       <h2>Adresse de facturation</h2>
       <p><span class="title"> Société :</span> <%=  current_user.company          %></p>
       <p><span class="title"> Adresse :</span> <%=  current_user.billing_address  %></p>
-      <%= link_to "Modifier", edit_user_registration_path, class: "bici-button"   %>
+      <%= link_to "Modifier", edit_user_facturation_path(@user_facturation), class: "bici-button"   %>
     </div>
   </div>
 
@@ -27,7 +28,7 @@
     <div class="second-left">
       <h2>Mes parrainages</h2>
       <p><span class="title">Vous n’avez pas encore de parrainages.</span></p>
-      <%= link_to "Ajouter des fillots !", edit_user_registration_path, class: "bici-button"   %>
+      <%= link_to "Ajouter des fillots (bientôt) !", "#", class: "bici-button"   %>
 
     </div>
     <div class="second-right">

@@ -6,8 +6,10 @@ class User < ApplicationRecord
   has_many :carnets, :dependent => :destroy
   has_many :courses, :dependent => :destroy
   has_many :favorite_addresses, :dependent => :destroy
+  has_one :user_facturation, :dependent => :destroy
 
-  after_create :send_welcome_email
+  # after_create :send_welcome_email
+  after_create :create_facturation_infos
 
   private
 
@@ -15,4 +17,11 @@ class User < ApplicationRecord
     UserMailer.with(user: self).welcome.deliver_now
   end
 
+  def create_facturation_infos
+    UserFacturation.create(
+      {
+        user_id: self.id
+      }
+    )
+  end
 end

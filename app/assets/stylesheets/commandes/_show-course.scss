@@ -21,7 +21,6 @@
       font-weight: 600;
       font-size: 30px;
       line-height: 25px;
-      color: white;
       border-bottom: 2px $yellow solid;
       padding-bottom: 8px;
       margin-bottom: 16px;
@@ -44,73 +43,18 @@
     }
   }
   #show-map-container {
+    margin: 10px 0px 20px 0px;
     width: 45%;
-    height: 500px;
-    // background-color: blue;
+    // height: 500px;
+    border-radius: 15px;
+    background: #153A7E;
+    box-shadow:  7px -7px 14px #143776,
+                 -7px 7px 14px #163d86;
+    // background-color: pink;
   }
-
-  .price-container {
-    // background-color: blue;
-    width: 45%;
-    padding: 0px 10px 10px 10px;
-    .ticket-image {
-      background-image: asset-url('tarifs/ticket-2.svg');
-      width: 50px;
-      height: 50px;
-      background-position: center;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    .euro-image {
-      background-image: asset-url('euro.svg');
-      width: 50px;
-      height: 50px;
-      background-position: center;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    .price-line {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 10px 10px 10px;
-      align-items: center;
-    }
-    .sous-total {
-      p {
-
-        font-size: 16px;
-        line-height: 25px;
-        color: white;
-        margin: 0px 20px 0px 10px;
-      }
-    }
-    .total {
-      border-top: 2px solid white;
-
-      p {
-
-
-        font-weight: 800;
-        font-size: 22px;
-        line-height: 25px;
-        color: white;
-        margin: 10px 20px 0px 10px;
-      }
-    }
-    .total-title {
-      margin: 0px 10px 0px 10px;
-      border-bottom: 2px solid white;
-      p {
-        margin-top: 14px;
-
-
-        font-weight: 800;
-        font-size: 22px;
-        line-height: 25px;
-        color: white;
-        margin: 0px 10px 0px 10px;
-      }
-    }
+  .total-container {
+  width: 45%;
+  min-height: 50vh;
   }
 }
 

@@ -4,12 +4,14 @@
     <%= link_to carnet_path(carnet), class: "index-column index-carnets" do %>
       <div class="index-content center"> <p> <%= carnet.created_at.strftime("%d %B %y") %> </p> </div>
       <div class="index-content center"> <p> <%= carnet.carnet_template.ticket_nb %> </p> </div>
+      <div class="index-content center"> <p> <%= carnet.course_overflow %> </p> </div>
       <div class="index-content center"> <p> <%= number_with_precision((carnet.carnet_template.ticket_nb.to_i * carnet.carnet_template.price_cents.to_i)/100, precision: 2) %> ht </p> </div>
       <div class="index-content center">
         <div class="ldBar carnet-<%= state %>-<%= idx %> carnet-progress-<%= state %> label-center ticket-counter"
           data-max="<%= carnet.carnet_template.ticket_nb%>"
           data-stroke="#FFCC00"
-          data-value=" <%= carnet.remaining_tickets %>">
+          data-value=" <%= carnet.remaining_tickets %>"
+          data-min=" <%= carnet.remaining_tickets %>">
         </div>
       </div>
     <% end %>

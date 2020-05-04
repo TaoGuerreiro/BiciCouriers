@@ -3,7 +3,7 @@ class CarnetsController < ApplicationController
 
   def index
     @inprogress = policy_scope(Carnet).where('remaining_tickets > ?', 0).order(created_at: :desc)
-    @oldone = policy_scope(Carnet).where('remaining_tickets <= ?', 0)
+    @oldone = policy_scope(Carnet).where('remaining_tickets <= ?', 0).order(created_at: :desc)
   end
 
   def show

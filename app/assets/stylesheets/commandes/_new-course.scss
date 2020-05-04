@@ -58,6 +58,10 @@
   }
   .one-line-address-contact {
     display: flex;
+    .bici-button {
+      height: 30px;
+      padding: 3px 12px;
+    }
   }
 }
 
@@ -278,12 +282,9 @@
     border-top: 2px solid white;
 
     p {
-
-
       font-weight: 800;
       font-size: 22px;
       line-height: 25px;
-      color: white;
       margin: 10px 20px 0px 10px;
     }
   }
@@ -292,17 +293,23 @@
     border-bottom: 2px solid white;
     p {
       margin-top: 14px;
-
-
       font-weight: 800;
       font-size: 22px;
       line-height: 25px;
-      color: white;
       margin: 0px 10px 0px 10px;
     }
   }
-  .bici-button {
-    padding: 7px 12px;
+  .carnet-diff {
+    // height: 150px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    .bici-button {
+      padding: 7px 12px;
+    }
   }
 }
 
@@ -333,6 +340,7 @@
   &:hover {
     color: $pink;
   }
+
 }
 
 

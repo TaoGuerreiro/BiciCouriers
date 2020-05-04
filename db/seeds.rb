@@ -128,6 +128,15 @@ admin = User.create(
   }
 )
 
+# ticket_solo = CarnetTemplate.create(
+#   {
+#     ticket_nb: 0,
+#     price_cents: 700,
+#     description: "Sans carnet, le service à la carte !",
+#     image: "tarifs/ticket-1.svg"
+#   }
+# )
+
 carnet_10_t = CarnetTemplate.create(
   {
     ticket_nb: 10,
@@ -177,6 +186,14 @@ bike_2 = Bike.create(
     max_size: 2000000
   }
 )
+
+# Carnet.create(
+#   {
+#   user_id: admin.id,
+#   remaining_tickets: 0,
+#   carnet_template_id: ticket_solo.id
+#   }
+# )
 
 # carnet_50 = Carnet.create(
 #   {
