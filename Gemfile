@@ -25,6 +25,7 @@ gem 'turbolinks', '~> 5.2.0'
 gem 'turbolinks_render'
 gem 'money-rails'
 gem 'postmark-rails'
+gem 'stripe'
 
 
 group :development do

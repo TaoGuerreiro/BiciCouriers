@@ -9,6 +9,12 @@
   get "/histoire", to: "pages#story"
   get "/tarifs", to: "pages#tarifs"
 
+  resources :shopping_cart, only: [:show, :create]
+
+  resources :orders, only: [:show, :create] do
+    resources :payments, only: :new
+  end
+
   resources :services, only: [:index, :show]
 
   resources :avantages, only: [:index]
