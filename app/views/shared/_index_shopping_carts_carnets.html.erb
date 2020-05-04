@@ -2,8 +2,8 @@
   <% carnets.each_with_index do |carnet, idx|  %>
 
     <%= link_to carnet_path(carnet), class: "index-column index-courses" do %>
-      <div class="index-content center"> <p> <%= carnet.created_at.strftime("%d %B %y") %> </p> </div>
-      <div class="index-content center"> <p> Carnet de <%= carnet.carnet_template.ticket_nb %> tickets </p> </div>
+      <div class="index-content center"> <p> <%= carnet.created_at.strftime('%e/%V/%y') %> </p> </div>
+      <div class="index-content "> <p> Carnet de <%= carnet.carnet_template.ticket_nb %> tickets </p> </div>
       <div class="index-content center"> <p> <%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %> € </p> </div>
       <div class="index-content center"> <p></p> </div>
     <% end %>
