@@ -1,0 +1,32 @@
+<div class="shopping-cart-main-container">
+  <div class="course-main-container">
+    <div class="course-in-progress">
+      <h1>Ma commande <span class="badge badge-primary"><%= @order.state %></span></h1>
+      <div class="index-column index-titles">
+        <div class="index-title title center">  <p>Date</p>         </div>
+        <div class="index-title title center">         <p>Description</p>  </div>
+        <div class="index-title title center">  <p>Prix</p>         </div>
+        <div class="index-title title center">         <p>Statut</p>       </div>
+        <div class="index-title title">                             </div>
+      </div>
+      <%= render 'shared/index_shopping_carts_courses', courses: @order.shopping_cart.courses %>
+      <%= render 'shared/index_shopping_carts_carnets', carnets: @order.shopping_cart.carnets %>
+    </div>
+
+    <button id="pay" class="bici-button">Pay</button>
+
+          <script src="https://js.stripe.com/v3/"></script>
+          <script>
+            const paymentButton = document.getElementById('pay');
+            paymentButton.addEventListener('click', () => {
+              const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+              stripe.redirectToCheckout({
+                sessionId: '<%= @order.checkout_session_id %>'
+              });
+            });
+          </script>
+
+
+
+  </div>
+</div>

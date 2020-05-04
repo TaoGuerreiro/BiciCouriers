@@ -9,6 +9,9 @@ Rails.application.configure do
       CoursesController.layout "commandes"
       CarnetsController.layout "commandes"
       FavoriteAddressesController.layout "commandes"
+      ShoppingCartsController.layout "commandes"
+      PaymentsController.layout "commandes"
+      OrdersController.layout "commandes"
   end
   config.action_mailer.delivery_method     = :postmark
   config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }

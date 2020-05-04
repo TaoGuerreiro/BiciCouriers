@@ -9,11 +9,12 @@
   get "/histoire", to: "pages#story"
   get "/tarifs", to: "pages#tarifs"
 
-  resources :shopping_cart, only: [:show, :create]
+  resources :shopping_carts, only: [:show, :create]
 
   resources :orders, only: [:show, :create] do
     resources :payments, only: :new
   end
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   resources :services, only: [:index, :show]
 

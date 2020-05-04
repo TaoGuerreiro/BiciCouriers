@@ -28,6 +28,15 @@ class CarnetsController < ApplicationController
       @carnet.remaining_tickets = @carnet.carnet_template.ticket_nb
     end
 
+    if commande_en_cours?
+        add_carnet_to_shopping_cart(@carnet, @user.shopping_carts.last)
+        @user.shopping_carts.last.save
+      else
+        create_shopping_cart
+        add_carnet_to_shopping_cart(@carnet, @new_shopping_cart)
+        @new_shopping_cart.save
+      end
+
     authorize @carnet
     if @carnet.save
       # raise
@@ -44,6 +53,24 @@ class CarnetsController < ApplicationController
 
   def carnet_params
         params.require(:carnet).permit(:carnet_template_id)
+  end
+
+  def commande_en_cours?
+
+    if @user.shopping_carts != nil
+      return true
+    else
+     @user.shopping_carts.last.state == 'pending'
+    end
+  end
+
+  def create_shopping_cart
+    @new_shopping_cart = ShoppingCart.create(user: @user)
+  end
+
+  def add_carnet_to_shopping_cart(carnet, cart)
+    carnet.shopping_cart = cart
+    cart.price_cents = cart.price_cents + (carnet.carnet_template.price_cents * carnet.carnet_template.ticket_nb)
   end
 
 end

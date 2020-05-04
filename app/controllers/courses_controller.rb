@@ -41,8 +41,18 @@ class CoursesController < ApplicationController
 
     # parcour sans carnet ______________________________________________________
     if @user.carnets == []
+      if commande_en_cours?
+        add_carnet_to_shopping_cart(@course, @user.shopping_carts.last)
+        @user.shopping_carts.last.save
+      else
+        create_shopping_cart
+        add_carnet_to_shopping_cart(@course, @new_shopping_cart)
+        @new_shopping_cart.save
+      end
       if @course.save
         redirect_to courses_path
+
+
       else
         render :new
         raise
@@ -143,10 +153,26 @@ private
   end
 
 
+  def commande_en_cours?
+    if @user.shopping_carts.nil?
+      return false
+    elsif @user.shopping_carts == []
+      return false
+    elsif @user.shopping_carts.last.state == 'pending'
+      return true
+    else
+      return false
+    end
+  end
 
+  def create_shopping_cart
+    @new_shopping_cart = ShoppingCart.create(user: @user)
+  end
 
-
-
+  def add_carnet_to_shopping_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents = cart.price_cents + (700 * course.ticket_nb)
+  end
 
 
 

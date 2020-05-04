@@ -10,14 +10,13 @@
   </div>
   <div class="button-list">
     <ul>
-      <li> <%= link_to "Mes informations", profil_path  %> </li>
-      <li> <%= link_to "Mes commandes", courses_path  %></li>
-      <li> <%= link_to "Mes carnets", carnets_path  %></li>
-      <br>
       <%= link_to "Nouvelle course", new_course_path, class: "bici-button" %>
       <br>
+      <li> <%= link_to "Mon panier", shopping_cart_path(ShoppingCart.last.id) if ShoppingCart.last != nil %> </li>
+      <li> <%= link_to "Mes livraisons", courses_path  %></li>
+      <li> <%= link_to "Mes carnets", carnets_path  %></li>
+      <li> <%= link_to "Mes informations", profil_path  %> </li>
       <br>
-      <%= link_to "Nouveau carnet", new_carnet_path, class: "bici-button" %>
     </ul>
   </div>
   <div class="side-oeuf-1">
