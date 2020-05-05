@@ -8,6 +8,8 @@
   root to: 'pages#home'
   get "/histoire", to: "pages#story"
   get "/tarifs", to: "pages#tarifs"
+  get "/about", to: "pages#about"
+  get "/tarifs", to: "pages#tarifs"
 
   resources :shopping_carts, only: [:show, :create]
 
