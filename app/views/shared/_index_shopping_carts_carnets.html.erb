@@ -1,14 +1,22 @@
-<div class="index-contents">
-  <% carnets.each_with_index do |carnet, idx|  %>
-  <div class="one-line">
-    <%= link_to carnet_path(carnet), remote: true, class: "index-column index-courses" do %>
-      <div class="index-content center">  <p> <%= carnet.created_at.strftime('%e/%V/%y') %>                             </p> </div>
-      <div class="index-content ">        <p> Carnet de <%= carnet.carnet_template.ticket_nb %> tickets                 </p> </div>
-      <div class="index-content center">  <p> <%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %> €  </p> </div>
+<% if carnets != [] %>
+  <div class="cards">
+    <% carnets.each do |carnet|  %>
+      <div class="card">
+        <div class="infos-div"><%= link_to carnet_path(carnet), remote: true, class: "infos" do  %>
+          <div class="item w-200 "> <p> <%= carnet.created_at.strftime('%e/%V/%y') %> </p> </div>
+          <div class="item grow text-g"> <p>Carnet de <%= carnet.carnet_template.ticket_nb %> tickets</p></div>
+          <div class="item mw-80 text-g"><p><%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %>
+            <span class="hors-taxe-text">H.T</span></p>
+          </div>
+
+        <% end %></div>
+        <% if params[:controller] == 'shopping_carts' %>
+          <div class="delete-div"> <%= link_to carnet_path(carnet), method: :delete do %>
+            <div class="delete-button"></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-    <div class="index-content center"> <%= link_to carnet_path(carnet), method: :delete do %>
-      <i class="fas fa-times-circle"></i>
-    <% end %></div>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

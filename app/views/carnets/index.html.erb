@@ -1,19 +1,21 @@
-<div class="carnet-main-container">
-  <div class="carnet-in-progress">
+
+
+
+
+
+<div class="hcf-main-container">
+  <div class="header">
     <h1>Mes carnets</h1>
-    <br>
-    <%= link_to "Nouveau carnet", new_carnet_path, class: "bici-button" %>
-    <br>
-    <br>
-    <div class="index-titles index-column">
-      <div class="index-title title center">  <p>Date d'achat</p>     </div>
-      <div class="index-title title center">  <p>Qantitée</p>         </div>
-      <div class="index-title title center">  <p>Report</p>         </div>
-      <div class="index-title title center">  <p>Prix</p>             </div>
-      <div class="index-title title center">  <p>Tickets restant</p>  </div>
+  </div>
+  <div class="content">
+    <%= render 'shared/index_carnets', carnets: @inprogress, state: "ip" %>
+    <%= render 'shared/index_carnets', carnets: @oldone, state: "do" %>
+  </div>
+  <div class="footer">
+    <div class="right-button">
+      <%= link_to "Nouveau carnet", new_carnet_path, class: "bici-button" %>
     </div>
   </div>
-  <%= render 'shared/index_carnets', carnets: @inprogress, state: "ip" %>
-  <%= render 'shared/index_carnets', carnets: @oldone, state: "do" %>
+
 </div>
 

@@ -1,20 +1,15 @@
-<div class="course-main-container">
-  <div class="course-in-progress">
-    <h1>Mes commandes</h1>
-    <div class="index-column index-titles">
-      <div class="index-title title center">  <p>Date</p>                 </div>
-      <div class="index-title title">         <p>Point de ramassage</p>   </div>
-      <div class="index-title title center">  <p>Date</p>                 </div>
-      <div class="index-title title">         <p>Point de livraison</p>   </div>
-      <div class="index-title title center">  <p>Statut</p>               </div>
-      <div class="index-title title center">  <p>Distance</p>             </div>
-      <div class="index-title title center">         <p>Prix</p>                 </div>
-      <div class="index-title title center">  <p>Tickets</p>            </div>
-      <!-- <div class="index-title title right"></div> -->
-    </div>
+
+
+
+<div class="hcf-main-container">
+  <div class="header">
+    <h1>Mes courses</h1>
+  </div>
+  <div class="content">
     <%= render 'shared/index_courses', courses: @pending %>
     <%= render 'shared/index_courses', courses: @accepted %>
     <%= render 'shared/index_courses', courses: @inprogress %>
     <%= render 'shared/index_courses', courses: @done %>
   </div>
 </div>
+

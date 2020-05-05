@@ -41,3 +41,145 @@ p, h1, h2, h3, h4, h5, h6 {
 //     cursor: asset-url('mouse-hover.svg'), move;
 //   }
 // }
+.hcf-main-container {
+  // background-color: red;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 100px;
+  .header, .content, .footer {
+    width: 91%;
+    margin: 0 auto;
+  }
+  .header {
+    // background-color: blue;
+    border-bottom: 1px white solid;
+  }
+  .content {
+    // background-color: pink;
+  }
+  .footer {
+    border-top: 1px white solid;
+    // background-color: blue;
+  }
+}
+.carnet-progress-do, .carnet-progress-ip {
+  width: 100% !important;
+  height: 100% !important;
+}
+.ldBar-label {
+  top: 20% !important;
+}
+
+.hors-taxe-text {
+  font-size: 10px;
+  letter-spacing: 1;
+}
+
+.address-text {
+  font-size: 14px;
+  letter-spacing: 1;
+}
+.text-f {
+  font-weight: 200;
+}
+.text-n {
+  font-weight: 400;
+}
+.text-g {
+  font-weight: 600;
+}
+.text-tg {
+  font-weight: 800;
+}
+// width:
+.w-60 {
+  width: 60px;
+}
+.w-80 {
+  width: 80px;
+}
+.w-101 {
+  width: 100px;
+}
+.w-120 {
+  width: 120px;
+}
+.w-130 {
+  width: 130px;
+}
+.w-140 {
+  width: 140px;
+}
+.w-160 {
+  width: 160px;
+}
+.w-200 {
+  width: 200px;
+}
+.mw-120 {
+  min-width: 120px;
+}
+.mw-80 {
+  min-width: 80px;
+}
+.justify-self-start {
+  justify-self: right;
+}
+
+.grow {
+  flex-grow: 1;
+}
+.ta-r {
+  text-align: right;
+}
+.ta-l {
+  text-align: left;
+}
+
+.right-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  margin-top: 15px;
+}
+.left-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  margin-top: 15px;
+}
+  .center-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 15px;
+}
+
+.status-pending {
+  p {
+  color: red !important;
+  font-weight: 600 !important;
+  }
+}
+.status-inprogress {
+  p {
+  color: orange !important;
+  font-weight: 600 !important;
+  }
+}
+.status-accepted {
+  p {
+  color: $yellow !important;
+  font-weight: 600 !important;
+  }
+}
+.status-done {
+  p {
+  color: green !important;
+  font-weight: 600 !important;
+  }
+}
