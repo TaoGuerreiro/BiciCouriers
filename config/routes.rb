@@ -22,14 +22,14 @@
 
   resources :contacts, only: [:new, :create]
 
-  resources :courses, only: [:new, :create, :index, :show] do
+  resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
   end
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
-  resources :carnets, only: [:new, :create, :index, :show] do
+  resources :carnets, only: [:new, :create, :index, :show, :destroy] do
     collection do
       get :inprogress
     end

@@ -67,6 +67,7 @@ class CoursesController < ApplicationController
           @carnet.save
           @user.save
           redirect_to courses_path
+
         else
           render :new
         end
@@ -88,6 +89,7 @@ class CoursesController < ApplicationController
           @next_carnet.save
           @user.save
           redirect_to courses_path
+          flash.now[:notice] = 'Carnet renouvellé !'
         else
           render :new
         end
@@ -103,6 +105,15 @@ class CoursesController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    @shopping_cart = ShoppingCart.last
+    @course = Course.find(params[:id])
+    remove_carnet_from_shopping_cart(@course, @shopping_cart)
+    @course.destroy
+    redirect_to shopping_cart_path(@shopping_cart.id)
+    authorize @course
   end
 
 private
@@ -171,12 +182,15 @@ private
 
   def add_carnet_to_shopping_cart(course, cart)
     course.shopping_cart = cart
-    cart.price_cents = cart.price_cents + (700 * course.ticket_nb)
+    cart.price_cents = cart.price_cents + (583 * course.ticket_nb)
+    flash.now[:notice] = 'Course ajoutée au panier !'
+    cart.save
   end
 
-
-
-
-
+  def remove_carnet_from_shopping_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents = cart.price_cents - (583 * course.ticket_nb)
+    cart.save
+  end
 
 end

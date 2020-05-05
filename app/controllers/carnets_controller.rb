@@ -49,6 +49,16 @@ class CarnetsController < ApplicationController
     end
   end
 
+  def destroy
+    @cart = ShoppingCart.last
+    @carnet = Carnet.find(params[:id])
+    remove_carnet_from_shopping_cart(@carnet, @cart)
+
+    @carnet.destroy
+    redirect_to shopping_cart_path(ShoppingCart.last.id)
+    authorize @carnet
+  end
+
   private
 
   def carnet_params
@@ -71,6 +81,13 @@ class CarnetsController < ApplicationController
   def add_carnet_to_shopping_cart(carnet, cart)
     carnet.shopping_cart = cart
     cart.price_cents = cart.price_cents + (carnet.carnet_template.price_cents * carnet.carnet_template.ticket_nb)
+    cart.save
+  end
+
+  def remove_carnet_from_shopping_cart(carnet, cart)
+    carnet.shopping_cart = cart
+    cart.price_cents = cart.price_cents - (carnet.carnet_template.price_cents * carnet.carnet_template.ticket_nb)
+    cart.save
   end
 
 end

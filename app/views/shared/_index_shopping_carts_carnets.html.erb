@@ -1,11 +1,14 @@
 <div class="index-contents">
   <% carnets.each_with_index do |carnet, idx|  %>
-
-    <%= link_to carnet_path(carnet), class: "index-column index-courses" do %>
-      <div class="index-content center"> <p> <%= carnet.created_at.strftime('%e/%V/%y') %> </p> </div>
-      <div class="index-content "> <p> Carnet de <%= carnet.carnet_template.ticket_nb %> tickets </p> </div>
-      <div class="index-content center"> <p> <%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %> € </p> </div>
-      <div class="index-content center"> <p></p> </div>
+  <div class="one-line">
+    <%= link_to carnet_path(carnet), remote: true, class: "index-column index-courses" do %>
+      <div class="index-content center">  <p> <%= carnet.created_at.strftime('%e/%V/%y') %>                             </p> </div>
+      <div class="index-content ">        <p> Carnet de <%= carnet.carnet_template.ticket_nb %> tickets                 </p> </div>
+      <div class="index-content center">  <p> <%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %> €  </p> </div>
     <% end %>
+    <div class="index-content center"> <%= link_to carnet_path(carnet), method: :delete do %>
+      <i class="fas fa-times-circle"></i>
+    <% end %></div>
+    </div>
   <% end %>
 </div>

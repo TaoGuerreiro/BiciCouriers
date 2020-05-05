@@ -8,7 +8,7 @@
     margin: 0px auto;
     display: grid;
     align-items: center;
-    grid-template-columns: 10% 55% 15% 15% 5%;
+    grid-template-columns: 10% 70% 15%5%;
     grid-template-rows: auto;
     .title > p {
       color: white;
@@ -29,5 +29,11 @@
     .index-content {
       // padding-left: 10px;
     }
+  }
+  i {
+    color: white;
+  }
+  .one-line {
+    display: flex;
   }
 }
