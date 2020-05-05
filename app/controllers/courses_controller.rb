@@ -41,8 +41,18 @@ class CoursesController < ApplicationController
 
     # parcour sans carnet ______________________________________________________
     if @user.carnets == []
+      if commande_en_cours?
+        add_carnet_to_shopping_cart(@course, @user.shopping_carts.last)
+        @user.shopping_carts.last.save
+      else
+        create_shopping_cart
+        add_carnet_to_shopping_cart(@course, @new_shopping_cart)
+        @new_shopping_cart.save
+      end
       if @course.save
         redirect_to courses_path
+
+
       else
         render :new
         raise
@@ -57,6 +67,7 @@ class CoursesController < ApplicationController
           @carnet.save
           @user.save
           redirect_to courses_path
+
         else
           render :new
         end
@@ -78,6 +89,7 @@ class CoursesController < ApplicationController
           @next_carnet.save
           @user.save
           redirect_to courses_path
+          flash.now[:notice] = 'Carnet renouvellé !'
         else
           render :new
         end
@@ -93,6 +105,15 @@ class CoursesController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    @shopping_cart = ShoppingCart.last
+    @course = Course.find(params[:id])
+    remove_carnet_from_shopping_cart(@course, @shopping_cart)
+    @course.destroy
+    redirect_to shopping_cart_path(@shopping_cart.id)
+    authorize @course
   end
 
 private
@@ -143,14 +164,33 @@ private
   end
 
 
+  def commande_en_cours?
+    if @user.shopping_carts.nil?
+      return false
+    elsif @user.shopping_carts == []
+      return false
+    elsif @user.shopping_carts.last.state == 'pending'
+      return true
+    else
+      return false
+    end
+  end
 
+  def create_shopping_cart
+    @new_shopping_cart = ShoppingCart.create(user: @user)
+  end
 
+  def add_carnet_to_shopping_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents = cart.price_cents + (583 * course.ticket_nb)
+    flash.now[:notice] = 'Course ajoutée au panier !'
+    cart.save
+  end
 
-
-
-
-
-
-
+  def remove_carnet_from_shopping_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents = cart.price_cents - (583 * course.ticket_nb)
+    cart.save
+  end
 
 end

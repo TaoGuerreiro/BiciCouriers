@@ -1,0 +1,9 @@
+<h1><%= @course.user.company %> </h1>
+
+Pickup : <%= @course.pickups.first.address %><br>
+Entre : <%= Time.at( @course.pickups.first.start_hour * 3600 ).utc.strftime("%H:%M") %> ET <%= Time.at( @course.pickups.first.end_hour * 3600 ).utc.strftime("%H:%M") %><br>
+Détails : <%= @course.pickups.first.details %><br>
+<br>
+Drop : <%= @course.drops.first.address %><br>
+Entre : <%= Time.at( @course.drops.first.start_hour * 3600 ).utc.strftime("%H:%M") %> ET <%= Time.at( @course.drops.first.end_hour * 3600 ).utc.strftime("%H:%M") %><br>
+Détails : <%= @course.drops.first.details %><br>

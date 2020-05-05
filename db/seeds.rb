@@ -15,6 +15,8 @@ Course.destroy_all
 Carnet.destroy_all
 User.destroy_all
 CarnetTemplate.destroy_all
+ShoppingCart.destroy_all
+Order.destroy_all
 
 Service.create(
   {

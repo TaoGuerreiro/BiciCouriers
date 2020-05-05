@@ -1,0 +1,39 @@
+.shopping-cart-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  .index-column {
+    width: 90%;
+    height: 50px;
+    margin: 0px auto;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 10% 70% 15%5%;
+    grid-template-rows: auto;
+    .title > p {
+      color: white;
+
+
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+  .index-titles {
+    border-bottom: 2px solid white;
+    .index-title {
+      border: none;
+    }
+  }
+  .index-contents {
+    .index-content {
+      // padding-left: 10px;
+    }
+  }
+  i {
+    color: white;
+  }
+  .one-line {
+    display: flex;
+  }
+}

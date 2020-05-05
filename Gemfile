@@ -26,6 +26,7 @@ gem 'turbolinks_render'
 gem 'money-rails'
 gem 'postmark-rails'
 gem 'stripe'
+gem 'stripe_event'
 
 
 group :development do

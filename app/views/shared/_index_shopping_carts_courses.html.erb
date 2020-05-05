@@ -1,0 +1,35 @@
+<% if courses != [] %>
+  <div class="index-contents">
+    <% courses.each do |course|  %>
+      <div class="one-line">
+        <%= link_to course_path(course), remote: true, class: "index-courses index-column" do  %>
+
+          <div class="index-content center"> <p> <%= (course.pickups.first.created_at).strftime('%e/%V/%y') %> </p> </div>
+          <div class="index-content"> <p>Livraison entre <%= course.pickups.first.address %> et <%= course.drops.first.address %> </p> </div>
+          <div class="index-content center"><p>
+            <% if course.ticket_nb.nil? %>
+              0
+            <% else %>
+              <% if  course.ticket_nb > 0 %>
+                <% if course.carnet_id.nil? %>
+                  <%= number_with_precision((583 * course.ticket_nb)/100.00, precision: 2) %>
+                <% else %>
+                  <%= number_with_precision((course.carnet.carnet_template.price) * course.ticket_nb, precision: 2) %>
+                <% end %>
+              <% else %>
+                0
+              <% end %>
+            <% end %>
+            €</p>
+          </div>
+        <% end %>
+
+        <div class="index-content center"> <%= link_to course_path(course), method: :delete do %>
+          <i class="fas fa-times-circle"></i>
+        <% end %></div>
+
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
