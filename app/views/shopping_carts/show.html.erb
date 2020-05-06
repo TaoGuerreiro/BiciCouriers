@@ -1,19 +1,19 @@
-<div class="shopping-cart-main-container">
-  <div class="course-main-container">
-    <div class="course-in-progress">
-      <h1>Mon panier</h1>
-      <div class="index-column index-titles">
-        <div class="index-title title center">  <p>Date</p>         </div>
-        <div class="index-title title center">         <p>Description</p>  </div>
-        <div class="index-title title center">  <p>Prix</p>         </div>
-
-      </div>
+<div class="hcf-main-container">
+  <div class="header">
+    <h1>Mon panier</h1>
+  </div>
+  <div class="content">
       <%= render 'shared/index_shopping_carts_courses', courses: @shopping_cart.courses %>
       <%= render 'shared/index_shopping_carts_carnets', carnets: @shopping_cart.carnets %>
+  </div>
+  <div class="footer">
+    <div class="right-button">
+      <%= form_tag orders_path do %>
+        <%= hidden_field_tag 'shopping_cart_id', @shopping_cart.id %>
+        <%= submit_tag 'Confirmer ma commande', class: 'bici-button' %>
+      <% end %>
     </div>
-    <%= form_tag orders_path do %>
-      <%= hidden_field_tag 'shopping_cart_id', @shopping_cart.id %>
-      <%= submit_tag 'Acheter', class: 'bici-button' %>
-    <% end %>
   </div>
 </div>
+
+

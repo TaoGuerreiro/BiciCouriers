@@ -1,3 +1,9 @@
+.course-main-container {
+  width: 100%;
+  padding-top: 100px;
+}
+
+
 .first-container {
   display: flex;
   // background-color: red;
@@ -13,9 +19,8 @@
   transition: 0.4s;
   width: 45%;
   border-radius: 15px;
-  background: $light-blue;
-  box-shadow:  7px -7px 14px #143776,
-               -7px 7px 14px #143776;
+  background: $dark-blue;
+
   padding: 20px 20px 20px 20px;
   margin-bottom: 20px;
   .slider-container {
@@ -37,8 +42,7 @@
   &:hover {
     border-radius: 15px;
     background: #153A7E;
-    box-shadow:  15px -15px 51px #113069,
-                 -15px 15px 51px #113069;
+
     // transform: scale(1.02);
     cursor: pointer;
   }
@@ -48,7 +52,7 @@
     height: 40px;
   }
   select {
-    background-color: $light-blue;
+    background-color: $dark-blue;
     border: none;
     color: $yellow;
     &:active, &:focus {
@@ -99,9 +103,8 @@
   width: 45%;
   // height: 500px;
   border-radius: 15px;
-  background: #153A7E;
-  box-shadow:  7px -7px 14px #143776,
-               -7px 7px 14px #163d86;
+  background: $dark-blue;
+
   // background-color: pink;
 }
 .options-container {
@@ -114,15 +117,12 @@
   flex-direction: column;
   margin-top: 20px;
   border-radius: 15px;
-  background: $light-blue;
-  box-shadow:  7px -7px 14px #143776,
-               -7px 7px 14px #143776;
+  background: $dark-blue;
   padding: 15px;
   &:hover {
     border-radius: 15px;
     background: #153A7E;
-    box-shadow:  15px -15px 51px #113069,
-                 -15px 15px 51px #113069;
+
     // transform: scale(1.02);
     cursor: pointer;
   }
@@ -162,14 +162,11 @@
   margin-top: 13px;
   border-radius: 15px;
   padding: 15px;
-  background: $light-blue;
-  box-shadow:  7px -7px 14px #143776,
-               -7px 7px 14px #163d86;
+  background: $dark-blue;
+
   &:hover {
     border-radius: 15px;
     background: #153A7E;
-    box-shadow:  15px -15px 51px #113069,
-                 -15px 15px 51px #113069;
     // transform: scale(1.02);
     cursor: pointer;
   }
@@ -219,8 +216,7 @@
   margin: 10px 0px 20px 0px;
   border-radius: 15px;
   background: $light-blue;
-  box-shadow:  7px -7px 14px #143776,
-               -7px 7px 14px #143776;
+
   padding: 15px;
   .hidden {
     display: none !important;
@@ -239,8 +235,7 @@
   &:hover {
     border-radius: 15px;
     background: #153A7E;
-    box-shadow:  15px -15px 51px #113069,
-                 -15px 15px 51px #113069;
+
     // transform: scale(1.02);
   }
   .ticket-image {

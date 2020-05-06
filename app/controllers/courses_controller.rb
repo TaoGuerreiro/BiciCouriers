@@ -33,76 +33,53 @@ class CoursesController < ApplicationController
 
   def create
     @user = current_user
-
     @course = Course.new(course_params)
     @course.bike_id = Bike.first.id if @course.bike_id.nil?
     @course.user = @user
     authorize @course
+    all_user_carnets = @user.carnets.where('remaining_tickets > ?', 0).order(remaining_tickets: :asc)
+    @cart = @user.shopping_carts.last
 
-    # parcour sans carnet ______________________________________________________
-    if @user.carnets == []
-      if commande_en_cours?
-        add_carnet_to_shopping_cart(@course, @user.shopping_carts.last)
-        @user.shopping_carts.last.save
-      else
-        create_shopping_cart
-        add_carnet_to_shopping_cart(@course, @new_shopping_cart)
-        @new_shopping_cart.save
-      end
-      if @course.save
-        redirect_to courses_path
-
-
-      else
-        render :new
-        raise
-      end
-
-    # parcour avec carnet ______________________________________________________
+    if @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb
+      redirect_to new_course_path, flash: {alert: 'Bien trop de tickets pour une si grosse course ! :o'}
     else
-      if is_enought_ticket?   # assez de ticket
-        @course.carnet = @carnet
-        if @course.save
-          add_course_to_carnet(@carnet, @course, @user)
-          @carnet.save
-          @user.save
-          redirect_to courses_path
 
+      if user_have_a_carnet?(@user)
+        create_shopping_cart unless user_have_a_cart?(@cart)
+        if user_have_enought_tickets?(@course, all_user_carnets)
+          if only_one_carnet?(all_user_carnets)
+            @carnet = all_user_carnets.last
+            add_course_to_carnet(@carnet, @course)
+            @carnet.save
+            # raise
+            save_data(@course)
+          else
+            add_course_on_both_carnets_and_save(all_user_carnets, @course)
+            save_data(@course)
+          end
         else
-          render :new
-        end
-      elsif carnet_renewal? # pas assez, mais renouvellement auto
-        create_next_carnet
-        @ticket_to_actual = @carnet.remaining_tickets
-        @course.ticket_overflow = @ticket_to_actual
-        @carnet.remaining_tickets = 0
-        @ticket_to_next = (@course.ticket_nb - @ticket_to_actual)
-        @next_carnet.course_overflow = @ticket_to_next
+          if carnet_renewal?(@user)
+            create_new_carnet(@user, all_user_carnets.first)
+            if only_one_carnet?(all_user_carnets)
+              @carnet = all_user_carnets.last
+              add_course_to_carnet(@carnet, @course)
+              @carnet.save
+              save_data(@course)
+            else
+              both_carnets = @user.carnets.where('remaining_tickets > ?', 0).order(remaining_tickets: :asc)
+              add_course_on_both_carnets_and_save(both_carnets, @course)
+              save_data(@course)
+            end
+          else
+            redirect_to new_carnet_path, flash: {alert: 'Plus assez de tickets, veuillez renouveller votre carnet !'}
 
-        @next_carnet.remaining_tickets = (@next_carnet.remaining_tickets - @ticket_to_next)
-        @next_carnet.save
-
-        @course.carnet = @carnet
-        if @course.save
-          add_course_to_carnet(@carnet, @course, @user)
-          @carnet.save
-          @next_carnet.save
-          @user.save
-          redirect_to courses_path
-          flash.now[:notice] = 'Carnet renouvellé !'
-        else
-          render :new
+          end
         end
-      else # pas assez, et pas renouvellement auto
-        @course.carnet = @carnet
-        if @course.save
-          add_course_to_carnet(@carnet, @course, @user)
-          @carnet.save
-          @user.save
-          redirect_to courses_path
-        else
-          render :new
-        end
+      else
+        create_shopping_cart unless user_have_a_cart?(@cart)
+        add_course_to_cart(@course, @cart)
+        @cart.save
+        save_data(@course)
       end
     end
   end
@@ -110,7 +87,8 @@ class CoursesController < ApplicationController
   def destroy
     @shopping_cart = ShoppingCart.last
     @course = Course.find(params[:id])
-    remove_carnet_from_shopping_cart(@course, @shopping_cart)
+    remove_course_from_cart(@course, @shopping_cart)
+    @shopping_cart.save
     @course.destroy
     redirect_to shopping_cart_path(@shopping_cart.id)
     authorize @course
@@ -122,75 +100,87 @@ private
     params.require(:course).permit(:ticket_nb, :tickets_volume, :tickets_urgence, :tickets_distance, :distance, :details, :status, :price, :urgence, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
   end
 
-  def add_course_to_carnet(carnet, course, user)
-    if carnet.remaining_tickets <= 0
-       user.pool = user.pool + carnet.remaining_tickets
-       carnet.remaining_tickets = 0
-      flash[:notice] = "Attention, vous n'avez plus de ticket dans votre carnet !"
-    else
-      carnet.remaining_tickets = (carnet.remaining_tickets - course.ticket_nb)
-      if carnet.remaining_tickets <= 0
-       user.pool = user.pool + carnet.remaining_tickets
-       carnet.remaining_tickets = 0
-      flash[:notice] = "Attention, vous n'avez plus de ticket dans votre carnet !"
-      end
-    end
+  def user_have_a_carnet?(user)
+    user.carnets != []
   end
 
-  def is_enought_ticket?
-    @ticket_nb = @course.ticket_nb
-    @carnet = @user.carnets.where('remaining_tickets > ?', 0).first
-    @ticket_left = @carnet.remaining_tickets
-
-    @ticket_nb > @ticket_left ? false : true
-  end
-
-  def save_the_course
-
-  end
-
-  def carnet_renewal?
-    @user.carnet_renewal
-  end
-
-  def create_next_carnet
-    @next_carnet = Carnet.create(
-      {
-      carnet_template_id: @carnet.carnet_template.id,
-      user_id: @user.id,
-      remaining_tickets: @carnet.carnet_template.ticket_nb
-      }
-    )
-  end
-
-
-  def commande_en_cours?
-    if @user.shopping_carts.nil?
+  def user_have_a_cart?(cart)
+    if (cart.nil? || cart == [] )
       return false
-    elsif @user.shopping_carts == []
-      return false
-    elsif @user.shopping_carts.last.state == 'pending'
+    elsif cart.state == 'pending'
       return true
     else
       return false
     end
   end
 
+  def add_course_to_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents += (583 * course.ticket_nb)
+  end
+
+  def remove_course_from_cart(course, cart)
+    course.shopping_cart = cart
+    cart.price_cents -= (583 * course.ticket_nb)
+  end
+
+  def add_carnet_to_cart(carnet, cart)
+    carnet.shopping_cart = cart
+    cart.price_cents += (carnet.carnet_template.price_cents)
+  end
+
+
+
+  def save_data(data)
+    if data.save
+      redirect_to courses_path
+    else
+       render :new
+    end
+  end
+
   def create_shopping_cart
-    @new_shopping_cart = ShoppingCart.create(user: @user)
+    @cart = ShoppingCart.create(user: @user)
   end
 
-  def add_carnet_to_shopping_cart(course, cart)
-    course.shopping_cart = cart
-    cart.price_cents = cart.price_cents + (583 * course.ticket_nb)
-    flash.now[:notice] = 'Course ajoutée au panier !'
-    cart.save
+  def user_have_enought_tickets?(course, carnets)
+    course.ticket_nb <= carnets.sum(:remaining_tickets)
   end
 
-  def remove_carnet_from_shopping_cart(course, cart)
-    course.shopping_cart = cart
-    cart.price_cents = cart.price_cents - (583 * course.ticket_nb)
-    cart.save
+  def only_one_carnet?(carnets)
+    true if carnets.count == 1
+  end
+
+  def add_course_to_carnet(carnet, course)
+    carnet.remaining_tickets -= course.ticket_nb
+    course.carnet = carnet
+  end
+
+  def add_course_on_both_carnets_and_save(carnets, course)
+    tickets_to_report = course.ticket_nb - carnets[0].remaining_tickets
+    if tickets_to_report <= 0
+      carnets[0].remaining_tickets -= course.ticket_nb
+      course.carnet = carnets[0]
+    else
+      carnets[0].remaining_tickets = 0
+      carnets[1].remaining_tickets -= tickets_to_report
+      course.carnet = carnets[0]
+    end
+      carnets.each { |carnet| carnet.save}
+  end
+
+  def carnet_renewal?(user)
+    user.carnet_renewal
+  end
+
+  def create_new_carnet(user, last_carnet)
+    @new_carnet = Carnet.create(
+      {
+      carnet_template_id: last_carnet.carnet_template.id,
+      user_id: user.id,
+      remaining_tickets: last_carnet.carnet_template.ticket_nb
+      }
+    )
   end
 
 end

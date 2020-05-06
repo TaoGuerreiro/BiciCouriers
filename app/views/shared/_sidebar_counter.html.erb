@@ -1,17 +1,14 @@
 
 <%= link_to carnets_path do %>
   <div class="myItem1 label-center ticket-counter"
-    data-max="<% max_tickets = 0 %>
-      <% current_user.carnets.map do |carnet| %>
-        <% (max_tickets = max_tickets + carnet.carnet_template.ticket_nb) if carnet.remaining_tickets > 0 %>
-      <% end %>
-      <%= max_tickets %>"
+  <%#= raise %>
+    data-max=" <% sum = 0  %>
+    <% current_user.carnets.where('remaining_tickets > ?', 0).map do |carnet| %>
+    <% sum += carnet.carnet_template.ticket_nb %>
+    <% end %>
+    <%= sum %>"
     data-pool="<%= current_user.pool %>"
     data-duration="1000"
-    data-value='<% left_tickets = 0 %>
-    <% current_user.carnets.map do |carnet| %>
-      <% left_tickets = left_tickets + carnet.remaining_tickets %>
-    <% end %>
-    <%= left_tickets %>'>
+    data-value="<%= current_user.carnets.where('remaining_tickets > ?', 0).sum(:remaining_tickets) %>">
   </div>
 <% end %>

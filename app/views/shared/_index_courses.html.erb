@@ -1,45 +1,61 @@
 <% if courses != [] %>
-  <div class="index-contents">
-  	<% courses.each do |course|  %>
-      <%= link_to course_path(course), class: "index-courses index-column" do  %>
+  <div class="cards">
+    <% courses.each do |course|  %>
+      <div class="card">
+        <div class="infos-div"><%= link_to course_path(course), class: "infos" do  %>
 
-    		<div class="index-content center"> <p> <%= (course.pickups.first.date).strftime('%e/%V/%y') %> </p> </div>
-    		<div class="index-content"> <p> <%= course.pickups.first.address %> </p> </div>
-    		<div class="index-content center"> <p> <%= (course.drops.first.date).strftime('%e/%V/%y') %> </p> </div>
-    		<div class="index-content"> <p> <%= course.drops.first.address %> </p> </div>
-    		<div class="index-content center status-<%=course.status%>"><p>
-    			<% case course.status %>
-    			<% when 'pending' %>
-    				En attente
-    			<% when 'accepted' %>
-    				Acceptée
-    			<% when 'inprogress' %>
-    				En livraison
-    			<% when 'done' %>
-    				Livrée
-    			<% end %></p></div>
-    		<div class="index-content right"><p> <%= course.distance.nil? ? 0 : course.distance/1000.to_f %>km</p> </div>
-    		<div class="index-content center"><p>
-          <% if course.ticket_nb.nil? %>
-            0
-          <% else %>
-            <% if  course.ticket_nb > 0 %>
-              <% if course.carnet_id.nil? %>
-                <%= number_with_precision((7.00 * course.ticket_nb), precision: 2) %>
-              <% else %>
-                <%= number_with_precision((course.carnet.carnet_template.price) * course.ticket_nb, precision: 2) %>
-              <% end %>
-            <% else %>
-              0
+          <div class="double-item w-80  ">
+            <div class=""> <p> <%= (course.pickups.first.date).strftime('%e/%V/%y') %> </p> </div>
+            <% if course.pickups.first.date != course.drops.first.date %>
+              <div class=""> <p> <%= (course.drops.first.date).strftime('%e/%V/%y') %> </p> </div>
             <% end %>
-          <% end %>
-          €</p>
-        </div>
-    		<div class="index-content center"> <p> <%= course.ticket_nb %> </p> </div>
-    		<!-- <div class="index-content left"> <%= link_to "détails", course_path(course), class: "bici-button" %></div> -->
+          </div>
+          <div class="double-item w-140  ">
+            <div class="ta-r text-f"> <p>Livraison entre :</p></div>
+            <div class="ta-r text-f"> <p>et : </p></div>
+          </div>
+          <div class="double-item grow">
+            <div class="ta-l text-g"> <p><span class="address-text"><%= course.pickups.first.address %></span></p></div>
+            <div class="ta-l text-g"> <p><span class="address-text"><%= course.drops.first.address %></span></p></div>
+          </div>
+<!-- horaires -->
+          <div class="double-item w-200">
+            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= Time.at(course.pickups.first.start_hour * 3600 ).utc.strftime("%H:%M")%></span> et <span class="text-g"><%= Time.at(course.pickups.first.end_hour* 3600 ).utc.strftime("%H:%M") %></span></p></div>
+            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= Time.at(course.drops.first.start_hour * 3600 ).utc.strftime("%H:%M")%></span> et <span class="text-g"><%= Time.at(course.drops.first.end_hour* 3600 ).utc.strftime("%H:%M") %></span></p></div>
+          </div>
 
-  	 <% end %>
+          <div class="double-item mw-80">
+            <div class=""><p> <%= course.distance.nil? ? 0 : course.distance/1000.to_f %>km</p> </div>
+            <div class="status-<%=course.status%>"><p> <%= state_translation(course.status) %></p> </div>
+          </div>
+          <div class="double-item">
+            <div class=" mw-80 text-g"><p>
+            <% if course.ticket_nb.nil? %>
+              0
+            <% else %>
+              <% if  course.ticket_nb > 0 %>
+                <% if course.carnet_id.nil? %>
+                  <%= number_with_precision((583 * course.ticket_nb)/100.00, precision: 2) %>
+                <% else %>
+                  <%= number_with_precision((course.carnet.carnet_template.price) * course.ticket_nb, precision: 2) %>
+                <% end %>
+              <% else %>
+                0
+              <% end %>
+            <% end %>
+            <span class="hors-taxe-text">H.T</span></p>
+            </div>
+            <div class=" mw-80"><p> <%= course.ticket_nb %> ticket(s)</p> </div>
+          </div>
+
+        <% end %></div>
+        <% if params[:controller] == 'shopping_carts' %>
+          <div class="delete-div"> <%= link_to course_path(course), method: :delete do %>
+            <div class="delete-button"></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>
-

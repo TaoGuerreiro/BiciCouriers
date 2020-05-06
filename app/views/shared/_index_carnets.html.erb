@@ -1,19 +1,36 @@
-<div class="index-contents">
-  <% carnets.each_with_index do |carnet, idx|  %>
 
-    <%= link_to carnet_path(carnet), class: "index-column index-carnets" do %>
-      <div class="index-content center"> <p> <%= carnet.created_at.strftime("%d %B %y") %> </p> </div>
-      <div class="index-content center"> <p> <%= carnet.carnet_template.ticket_nb %> </p> </div>
-      <div class="index-content center"> <p> <%= carnet.course_overflow %> </p> </div>
-      <div class="index-content center"> <p> <%= number_with_precision((carnet.carnet_template.ticket_nb.to_i * carnet.carnet_template.price_cents.to_i)/100, precision: 2) %> ht </p> </div>
-      <div class="index-content center">
-        <div class="ldBar carnet-<%= state %>-<%= idx %> carnet-progress-<%= state %> label-center ticket-counter"
-          data-max="<%= carnet.carnet_template.ticket_nb%>"
-          data-stroke="#FFCC00"
-          data-value=" <%= carnet.remaining_tickets %>"
-          data-min=" <%= carnet.remaining_tickets %>">
-        </div>
+
+
+<% if carnets != [] %>
+  <div class="cards">
+    <% carnets.each_with_index do |carnet, idx|  %>
+      <div class="card">
+        <div class="infos-div"><%= link_to carnet_path(carnet), class: "infos" do  %>
+          <div class="item w-60 ">  <p> <%= carnet.created_at.strftime('%e/%V/%y') %></p> </div>
+          <div class="item w-101">  <p> <%= carnet.carnet_template.ticket_nb %> tickets</p> </div>
+          <div class="item w-101 ">  <p> <%= carnet.course_overflow %> tickets consommés</p> </div>
+          <div class="item w-60 ">  <p> <%= number_with_precision((carnet.carnet_template.ticket_nb.to_i * carnet.carnet_template.price.to_i), precision: 2) %> ht </p> </div>
+          <div class="item text-g"> <p>Carnet de <%= carnet.carnet_template.ticket_nb %> tickets</p></div>
+          <div class="item grow text-g">
+            <div class="ldBar carnet-<%= state %>-<%= idx %> carnet-progress-<%= state %> label-center ticket-counter"
+              data-max="<%= carnet.carnet_template.ticket_nb%>"
+              data-stroke="#FFCC00"
+              data-value=" <%= carnet.remaining_tickets %>"
+              data-min=" <%= carnet.remaining_tickets %>">
+            </div>
+          </div>
+          <div class="item mw-80 text-g"><p><%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %>
+            <span class="hors-taxe-text"><span class="hors-taxe-text">H.T</span></span></p>
+          </div>
+
+        <% end %></div>
+        <% if params[:controller] == 'shopping_carts' %>
+          <div class="delete-div"> <%= link_to carnet_path(carnet), method: :delete do %>
+            <div class="delete-button"></div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
