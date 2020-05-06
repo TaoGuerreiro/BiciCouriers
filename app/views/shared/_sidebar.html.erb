@@ -9,7 +9,7 @@
     <%# end %>
   </div>
   <div class="button-list">
-    <% cart =  ShoppingCart.last.carnets.count + ShoppingCart.last.courses.count %>
+    <% cart =  ShoppingCart.last.carnets.count + ShoppingCart.last.courses.count if ShoppingCart.last != nil %>
     <ul>
       <%= link_to "Nouvelle course", new_course_path, class: "bici-button" %>
       <br>

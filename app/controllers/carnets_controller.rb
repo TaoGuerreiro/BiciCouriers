@@ -21,14 +21,11 @@ class CarnetsController < ApplicationController
     @carnet = Carnet.new(carnet_params)
     @user = current_user
     @carnet.user = current_user
-    if @user.pool < 0
-      @carnet.remaining_tickets = (@carnet.carnet_template.ticket_nb + @user.pool)
-      @user.pool = @user.pool + (@carnet.carnet_template.ticket_nb - @carnet.remaining_tickets)
-    else
-      @carnet.remaining_tickets = @carnet.carnet_template.ticket_nb
-    end
+    @carnet.remaining_tickets = @carnet.carnet_template.ticket_nb
+
 
     if commande_en_cours?
+      # raise
         add_carnet_to_shopping_cart(@carnet, @user.shopping_carts.last)
         @user.shopping_carts.last.save
       else
@@ -67,8 +64,8 @@ class CarnetsController < ApplicationController
 
   def commande_en_cours?
 
-    if @user.shopping_carts != nil
-      return true
+    if (@user.shopping_carts == nil || @user.shopping_carts == [])
+      return false
     else
      @user.shopping_carts.last.state == 'pending'
     end

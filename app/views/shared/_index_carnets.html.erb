@@ -5,7 +5,7 @@
   <div class="cards">
     <% carnets.each_with_index do |carnet, idx|  %>
       <div class="card">
-        <div class="infos-div"><%= link_to carnet_path(carnet), remote: true, class: "infos" do  %>
+        <div class="infos-div"><%= link_to carnet_path(carnet), class: "infos" do  %>
           <div class="item w-60 ">  <p> <%= carnet.created_at.strftime('%e/%V/%y') %></p> </div>
           <div class="item w-101">  <p> <%= carnet.carnet_template.ticket_nb %> tickets</p> </div>
           <div class="item w-101 ">  <p> <%= carnet.course_overflow %> tickets consommés</p> </div>
