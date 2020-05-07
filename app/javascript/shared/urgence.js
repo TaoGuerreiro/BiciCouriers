@@ -1,4 +1,5 @@
 import  { counter } from '../shared/counter.js';
+import  { sum } from '../shared/slider.js';
 
 let urgenceTickets = 0
 let urgenceRange = 11
@@ -67,18 +68,19 @@ const urgenceToggle = () => {
   urgence4.addEventListener('click', (event) => {
     resetUrgence();
     urgence4.classList.add('active');
-    const urgenceDiv = document.getElementById('urgence-t');
-    const urgenceDivPrice = document.getElementById('urgence-e');
     const urgenceLinePrice = document.querySelector('.total-urgence');
+    urgenceLinePrice.classList.remove('hidden');
+    // const urgenceDiv = document.getElementById('urgence-t');
+    // const urgenceDivPrice = document.getElementById('urgence-e');
+    // const urgenceLinePrice = document.querySelector('.total-urgence');
+    // urgenceDiv.innerHTML = 2
+    // urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
+    urgenceTickets = 2
 
     // const bar1 = document.getElementById('myItem1').ldBar;
     // bar1.set(60);
 
 
-    urgenceLinePrice.classList.remove('hidden');
-    urgenceDiv.innerHTML = 2
-    urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
-    urgenceTickets = 2
     urgenceRange = 0.75
     counter();
   });

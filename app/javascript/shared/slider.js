@@ -1,6 +1,11 @@
 import noUiSlider from 'nouislider';
 import  { urgenceRange } from '../shared/urgence.js';
+import  { counter } from '../shared/counter.js';
 
+let sum = 0
+let urgenceTicketsSurMesure = 0
+const totalContainer = document.querySelector('.total-container')
+const price = totalContainer.dataset.carnetPrice;
 const slider = () => {
   document.addEventListener("turbolinks:load", (event) => {
   const sliderPickup = document.getElementById('slider-pickup');
@@ -51,7 +56,7 @@ const slider = () => {
   // VARIABLES
   const now = round(hm);
   const start = 8
-  const end = 23.99
+  const end = 19
 
   Qminutes.innerText = (hm + 0.75).toHHMMSS();
   Qheures.innerText = (hm + 4).toHHMMSS();
@@ -79,6 +84,7 @@ const slider = () => {
             }
         },
       start: [now, now + 2],
+      behaviour: 'drag-tap',
       connect: true,
       margin: urgenceRange,
       padding: [now-8, 0],
@@ -100,6 +106,7 @@ const slider = () => {
             }
         },
       start: [now, now + 2],
+      behaviour: 'drag-tap',
       connect: true,
       margin: urgenceRange,
       padding: [now-8, 0],
@@ -118,29 +125,112 @@ const slider = () => {
     var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
     return hours + minutes / 60;
   }
+  const calculSurMesure = (pu1, pu2, dr1, dr2) => {
+    const test = document.querySelector('.noUi-touch-area');
+    sum=0
 
-  sliderPickup.noUiSlider.on('update', (values, handle) => {
-      sliderValuePickup.innerHTML = values[handle];
-      const pickupsValues = sliderPickup.noUiSlider.get()
-      const stPickupInput = document.querySelector('.st-pickup-input')
-      const ndPickupInput = document.querySelector('.nd-pickup-input')
-      stPickupInput.innerText = timeStringToFloat(pickupsValues[0]);
-      ndPickupInput.innerText = timeStringToFloat(pickupsValues[1]);
+    if((pu2-pu1)== 0.75) {
+      sum = sum + 2 }
+    end
+    if((dr2-dr1)== 0.75) {
+      sum = sum + 2 }
+    end
+    if((dr2-pu1)<= 0.75) {
+      sum = sum + 2 }
+    end
+    // if((pu2-pu1)== 4) {
+    //   sum = sum + 1 }
+    // end
+    // if((dr2-dr1)== 4) {
+    //   sum = sum + 1 }
+    // end
+    if((dr2-pu1)< 4) {
+      sum = sum + 1 }
+    end
+    if (sum > 2) {
+      sum = 2
+    } end
+    urgenceTicketsSurMesure = sum
+  }
+
+  let stPu = now
+  let ndPu = now + 2
+  let stDr = now
+  let ndDr = now + 2
+
+  const setValues = (values, handle) => {
+    sliderValueDrop.innerHTML = values[handle];
+    const dropsValues = sliderDrop.noUiSlider.get()
+    sliderValuePickup.innerHTML = values[handle];
+    const pickupsValues = sliderPickup.noUiSlider.get()
+    const stPickupInput = document.querySelector('.st-pickup-input')
+    const ndPickupInput = document.querySelector('.nd-pickup-input')
+    const stDropInput = document.querySelector('.st-drop-input')
+    const ndDropInput = document.querySelector('.nd-drop-input')
+    stPickupInput.innerText = timeStringToFloat(pickupsValues[0]);
+    ndPickupInput.innerText = timeStringToFloat(pickupsValues[1]);
+    stDropInput.innerText = timeStringToFloat(dropsValues[0]);
+    ndDropInput.innerText = timeStringToFloat(dropsValues[1]);
+    stPu = timeStringToFloat(pickupsValues[0])
+    ndPu = timeStringToFloat(pickupsValues[1])
+    stDr = timeStringToFloat(dropsValues[0])
+    ndDr = timeStringToFloat(dropsValues[1])
+
+
+    const urgenceDiv = document.getElementById('urgence-t');
+    const urgenceDivPrice = document.getElementById('urgence-e');
+    urgenceDiv.innerHTML = sum
+    urgenceDivPrice.innerHTML = `${(sum * price /100).toFixed(2)} €`
+    urgenceTicketsSurMesure = sum
+
+
+  }
+  sliderPickup.noUiSlider.on('change', (values, handle) => {
+      setValues(values, handle);
+
+      if (stDr < stPu) {
+        sliderDrop.noUiSlider.updateOptions({
+        start: [stPu, ndDr]
+        });
+      } end
+      if (ndDr < ndPu) {
+        sliderDrop.noUiSlider.updateOptions({
+        start: [stDr, ndPu]
+        });
+      } end
+      calculSurMesure(stPu, ndPu, stDr, ndDr);
+      setValues(values, handle);
+      counter();
   });
 
-  sliderDrop.noUiSlider.on('update', (values, handle) => {
-      sliderValueDrop.innerHTML = values[handle];
-      const dropsValues = sliderDrop.noUiSlider.get()
-      const stDropInput = document.querySelector('.st-drop-input')
-      const ndDropInput = document.querySelector('.nd-drop-input')
-      stDropInput.innerText = timeStringToFloat(dropsValues[0]);
-      ndDropInput.innerText = timeStringToFloat(dropsValues[1]);
 
+  sliderDrop.noUiSlider.on('change', (values, handle) => {
+      setValues(values, handle);
+
+      if (stDr < stPu) {
+        sliderPickup.noUiSlider.updateOptions({
+        start: [stDr, ndPu]
+        });
+      } end
+      if (ndDr < ndPu) {
+        sliderPickup.noUiSlider.updateOptions({
+        start: [stPu, ndDr]
+        });
+      } end
+      calculSurMesure(stPu, ndPu, stDr, ndDr);
+      setValues(values, handle);
+      counter();
   });
+
+
+
+
+
+
 
   urgences.forEach((urgence) => {
     urgence.addEventListener('click', function () {
-      console.log(urgenceRange)
+      // console.log(urgenceRange)
       sliderPickup.noUiSlider.updateOptions({
           margin: urgenceRange,
       });
@@ -158,7 +248,8 @@ const slider = () => {
   });
  });
  });
-
 }
 
-export { slider }
+
+
+export { slider, urgenceTicketsSurMesure }
