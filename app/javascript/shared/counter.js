@@ -1,5 +1,6 @@
 import  { initMap, distanceTickets } from '../shared/init_map.js';
 import  { urgenceToggle, urgenceTickets } from '../shared/urgence.js';
+import  { urgenceTicketsSurMesure } from '../shared/slider.js';
 import  { bikeToggle, volumeTickets } from '../shared/volume.js';
 
 let price = 0
@@ -8,6 +9,8 @@ let price = 0
 
 const counter = () => {
     let sum = 0
+
+    const trueUrgenceTickets = Math.min.apply(null,[urgenceTicketsSurMesure, urgenceTickets]);
     const totalContainer = document.querySelector('.total-container')
     if (totalContainer === null) {
       return
@@ -23,11 +26,11 @@ const counter = () => {
   // console.log("volume" + volumeTickets);
   // Urgence
   const ticketsUrgenceInput = document.querySelector('.tickets-urgence');
-  ticketsUrgenceInput.value = urgenceTickets;
-  // console.log("urgence" + urgenceTickets);
+  ticketsUrgenceInput.value = trueUrgenceTickets;
+  // console.log("urgence" + trueUrgenceTickets);
 
   // TOTAL
-   sum = volumeTickets + urgenceTickets + distanceTickets
+   sum = volumeTickets + trueUrgenceTickets + distanceTickets
   // console.log(sum);
 
   const totalDiv = document.getElementById('total-t');
