@@ -79,7 +79,7 @@ class CoursesController < ApplicationController
         create_shopping_cart unless user_have_a_cart?(@cart)
         add_course_to_cart(@course, @cart)
         @cart.save
-        save_data(@course)
+        save_data_carnet_less(@course)
       end
     end
   end
@@ -130,10 +130,17 @@ private
   end
 
 
-
   def save_data(data)
     if data.save
       redirect_to courses_path
+    else
+       render :new
+    end
+  end
+
+  def save_data_carnet_less(data)
+    if data.save
+      redirect_to shopping_cart_path(current_user.shopping_carts.last)
     else
        render :new
     end

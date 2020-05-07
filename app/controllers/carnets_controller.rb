@@ -39,7 +39,7 @@ class CarnetsController < ApplicationController
       # raise
       @carnet.save
       @user.save
-      redirect_to carnets_path
+      redirect_to shopping_cart_path(current_user.shopping_carts.last)
     else
     # raise
       render :new

@@ -4,14 +4,14 @@ import  { counter } from '../shared/counter.js';
 
 let sum = 0
 let urgenceTicketsSurMesure = 0
-const totalContainer = document.querySelector('.total-container')
-const price = totalContainer.dataset.carnetPrice;
 const slider = () => {
   document.addEventListener("turbolinks:load", (event) => {
   const sliderPickup = document.getElementById('slider-pickup');
   if (sliderPickup === null) {
     return
   }
+  const totalContainer = document.querySelector('.total-container')
+  const price = totalContainer.dataset.carnetPrice;
   const sliderDrop = document.getElementById('slider-drop');
 
   const sliders = document.querySelectorAll('.slider-container');
@@ -160,9 +160,9 @@ const slider = () => {
 
   const setValues = (values, handle) => {
     sliderValueDrop.innerHTML = values[handle];
-    const dropsValues = sliderDrop.noUiSlider.get()
     sliderValuePickup.innerHTML = values[handle];
     const pickupsValues = sliderPickup.noUiSlider.get()
+    const dropsValues = sliderDrop.noUiSlider.get()
     const stPickupInput = document.querySelector('.st-pickup-input')
     const ndPickupInput = document.querySelector('.nd-pickup-input')
     const stDropInput = document.querySelector('.st-drop-input')
@@ -185,6 +185,14 @@ const slider = () => {
 
 
   }
+  sliderPickup.noUiSlider.on('update', (values, handle) => {
+      setValues(values, handle);
+  });
+  sliderDrop.noUiSlider.on('update', (values, handle) => {
+      setValues(values, handle);
+  });
+
+
   sliderPickup.noUiSlider.on('change', (values, handle) => {
       setValues(values, handle);
 
