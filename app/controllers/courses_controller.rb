@@ -40,7 +40,7 @@ class CoursesController < ApplicationController
     all_user_carnets = @user.carnets.where('remaining_tickets > ?', 0).order(remaining_tickets: :asc)
     @cart = @user.shopping_carts.last
 
-    if (all_user_carnets.last != nil && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
+    if (all_user_carnets.last.present? && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
       redirect_to new_course_path, flash: {alert: 'Bien trop de tickets pour une si grosse course ! :o'}
     else
 
@@ -105,7 +105,7 @@ private
   end
 
   def user_have_a_cart?(cart)
-    if (cart.nil? || cart == [] )
+    if cart.blank?
       return false
     elsif cart.state == 'pending'
       return true

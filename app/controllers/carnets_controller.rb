@@ -3,6 +3,7 @@ class CarnetsController < ApplicationController
 
   def index
     @inprogress = policy_scope(Carnet).where('remaining_tickets > ?', 0).order(created_at: :desc)
+    # raise
     @oldone = policy_scope(Carnet).where('remaining_tickets <= ?', 0).order(created_at: :desc)
   end
 
@@ -22,16 +23,17 @@ class CarnetsController < ApplicationController
     @user = current_user
     @carnet.user = current_user
     @carnet.remaining_tickets = @carnet.carnet_template.ticket_nb
+    @shopping_cart = @user.shopping_carts.last
 
 
     if commande_en_cours?
       # raise
-        add_carnet_to_shopping_cart(@carnet, @user.shopping_carts.last)
+        add_carnet_to_shopping_cart(@carnet, @shopping_cart )
         @user.shopping_carts.last.save
       else
         create_shopping_cart
-        add_carnet_to_shopping_cart(@carnet, @new_shopping_cart)
-        @new_shopping_cart.save
+        add_carnet_to_shopping_cart(@carnet, @shopping_cart)
+        @shopping_cart.save
       end
 
     authorize @carnet
@@ -39,7 +41,7 @@ class CarnetsController < ApplicationController
       # raise
       @carnet.save
       @user.save
-      redirect_to shopping_cart_path(current_user.shopping_carts.last)
+      redirect_to shopping_cart_path(@shopping_cart)
     else
     # raise
       render :new
@@ -72,7 +74,7 @@ class CarnetsController < ApplicationController
   end
 
   def create_shopping_cart
-    @new_shopping_cart = ShoppingCart.create(user: @user)
+    @shopping_cart = ShoppingCart.create(user: @user)
   end
 
   def add_carnet_to_shopping_cart(carnet, cart)
