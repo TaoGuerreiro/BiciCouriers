@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
     @course = Course.new
     @drop = @course.drops.build
     @pickup = @course.pickups.build
-    @carnet = current_user.carnets.where('remaining_tickets > ?', 0).first
+    @carnet = current_user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').first
 
 
     # @drop = Drop.geocoded
@@ -37,7 +37,7 @@ class CoursesController < ApplicationController
     @course.bike_id = Bike.first.id if @course.bike_id.nil?
     @course.user = @user
     authorize @course
-    all_user_carnets = @user.carnets.where('remaining_tickets > ?', 0).order(remaining_tickets: :asc)
+    all_user_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
     @cart = @user.shopping_carts.last
 
     if (all_user_carnets.last.present? && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
@@ -66,7 +66,7 @@ class CoursesController < ApplicationController
               @carnet.save
               save_data(@course)
             else
-              both_carnets = @user.carnets.where('remaining_tickets > ?', 0).order(remaining_tickets: :asc)
+              both_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
               add_course_on_both_carnets_and_save(both_carnets, @course)
               save_data(@course)
             end

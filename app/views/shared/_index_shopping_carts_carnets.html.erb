@@ -5,13 +5,18 @@
         <div class="infos-div"><%= link_to carnet_path(carnet), remote: true, class: "infos" do  %>
           <div class="item w-200 "> <p> <%= carnet.created_at.strftime('%e/%V/%y') %> </p> </div>
           <div class="item grow text-g"> <p>Carnet de <%= carnet.carnet_template.ticket_nb %> tickets</p></div>
-          <div class="item mw-80 text-g"><p><%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %>
+          <div class="item mw-80 text-g fs18"><p><%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %>
             <span class="hors-taxe-text">H.T</span></p>
           </div>
+          <% if params[:controller] == 'payments' %>
+          <div class="item mw-80 text-g fs18"><p><%= (carnet.carnet_template.ticket_nb * carnet.carnet_template.price * 1.2) %>
+            <span class="hors-taxe-text ">€ TTC</span></p>
+          </div>
+          <% end %>
 
         <% end %></div>
         <% if params[:controller] == 'shopping_carts' %>
-          <div class="delete-div"> <%= link_to carnet_path(carnet), method: :delete do %>
+          <div class="delete-div "> <%= link_to carnet_path(carnet), method: :delete do %>
             <div class="delete-button"></div>
             <% end %>
           </div>

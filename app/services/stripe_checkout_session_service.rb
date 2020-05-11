@@ -1,16 +1,16 @@
 class StripeCheckoutSessionService
   def call(event)
-    raise
     order = Order.find_by(checkout_session_id: event.data.object.id)
     order.update(state: 'paid')
-    # order.last.shopping_cart.update(state: 'paid')
-    create_shopping_cart
+    order.shopping_cart.update(state: 'paid')
+    # customer = User.find(params[:user_id])
+    # create_shopping_cart(customer)
   end
 
 private
 
-def create_shopping_cart
-  ShoppingCart.create(user: current_user)
-end
+# def create_shopping_cart(user)
+#   ShoppingCart.create(user: user)
+# end
 
 end

@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
       line_items: [{
         name: 'Nouvelle commande',
         # images: [shopping_cart.photo_url],
-        amount: shopping_cart.price_cents,
+        amount: (shopping_cart.price_cents * 1.2).ceil.to_i,
         currency: 'eur',
         quantity: 1
       }],

@@ -8,7 +8,7 @@
           <div class="item grow text-g"> <p><span class="address-text"><%= course.pickups.first.address %></span><br>
                                 <span class="address-text"><%= course.drops.first.address %></span></p>
                               </div>
-          <div class="item mw-80 text-g"><p>
+          <div class="item mw-80 text-g fs18"><p>
             <% if course.ticket_nb.nil? %>
               0
             <% else %>
@@ -24,6 +24,27 @@
             <% end %>
             <span class="hors-taxe-text">H.T</span></p>
           </div>
+
+          <% if params[:controller] == 'payments' %>
+          <div class="item mw-80 text-g fs18"><p>
+            <% if course.ticket_nb.nil? %>
+              0
+            <% else %>
+              <% if  course.ticket_nb > 0 %>
+                <% if course.carnet_id.nil? %>
+                  <%= number_with_precision((583 * course.ticket_nb)/100.00 * 1.2, precision: 2) %>
+                <% else %>
+                  <%= number_with_precision((course.carnet.carnet_template.price) * course.ticket_nb * 1.2, precision: 2) %>
+                <% end %>
+              <% else %>
+                0
+              <% end %>
+            <% end %>
+            <span class="hors-taxe-text">€ TTC</span></p>
+          </div>
+          <% end %>
+
+
 
         <% end %></div>
         <% if params[:controller] == 'shopping_carts' %>

@@ -2,7 +2,7 @@ class CarnetsController < ApplicationController
 
 
   def index
-    @inprogress = policy_scope(Carnet).where('remaining_tickets > ?', 0).order(created_at: :desc)
+    @inprogress = policy_scope(Carnet).joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :desc)
     # raise
     @oldone = policy_scope(Carnet).where('remaining_tickets <= ?', 0).order(created_at: :desc)
   end
@@ -65,12 +65,7 @@ class CarnetsController < ApplicationController
   end
 
   def commande_en_cours?
-
-    if (@user.shopping_carts == nil || @user.shopping_carts == [])
-      return false
-    else
-     @user.shopping_carts.last.state == 'pending'
-    end
+    @user.shopping_carts.blank? ? false : @user.shopping_carts.last.state == 'pending'
   end
 
   def create_shopping_cart
