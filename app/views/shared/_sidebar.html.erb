@@ -16,9 +16,10 @@
       <%= link_to "Nouvelle course", new_course_path, class: "bici-button" %>
       <br>
       <%#= raise %>
-      <li class="<%= 'select' if (params[:controller] == 'shopping_carts' && params[:action] == 'show')%>"> <%= link_to "Mon panier (#{cart})", shopping_cart_path(current_user.shopping_carts.last.id) if current_user.shopping_carts.last.present? %> </li>
+      <li class="<%= 'select' if (params[:controller] == 'shopping_carts' && params[:action] == 'show')%>">
+      <%= link_to "Mon panier (#{cart})", shopping_cart_path(current_user.shopping_carts.last.id) if (current_user.shopping_carts.last.present? && current_user.shopping_carts.last.state == 'pending') %> </li>
       <li class="<%= 'select' if (params[:controller] == 'courses' && params[:action] == 'index')%>"> <%= link_to "Mes livraisons", courses_path  %></li>
-      <li class="<%= 'select' if (params[:controller] == 'carnets' && params[:action] == 'index')%>"> <%= link_to "Mes carnets", carnets_path  %></li>
+      <li class="<%= 'select' if (params[:controller] == 'carnets' && params[:action] == 'index')%>"> <%= link_to "Mes carnets de tickets", carnets_path  %></li>
       <li class="<%= 'select' if (params[:controller] == 'users' && params[:action] == 'show')%>"> <%= link_to "Mes informations", profil_path  %> </li>
       <br>
     </ul>

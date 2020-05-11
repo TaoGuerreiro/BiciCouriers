@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :company])
 
     # For additional in app/views/devise/registrations/edit.html.erb
-      devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :first_name, :last_name, :company, :paper_invoice, :carnet_renewal])
+      devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :first_name, :last_name, :billing_company, :billing_address, :company, :paper_invoice, :carnet_renewal])
     end
 
     def default_url_options

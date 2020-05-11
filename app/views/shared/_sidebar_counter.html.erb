@@ -3,12 +3,12 @@
   <div class="myItem1 label-center ticket-counter"
   <%#= raise %>
     data-max=" <% sum = 0  %>
-    <% current_user.carnets.where('remaining_tickets > ?', 0).map do |carnet| %>
+    <% current_user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').map do |carnet| %>
     <% sum += carnet.carnet_template.ticket_nb %>
     <% end %>
     <%= sum %>"
     data-pool="<%= current_user.pool %>"
     data-duration="1000"
-    data-value="<%= current_user.carnets.where('remaining_tickets > ?', 0).sum(:remaining_tickets) %>">
+    data-value="<%= current_user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').sum(:remaining_tickets) %>">
   </div>
 <% end %>

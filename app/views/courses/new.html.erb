@@ -16,11 +16,11 @@
 
       <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
-        <%= pickup.text_field :address, label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
-        <% if @favorite_addresses == [] %>
+        <%= pickup.text_field :address, hint: "wrshhhhhh", label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
+        <% if @favorite_addresses.blank? %>
           <%= link_to 'Favoris', favorite_addresses_path, class: 'bici-button' %>
         <% else %>
-          <% if @favorite_addresses != nil %>
+          <% if @favorite_addresses.present? %>
             <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-pickup' %>
           <% end %>
         <% end %>
@@ -43,10 +43,10 @@
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
         <%= drop.text_field :address, label: false, required: :true, placeholder: 'Adresse de livraison', class: 'inline-form address-input' %>
-        <% if @favorite_addresses == [] %>
+        <% if @favorite_addresses.blank? %>
           <%= link_to 'Favoris', new_favorite_address_path, class: 'bici-button' %>
         <% else %>
-          <% if @favorite_addresses != nil %>
+          <% if @favorite_addresses.present? %>
             <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-drop' %>
           <% end %>
         <% end %>
@@ -115,7 +115,7 @@
  <!-- __________ TOTAL __________ -->
 
     <div class="total-container"
-          data-carnet-price='<%= @carnet.nil? ? 583 : @carnet.carnet_template.price_cents %>'>
+          data-carnet-price='<%= @carnet.blank? ? 583 : @carnet.carnet_template.price_cents %>'>
       <div class="total-title price-line">                <div class="column1"><p>Prestation</p></div>   <div class="column2 euro-image"></div>              <div class="column3 ticket-image"></div>                      </div>
       <div class="sous-total total-distance price-line">  <div class="column1"><p>Distance</p></div>     <div class="column2"><p id="distance-e">inclu</p></div> <div class="column3"><p id="distance-t">0</p></div>           </div>
       <div class="sous-total total-urgence price-line hidden">   <div class="column1"><p>Urgence</p></div>      <div class="column2"><p id="urgence-e">inclu</p></div>  <div class="column3"><p id="urgence-t">0</p></div>            </div>
@@ -131,7 +131,7 @@
       <%= f.input_field :tickets_distance, hint: "ticket distance", class: "hidden tickets-distance" %>
       <%= f.input_field :ticket_nb, hint: "ticket total", class: "hidden tickets-input" %>
       <%= f.input_field :status, value: "pending", class: "hidden" %>
-      <% if @carnet.nil? %>
+      <% if @carnet.blank? %>
         <div class="carnet-diff">
           <%= f.submit "Ajouter au panier", class: "bici-button" %> <br>
 

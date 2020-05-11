@@ -6,4 +6,18 @@ class ShoppingCart < ApplicationRecord
 
   monetize :price_cents
 
+  after_save :create_new_cart, on: :update
+
+
+private
+
+  def create_new_cart
+    ShoppingCart.create(
+      {
+        user_id: self.id
+      }
+    )
+  end
+
 end
+
