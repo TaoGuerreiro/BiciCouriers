@@ -1,9 +1,10 @@
  Rails.application.routes.draw do
   devise_for :users
+  root to: 'pages#home'
 
   match 'profil', to: 'users#show', via: 'get'
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
 
-  root to: 'pages#home'
   get "/histoire", to: "pages#story"
   get "/tarifs", to: "pages#tarifs"
   get "/about", to: "pages#about"
@@ -15,7 +16,6 @@
     resources :payments, only: :new
   end
 
-  mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   resources :services, only: [:index, :show]
 
