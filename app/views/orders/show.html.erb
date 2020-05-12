@@ -1,15 +1,16 @@
-<div class="shopping-cart-main-container">
-  <div class="course-main-container">
-    <div class="course-in-progress">
-      <h1>Ma commande <span class="badge badge-primary"><%= @order.state %></span></h1>
-      <div class="index-column index-titles">
-        <div class="index-title title center">  <p>Date</p>         </div>
-        <div class="index-title title center">         <p>Description</p>  </div>
-        <div class="index-title title center">  <p>Prix</p>         </div>
-        <div class="index-title title center">         <p>Statut</p>       </div>
-        <div class="index-title title">                             </div>
-      </div>
+
+
+
+
+<div class="hcf-main-container">
+  <div class="header">
+    <h1>Commande <%= state_order_translation(@order.state) %> </h1>
+    <!-- <span><%= @order.state %></span> -->
+  </div>
+  <div class="content">
       <%= render 'shared/index_shopping_carts_courses', courses: @order.shopping_cart.courses %>
       <%= render 'shared/index_shopping_carts_carnets', carnets: @order.shopping_cart.carnets %>
   </div>
 </div>
+
+

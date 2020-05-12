@@ -9,8 +9,9 @@ let price = 0
 
 const counter = () => {
     let sum = 0
-
-    const trueUrgenceTickets = Math.min.apply(null,[urgenceTicketsSurMesure, urgenceTickets]);
+    // console.log("slider" + urgenceTicketsSurMesure)
+    // console.log("button" + urgenceTickets)
+    const trueUrgenceTickets = Math.max.apply(null,[urgenceTicketsSurMesure, urgenceTickets]);
     const totalContainer = document.querySelector('.total-container')
     if (totalContainer === null) {
       return
@@ -24,10 +25,19 @@ const counter = () => {
   const ticketsVolumeInput = document.querySelector('.tickets-volume');
   ticketsVolumeInput.value = volumeTickets;
   // console.log("volume" + volumeTickets);
+
   // Urgence
+  const urgenceDivPrice = document.getElementById('urgence-e');
+  urgenceDivPrice.innerHTML = `${(trueUrgenceTickets * price /100).toFixed(2)} €`
+  console.log(urgenceDivPrice);
+  console.log(`${(trueUrgenceTickets * price /100).toFixed(2)} €`);
+
+  const urgenceDiv = document.getElementById('urgence-t');
+  urgenceDiv.innerHTML = trueUrgenceTickets;
+
   const ticketsUrgenceInput = document.querySelector('.tickets-urgence');
   ticketsUrgenceInput.value = trueUrgenceTickets;
-  // console.log("urgence" + trueUrgenceTickets);
+
 
   // TOTAL
    sum = volumeTickets + trueUrgenceTickets + distanceTickets

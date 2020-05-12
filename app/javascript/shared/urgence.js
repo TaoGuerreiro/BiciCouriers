@@ -14,73 +14,47 @@ const urgenceToggle = () => {
     return
   }
 
-  const resetUrgence = () => {
-  const urgences = document.querySelectorAll('.urgence');
+  const unactiveUrgence = () => {
+    const urgences = document.querySelectorAll('.urgence');
     urgences.forEach((urg) => {
       urg.classList.remove('active');
     });
+    displayUrgenceLine();
   }
-  const totalContainer = document.querySelector('.total-container')
-  const price = totalContainer.dataset.carnetPrice;
+
+  const displayUrgenceLine = () => {
+    const urgenceLinePrice = document.querySelector('.total-urgence');
+    urgenceLinePrice.classList.remove('hidden');
+  }
 
   urgence1.addEventListener('click', (event) => {
-    resetUrgence();
+    unactiveUrgence();
     urgence1.classList.add('active');
-    const urgenceDiv = document.getElementById('urgence-t');
-    const urgenceDivPrice = document.getElementById('urgence-e');
-    const urgenceLinePrice = document.querySelector('.total-urgence');
-    urgenceLinePrice.classList.add('hidden');
-    urgenceDiv.innerHTML = 0
-    urgenceDivPrice.innerHTML = 'inclu'
     urgenceTickets = 0
     urgenceRange = 11
     counter();
   });
 
   urgence2.addEventListener('click', (event) => {
-    resetUrgence();
+    unactiveUrgence();
     urgence2.classList.add('active');
-    const urgenceDiv = document.getElementById('urgence-t');
-    const urgenceDivPrice = document.getElementById('urgence-e');
-    const urgenceLinePrice = document.querySelector('.total-urgence');
-    urgenceLinePrice.classList.remove('hidden');
-    urgenceDiv.innerHTML = 1
-    urgenceDivPrice.innerHTML = `${(1 * price /100).toFixed(2)} €`
     urgenceTickets = 1
     urgenceRange = 4
     counter();
   });
 
   urgence3.addEventListener('click', (event) => {
-    resetUrgence();
+    unactiveUrgence();
     urgence3.classList.add('active');
-    const urgenceDiv = document.getElementById('urgence-t');
-    const urgenceDivPrice = document.getElementById('urgence-e');
-    const urgenceLinePrice = document.querySelector('.total-urgence');
-    urgenceLinePrice.classList.remove('hidden');
-    urgenceDiv.innerHTML = 2
-    urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
     urgenceTickets = 2
     urgenceRange = 0.75
     counter();
   });
 
   urgence4.addEventListener('click', (event) => {
-    resetUrgence();
+    unactiveUrgence();
     urgence4.classList.add('active');
-    const urgenceLinePrice = document.querySelector('.total-urgence');
-    urgenceLinePrice.classList.remove('hidden');
-    // const urgenceDiv = document.getElementById('urgence-t');
-    // const urgenceDivPrice = document.getElementById('urgence-e');
-    // const urgenceLinePrice = document.querySelector('.total-urgence');
-    // urgenceDiv.innerHTML = 2
-    // urgenceDivPrice.innerHTML = `${(2 * price /100).toFixed(2)} €`
-    urgenceTickets = 2
-
-    // const bar1 = document.getElementById('myItem1').ldBar;
-    // bar1.set(60);
-
-
+    urgenceTickets = 0
     urgenceRange = 0.75
     counter();
   });

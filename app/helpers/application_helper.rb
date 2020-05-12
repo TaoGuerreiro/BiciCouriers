@@ -13,4 +13,13 @@ module ApplicationHelper
     end
   end
 
+  def state_order_translation(pg_state)
+    case pg_state
+      when 'pending'
+        'en attente de payement'
+      when 'paid'
+        'rélgée'
+    end
+  end
+
 end

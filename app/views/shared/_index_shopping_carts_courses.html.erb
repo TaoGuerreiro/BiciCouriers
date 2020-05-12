@@ -25,7 +25,7 @@
             <span class="hors-taxe-text">H.T</span></p>
           </div>
 
-          <% if params[:controller] == 'payments' %>
+          <% if (params[:controller] == 'payments' || params[:controller] == 'orders') %>
           <div class="item mw-80 text-g fs18"><p>
             <% if course.ticket_nb.nil? %>
               0
