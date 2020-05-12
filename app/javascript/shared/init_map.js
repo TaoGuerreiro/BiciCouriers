@@ -61,13 +61,14 @@ const initMap = () => {
         }
       pickupInput.addEventListener('change', calculDistance );
       dropInput.addEventListener('change', calculDistance );
-
-      pickupFavInput.addEventListener('change', () => {
-        setTimeout(calculDistance, 500);
-      });
-      dropFavInput.addEventListener('change', () => {
-        setTimeout(calculDistance, 500);
-      });
+      if ( pickupFavInput !== null ) {
+        pickupFavInput.addEventListener('change', () => {
+          setTimeout(calculDistance, 500);
+        });
+        dropFavInput.addEventListener('change', () => {
+          setTimeout(calculDistance, 500);
+        });
+      }
   });
 }
 
