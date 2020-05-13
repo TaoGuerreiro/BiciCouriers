@@ -14,8 +14,8 @@ Rails.application.configure do
       OrdersController.layout "commandes"
   end
 
-  config.action_mailer.delivery_method = :mail_form
-  # config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: "http://localhost:3000" }
   # Settings specified here will take precedence over those in config/application.rb.
 
