@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_one :user_facturation, dependent: :destroy
 
 
-  after_create :send_welcome_email
+  # after_create :send_welcome_email
 
   private
 
