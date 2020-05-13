@@ -1,0 +1,29 @@
+<% if orders.present? %>
+  <div class="cards">
+    <% orders.each do |order|  %>
+      <div class="card">
+        <div class="infos-div"><%= link_to order_path(order), remote: true, class: "infos" do  %>
+          <div class="item grow "> <p> <%= order.created_at.strftime('%e/%V/%y') %> </p> </div>
+          <div class="item mw-80 text-g fs18"><p><%= order.amount %>
+            <span class="hors-taxe-text">H.T</span></p>
+          </div>
+          <% if (params[:controller] == 'payments' || params[:controller] == 'orders') %>
+          <div class="item mw-80 text-g fs18"><p><%= (order.amount * 1.2) %>
+            <span class="hors-taxe-text ">€ TTC</span></p>
+          </div>
+          <% end %>
+
+        <% end %></div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+<!--  t.string "state"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "checkout_session_id"
+    t.bigint "user_id"
+    t.bigint "shopping_cart_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false -->

@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
 
 
+  def index
+    @orders = policy_scope(Order)
+  end
 
   def create
     shopping_cart = ShoppingCart.find(params[:shopping_cart_id])

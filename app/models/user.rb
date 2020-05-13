@@ -12,7 +12,6 @@ class User < ApplicationRecord
 
 
   after_create :send_welcome_email
-  after_create :create_facturation_infos
 
   private
 
@@ -20,11 +19,4 @@ class User < ApplicationRecord
     UserMailer.with(user: self).welcome.deliver_now
   end
 
-  def create_facturation_infos
-    UserFacturation.create(
-      {
-        user_id: self.id
-      }
-    )
-  end
 end

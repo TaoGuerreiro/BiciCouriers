@@ -26,7 +26,7 @@
 
           <div class="double-item mw-80">
             <div class=""><p> <%= course.distance.nil? ? 0 : course.distance/1000.to_f %>km</p> </div>
-            <div class="status-<%=course.status%>"><p> <%= state_translation(course.status) %></p> </div>
+            <div class="status-<%=course.status%>"><p> <%= state_translation(course.status, course) %></p> </div>
           </div>
           <div class="double-item">
             <div class=" mw-80 text-g"><p>

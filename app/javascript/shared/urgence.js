@@ -32,7 +32,7 @@ const urgenceToggle = () => {
     urgence1.classList.add('active');
     urgenceTickets = 0
     urgenceRange = 11
-    counter();
+    setTimeout(counter,100);
   });
 
   urgence2.addEventListener('click', (event) => {
@@ -40,7 +40,8 @@ const urgenceToggle = () => {
     urgence2.classList.add('active');
     urgenceTickets = 1
     urgenceRange = 4
-    counter();
+    setTimeout(counter,100);
+    console.log('coucou');
   });
 
   urgence3.addEventListener('click', (event) => {
@@ -48,7 +49,7 @@ const urgenceToggle = () => {
     urgence3.classList.add('active');
     urgenceTickets = 2
     urgenceRange = 0.75
-    counter();
+    setTimeout(counter,100);
   });
 
   urgence4.addEventListener('click', (event) => {
@@ -56,7 +57,7 @@ const urgenceToggle = () => {
     urgence4.classList.add('active');
     urgenceTickets = 0
     urgenceRange = 0.75
-    counter();
+    setTimeout(counter,100);
   });
   });
 }

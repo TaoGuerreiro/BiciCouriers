@@ -12,7 +12,7 @@
 
   resources :shopping_carts, only: [:show, :create]
 
-  resources :orders, only: [:show, :create] do
+  resources :orders, only: [:show, :create, :index] do
     resources :payments, only: :new
   end
 

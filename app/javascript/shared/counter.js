@@ -16,7 +16,7 @@ const counter = () => {
     if (totalContainer === null) {
       return
     }
-    price = totalContainer.dataset.carnetPrice;
+  price = totalContainer.dataset.carnetPrice;
   // Distance
   const ticketsDistanceInput = document.querySelector('.tickets-distance');
   ticketsDistanceInput.value = distanceTickets;
