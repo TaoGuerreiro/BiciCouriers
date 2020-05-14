@@ -24,6 +24,7 @@ class FavoriteAddressesController < ApplicationController
   end
 
   def create
+    @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
     @favorite_address = FavoriteAddress.new(favorite_address_params)
     @favorite_address.user = current_user
 
@@ -32,7 +33,7 @@ class FavoriteAddressesController < ApplicationController
     else
       render "favorite_addresses/index"
     end
-    authorize @favorite_address
+      authorize @favorite_address
   end
 
 private

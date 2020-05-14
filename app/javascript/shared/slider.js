@@ -163,14 +163,15 @@ const slider = () => {
     sliderValuePickup.innerHTML = values[handle];
     const pickupsValues = sliderPickup.noUiSlider.get()
     const dropsValues = sliderDrop.noUiSlider.get()
-    const stPickupInput = document.querySelector('.st-pickup-input')
-    const ndPickupInput = document.querySelector('.nd-pickup-input')
-    const stDropInput = document.querySelector('.st-drop-input')
-    const ndDropInput = document.querySelector('.nd-drop-input')
-    stPickupInput.innerText = timeStringToFloat(pickupsValues[0]);
-    ndPickupInput.innerText = timeStringToFloat(pickupsValues[1]);
-    stDropInput.innerText = timeStringToFloat(dropsValues[0]);
-    ndDropInput.innerText = timeStringToFloat(dropsValues[1]);
+    const stPickupInput = document.getElementById('course_pickups_attributes_0_start_hour')
+    const ndPickupInput = document.getElementById('course_pickups_attributes_0_end_hour')
+    const stDropInput = document.getElementById('course_drops_attributes_0_start_hour')
+    const ndDropInput = document.getElementById('course_drops_attributes_0_end_hour')
+    console.log(ndDropInput)
+    stPickupInput.value = timeStringToFloat(pickupsValues[0]);
+    ndPickupInput.value = timeStringToFloat(pickupsValues[1]);
+    stDropInput.value = timeStringToFloat(dropsValues[0]);
+    ndDropInput.value = timeStringToFloat(dropsValues[1]);
     stPu = timeStringToFloat(pickupsValues[0])
     ndPu = timeStringToFloat(pickupsValues[1])
     stDr = timeStringToFloat(dropsValues[0])

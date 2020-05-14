@@ -16,7 +16,7 @@
 
       <%= f.fields_for :pickups, remote: true do |pickup| %>
       <div class="one-line-address-contact">
-        <%= pickup.text_field :address, hint: "wrshhhhhh", label: :false, required: :true, placeholder: 'Adresse de rammassage', class: 'inline-form address-input' %>
+        <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input' } %>
         <% if @favorite_addresses.blank? %>
           <%= link_to 'Favoris', favorite_addresses_path, class: 'bici-button' %>
         <% else %>
@@ -25,10 +25,20 @@
           <% end %>
         <% end %>
       </div>
-      <%= pickup.date_field :date, value: Date.today, placeholder: 'Date', label: false, required: true, class: 'inline-form' %>
-      <%= pickup.text_area :details, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
-      <%= pickup.text_area :start_hour, class: 'inline-form st-pickup-input hidden' %>
-      <%= pickup.text_area :end_hour, class: 'inline-form nd-pickup-input hidden' %>
+
+
+
+      <div class="containere">
+        <div class="form-wrapper">
+            <%= pickup.input :date, as: :string, value: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+            <%#= f.input :starts_at, as: :string, required: false, input_html: {class: "datepicker"} %>
+            <%#= f.input :ends_at, as: :string, required: false, input_html: {class: "datepicker"} %>
+        </div>
+      </div>
+
+      <%= pickup.input :details, label: false, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
+      <div class='hidden'> <%= pickup.input :start_hour, label: false %> </div>
+      <div class='hidden'> <%= pickup.input :end_hour, label: false %> </div>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
 
@@ -42,7 +52,7 @@
   <div class="livraison">
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
-        <%= drop.text_field :address, label: false, required: :true, placeholder: 'Adresse de livraison', class: 'inline-form address-input' %>
+        <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input' } %>
         <% if @favorite_addresses.blank? %>
           <%= link_to 'Favoris', new_favorite_address_path, class: 'bici-button' %>
         <% else %>
@@ -51,10 +61,12 @@
           <% end %>
         <% end %>
       </div>
-      <%= drop.date_field :date, value: Date.today, label: :false, required: :true, placeholder: 'Date', class: 'inline-form' %>
-      <%= drop.text_area :details, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>
-      <%= drop.text_area :start_hour, class: 'inline-form st-drop-input hidden' %>
-      <%= drop.text_area :end_hour, class: 'inline-form nd-drop-input hidden' %>
+      <div class="form-wrapper">
+        <%= drop.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+      </div>
+      <%= drop.input :details, label: false, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>
+      <div class='hidden'> <%= drop.input :start_hour, label: false  %> </div>
+      <div class='hidden'> <%= drop.input :end_hour, label: false %> </div>
       <div class="slider-container hidden-trans"><div id="slider-drop"></div><span id="slider-drop-value" class="hidden"></span></div>
     <% end %>
   </div>

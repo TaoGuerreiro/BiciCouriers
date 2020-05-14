@@ -51,6 +51,9 @@
     width: 40%;
     height: 40px;
   }
+  .course_pickups_address, .course_drops_address {
+    width: 100% !important;
+  }
   select {
     background-color: $dark-blue;
     border: none;
@@ -68,12 +71,14 @@
     }
   }
 }
-
-.inline-form {
-  width: 100%;
+.form-wrapper {
+  width: 100% !important
+}
+.form-control {
+  width: 100% !important;
   border:none;
   border-bottom: 2px $yellow solid;
-  background-color: transparent;
+  background-color: transparent !important;
   margin-bottom: 20px;
 
 
@@ -83,6 +88,9 @@
   color: $white;
   &:active {
     box-shadow: none;
+  }
+  &:disabled {
+
   }
 }
 
