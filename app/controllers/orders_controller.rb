@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 
 
   def index
-    @orders = policy_scope(Order)
+    @orders = policy_scope(Order).where(user: current_user)
   end
 
   def create

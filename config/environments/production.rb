@@ -14,6 +14,7 @@ Rails.application.configure do
       OrdersController.layout "commandes"
   end
   config.action_mailer.delivery_method     = :postmark
+
   config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
   config.action_mailer.default_url_options = { host: "bicicouriers.fr" }
   # Settings specified here will take precedence over those in config/application.rb.

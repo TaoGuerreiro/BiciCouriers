@@ -2,6 +2,7 @@ require("turbolinks").start()
 import "bootstrap";
 import 'nouislider/distribute/nouislider.css';
 import "controllers"
+import "../plugins/flatpickr"
 
 
 
