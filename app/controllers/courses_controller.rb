@@ -101,7 +101,7 @@ private
   end
 
   def user_have_a_carnet?(user)
-    user.carnets != []
+    user.carnets.present?
   end
 
   def user_have_a_cart?(cart)
