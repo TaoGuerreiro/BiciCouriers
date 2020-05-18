@@ -16,7 +16,6 @@ gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
 
-gem "mail_form"
 gem 'postmark-rails'
 
 gem 'geocoder'
