@@ -1,0 +1,73 @@
+.main-estimation-container {
+  width: 300px;
+  height: 470px;
+  background-color: $pink;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  position: absolute;
+  bottom: -420px;
+  // bottom: 0px;
+  left: 60px;
+  text-align: center;
+  transition: 0.3s;
+
+  h3 {
+    margin-top: 20px;
+    font-size: 16px;
+    letter-spacing: 2.5px;
+    margin-bottom: 20px;
+  }
+  &:hover {
+    bottom: 0px;
+    cursor: pointer;
+  }
+  .title {
+    // height: 50px;
+    // vertical-align : baseline;
+  }
+  .addresses {
+    margin: 10px;
+  }
+  .form-control {
+    border: none;
+    background-color: white !important;
+    color: black;
+  }
+  .div-align {
+    display: flex;
+    justify-content: space-around;
+  }
+  .icon {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    margin: 0px auto;
+  }
+  .icon-w {
+    width: 60px;
+    height: 70px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .urgence-1 {
+    background-image: asset-url("commande/time-white.svg");
+  }
+  .urgence-2 {
+    background-image: asset-url("commande/time-white.svg");
+  }
+  .urgence-3 {
+    background-image: asset-url("commande/time-white.svg");
+  }
+  .volume-1 {
+    background-image: asset-url("commande/white-letter.svg");
+  }
+  .volume-2 {
+    background-image: asset-url("commande/white-box.svg");
+  }
+  .active {
+    background-image: asset-url("commande/pink-check.svg");
+  }
+}
+
