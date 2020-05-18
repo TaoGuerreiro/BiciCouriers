@@ -3,7 +3,7 @@
     <% carnets.each do |carnet|  %>
       <div class="card">
         <div class="infos-div"><%= link_to carnet_path(carnet), remote: true, class: "infos" do  %>
-          <div class="item w-200 "> <p> <%= carnet.created_at.strftime('%e/%V/%y') %> </p> </div>
+          <div class="item w-200 "> <p> <%= carnet.created_at.strftime('%e/%m/%y') %> </p> </div>
           <div class="item grow text-g"> <p>Carnet de <%= carnet.carnet_template.ticket_nb %> tickets</p></div>
           <div class="item mw-80 text-g fs18"><p><%= carnet.carnet_template.ticket_nb * carnet.carnet_template.price %>
             <span class="hors-taxe-text">H.T</span></p>

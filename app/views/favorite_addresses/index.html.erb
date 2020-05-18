@@ -17,7 +17,7 @@
         <div class="first-container">
           <div class="address">
             <%= f.input :title, label: false, :required => true, :placeholder => 'Nom de cette adresse', class: 'inline-form' %>
-            <%= f.input :address, :required => true, value: current_user.address, label: false, :required => true, :placeholder => 'Adresse', class: 'inline-form address-input' %>
+            <%= f.input :address, :required => true, value: current_user.address, label: false, :required => true, :placeholder => 'Adresse', input_html: { class: 'address-input' } %>
             <%= f.input :details, :as => :text, :placeholder => "Rendez un coursier heureux, donnez un max d'infos sur cette adresse !
             Interphone,
             Digicode,

@@ -7,8 +7,7 @@ class ContactsController < ApplicationController
 
   def create
     @contact = Contact.new(contact_params)
-    @contact.request = request
-    if @contact.deliver
+    if @contact.save
       flash.now[:notice] = 'Thank you for your message. We will contact you soon!'
       redirect_to root_path
     else
@@ -20,6 +19,6 @@ class ContactsController < ApplicationController
   private
 
   def contact_params
-  params.require(:contact).permit(:name, :email, :phone, :message, :captcha)
+    params.require(:contact).permit(:name, :email, :phone, :message, :captcha)
   end
 end
