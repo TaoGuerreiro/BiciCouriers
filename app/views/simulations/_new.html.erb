@@ -1,0 +1,20 @@
+<%= simple_form_for @simulation do |f| %>
+  <%= f.input :s_pickup, placeholder: 'adresse de départ', label: false, input_html: { class: 'address-input' } %>
+  <%= f.input :s_drop, placeholder: "adresse d'arrivée", label: false, input_html: { class: 'address-input' } %>
+  <%= f.input :s_urgence, label: false, wrapper_html: { style: "display: none" } %>
+  <%= f.input :s_volume, label: false, wrapper_html: { style: "display: none" } %>
+  <%= f.input :s_distance, label: false, wrapper_html: { style: "display: none" } %>
+  <div class="div-align" data-urgence='0' id="urgence">
+    <div class="icon-w fs10"><div class='icon urgence urgence-1 active' data-tickets='0'></div>Avant 19h</div>
+    <div class="icon-w fs10"><div class='icon urgence urgence-2' data-tickets='1'></div>Avant 13h</div>
+    <div class="icon-w fs10"><div class='icon urgence urgence-3' data-tickets='2'></div>Avant 10h</div>
+  </div>
+  <div class="div-align" data-volume='0' id="volume">
+    <div class="icon-w fs10"><div class='icon volume volume-1 active' data-tickets='0'></div>Enveloppe ou petit plis</div>
+    <div class="icon-w fs10"><div class='icon volume volume-2' data-tickets='1'></div>Gros colis ou > 5kg</div>
+  </div>
+  <!-- <br> -->
+  <%#= f.submit "Simuler", class: 'bici-button' %>
+<% end %>
+  <button id="sweet-alert-demo" class="bici-button">Simuler !</button>
+

@@ -22,6 +22,7 @@
   resources :avantages, only: [:index]
 
   resources :contacts, only: [:new, :create]
+  resources :simulations, only: [:new, :create]
 
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
