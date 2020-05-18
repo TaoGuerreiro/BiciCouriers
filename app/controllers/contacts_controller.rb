@@ -8,11 +8,9 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
     if @contact.save
-      flash.now[:notice] = 'Thank you for your message. We will contact you soon!'
-      redirect_to root_path
+      redirect_to root_path, flash: {notice: 'Merci pour le message, on vous recontacte rapidement !'}
     else
-      flash.now[:error] = 'Cannot send message.'
-      render :new
+      render :new, flash: {error: 'Il doit y avoir un soucis dans le formulaire !'}
     end
   end
 
