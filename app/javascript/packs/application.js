@@ -53,7 +53,7 @@ animations();
 counterCircle();
 selectCarnet();
 favoriteFill();
-simulation();
+// simulation();
 
 progressSidebar();
 progressCarnet();

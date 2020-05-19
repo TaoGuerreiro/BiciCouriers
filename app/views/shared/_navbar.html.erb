@@ -34,7 +34,7 @@
           <%= link_to "Contactez-nous", new_contact_path, class: "nav-link #{color_text} text-nav" %>
         </li>
         <li class="nav-item dropdown">
-          <%= image_tag "#{color_user}.png", class: "avatar dropdown-toggle hiddden", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false, alt: "user-icon"  %>
+          <%= image_tag "#{color_user}.png", class: "avatar dropdown-toggle hidden", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false, alt: "user-icon"  %>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <%= link_to "Mon compte", profil_path, class: "dropdown-item" %>
             <%= link_to "Mes courses", courses_path, class: "dropdown-item" %>
@@ -76,7 +76,7 @@
             <%= link_to "Contactez-nous", new_contact_path, class: "nav-link #{color_text} text-nav" %>
           </li>
           <li class="nav-item dropdown">
-            <%= image_tag "#{color_user}.png", class: "avatar dropdown-toggle hiddden", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false, alt: "user-icon" %>
+            <%= image_tag "#{color_user}.png", class: "avatar dropdown-toggle hidden", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false, alt: "user-icon" %>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <%= link_to "Connexion", new_user_session_path, class: "dropdown-item" %>
             </div>
