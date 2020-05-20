@@ -3,7 +3,7 @@ import "bootstrap";
 import 'nouislider/distribute/nouislider.css';
 import "controllers"
 import "../plugins/flatpickr"
-import { total } from '../shared/simulation.js';
+
 
 
 

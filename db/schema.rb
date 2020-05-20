@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_160525) do
+ActiveRecord::Schema.define(version: 2020_05_20_103609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,10 @@ ActiveRecord::Schema.define(version: 2020_05_18_160525) do
     t.integer "s_distance", default: 0
     t.integer "s_volume", default: 0
     t.integer "s_urgence", default: 0
+    t.string "state"
+    t.string "details"
+    t.string "phone"
+    t.string "name"
   end
 
   create_table "users", force: :cascade do |t|

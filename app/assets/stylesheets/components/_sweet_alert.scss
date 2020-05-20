@@ -1,0 +1,17 @@
+.swal2-popup {
+  background-color: $pink;
+  border: none;
+  color: white !important;
+}
+
+.swal2-title, .swal2-text, .swal2-html-container {
+  color: white !important;
+}
+
+.swal2-text {
+  text-align: center;
+}
+.swal2-input, .swal2-textarea {
+  background-color: white !important;
+  color: black !important;
+}
