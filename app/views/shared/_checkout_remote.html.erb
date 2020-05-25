@@ -1,0 +1,21 @@
+  <button id="pay" class="btn btn-primary">Pay</button>
+
+ <!--  # Commented for the lecture, remove comments. -->
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    const payement = () => {
+      const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+      stripe.redirectToCheckout({
+        sessionId: '<%= simulation_order.checkout_session_id if simulation_order.present? %>'
+      });
+    }
+    const paymentButton = document.getElementById('pay');
+    paymentButton.addEventListener('click', () => {
+      document.location.reload(true)
+      window.onload = payement();
+      // setTimeout(, 2000);
+      <%#= raise %>
+
+    });
+  </script>

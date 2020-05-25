@@ -15,17 +15,8 @@ class ApplicationController < ActionController::Base
   #   redirect_to(root_path)
   # end
 
-  # layout :layout_by_resource
 
   private
-
-    # def layout_by_resource
-    #   if (devise_controller? && resource_name == :user && action_name == "edit")
-    #     "commandes"
-    #   else
-    #     "application"
-    #   end
-    # end
 
     def configure_permitted_parameters
     # For additional fields in app/views/devise/registrations/new.html.erb
@@ -40,6 +31,6 @@ class ApplicationController < ActionController::Base
     end
 
     def skip_pundit?
-      devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^avantages$)|(^services$)|(^contacts$)/
+      devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^avantages$)|(^services$)|(^contacts$)|(^simulations$)|(^simulation_orders$)/
     end
 end

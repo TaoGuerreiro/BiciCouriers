@@ -94,10 +94,12 @@ const total = () => {
     const mainUrgence = document.getElementById('urgence');
     const mainVolume = document.getElementById('volume');
     const mainDistance = document.getElementById('distance');
+    const priceInput = document.getElementById('simulation_price_cents');
     let urgenceTickets = parseInt(mainUrgence.dataset.urgence, 10);
     let volumeTickets = parseInt(mainVolume.dataset.volume, 10);
     let distanceTickets = parseInt(mainDistance.dataset.distance, 10);
     let sum = parseInt((urgenceTickets + volumeTickets + distanceTickets), 10);
+    priceInput.value = sum * 583
     return sum
   }
 

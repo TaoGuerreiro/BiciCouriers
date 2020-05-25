@@ -5,22 +5,12 @@ import swal from 'sweetalert2'
 let sum = null
 const datas = (price) => {
   sum = total();
-  initSweetalert('#sweet-alert-demo',
-    {
-
-      buttonsStyling: false,
-      customClass: {
-        confirmButton: 'bici-button mar10',
-        cancelButton: 'bici-button mar10',
-      },
-
-
-
-
-
-
-
-
+  initSweetalert('#sweet-alert-demo',{
+    buttonsStyling: false,
+    customClass: {
+      confirmButton: 'bici-button mar10',
+      cancelButton: 'bici-button mar10',
+    },
     title: `<p class='text-white'> C'est parti !</p>`,
     background: '#FF016C',
     position: 'top',
@@ -51,8 +41,8 @@ const datas = (price) => {
             const detailsInput = document.getElementById('simulation_details');
             detailsInput.value = details.value
                   // setTimeOut(() => {
-                    // const link = document.querySelector('#submit-link');
-                    // link.click();
+                const link = document.querySelector('#submit-link');
+                link.click();
                   // }, 2000);
               });
     } else {
