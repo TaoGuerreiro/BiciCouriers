@@ -2,6 +2,8 @@ import  { initSweetalert } from '../plugins/init_sweetalert.js';
 import { total } from '../shared/simulation.js';
 import swal from 'sweetalert2'
 
+
+
 let sum = null
 const datas = (price) => {
   sum = total();
@@ -81,8 +83,8 @@ const datas = (price) => {
                 showConfirmButton: false,
                 timer: 1500
                   });
-              // const link1 = document.querySelector('#mail-link');
-              // link1.click();
+              const link1 = document.querySelector('#mail-link');
+              link1.click();
                 });
               });
     }

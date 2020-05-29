@@ -1,8 +1,9 @@
 class SimulationOrdersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
 
+
   def create
-    simulation = Simulation.find(cookies[:current_sim])
+    simulation = Simulation.last
     simulation_order  = SimulationOrder.create!(simulation: simulation, amount: simulation.price, state: 'pending')
 
     session = Stripe::Checkout::Session.create(
@@ -21,8 +22,18 @@ class SimulationOrdersController < ApplicationController
     cookies[:current_session_id] = session.id
     cookies[:sim_order_id] = simulation_order.id
     # redirect_to new_simulation_order_payment_path(simulation_order)
+    # redirect_to root_path
+    respond_to do |format|
+          format.json { render json: { checkout_session_id: session.id } }
+    end
     # raise
 
+
+  end
+
+  def index
+    trainers = SimulationOrder.all
+    render json: trainers, only: [:id, :checkout_session_id]
   end
 
 end

@@ -1,4 +1,4 @@
-<%= simple_form_for simulation, remote: true do |f| %>
+<%= simple_form_for( simulation, remote: true) do |f| %>
   <%= f.input :s_pickup, placeholder: 'adresse de départ', label: false, input_html: { class: 'address-input' } %>
   <%= f.input :s_drop, placeholder: "adresse d'arrivée", label: false, input_html: { class: 'address-input' } %>
   <%= f.input :s_urgence, label: false, wrapper_html: { style: "display: none" } %>
@@ -21,7 +21,8 @@
   <div id="distance" data-distance="0"></div>
   <!-- <br> -->
   <%= f.submit "Simuler", class: 'bici-button hidden', id: 'submit-link' %>
-  <%#= link_to "send mail", id: 'mail-link' %>
+  <%= link_to "send mail", simulation_path(simulation: { name: :name, email: 'test@gmail.com', phone: '0987000000', message: 'lala de au moins 30 caractère sinon papan cucu'  }), method: 'post', id: 'mail-link' %>
+  <%#= raise %>
 <% end %>
 
 
@@ -29,9 +30,38 @@
 
 
 
-  <%= form_tag simulation_orders_path, remote: true do %>
-    <%= hidden_field_tag 'simulation_id', simulation.id, remote: true  %>
-    <%= submit_tag 'Purchase', class: 'btn btn-primary', id: 'purchase-link', remote: true  %>
+  <%= form_tag( simulation_orders_path, remote: true) do %>
+    <%= hidden_field_tag 'simulation_id', simulation.id %>
+    <%= submit_tag 'Purchase', class: 'btn btn-primary', id: 'purchase-link' %>
   <% end %>
+  <button id="pay" class="btn btn-primary">Pay</button>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    const refresh = () => {
+  // fetch('/simulation_orders', { headers: { accept: "application/json" } })
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //   });
+        function fetchTrainers() {
+        return fetch('/simulation_orders')
+          .then(response => response.json())
+      };
+          fetchTrainers()
+            .then(results => console.log(results));
+
+}
+    const paymentButton = document.getElementById('pay');
+    paymentButton.addEventListener('click', () => {
+      refresh();
+      // checkoutSession = '<%= simulation_order.checkout_session_id if simulation_order.present? %>'
+      // const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+      // stripe.redirectToCheckout({
+      //   sessionId: checkoutSession
+      // });
+
+    });
+  </script>
 
  <%= render 'shared/checkout_remote', simulation_order: simulation_order, remote: true  %>
+
