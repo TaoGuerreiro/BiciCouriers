@@ -28,7 +28,8 @@ const datas = (price) => {
     cancelButtonAriaLabel: 'rappel'
   }, (result) => {
     if (result.value) {
-
+      const link = document.querySelector('#purchase-link');
+      link.click();
           swal.fire(
             {
             buttonsStyling: false,
@@ -43,7 +44,7 @@ const datas = (price) => {
             const detailsInput = document.getElementById('simulation_details');
             detailsInput.value = details.value
                   // setTimeOut(() => {
-                const link = document.querySelector('#submit-link');
+                const link = document.querySelector('#pay');
                 link.click();
                   // }, 2000);
               });

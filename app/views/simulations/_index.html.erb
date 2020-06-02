@@ -20,46 +20,45 @@
   </div>
   <div id="distance" data-distance="0"></div>
   <!-- <br> -->
-  <%= f.submit "Simuler", class: 'bici-button hidden', id: 'submit-link' %>
-  <%= link_to "send mail", simulation_path(simulation: { name: :name, email: 'test@gmail.com', phone: '0987000000', message: 'lala de au moins 30 caractère sinon papan cucu'  }), method: 'post', id: 'mail-link' %>
+  <%= f.submit "Simuler", class: 'bici-button', id: 'sweet-alert-demo' %>
+  <%#= link_to "send mail", simulation_path(simulation: { name: :name, email: 'test@gmail.com', phone: '0987000000', message: 'lala de au moins 30 caractère sinon papan cucu'  }), method: 'post', id: 'mail-link' %>
   <%#= raise %>
 <% end %>
 
 
-  <button id="sweet-alert-demo" class="bici-button">Simuler !</button>
+  <!-- <button id="" class="bici-button">Simuler !</button> -->
 
 
 
   <%= form_tag( simulation_orders_path, remote: true) do %>
     <%= hidden_field_tag 'simulation_id', simulation.id %>
-    <%= submit_tag 'Purchase', class: 'btn btn-primary', id: 'purchase-link' %>
+    <%= submit_tag 'Purchase', class: 'btn btn-primary hidden', id: 'purchase-link' %>
   <% end %>
-  <button id="pay" class="btn btn-primary">Pay</button>
+  <button id="pay" class="btn btn-primary hidden">Pay</button>
   <script src="https://js.stripe.com/v3/"></script>
   <script>
-    const refresh = () => {
-  // fetch('/simulation_orders', { headers: { accept: "application/json" } })
-  //   .then(response => response.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
+    let check_id = null
+    const getSimulationOrderId = () => {
         function fetchTrainers() {
         return fetch('/simulation_orders')
           .then(response => response.json())
-      };
-          fetchTrainers()
-            .then(results => console.log(results));
+        };
+
+        fetchTrainers()
+          .then(results => {
+            return results.checkout_session_id
+          }).then((data) => {
+            checkoutSession = data
+            const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+            stripe.redirectToCheckout({
+              sessionId: checkoutSession
+            });
+          });
 
 }
     const paymentButton = document.getElementById('pay');
     paymentButton.addEventListener('click', () => {
-      refresh();
-      // checkoutSession = '<%= simulation_order.checkout_session_id if simulation_order.present? %>'
-      // const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-      // stripe.redirectToCheckout({
-      //   sessionId: checkoutSession
-      // });
-
+      getSimulationOrderId();
     });
   </script>
 

@@ -17,7 +17,7 @@
     resources :payments, only: :new
   end
 
-  resources :simulation_orders, only: [:show, :create] do
+  resources :simulation_orders, only: [:show, :create, :index] do
     resources :simulation_payments, only: :new
   end
 
