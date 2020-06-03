@@ -21,12 +21,20 @@
   <div id="distance" data-distance="0"></div>
   <!-- <br> -->
   <%= f.submit "Simuler", class: 'bici-button', id: 'sweet-alert-demo' %>
-  <%#= link_to "send mail", simulation_path(simulation: { name: :name, email: 'test@gmail.com', phone: '0987000000', message: 'lala de au moins 30 caractère sinon papan cucu'  }), method: 'post', id: 'mail-link' %>
+  <%#= link_to "send mail", simulation_path(simulation: { name: 'Tao', email: 'florent@gmail.com', phone: '0674236080', message: 'Livraison de #{@simulation.s_pickup} vers #{@simulation.s_drop}'  }), method: 'post', id: 'mail-link' %>
   <%#= raise %>
 <% end %>
 
 
   <!-- <button id="" class="bici-button">Simuler !</button> -->
+
+  <form  action="/simulation" method="post" >
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :simulation_id, @simulation.id %>
+    <label class="hidden" for="data-spot"></label>
+    <input class="hidden" type="text" id="data-spot" name="data-spot"></input>
+    <button id='mail-link' class="button-edit-save hidden test-data">send mail</button>
+  </form>
 
 
 
@@ -62,5 +70,4 @@
     });
   </script>
 
- <%= render 'shared/checkout_remote', simulation_order: simulation_order, remote: true  %>
 

@@ -4,11 +4,14 @@ class SimulationsController < ApplicationController
 
   def create
     @simulation = Simulation.new(simu_params)
-    @simulation.save
-    respond_to do |format|
+    if @simulation.save
+      respond_to do |format|
           format.json { render json: { id: @simulation.id } }
+      end
+      cookies[:current_sim_id] = @simulation.id
+    else
+      render 'pages/home'
     end
-    cookies[:current_sim_id] = @simulation.id
     # @simulation.price_cents = ((params[:s_volume] + params[:s_urgence] + params[:s_distance]) * 583 )
   end
 
