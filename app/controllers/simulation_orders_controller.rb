@@ -1,6 +1,11 @@
 class SimulationOrdersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create, :index]
+  skip_before_action :authenticate_user!, only: [:create, :index, :show]
 
+  def show
+# send mail comfirmation
+
+    redirect_to root_path
+  end
 
   def create
     # raise

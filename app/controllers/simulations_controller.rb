@@ -1,5 +1,5 @@
 class SimulationsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create, :update]
 
 
   def create

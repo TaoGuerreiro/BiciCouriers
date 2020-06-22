@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_091550) do
+ActiveRecord::Schema.define(version: 2020_06_22_123809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_091550) do
   end
 
   create_table "simulation_orders", force: :cascade do |t|
-    t.string "state"
+    t.string "state", default: "pending"
     t.integer "amount_cents", default: 0, null: false
     t.string "checkout_session_id"
     t.bigint "simulation_id"
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_091550) do
     t.integer "s_distance", default: 0
     t.integer "s_volume", default: 0
     t.integer "s_urgence", default: 0
-    t.string "state"
+    t.string "state", default: "pending"
     t.string "details"
     t.string "phone"
     t.string "name"
