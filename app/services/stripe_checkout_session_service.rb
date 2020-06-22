@@ -5,7 +5,7 @@ class StripeCheckoutSessionService
     #   order.update(state: 'paid')
     #   order.shopping_cart.update(state: 'paid')
     # else
-      order = SimulationOrder.find_by(checkout_session_id: event.data.object.id)
+      order = SimulationOrder.find_by(checkout_session_id: event.data.object.id) if event.present?
       @simulation = order.simulation if order.present?
 
 
