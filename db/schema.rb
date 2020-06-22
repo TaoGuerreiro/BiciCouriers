@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_103609) do
+ActiveRecord::Schema.define(version: 2020_06_22_123809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,16 @@ ActiveRecord::Schema.define(version: 2020_05_20_103609) do
     t.index ["user_id"], name: "index_shopping_carts_on_user_id"
   end
 
+  create_table "simulation_orders", force: :cascade do |t|
+    t.string "state", default: "pending"
+    t.integer "amount_cents", default: 0, null: false
+    t.string "checkout_session_id"
+    t.bigint "simulation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["simulation_id"], name: "index_simulation_orders_on_simulation_id"
+  end
+
   create_table "simulations", force: :cascade do |t|
     t.string "s_pickup"
     t.string "s_drop"
@@ -159,10 +169,11 @@ ActiveRecord::Schema.define(version: 2020_05_20_103609) do
     t.integer "s_distance", default: 0
     t.integer "s_volume", default: 0
     t.integer "s_urgence", default: 0
-    t.string "state"
+    t.string "state", default: "pending"
     t.string "details"
     t.string "phone"
     t.string "name"
+    t.integer "price_cents", default: 0, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -201,4 +212,5 @@ ActiveRecord::Schema.define(version: 2020_05_20_103609) do
   add_foreign_key "orders", "users"
   add_foreign_key "pickups", "courses"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "simulation_orders", "simulations"
 end

@@ -5,8 +5,8 @@
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  // bottom: -420px;
-  bottom: 0px;
+  bottom: -413px;
+  // bottom: 0px;
   left: 60px;
   text-align: center;
   transition: 0.3s;
@@ -52,13 +52,13 @@
     margin-bottom: 20px;
   }
   .urgence-1 {
-    background-image: asset-url("commande/time-white.svg");
+    background-image: asset-url("commande/urg_1.svg");
   }
   .urgence-2 {
-    background-image: asset-url("commande/time-white.svg");
+    background-image: asset-url("commande/urg_2.svg");
   }
   .urgence-3 {
-    background-image: asset-url("commande/time-white.svg");
+    background-image: asset-url("commande/urg_3.svg");
   }
   .volume-1 {
     background-image: asset-url("commande/white-letter.svg");

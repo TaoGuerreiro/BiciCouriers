@@ -8,6 +8,7 @@
   get "/histoire", to: "pages#story"
   get "/tarifs", to: "pages#tarifs"
   get "/about", to: "pages#about"
+  post "/simulation", to: "contacts#simulation"
 
 
   resources :shopping_carts, only: [:show, :create]
@@ -16,6 +17,9 @@
     resources :payments, only: :new
   end
 
+  resources :simulation_orders, only: [:show, :create, :index] do
+    resources :simulation_payments, only: :new
+  end
 
   resources :services, only: [:index, :show]
 

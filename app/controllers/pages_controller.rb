@@ -3,6 +3,7 @@ class PagesController < ApplicationController
 
   def home
     @simulation = Simulation.new
+    @simulation_order = SimulationOrder.last
   end
 
   def story

@@ -10,7 +10,7 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :pickups
 
 
-  # after_create :send_course_info_to_dispatch
+  after_create :send_course_info_to_dispatch
   private
 
   def send_course_info_to_dispatch
