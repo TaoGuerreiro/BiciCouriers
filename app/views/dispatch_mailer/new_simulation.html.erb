@@ -1,7 +1,7 @@
 <h1> Simulation de course </h1>
 
-Pickup : <%= @simulation.s_pickup%><br>
-Drop : <%= @simulation.s_drop%><br>
-Urgence : <%= @simulation.s_urgence %><br>
-Volume : <%= @simulation.s_volume %><br>
-Urgence : <%= @simulation.s_distance %><br>
+Pickup : <%= @simulation.s_pickup if s_pickup.present?%><br>
+Drop : <%= @simulation.s_drop if s_drop.present?%><br>
+Urgence : <%= @simulation.s_urgence if s_urgence.present? %><br>
+Volume : <%= @simulation.s_volume if s_volume.present? %><br>
+Urgence : <%= @simulation.s_distance if s_distance.present? %><br>
