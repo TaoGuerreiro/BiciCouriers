@@ -21,7 +21,7 @@ class StripeCheckoutSessionService
 
   def update_order
     send_course_info_to_dispatch
-    order.update(state: 'paid')
+    order.update(state: 'paid') if order.present?
   end
 
 private
