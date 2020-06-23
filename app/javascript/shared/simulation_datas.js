@@ -31,6 +31,8 @@ const datas = (price) => {
     cancelButtonAriaLabel: 'rappel',
     reverseButtons: true,
 
+
+// PAYER =>
   }, (result) => {
     if (result.value) {
       const link = document.querySelector('#purchase-link');
@@ -62,6 +64,7 @@ const datas = (price) => {
             }
           });
 
+// RAPPELER =>
     } else if (
     result.dismiss === swal.DismissReason.cancel
     ) {
@@ -93,7 +96,7 @@ const datas = (price) => {
                     title: "Quelque infos :",
                     input: 'text',
                     inputPlaceholder: 'Nom',
-                    text: "Promis après c'est finis",
+                    text: "C'est mieux pour se présenter :)",
                     inputValidator: (value) => {
                       if (!value) {
                         return 'You need to write something!'
@@ -101,6 +104,7 @@ const datas = (price) => {
                     }
               }).then((name) => {
                 const nameInput = document.getElementById('simulation_name');
+                const mailInput = document.getElementById('simulation_mail');
                 const puInput = document.getElementById('simulation_s_pickup');
                 const drInput = document.getElementById('simulation_s_drop');
                 const diInput = document.getElementById('simulation_s_distance');
@@ -108,11 +112,30 @@ const datas = (price) => {
                 const urInput = document.getElementById('simulation_s_urgence');
                 nameInput.value = name.value
 
-//recup les donné des input du formulaire et les calé dans un JSON
+                swal.fire({
+                  buttonsStyling: false,
+                  customClass: {
+                    confirmButton: 'bici-button',
+                    cancelButton: 'bici-button',
+                  },
+                      background: '#FF016C',
+                      title: "Quelque infos :",
+                      input: 'text',
+                      inputPlaceholder: 'Mail',
+                      text: "Promis après c'est finis",
+                      inputValidator: (value) => {
+                        if (!value) {
+                          return 'You need to write something!'
+                        }
+                      }
+                }).then((mail) => {
+                  mailInput.value = mail.value
+
+// recup les donné des input du formulaire et les calé dans un JSON
 
               let myData = {
                     "phone" : phone_number.value,
-                    "email" : 'florent@gmail.com',
+                    "email" : mail.value,
                     "name" : name.value,
                     "message" : `Une demande de livraison entre ${puInput.value} et ${drInput.value}. Urgence : ${urInput.value}. Volume : ${voInput.value}. Distance : ${diInput.value}`
                   }
@@ -131,9 +154,10 @@ const datas = (price) => {
               link1.click();
                 });
               });
-    }
-  });
-}
+            });
+          }
+        });
+      }
 
 export  { datas }
 
