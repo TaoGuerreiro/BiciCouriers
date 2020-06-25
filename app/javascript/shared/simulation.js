@@ -35,7 +35,7 @@ const simulation = () => {
         // console.log(ticket);
         mainUrgence.dataset.urgence = parseInt(ticket, 10);
         urgenceInput.value = parseInt(ticket, 10);
-        datas(583);
+        datas(700);
       });
     });
 
@@ -48,7 +48,7 @@ const simulation = () => {
         // console.log(ticket);
         mainVolume.dataset.volume = parseInt(ticket, 10);
         volumeInput.value = parseInt(ticket, 10);
-        datas(583);
+        datas(700);
       });
     });
 
@@ -75,7 +75,7 @@ const simulation = () => {
         directionsDisplay.setDirections(response);
         mainDistance.dataset.distance = parseInt(Math.ceil(distance / 3500), 10);
         volumeInput.input = parseInt(Math.ceil(distance / 3500), 10);
-        datas(583);
+        datas(700);
         }
       });
     }
@@ -99,7 +99,7 @@ const total = () => {
     let volumeTickets = parseInt(mainVolume.dataset.volume, 10);
     let distanceTickets = parseInt(mainDistance.dataset.distance, 10);
     let sum = parseInt((urgenceTickets + volumeTickets + distanceTickets), 10);
-    priceInput.value = sum * 583
+    priceInput.value = sum * 700
     return sum
   }
 
