@@ -10,10 +10,9 @@ class SimulationOrder < ApplicationRecord
   #   send_info_to_dispatch if: :will_save_change_to_status_id?
   # end
 
-
   private
 
   def send_info_to_dispatch
-    DispatchMailer.with(simulation: self.simulation).new_simulation.deliver_now
+    DispatchMailer.with(simulation: self.simulation).new_paid_course.deliver_now
   end
 end

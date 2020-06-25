@@ -38,4 +38,15 @@ module ApplicationHelper
         'rélgée'
     end
   end
+
+  def state_urgence_translation(nb)
+    case nb
+      when 0
+        'Dans la journée'
+      when 1
+        'Sous 4 heures'
+      when 2
+        'Sous 45 minutes'
+    end
+  end
 end

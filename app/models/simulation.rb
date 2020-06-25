@@ -10,9 +10,8 @@ class Simulation < ApplicationRecord
 
   private
 
-  def send_simulation_info_to_dispatch
-    DispatchMailer.with(simulation: self).new_simulation.deliver_now
-  end
-
+  # def send_simulation_info_to_dispatch
+  #   DispatchMailer.with(simulation: self).new_simulation.deliver_now
+  # end
 
 end

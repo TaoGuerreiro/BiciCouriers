@@ -5,13 +5,13 @@ class StripeCheckoutSessionService
     #   order.update(state: 'paid')
     #   order.shopping_cart.update(state: 'paid')
     # else
-      order = SimulationOrder.find_by(checkout_session_id: event.data.object.id) if event.present?
-      @simulation = order.simulation if order.present?
-      send_course_info_to_dispatch
-      order.update(state: 'paid') if order.present?
+      order = SimulationOrder.find_by(checkout_session_id: event.data.object.id)
+      @simulation = order.simulation
+      # send_course_info_to_dispatch
+      order.update(state: 'paid')
 
 
-      # order.shopping_cart.update(state: 'paid')
+    # order.shopping_cart.update(state: 'paid')
     # customer = User.find(params[:user_id])
     # create_shopping_cart(customer)
     # end
@@ -26,9 +26,9 @@ class StripeCheckoutSessionService
 
 private
 
-  def send_course_info_to_dispatch
-    DispatchMailer.with(simulation: @simulation).new_simulation.deliver_now
-  end
+  # def send_course_info_to_dispatch
+  #   DispatchMailer.with(simulation: @simulation).new_simulation.deliver_now
+  # end
 # def create_shopping_cart(user)
 #   ShoppingCart.create(user: user)
 # end

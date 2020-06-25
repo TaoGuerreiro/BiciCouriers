@@ -1,0 +1,20 @@
+<% if @simulation.present? %>
+<h1> Nouvelle course payée ! </h1>
+
+Pickup : <%= @simulation.s_pickup %><br>
+Drop : <%= @simulation.s_drop %><br>
+Urgence :
+<% case @simulation.s_urgence %>
+  <% when 0 %>
+    Dans la journée
+  <% when 1 %>
+    Sous 4 heures
+  <% when 2 %>
+    Sous 45 minutes
+<% end %>
+
+
+<br>
+Volume : <%= @simulation.s_volume == 1 ? 'Cargo' : 'Sac à dos'  %><br>
+Distance : <%= @simulation.s_distance %><br>
+<% end %>
