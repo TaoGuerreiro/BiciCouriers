@@ -1,6 +1,8 @@
 class Simulation < ApplicationRecord
   has_many :simulation_orders
   monetize :price_cents
+  has_many :drops, dependent: :destroy, inverse_of: :course
+  has_many :pickups, dependent: :destroy
 
   validates :s_pickup, presence: true
   validates :s_drop, presence: true

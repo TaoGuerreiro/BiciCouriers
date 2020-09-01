@@ -17,16 +17,19 @@
     resources :payments, only: :new
   end
 
-  resources :simulation_orders, only: [:show, :create, :index] do
-    resources :simulation_payments, only: :new
-  end
+
 
   resources :services, only: [:index, :show]
 
   resources :avantages, only: [:index]
 
   resources :contacts, only: [:new, :create]
-  resources :simulations, only: [:new, :create]
+
+  resources :simulations, only: [:new, :create] do
+    resources :simulation_orders, only: [:show, :create, :index] do
+      resources :simulation_payments, only: :new
+    end
+  end
 
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
