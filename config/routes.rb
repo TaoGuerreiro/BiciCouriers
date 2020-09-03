@@ -34,7 +34,11 @@
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
+
   end
+
+  #course building
+  get 'courses/distance'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 

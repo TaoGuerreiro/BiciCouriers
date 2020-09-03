@@ -5,6 +5,10 @@ class CoursesController < ApplicationController
     authorize @course
   end
 
+  def distance
+    raise
+  end
+
   def index
 
     @pending = policy_scope(Course).where(status: 'pending').order(created_at: :desc)
@@ -32,55 +36,62 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @user = current_user
-    @course = Course.new(course_params)
-    @course.bike_id = Bike.first.id if @course.bike_id.nil?
-    @course.user = @user
-    authorize @course
-    all_user_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
-    @cart = @user.shopping_carts.last
 
-    if (all_user_carnets.last.present? && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
-      redirect_to new_course_path, flash: {alert: 'Bien trop de tickets pour une si grosse course ! :o'}
-    else
 
-      if user_have_a_carnet?(@user)
-        create_shopping_cart unless user_have_a_cart?(@cart)
-        if user_have_enought_tickets?(@course, all_user_carnets)
-          if only_one_carnet?(all_user_carnets)
-            @carnet = all_user_carnets.last
-            add_course_to_carnet(@carnet, @course)
-            @carnet.save
-            # raise
-            save_data(@course)
-          else
-            add_course_on_both_carnets_and_save(all_user_carnets, @course)
-            save_data(@course)
-          end
-        else
-          if carnet_renewal?(@user)
-            create_new_carnet(@user, all_user_carnets.first)
+    if user_signed_in?
+      @user = current_user
+      @course = Course.new(course_params)
+      @course.bike_id = Bike.first.id if @course.bike_id.nil?
+      @course.user = @user
+      authorize @course
+      all_user_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
+      @cart = @user.shopping_carts.last
+
+
+      if (all_user_carnets.last.present? && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
+        redirect_to new_course_path, flash: {alert: 'Bien trop de tickets pour une si grosse course ! :o'}
+      else
+
+        if user_have_a_carnet?(@user)
+          create_shopping_cart unless user_have_a_cart?(@cart)
+          if user_have_enought_tickets?(@course, all_user_carnets)
             if only_one_carnet?(all_user_carnets)
               @carnet = all_user_carnets.last
               add_course_to_carnet(@carnet, @course)
               @carnet.save
+              # raise
               save_data(@course)
             else
-              both_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
-              add_course_on_both_carnets_and_save(both_carnets, @course)
+              add_course_on_both_carnets_and_save(all_user_carnets, @course)
               save_data(@course)
             end
           else
-            redirect_to new_carnet_path, flash: {alert: 'Plus assez de tickets, veuillez renouveller votre carnet !'}
+            if carnet_renewal?(@user)
+              create_new_carnet(@user, all_user_carnets.first)
+              if only_one_carnet?(all_user_carnets)
+                @carnet = all_user_carnets.last
+                add_course_to_carnet(@carnet, @course)
+                @carnet.save
+                save_data(@course)
+              else
+                both_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
+                add_course_on_both_carnets_and_save(both_carnets, @course)
+                save_data(@course)
+              end
+            else
+              redirect_to new_carnet_path, flash: {alert: 'Plus assez de tickets, veuillez renouveller votre carnet !'}
 
+            end
           end
+        else
+          create_shopping_cart unless user_have_a_cart?(@cart)
+          add_course_to_cart(@course, @cart)
+          @cart.save
+          save_data_carnet_less(@course)
         end
-      else
-        create_shopping_cart unless user_have_a_cart?(@cart)
-        add_course_to_cart(@course, @cart)
-        @cart.save
-        save_data_carnet_less(@course)
       end
+    else
+      raise
     end
   end
 

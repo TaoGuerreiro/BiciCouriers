@@ -41,6 +41,7 @@
       <div class='hidden'> <%= pickup.input :end_hour, label: false %> </div>
       <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
     <% end %>
+  </div>
 
 
 
@@ -48,7 +49,6 @@
 
 
  <!-- __________ ADRESSE DE LIVRAISON __________ -->
-  </div>
   <div class="livraison">
     <%= f.fields_for :drops do |drop| %>
       <div class="one-line-address-contact">
