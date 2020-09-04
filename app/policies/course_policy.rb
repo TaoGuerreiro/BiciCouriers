@@ -9,6 +9,10 @@ class CoursePolicy < ApplicationPolicy
     end
   end
 
+  def distance?
+    true
+  end
+
   def create?
     true
   end

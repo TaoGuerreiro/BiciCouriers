@@ -1,12 +1,29 @@
 class CoursesController < ApplicationController
 
+  before_action :authenticate_user!, except: [:create, :new, :distance]
+
   def show
     @course = Course.find(params[:id])
     authorize @course
   end
 
   def distance
-    raise
+    skip_authorization
+    addresses = JSON.parse(distance_params.to_json)
+
+    pickup = addresses["puAddressName"].to_s
+    drop = addresses["drAddressName"].to_s
+    apiKey = ""
+    url = `https://maps.googleapis.com/maps/api/directions/json?origin=#{pickup}&destination=#{drop}&key=#{apiKey}`
+
+    response = Faraday.get(url)
+
+    pu_long_lat = Geocoder.search(pickup).first.coordinates
+    dr_long_lat = Geocoder.search(drop).first.coordinates
+    teste = Geocoder::Calculations.distance_between(pu_long_lat, dr_long_lat)
+    test = [pu_long_lat, dr_long_lat]
+
+    render json: url
   end
 
   def index
@@ -200,5 +217,9 @@ private
       }
     )
   end
+  #-----------
+    def distance_params
+    params.require(:addresses).permit(:puAddressName, :drAddressName)
+    end
 
 end

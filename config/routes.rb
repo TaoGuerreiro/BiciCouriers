@@ -38,7 +38,7 @@
   end
 
   #course building
-  get 'courses/distance'
+  post 'course/distance', to: 'courses#distance'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
