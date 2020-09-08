@@ -1,6 +1,6 @@
-class CoursesController < ApplicationController
 
-  before_action :authenticate_user!, except: [:create, :new, :distance]
+class CoursesController < ApplicationController
+  before_action :authenticate_user!, except: [:create, :new, :distance, :tickets_nb]
 
   def show
     @course = Course.find(params[:id])
@@ -13,17 +13,36 @@ class CoursesController < ApplicationController
 
     pickup = addresses["puAddressName"].to_s
     drop = addresses["drAddressName"].to_s
-    apiKey = ""
-    url = `https://maps.googleapis.com/maps/api/directions/json?origin=#{pickup}&destination=#{drop}&key=#{apiKey}`
+    apiKey = ENV['GOOGLE_API_KEY']
 
-    response = Faraday.get(url)
+    url = 'https://maps.googleapis.com/maps/api/directions/json?'
+    query = {
+      origin: pickup,
+      destination: drop,
+      key: apiKey
+    }
 
-    pu_long_lat = Geocoder.search(pickup).first.coordinates
-    dr_long_lat = Geocoder.search(drop).first.coordinates
-    teste = Geocoder::Calculations.distance_between(pu_long_lat, dr_long_lat)
-    test = [pu_long_lat, dr_long_lat]
+    distance = JSON.parse(HTTParty.get(
+      url,
+      query: query
+    ).body)
 
-    render json: url
+    render json: distance['routes'][0]['legs'][0]['distance']['value']
+  end
+
+  def tickets_nb
+    skip_authorization
+
+    response = JSON.parse(tickets_params.to_json)
+    distance =response['distanceM'].to_i
+
+    if user_signed_in?
+      tickets = distance/10
+    else
+      tickets = distance/3
+    end
+
+    render json: tickets
   end
 
   def index
@@ -219,7 +238,11 @@ private
   end
   #-----------
     def distance_params
-    params.require(:addresses).permit(:puAddressName, :drAddressName)
+      params.require(:addresses).permit(:puAddressName, :drAddressName)
+    end
+
+    def tickets_params
+      params.require(:distance).permit(:distanceM)
     end
 
 end
