@@ -10,8 +10,9 @@ const distance = () => {
     const tiDisplay = document.querySelector('.tickets');
 
 //______________________DISTANCE______________________
-    const getDistance = (pickup, drop) => {
-      const data = { addresses: { puAddressName: puAddress.value, drAddressName: drAddress.value }}
+    let getDistance = (pickup, drop) => {
+
+      const input = { addresses: { puAddressName: pickup, drAddressName: drop }}
 
       fetchWithToken("/course/distance", {
         method: "POST",
@@ -19,16 +20,18 @@ const distance = () => {
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(input)
       })
       .then(response => response.json())
-      .then((data) => {
-        console.log(data)
-        diDisplay.innerHTML = data
+      .then((dist) => {
+        diDisplay.innerHTML = dist
+        console.log(dist)
       });
     };
+
+
       //______________________TICKETS______________________
-    const getTickets = (dist) => {
+    let getTickets = (dist) => {
       const data = { distance: { distanceM: dist }}
       fetchWithToken("/course/tickets", {
         method: "POST",
@@ -40,20 +43,27 @@ const distance = () => {
       })
       .then(response => response.json())
       .then((data) => {
+        return data
         console.log(data)
         tiDisplay.innerHTML = data
       });
+
     };
 
     const pickupInput = document.getElementById('course_drops_attributes_0_address');
-    let dist = 0
-    pickupInput.addEventListener("change", (event) => {
-      dist = getDistance(puAddress, drAddress);
-    });
 
     pickupInput.addEventListener("change", (event) => {
-      getTickets(dist);
+
+        console.log(puAddress.value)
+        console.log(drAddress.value)
+
+        const dist = getDistance(puAddress.value, drAddress.value)
+        console.log(dist)
+
+
+      // setTimeout(getTickets(dist), 5000);
     });
+
   });
 }
 

@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
     skip_authorization
 
     response = JSON.parse(tickets_params.to_json)
-    distance =response['distanceM'].to_i
+    distance =response['distanceM']
 
     if user_signed_in?
       tickets = distance/10
