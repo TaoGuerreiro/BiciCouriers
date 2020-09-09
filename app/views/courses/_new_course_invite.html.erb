@@ -3,30 +3,25 @@
 
   <%= f.fields_for :pickups, remote: true do |pickup| %>
     <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input' } %>
+    <%= pickup.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+    <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
+    <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
+
   <% end %>
 
   <%= f.fields_for :drops do |drop| %>
     <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input' } %>
+    <%= drop.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+    <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
+    <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
   <% end %>
+
+
+  <%= f.input_field :tickets_urgence, hint: "ticket urgence", class: "hiddden tickets-urgence" %>
+
+  <%= f.input_field :tickets_volume, hint: "ticket volume", class: "hiddden tickets-volume" %>
   <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
+
   <p class='distance'>coucou</p>
   <p class='tickets'>kaka</p>
 

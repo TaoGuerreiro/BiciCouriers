@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_072703) do
+ActiveRecord::Schema.define(version: 2020_09_09_112948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_09_03_072703) do
     t.string "image"
     t.string "description"
     t.integer "price_cents", default: 0, null: false
+    t.float "distance_max", default: 3.5
   end
 
   create_table "carnets", force: :cascade do |t|
@@ -64,17 +65,18 @@ ActiveRecord::Schema.define(version: 2020_09_03_072703) do
     t.bigint "user_id"
     t.bigint "carnet_id"
     t.bigint "bike_id"
-    t.integer "ticket_nb"
+    t.integer "ticket_nb", default: 0
     t.integer "distance"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
-    t.integer "tickets_urgence"
-    t.integer "tickets_volume"
-    t.integer "tickets_distance"
+    t.string "status", default: "pending"
+    t.integer "tickets_urgence", default: 0
+    t.integer "tickets_volume", default: 0
+    t.integer "tickets_distance", default: 0
     t.integer "ticket_overflow", default: 0
     t.bigint "shopping_cart_id"
+    t.integer "price_cents", default: 0, null: false
     t.index ["bike_id"], name: "index_courses_on_bike_id"
     t.index ["carnet_id"], name: "index_courses_on_carnet_id"
     t.index ["shopping_cart_id"], name: "index_courses_on_shopping_cart_id"

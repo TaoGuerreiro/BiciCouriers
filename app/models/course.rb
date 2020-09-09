@@ -9,6 +9,8 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
 
+  monetize :price_cents
+
 
   after_create :send_course_info_to_dispatch
   private

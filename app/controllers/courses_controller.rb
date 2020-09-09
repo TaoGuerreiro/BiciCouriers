@@ -1,6 +1,7 @@
 
 class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:create, :new, :distance, :tickets_nb]
+  before_action :skip_authorization, only: [:create, :new]
 
   def show
     @course = Course.find(params[:id])
@@ -13,22 +14,13 @@ class CoursesController < ApplicationController
 
     pickup = addresses["puAddressName"].to_s
     drop = addresses["drAddressName"].to_s
-    apiKey = ENV['GOOGLE_API_KEY']
 
-    url = 'https://maps.googleapis.com/maps/api/directions/json?'
-    query = {
-      origin: pickup,
-      destination: drop,
-      key: apiKey
-    }
+    distance = dist(pickup, drop)
 
-    distance = JSON.parse(HTTParty.get(
-      url,
-      query: query
-    ).body)
-
-    render json: distance['routes'][0]['legs'][0]['distance']['value']
+    render json: distance
   end
+
+
 
   def tickets_nb
     skip_authorization
@@ -36,11 +28,7 @@ class CoursesController < ApplicationController
     response = JSON.parse(tickets_params.to_json)
     distance =response['distanceM']
 
-    if user_signed_in?
-      tickets = distance/10
-    else
-      tickets = distance/3
-    end
+    tickets = tick(distance)
 
     render json: tickets
   end
@@ -73,13 +61,12 @@ class CoursesController < ApplicationController
 
   def create
 
-
-    if user_signed_in?
+    if user_signed_in? # USER EN LIGNE OLD VERSION
       @user = current_user
       @course = Course.new(course_params)
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
       @course.user = @user
-      authorize @course
+      # authorize @course
       all_user_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
       @cart = @user.shopping_carts.last
 
@@ -96,10 +83,10 @@ class CoursesController < ApplicationController
               add_course_to_carnet(@carnet, @course)
               @carnet.save
               # raise
-              save_data(@course)
+              save_data(@course, courses_path)
             else
               add_course_on_both_carnets_and_save(all_user_carnets, @course)
-              save_data(@course)
+              save_data(@course, courses_path)
             end
           else
             if carnet_renewal?(@user)
@@ -108,11 +95,11 @@ class CoursesController < ApplicationController
                 @carnet = all_user_carnets.last
                 add_course_to_carnet(@carnet, @course)
                 @carnet.save
-                save_data(@course)
+                save_data(@course, courses_path)
               else
                 both_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
                 add_course_on_both_carnets_and_save(both_carnets, @course)
-                save_data(@course)
+                save_data(@course, courses_path)
               end
             else
               redirect_to new_carnet_path, flash: {alert: 'Plus assez de tickets, veuillez renouveller votre carnet !'}
@@ -126,10 +113,32 @@ class CoursesController < ApplicationController
           save_data_carnet_less(@course)
         end
       end
-    else
-      raise
+    else # USER HORS LIGNE V1.0
+      # raise
+      #parcours de facturation hors-ligne
+
+      @user = User.first
+      @course = Course.new(course_params)
+      @course.bike_id = Bike.first.id if @course.bike_id.nil?
+      @course.user = @user
+      pu = params[:course][:pickups_attributes]["0"][:address]
+      dr = params[:course][:drops_attributes]["0"][:address]
+      @course.distance = dist(pu, dr)
+      @course.tickets_distance = tick(@course.distance)
+      @course.ticket_nb = @course.tickets_distance.to_i + params[:tickets_volume].to_i + params[:tickets_urgence].to_i
+      @course.price_cents = price(@course.ticket_nb)
+
+      if @course.save
+        redirect_to root_path, flash: {alert: 'Well !'}
+      else
+        render "pages/home", flash: {error: 'Il doit y avoir un soucis dans le formulaire !'}
+      end
+
+
+
     end
   end
+#    :ticket_nb, :, :, :, :, :, :, :, :, :, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
 
   def destroy
     @shopping_cart = ShoppingCart.last
@@ -177,9 +186,9 @@ private
   end
 
 
-  def save_data(data)
+  def save_data(data, path)
     if data.save
-      redirect_to courses_path
+      redirect_to path
     else
        render :new
     end
@@ -236,13 +245,63 @@ private
       }
     )
   end
-  #-----------
-    def distance_params
-      params.require(:addresses).permit(:puAddressName, :drAddressName)
-    end
 
-    def tickets_params
-      params.require(:distance).permit(:distanceM)
+
+
+
+
+  #______________________V2______________________
+
+  def dist(pu, dr)
+
+    url = 'https://maps.googleapis.com/maps/api/directions/json?'
+    query = {
+      origin: pu,
+      destination: dr,
+      key: ENV['GOOGLE_API_KEY']
+    }
+
+    distance = JSON.parse(HTTParty.get(
+      url,
+      query: query
+    ).body)
+
+    return (distance['routes'][0]['legs'][0]['distance']['value'])
+  end
+
+  def tick(dist)
+    if is_user_and_have_carnet?
+      tickets = (dist/1000.000/(current_user.carnets.last.carnet_template.distance_max)).ceil
+    else
+      tickets = (dist/1000.000/2.000).ceil
     end
+    return tickets
+  end
+
+  def price(ticket_nb)
+    if is_user_and_have_carnet?
+      unit_price = current_user.carnets.last.carnet_template.price_cents
+    else
+      unit_price = 583
+    end
+    return unit_price * ticket_nb
+  end
+
+  def is_user_and_have_carnet?
+    (user_signed_in? && user_have_a_carnet?(current_user))
+  end
+
+  #______________________PARAMS AJAX______________________
+  def distance_params
+    params.require(:addresses).permit(:puAddressName, :drAddressName)
+  end
+
+  def tickets_params
+    params.require(:distance).permit(:distanceM)
+  end
 
 end
+
+
+
+
