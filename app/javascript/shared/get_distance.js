@@ -131,8 +131,6 @@ const distance = () => {
       })
     });
 
-
-
     drAddress.addEventListener("input", (event) => {
       getDistance(puAddress.value, drAddress.value)
       .then((dist) => getDistTickets(dist))
@@ -144,6 +142,8 @@ const distance = () => {
         getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value);
       })
     });
+
+
 
   });
 }
