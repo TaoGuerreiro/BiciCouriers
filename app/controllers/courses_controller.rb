@@ -1,7 +1,7 @@
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:create, :new, :distance, :tickets_nb]
-  before_action :skip_authorization, only: [:create, :new]
+  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb]
+  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb]
 
   def show
     @course = Course.find(params[:id])
@@ -9,7 +9,6 @@ class CoursesController < ApplicationController
   end
 
   def distance
-    skip_authorization
     addresses = JSON.parse(distance_params.to_json)
 
     pickup = addresses["puAddressName"].to_s
@@ -20,10 +19,22 @@ class CoursesController < ApplicationController
     render json: distance
   end
 
+  def urgence
+    urgence = JSON.parse(urgence_params.to_json)
 
+    puStart = urgence["puStart"].to_f
+    puEnd = urgence["puEnd"].to_f
+    drStart = urgence["drStart"].to_f
+    drEnd = urgence["drEnd"].to_f
+
+    tickets_urgence = urge(puStart, puEnd, drStart, drEnd)
+
+    render json: tickets_urgence
+
+
+  end
 
   def tickets_nb
-    skip_authorization
 
     response = JSON.parse(tickets_params.to_json)
     distance =response['distanceM']
@@ -287,6 +298,34 @@ private
     return unit_price * ticket_nb
   end
 
+  def urge(pus, pue, drs, dre)
+    #coder toute la logique d'urgence, en fonction des data utilisateur && carnets
+    tickets = 0
+    pickup_slot = pue - pus
+    drop_slot = dre - drs
+
+    case pickup_slot
+      when 0..0.75
+        2 + tickets
+      when 0.75..4
+        1 + tickets
+      when 4..11
+        0 + tickets
+      else
+    end
+
+    case drop_slot
+      when 0..0.75
+        2 + tickets
+      when 0.75..4
+        1 + tickets
+      when 4..11
+        0 + tickets
+      else
+    end
+    return tickets
+  end
+
   def is_user_and_have_carnet?
     (user_signed_in? && user_have_a_carnet?(current_user))
   end
@@ -294,6 +333,10 @@ private
   #______________________PARAMS AJAX______________________
   def distance_params
     params.require(:addresses).permit(:puAddressName, :drAddressName)
+  end
+
+  def urgence_params
+    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd)
   end
 
   def tickets_params

@@ -4,16 +4,13 @@
 
 const simulation = () => {
   document.addEventListener("turbolinks:load", (event) => {
-    const submitDistance = document.getElementById('testv2');
-  });
-};
-
-export { simulation }
+    // const submitDistance = document.getElementById('testv2');
 
 
-//     const volumes = document.querySelectorAll('.volume');
 
-//     const urgences = document.querySelectorAll('.urgence');
+    const volumes = document.querySelectorAll('.volume');
+
+    const urgences = document.querySelectorAll('.urgence');
 
 //     const urgenceInput = document.getElementById('simulation_s_urgence');
 //     const volumeInput = document.getElementById('simulation_s_volume');
@@ -26,40 +23,84 @@ export { simulation }
 //     let urgenceTickets = 0
 //     let volumeTickets = 0
 //     let distanceTickets = 0
+var currentdate = new Date();
+
+
+var datetime = currentdate.getHours() + ":"  + currentdate.getMinutes()
 
 
 
-//     const removeActive = (array) => {
-//         array.forEach((urgence) => {
-//           urgence.classList.remove('active');
-//         });
-//       }
 
-//     urgences.forEach( (urgence) => {
-//       urgence.addEventListener('click', (event) => {
-//         removeActive(urgences);
-//         urgence.classList.add('active');
-//         // console.log(urgence);
-//         const ticket = urgence.dataset.tickets;
-//         // console.log(ticket);
-//         mainUrgence.dataset.urgence = parseInt(ticket, 10);
-//         urgenceInput.value = parseInt(ticket, 10);
-//         datas(700);
-//       });
-//     });
+    const puStart = document.getElementById('course_pickups_attributes_0_start_hour');
+    const puEnd = document.getElementById('course_pickups_attributes_0_end_hour');
+    const drStart = document.getElementById('course_drops_attributes_0_start_hour');
+    const drEnd = document.getElementById('course_drops_attributes_0_end_hour');
 
-//     volumes.forEach( (volume) => {
-//       volume.addEventListener('click', (event) => {
-//         removeActive(volumes);
-//         volume.classList.add('active');
-//         // console.log(volume);
-//         const ticket = volume.dataset.tickets;
-//         // console.log(ticket);
-//         mainVolume.dataset.volume = parseInt(ticket, 10);
-//         volumeInput.value = parseInt(ticket, 10);
-//         datas(700);
-//       });
-//     });
+    const timeToDecimal = (t) => {
+        const arr = t.split(':');
+        const dec = parseInt((arr[1]/6)*10, 10);
+
+        return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
+    }
+
+    const removeActive = (array) => {
+        array.forEach((urgence) => {
+          urgence.classList.remove('active');
+        });
+      }
+
+    urgences.forEach( (urgence) => {
+      urgence.addEventListener('click', (event) => {
+        removeActive(urgences);
+        urgence.classList.add('active');
+        const typeOfUrgence = urgence.dataset.tickets
+        puStart.value = timeToDecimal(datetime)
+        drStart.value = timeToDecimal(datetime)
+
+        const expr = typeOfUrgence;
+        switch (expr) {
+          case '0' :
+            puEnd.value = timeToDecimal('19:00')
+            drEnd.value = timeToDecimal('19:00')
+            break;
+          case '1':
+            puEnd.value = timeToDecimal((currentdate.getHours() + 4)  + ":"  + currentdate.getMinutes())
+            drEnd.value = timeToDecimal((currentdate.getHours() + 4)  + ":"  + currentdate.getMinutes())
+          break;
+          case '2':
+            puEnd.value = timeToDecimal((currentdate.getHours() + 1)  + ":"  + currentdate.getMinutes())
+            drEnd.value = timeToDecimal((currentdate.getHours() + 1)  + ":"  + currentdate.getMinutes())
+            break;
+          default:
+            puEnd.value = timeToDecimal('19:00')
+            drEnd.value = timeToDecimal('19:00')
+        }
+
+        //Requete ajax pour connaitre le nb de tickets
+
+
+      });
+    });
+
+    volumes.forEach( (volume) => {
+      volume.addEventListener('click', (event) => {
+        removeActive(volumes);
+        volume.classList.add('active');
+        // console.log(volume);
+        const ticket = volume.dataset.tickets;
+        // console.log(ticket);
+        mainVolume.dataset.volume = parseInt(ticket, 10);
+        volumeInput.value = parseInt(ticket, 10);
+        datas(700);
+      });
+    });
+
+
+
+      });
+    };
+
+    export { simulation }
 
 //     const directionsService = new google.maps.DirectionsService();
 //     const directionsDisplay = new google.maps.DirectionsRenderer();
