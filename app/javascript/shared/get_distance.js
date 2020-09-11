@@ -12,10 +12,28 @@ const distance = () => {
     const drStart = document.getElementById('course_drops_attributes_0_start_hour');
     const drEnd = document.getElementById('course_drops_attributes_0_end_hour');
 
-    const diDisplay = document.querySelector('.distance');
-    const urDisplay = document.querySelector('.tickets_urgence');
-    const tiDisplay = document.querySelector('.tickets');
+    const urButtons = document.querySelectorAll('.urgence');
+    const voButtons = document.querySelectorAll('.volume');
 
+    const sousTotals = document.querySelectorAll('.sous-total');
+    const toDisplay = document.getElementById('total-course');
+
+    const diDisplay = document.getElementById('kilometers');
+    const urDisplay = document.querySelector('.right-urgence');
+    const tiDisplay = document.querySelector('.right-distance');
+    const heDisplay = document.querySelector('.heure');
+    const voDisplay = document.querySelector('.right-volume');
+
+//______________________TOTAL______________________
+    let getTotal = () => {
+      let total = 0
+      sousTotals.forEach((number) => {
+        total = total + parseInt(number.innerHTML, 10)
+        // console.log(total)
+        toDisplay.innerHTML = total
+
+      });
+    }
 //______________________DISTANCE______________________
     let getDistance = (pickup, drop) => {
 
@@ -31,13 +49,14 @@ const distance = () => {
       })
       .then(response => response.json())
       .then((dist) => {
-        diDisplay.innerHTML = dist
+        diDisplay.innerHTML = dist/1000
         // console.log(dist)
         return dist
+        // getTotal()
       });
     };
 
-//______________________TICKETS______________________
+//______________________TICKETS DISTANCE______________________
     let getDistTickets = (dist) => {
       let data = { distance: { distanceM: dist }}
       return fetchWithToken("/course/tickets", {
@@ -52,16 +71,17 @@ const distance = () => {
       .then((data) => {
         // console.log(data)
         tiDisplay.innerHTML = data
+        getTotal()
         return data
       });
 
     };
 
-    //______________________URGENCE______________________
+    //______________________TICKETS URGENCE______________________
 
-    let getUrgence = () => {
+    let getUrgence = (pus, pue, drs, dre) => {
 
-      let data = { urgence: { puStart: puStart.value, puEnd: puEnd.value, drStart: drStart.value, drEnd: drEnd.value}}
+      let data = { urgence: { puStart: pus, puEnd: pue, drStart: drs, drEnd: dre}}
       return fetchWithToken("/course/urgence", {
         method: "POST",
         headers: {
@@ -72,20 +92,59 @@ const distance = () => {
       })
       .then(response => response.json())
       .then((data) => {
-        console.log(data + 'test')
+        // console.log(data)
         urDisplay.innerHTML = data
+        heDisplay.innerHTML = drEnd.value
+        getTotal()
         return data
       });
 
     };
-//______________________EVENT______________________
 
-    drAddress.addEventListener("change", (event) => {
+    //______________________TICKETS VOLUME______________________
 
+    let getVolume = (size) => {
+
+      let data = { volume: { size: size}}
+      return fetchWithToken("/course/volume", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data)
+        voDisplay.innerHTML = data
+        getTotal()
+        return data
+      });
+
+    };
+//______________________EVENTS______________________
+    voButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        let number = parseInt(event.srcElement.dataset.tickets, 10)
+        getVolume(number);
+      })
+    });
+
+
+
+    drAddress.addEventListener("input", (event) => {
       getDistance(puAddress.value, drAddress.value)
       .then((dist) => getDistTickets(dist))
-      .then(() => getUrgence())
+      .then(() => getTotal())
     });
+
+    urButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value);
+      })
+    });
+
   });
 }
 

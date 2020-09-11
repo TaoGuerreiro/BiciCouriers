@@ -41,6 +41,7 @@
   post 'course/distance', to: 'courses#distance'
   post 'course/urgence', to: 'courses#urgence'
   post 'course/tickets', to: 'courses#tickets_nb'
+  post 'course/volume', to: 'courses#volume'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 

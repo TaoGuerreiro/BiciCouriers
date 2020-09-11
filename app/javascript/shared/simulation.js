@@ -38,9 +38,8 @@ var datetime = currentdate.getHours() + ":"  + currentdate.getMinutes()
 
     const timeToDecimal = (t) => {
         const arr = t.split(':');
-        const dec = parseInt((arr[1]/6)*10, 10);
 
-        return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
+        return (arr[0]<10?'0':'') + arr[0] + ':' + ((arr[1]<10 && arr[1]>0)?'0':'') + arr[1];
     }
 
     const removeActive = (array) => {
@@ -89,9 +88,7 @@ var datetime = currentdate.getHours() + ":"  + currentdate.getMinutes()
         // console.log(volume);
         const ticket = volume.dataset.tickets;
         // console.log(ticket);
-        mainVolume.dataset.volume = parseInt(ticket, 10);
-        volumeInput.value = parseInt(ticket, 10);
-        datas(700);
+
       });
     });
 

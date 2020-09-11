@@ -1,11 +1,19 @@
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb]
-  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb]
+  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb, :volume]
+  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb, :volume]
 
   def show
     @course = Course.find(params[:id])
     authorize @course
+  end
+
+  def volume
+    volume = JSON.parse(volume_params.to_json)
+
+    bike_id = volume["size"].to_i
+
+    render json: bike_id
   end
 
   def distance
@@ -22,22 +30,21 @@ class CoursesController < ApplicationController
   def urgence
     urgence = JSON.parse(urgence_params.to_json)
 
-    puStart = urgence["puStart"].to_f
-    puEnd = urgence["puEnd"].to_f
-    drStart = urgence["drStart"].to_f
-    drEnd = urgence["drEnd"].to_f
+    puStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puStart"].slice(0,2), urgence["puStart"].slice(3,4), 00)
+    puEnd = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puEnd"].slice(0,2), urgence["puEnd"].slice(3,4), 00)
+    drStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drStart"].slice(0,2), urgence["drStart"].slice(3,4), 00)
+    drEnd = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drEnd"].slice(0,2), urgence["drEnd"].slice(3,4), 00)
 
     tickets_urgence = urge(puStart, puEnd, drStart, drEnd)
 
     render json: tickets_urgence
-
 
   end
 
   def tickets_nb
 
     response = JSON.parse(tickets_params.to_json)
-    distance =response['distanceM']
+    distance = response['distanceM']
 
     tickets = tick(distance)
 
@@ -132,11 +139,23 @@ class CoursesController < ApplicationController
       @course = Course.new(course_params)
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
       @course.user = @user
-      pu = params[:course][:pickups_attributes]["0"][:address]
-      dr = params[:course][:drops_attributes]["0"][:address]
-      @course.distance = dist(pu, dr)
+      puAddress = params[:course][:pickups_attributes]["0"][:address]
+      drAddress = params[:course][:drops_attributes]["0"][:address]
+
+      # puSt = params[:course][:pickups_attributes]["0"][:start_hour]
+      # puNd = params[:course][:pickups_attributes]["0"][:end_hour]
+      # drSt = params[:course][:drops_attributes]["0"][:start_hour]
+      # drNd = params[:course][:drops_attributes]["0"][:end_hour]
+
+      puSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:pickups_attributes]["0"][:start_hour].slice(0,2), params[:course][:pickups_attributes]["0"][:start_hour].slice(3,4), 00)
+      puNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:pickups_attributes]["0"][:end_hour].slice(0,2),   params[:course][:pickups_attributes]["0"][:end_hour].slice(3,4), 00)
+      drSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:drops_attributes]["0"][:start_hour].slice(0,2),   params[:course][:drops_attributes]["0"][:start_hour].slice(3,4), 00)
+      drNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:drops_attributes]["0"][:end_hour].slice(0,2),     params[:course][:drops_attributes]["0"][:end_hour].slice(3,4), 00)
+
+      @course.tickets_urgence = urge(puSt, puNd, drSt, drNd)
+      @course.distance = dist(puAddress, drAddress)
       @course.tickets_distance = tick(@course.distance)
-      @course.ticket_nb = @course.tickets_distance.to_i + params[:tickets_volume].to_i + params[:tickets_urgence].to_i
+      @course.ticket_nb = @course.tickets_distance.to_i + params[:tickets_volume].to_i + @course.tickets_urgence.to_i
       @course.price_cents = price(@course.ticket_nb)
 
       if @course.save
@@ -144,12 +163,8 @@ class CoursesController < ApplicationController
       else
         render "pages/home", flash: {error: 'Il doit y avoir un soucis dans le formulaire !'}
       end
-
-
-
     end
   end
-#    :ticket_nb, :, :, :, :, :, :, :, :, :, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
 
   def destroy
     @shopping_cart = ShoppingCart.last
@@ -164,7 +179,7 @@ class CoursesController < ApplicationController
 private
 
   def course_params
-    params.require(:course).permit(:ticket_nb, :tickets_volume, :tickets_urgence, :tickets_distance, :distance, :details, :status, :price, :urgence, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
+    params.require(:course).permit(:details, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
   end
 
   def user_have_a_carnet?(user)
@@ -284,7 +299,7 @@ private
     if is_user_and_have_carnet?
       tickets = (dist/1000.000/(current_user.carnets.last.carnet_template.distance_max)).ceil
     else
-      tickets = (dist/1000.000/2.000).ceil
+      tickets = (dist/1000.000/3.500).ceil
     end
     return tickets
   end
@@ -300,30 +315,30 @@ private
 
   def urge(pus, pue, drs, dre)
     #coder toute la logique d'urgence, en fonction des data utilisateur && carnets
-    tickets = 0
+    ticket = 0
     pickup_slot = pue - pus
     drop_slot = dre - drs
 
     case pickup_slot
-      when 0..0.75
-        2 + tickets
-      when 0.75..4
-        1 + tickets
-      when 4..11
-        0 + tickets
+      when 0..(3600)
+        ticket = 2 + ticket
+      when (3601)..(4 * 3600)
+        ticket = 1 + ticket
+      when (14401)..(11 * 3600)
+        ticket = 0 + ticket
       else
     end
 
     case drop_slot
-      when 0..0.75
-        2 + tickets
-      when 0.75..4
-        1 + tickets
-      when 4..11
-        0 + tickets
+      when 0..(3600)
+        ticket = 2 + ticket
+      when (3601)..(4 * 3600)
+        ticket = 1 + ticket
+      when (14401)..(11 * 3600)
+        ticket = 0 + ticket
       else
     end
-    return tickets
+    return ticket
   end
 
   def is_user_and_have_carnet?
@@ -341,6 +356,10 @@ private
 
   def tickets_params
     params.require(:distance).permit(:distanceM)
+  end
+
+  def volume_params
+    params.require(:volume).permit(:size)
   end
 
 end

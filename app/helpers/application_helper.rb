@@ -49,4 +49,13 @@ module ApplicationHelper
         'Sous 45 minutes'
     end
   end
+
+  def hour_to_dec(time)
+
+    hour = '%02d' % time.hour
+    dec = (time.hour/6) * 10
+
+    return `#{hour},#{dec}`.to_f.round(2)
+
+  end
 end

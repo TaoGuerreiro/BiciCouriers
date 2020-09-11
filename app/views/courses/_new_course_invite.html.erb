@@ -4,22 +4,25 @@
   <%= f.fields_for :pickups, remote: true do |pickup| %>
     <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input' } %>
     <%#= pickup.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
-    <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
-    <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
-
-
+    <div class='hidden'>
+      <%= pickup.input :start_hour, as: :string, :input_html => {value: Time.now.strftime("%H:%M")}, placeholder: 'pu start', label: false, required: true%>
+      <%= pickup.input :end_hour, as: :string, :input_html => {value: Time.new(Time.now.year, Time.now.mon, Time.now.day,19, 00, 00).strftime("%H:%M") }, placeholder: 'pu end', label: false, required: true%>
+    </div>
   <% end %>
 
   <%= f.fields_for :drops do |drop| %>
     <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input' } %>
     <%#= drop.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
-    <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
-    <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
+    <div class='hidden'>
+      <%= drop.input :start_hour, as: :string, :input_html => {value: Time.now.strftime("%H:%M")}, placeholder: 'dr start', label: false, required: true%>
+      <%= drop.input :end_hour, as: :string, :input_html => {value: Time.new(Time.now.year, Time.now.mon, Time.now.day,19, 00, 00).strftime("%H:%M")}, placeholder: 'dr end', label: false, required: true%>
+    </div>
   <% end %>
+
   <div class="div-align" data-urgence='0' id="urgence">
-      <div class="icon-w fs10"><div class='icon urgence urgence-1 active' data-tickets='0'></div>Avant 19h</div>
-      <div class="icon-w fs10"><div class='icon urgence urgence-2' data-tickets='1'></div>Avant 13h</div>
-      <div class="icon-w fs10"><div class='icon urgence urgence-3' data-tickets='2'></div>Avant 10h</div>
+      <div class="icon-w fs10"><div class='icon urgence urgence-1 active' data-tickets='0'></div>Aujourd'hui avant 19:00</div>
+      <div class="icon-w fs10"><div class='icon urgence urgence-2' data-tickets='1'></div>Aujourd'hui avant <%= (Time.now + (4*3600)).strftime("%H:%M") %></div>
+      <div class="icon-w fs10"><div class='icon urgence urgence-3' data-tickets='2'></div>Aujourd'hui avant <%= (Time.now + (1*3600)).strftime("%H:%M") %></div>
     </div>
 
 
@@ -27,18 +30,25 @@
       <div class="icon-w fs10"><div class='icon volume volume-1 active' data-tickets='0'></div>Enveloppe ou petit plis</div>
       <div class="icon-w fs10"><div class='icon volume volume-2' data-tickets='1'></div>Gros colis ou > 5kg</div>
     </div>
-
-  <%= f.input_field :tickets_urgence, hint: "ticket urgence", class: "hiddden tickets-urgence" %>
-
-  <%= f.input_field :tickets_volume, hint: "ticket volume", class: "hiddden tickets-volume" %>
   <br>
+  <div class="main-toggle-resultat">
+    <div class="left-box-resultat">
+      <p class="left-distance"><span id="kilometers">0</span> km</p>
+      <p class="left-urgence">Livraison avant <span class="heure">0</span></p>
+      <p class="left-volume">Enveloppe</p>
 
-  <p class='distance'>coucou</p>
-  <p class='tickets'>kaka</p>
-  <p class='tickets_urgence'>kaka</p>
+    </div>
 
+    <div class="right-box-resultat">
+      <p class="right-distance sous-total">0</p>
+      <p class="right-urgence sous-total">0</p>
+      <p class="right-volume sous-total">0</p>
+    </div>
+  </div>
+  <div class="total"><p class="total-text">Soit <span id='total-course'>0</span><%= user_signed_in? ? "ticket(s)" : " ticket(s)"  %> </p></div>
 
-  <%= f.submit "Ajouter au panier", class: "bici-button" %> <br>
+<button class="bici-button" >Continuer</button>
+  <%= f.submit "Valider", class: "bici-button hidden" %> <br>
 
 <% end %>
 
