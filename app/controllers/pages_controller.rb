@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home, :tarifs, :story]
 
   def home
+    @user = User.new
     @course = Course.new
     @order = Order.last
     @drop = @course.drops.build

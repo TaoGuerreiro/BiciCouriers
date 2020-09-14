@@ -1,7 +1,6 @@
 import swal from 'sweetalert2'
-import  { simulation } from '../shared/simulation.js';
 
-const initSweetalert = (selector, options = {}, callback = () => {}) => {
+const initGuestAlert = (selector, options = {}, callback = () => {}) => {
   const swalButton = document.querySelector(selector);
   if (swalButton) { // protect other pages
     swalButton.addEventListener('click', () => {
@@ -13,7 +12,7 @@ const initSweetalert = (selector, options = {}, callback = () => {}) => {
 
 
 
-const initBicialert = (selector, options = {}, callback = () => {}) => {
+const initUserAlert = (selector, options = {}, callback = () => {}) => {
   const swalButton = document.querySelector(selector);
   if (swalButton) { // protect other pages
     swalButton.addEventListener('click', () => {
@@ -23,4 +22,4 @@ const initBicialert = (selector, options = {}, callback = () => {}) => {
   }
 };
 
-export { initSweetalert };
+export { initGuestAlert };

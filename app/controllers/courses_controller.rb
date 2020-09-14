@@ -63,6 +63,7 @@ class CoursesController < ApplicationController
 
   def new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
+    @user = User.new
 
     @course = Course.new
     @drop = @course.drops.build
