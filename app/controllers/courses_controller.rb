@@ -133,12 +133,15 @@ class CoursesController < ApplicationController
         end
       end
     else # USER HORS LIGNE V1.0
-      # raise
-      #parcours de facturation hors-ligne
       email = params[:course][:user][:email]
-      raise if email_check(email)
-
-
+      if email_check(email)
+        @user = User.find_by_email(email)
+      else
+        @user = User.create({
+          email: email,
+          password: Devise.friendly_token.first(8)
+        })
+      end
       # if user already rec
       @course = Course.new(course_params)
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
@@ -146,15 +149,15 @@ class CoursesController < ApplicationController
       puAddress = params[:course][:pickups_attributes]["0"][:address]
       drAddress = params[:course][:drops_attributes]["0"][:address]
 
-      # puSt = params[:course][:pickups_attributes]["0"][:start_hour]
-      # puNd = params[:course][:pickups_attributes]["0"][:end_hour]
-      # drSt = params[:course][:drops_attributes]["0"][:start_hour]
-      # drNd = params[:course][:drops_attributes]["0"][:end_hour]
+      puSt = params[:course][:pickups_attributes]["0"][:start_hour]
+      puNd = params[:course][:pickups_attributes]["0"][:end_hour]
+      drSt = params[:course][:drops_attributes]["0"][:start_hour]
+      drNd = params[:course][:drops_attributes]["0"][:end_hour]
 
-      puSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:pickups_attributes]["0"][:start_hour].slice(0,2), params[:course][:pickups_attributes]["0"][:start_hour].slice(3,4), 00)
-      puNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:pickups_attributes]["0"][:end_hour].slice(0,2),   params[:course][:pickups_attributes]["0"][:end_hour].slice(3,4), 00)
-      drSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:drops_attributes]["0"][:start_hour].slice(0,2),   params[:course][:drops_attributes]["0"][:start_hour].slice(3,4), 00)
-      drNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, params[:course][:drops_attributes]["0"][:end_hour].slice(0,2),     params[:course][:drops_attributes]["0"][:end_hour].slice(3,4), 00)
+      puSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, puSt.slice(0,2), puSt.slice(3,4), 00)
+      puNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, puNd.slice(0,2), puNd.slice(3,4), 00)
+      drSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, drSt.slice(0,2), drSt.slice(3,4), 00)
+      drNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, drNd.slice(0,2), drNd.slice(3,4), 00)
 
       @course.tickets_urgence = urge(puSt, puNd, drSt, drNd)
       @course.distance = dist(puAddress, drAddress)
@@ -163,8 +166,8 @@ class CoursesController < ApplicationController
       @course.price_cents = price(@course.ticket_nb)
 
       if @course.save
-        raise
-        redirect_to root_path, flash: {alert: 'Well !'}
+        # raise
+        redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux !'}
       else
         render "pages/home", flash: {error: 'Il doit y avoir un soucis dans le formulaire !'}
       end

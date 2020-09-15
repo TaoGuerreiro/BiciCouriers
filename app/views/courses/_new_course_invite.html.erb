@@ -16,6 +16,7 @@
     <div class='hidden'>
       <%= drop.input :start_hour, as: :string, :input_html => {value: Time.now.strftime("%H:%M")}, placeholder: 'dr start', label: false, required: true%>
       <%= drop.input :end_hour, as: :string, :input_html => {value: Time.new(Time.now.year, Time.now.mon, Time.now.day,19, 00, 00).strftime("%H:%M")}, placeholder: 'dr end', label: false, required: true%>
+      <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
     </div>
   <% end %>
 
@@ -46,12 +47,14 @@
     </div>
   </div>
   <div class="total"><p class="total-text">Soit <span id='total-course'>0</span><%= user_signed_in? ? "ticket(s)" : " ticket(s)"  %> </p></div>
+  <div class='hidden'>
     <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
       <%= user.input :email %>
     <% end %>
+  </div>
 
 
-  <%= f.submit "course", class: "bici-button hiddden" %> <br>
+  <%= f.submit "course", class: "bici-button hidden", id: 'save-course' %> <br>
 
   <% end %>
 
