@@ -9,6 +9,7 @@ class PagesController < ApplicationController
     @pickup = @course.pickups.build
   end
 
+
   def story
   end
 

@@ -11,6 +11,8 @@ class Course < ApplicationRecord
 
   monetize :price_cents
 
+  attr_accessor :email
+
 
   after_create :send_course_info_to_dispatch
   private

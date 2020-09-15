@@ -46,12 +46,15 @@
     </div>
   </div>
   <div class="total"><p class="total-text">Soit <span id='total-course'>0</span><%= user_signed_in? ? "ticket(s)" : " ticket(s)"  %> </p></div>
+    <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
+      <%= user.input :email %>
+    <% end %>
+
 
   <%= f.submit "course", class: "bici-button hiddden" %> <br>
+
   <% end %>
 
 
-
-<input type="text">
 <button class="bici-button " id='continue' >Continuer</button>
 

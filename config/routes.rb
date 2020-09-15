@@ -1,5 +1,11 @@
  Rails.application.routes.draw do
-  devise_for :users
+  # devise_for :users
+
+
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
+
+  resources :users , only: [:create ]
+
   root to: 'pages#home'
 
   match 'profil', to: 'users#show', via: 'get'
@@ -9,6 +15,7 @@
   get "/tarifs", to: "pages#tarifs"
   get "/about", to: "pages#about"
   post "/simulation", to: "contacts#simulation"
+
 
 
   resources :shopping_carts, only: [:show, :create]

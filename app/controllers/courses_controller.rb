@@ -135,8 +135,11 @@ class CoursesController < ApplicationController
     else # USER HORS LIGNE V1.0
       # raise
       #parcours de facturation hors-ligne
+      email = params[:course][:user][:email]
+      raise if email_check(email)
 
-      @user = User.first
+
+      # if user already rec
       @course = Course.new(course_params)
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
       @course.user = @user
@@ -160,6 +163,7 @@ class CoursesController < ApplicationController
       @course.price_cents = price(@course.ticket_nb)
 
       if @course.save
+        raise
         redirect_to root_path, flash: {alert: 'Well !'}
       else
         render "pages/home", flash: {error: 'Il doit y avoir un soucis dans le formulaire !'}
@@ -177,7 +181,13 @@ class CoursesController < ApplicationController
     authorize @course
   end
 
+
+
 private
+
+  # def guest_course_params
+  #   params.require(:course).permit(:details, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address], user:[:email])
+  # end
 
   def course_params
     params.require(:course).permit(:details, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
@@ -361,6 +371,10 @@ private
 
   def volume_params
     params.require(:volume).permit(:size)
+  end
+
+  def email_check(email)
+    User.where(email: email).any?
   end
 
 end
