@@ -32,11 +32,11 @@
 
   resources :contacts, only: [:new, :create]
 
-  resources :simulations, only: [:new, :create] do
-    resources :simulation_orders, only: [:show, :create, :index] do
-      resources :simulation_payments, only: :new
-    end
-  end
+  # resources :simulations, only: [:new, :create] do
+  #   resources :simulation_orders, only: [:show, :create, :index] do
+  #     resources :simulation_payments, only: :new
+  #   end
+  # end
 
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
@@ -49,6 +49,7 @@
   post 'course/urgence', to: 'courses#urgence'
   post 'course/tickets', to: 'courses#tickets_nb'
   post 'course/volume', to: 'courses#volume'
+  post 'course/checkout', to: 'courses#checkout_id'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 

@@ -37,7 +37,7 @@ const distance = () => {
 //______________________DISTANCE______________________
     let getDistance = (pickup, drop) => {
 
-      let input = { addresses: { puAddressName: pickup, drAddressName: drop }}
+      let input = { addresses: { puAddressName:pickup, drAddressName:drop }}
 
       return fetchWithToken("/course/distance", {
         method: "POST",
@@ -58,7 +58,7 @@ const distance = () => {
 
 //______________________TICKETS DISTANCE______________________
     let getDistTickets = (dist) => {
-      let data = { distance: { distanceM: dist }}
+      let data = { distance: { distanceM:dist }}
       return fetchWithToken("/course/tickets", {
         method: "POST",
         headers: {
@@ -81,7 +81,7 @@ const distance = () => {
 
     let getUrgence = (pus, pue, drs, dre) => {
 
-      let data = { urgence: { puStart: pus, puEnd: pue, drStart: drs, drEnd: dre}}
+      let data = { urgence: { puStart:pus, puEnd:pue, drStart:drs, drEnd:dre}}
       return fetchWithToken("/course/urgence", {
         method: "POST",
         headers: {
@@ -105,7 +105,7 @@ const distance = () => {
 
     let getVolume = (size) => {
 
-      let data = { volume: { size: size}}
+      let data = { volume: { size:size}}
       return fetchWithToken("/course/volume", {
         method: "POST",
         headers: {
@@ -123,6 +123,22 @@ const distance = () => {
       });
 
     };
+
+//______________________CHECKOUT______________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //______________________EVENTS______________________
     voButtons.forEach((button) => {
       button.addEventListener("click", (event) => {

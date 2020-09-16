@@ -1,10 +1,56 @@
 import  { initGuestAlert } from '../plugins/init_sweetalert.js';
+import { fetchWithToken } from "../utils/fetch_with_token";
 import swal from 'sweetalert2'
 const datas = () => {
 
 
 
-  console.log("oui")
+const getCheckoutId = (mail) => {
+  new Promise(() => {
+    let data = { request: {mail:mail}}
+
+      fetchWithToken("/course/checkout", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then((data) => {
+        // return data
+      });
+  });
+}
+//TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
+
+// const promise1 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('foo');
+//   }, 3000);
+// });
+
+
+// promise1.then((value) => {
+//   console.log(value);
+//   // expected output: "foo"
+// });
+
+// async function logCheckoutId (mail) {
+//   await getCheckoutId(mail);
+// };
+
+const testbutton = document.getElementById('mailtest');
+
+testbutton.addEventListener('click', (event) => {
+  const mail = document.getElementById('course_user_email')
+  event.preventDefault();
+  getCheckoutId(mail.value);
+});
+
+//TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
+
   initGuestAlert('#continue',{
     buttonsStyling: false,
     customClass: {
@@ -57,44 +103,66 @@ const datas = () => {
       }).then((mail) => {
 
         if (mail.value) {
-
-          // const payementLivraisonButton = document.getElementById('payement-livraison');
-          // console.log(payementLivraisonButton)
-          // payementLivraisonButton.addEventListener('click', () => {
-          //   const link = document.getElementById('save-course');
-          //   link.click();
-          // });
-
-
-          console.log(mail.value)
           const emailInput = document.getElementById('course_user_email')
           emailInput.value = mail.value
           swal.fire(
           {
             buttonsStyling: false,
             customClass: {
-              confirmButton: 'bici-button',
-              cancelButton: 'bici-button',
-              denyButton: 'bici-button',
+              confirmButton: 'sw-button-user',
+              cancelButton: 'bici-button sw-button-stripe'
             },
             background: '#FF016C',
             title: "Comment souhaitez vous regler la course ?",
-            html:
-              `<p class='text-white'> Réglement</p>` +
-              `<button id="payemant-stripe" class="bici-button">Payer en ligne</button></br></br>` +
-              `<button id="payement-livraison" class="bici-button">Payer à la livraison</button>`,
+            // html:
+            //   `<p class='text-white'> Réglement</p>`,
+
             reverseButtons: true,
-            showCancelButton: false,
-            confirmButtonText: `Déjà client·e ?`
+            showCancelButton: true,
+            confirmButtonText: `Déjà client·e ? / Payer à la livraison`,
+            cancelButtonText: `Payer en ligne`
 
           }).then((payement) => {
 
             if (payement.value) {
-            // pay with stripe ?
-            console.log("client")
-            // const link = document.getElementById('save-course');
-            link.click();
+              const link = document.getElementById('save-course');
+              link.click();
+              swal.fire({
+                // position: 'top-end',
+                background: '#FF016C',
+                icon: 'success',
+                title: 'Bien reçu ! 😎​',
+                showConfirmButton: false,
+                timer: 1500
+              })
           } else {
+              const stripeCheckbox = document.getElementById('stripe');
+              const link = document.getElementById('save-course');
+
+              stripeCheckbox.click()
+              link.click()
+
+              swal.fire({
+                // position: 'top-end',
+                background: '#FF016C',
+                icon: 'success',
+                title: 'Bien reçu ! 😎​',
+                showConfirmButton: false,
+                timer: 3000
+              }).then(() =>{
+
+
+                const mail = document.getElementById('course_user_email')
+                console.log(mail.value); //-> ok
+                getCheckoutId(mail.value).then((id) =>{
+                  console.log(id)
+
+                // stripeCheckbox.innerHTML = id
+                }).catch(console.log('test'));
+                const linkStripe = document.getElementById('pay');
+                linkStripe.click()
+
+              });
             return
           }
         });
