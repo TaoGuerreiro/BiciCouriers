@@ -62,15 +62,20 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script>
 
+
       const paymentButton = document.getElementById('pay');
+
       paymentButton.addEventListener('click', (event) => {
          event.preventDefault();
 
+        const checkoutInput = document.getElementById('stripe');
+        let order_checkout_id = checkoutInput.innerHTML.toString()
+        console.log(order_checkout_id)
         const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-      //   stripe.redirectToCheckout({
-      //     sessionId:
+         stripe.redirectToCheckout({
+           sessionId: order_checkout_id
         });
-      // });
+       });
     </script>
 
   </div>

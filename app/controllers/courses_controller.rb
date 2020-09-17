@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
   def checkout_id
     request = JSON.parse(mail_params.to_json)
     email = request['mail'].to_s
-    user = User.find_by_email(email)
+    user = User.find_by(email: email)
     checkout_id = user.orders.last.checkout_session_id
 
     render json: checkout_id
@@ -39,10 +39,10 @@ class CoursesController < ApplicationController
   def urgence
     urgence = JSON.parse(urgence_params.to_json)
 
-    puStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puStart"].slice(0,2), urgence["puStart"].slice(3,4), 00)
-    puEnd = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puEnd"].slice(0,2), urgence["puEnd"].slice(3,4), 00)
-    drStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drStart"].slice(0,2), urgence["drStart"].slice(3,4), 00)
-    drEnd = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drEnd"].slice(0,2), urgence["drEnd"].slice(3,4), 00)
+    puStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puStart"].slice(0,2),  urgence["puStart"].slice(3,4), 00)
+    puEnd =   Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puEnd"].slice(0,2),    urgence["puEnd"].slice(3,4), 00)
+    drStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drStart"].slice(0,2),  urgence["drStart"].slice(3,4), 00)
+    drEnd =   Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drEnd"].slice(0,2),    urgence["drEnd"].slice(3,4), 00)
 
     tickets_urgence = urge(puStart, puEnd, drStart, drEnd)
 
@@ -155,12 +155,12 @@ class CoursesController < ApplicationController
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
       @course.user = @user
       puAddress = params[:course][:pickups_attributes]["0"][:address]
-      drAddress = params[:course][:drops_attributes]["0"][:address]
+      drAddress = params[:course][:drops_attributes]  ["0"][:address]
 
-      puSt = params[:course][:pickups_attributes]["0"][:start_hour]
-      puNd = params[:course][:pickups_attributes]["0"][:end_hour]
-      drSt = params[:course][:drops_attributes]["0"][:start_hour]
-      drNd = params[:course][:drops_attributes]["0"][:end_hour]
+      puSt = params[:course][:pickups_attributes] ["0"][:start_hour]
+      puNd = params[:course][:pickups_attributes] ["0"][:end_hour]
+      drSt = params[:course][:drops_attributes]   ["0"][:start_hour]
+      drNd = params[:course][:drops_attributes]   ["0"][:end_hour]
 
       puSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, puSt.slice(0,2), puSt.slice(3,4), 00)
       puNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, puNd.slice(0,2), puNd.slice(3,4), 00)
@@ -190,14 +190,19 @@ class CoursesController < ApplicationController
         )
         order.update(checkout_session_id: session.id)
 
-        render json: order.checkout_session_id
+        @checkout_id = order.checkout_session_id
+
+        respond_to do |format|
+             # format.html
+             format.json { render json: { checkout_id: @checkout_id } }
+        end
+        # redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux'}
+
         # redirect_to new_order_payment_path(order)
         # authorize order
         # raise
         # redirect_to root_path, flash: {alert: 'Stripe !'}
       elsif @course.save && payement.nil?
-
-
         redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux'}
       else
         render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}

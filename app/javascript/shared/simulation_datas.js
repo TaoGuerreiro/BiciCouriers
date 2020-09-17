@@ -1,9 +1,14 @@
 import  { initGuestAlert } from '../plugins/init_sweetalert.js';
 import { fetchWithToken } from "../utils/fetch_with_token";
 import swal from 'sweetalert2'
+
 const datas = () => {
 
-
+// document.body.addEventListener('ajax:success', (event) => {
+//    console.log(event);
+//    // console.log(status);
+//    // console.log(xhr);
+// });
 
 const getCheckoutId = (mail) => {
   new Promise(() => {
@@ -23,6 +28,8 @@ const getCheckoutId = (mail) => {
       });
   });
 }
+
+
 //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
 
 // const promise1 = new Promise((resolve, reject) => {
@@ -127,6 +134,7 @@ testbutton.addEventListener('click', (event) => {
             if (payement.value) {
               const link = document.getElementById('save-course');
               link.click();
+
               swal.fire({
                 // position: 'top-end',
                 background: '#FF016C',
@@ -137,10 +145,16 @@ testbutton.addEventListener('click', (event) => {
               })
           } else {
               const stripeCheckbox = document.getElementById('stripe');
-              const link = document.getElementById('save-course');
-
               stripeCheckbox.click()
+              const link = document.getElementById('save-course');
               link.click()
+
+              document.body.addEventListener('ajax:success', (event) => {
+                 // console.log(event.detail[0].checkout_id)
+                 const checkout_id = event.detail[0].checkout_id
+                 stripeCheckbox.innerHTML = checkout_id
+
+              });
 
               swal.fire({
                 // position: 'top-end',
@@ -148,17 +162,8 @@ testbutton.addEventListener('click', (event) => {
                 icon: 'success',
                 title: 'Bien reçu ! 😎​',
                 showConfirmButton: false,
-                timer: 3000
+                timer: 1000
               }).then(() =>{
-
-
-                const mail = document.getElementById('course_user_email')
-                console.log(mail.value); //-> ok
-                getCheckoutId(mail.value).then((id) =>{
-                  console.log(id)
-
-                // stripeCheckbox.innerHTML = id
-                }).catch(console.log('test'));
                 const linkStripe = document.getElementById('pay');
                 linkStripe.click()
 
