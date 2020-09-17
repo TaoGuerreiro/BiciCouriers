@@ -48,34 +48,48 @@
   </div>
   <div class="total"><p class="total-text">Soit <span id='total-course'>0</span><%= user_signed_in? ? "ticket(s)" : " ticket(s)"  %> </p></div>
 
-  <div class='hiddden'>
+  <div class='hidden'>
     <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
       <%= user.input :email %>
     <% end %>
+  </div>
     <input type="checkbox" id="stripe" name="stripe">
     <label for="stripe">stripe</label>
-  </div>
+    <button id="pay" class="btn btn-primary" data-checkout="">Pay</button>
   <div class="col">
-    <button id="pay" class="btn btn-primary">Pay</button>
-    <button id="mailtest" class="btn btn-primary">mail</button>
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
 
 
-      const paymentButton = document.getElementById('pay');
+      let paymentButton = document.getElementById('pay');
+      let  checkout_id = ""
 
-      paymentButton.addEventListener('click', (event) => {
-         event.preventDefault();
+      document.body.addEventListener('ajax:success', (event) => {
+         // console.log(event.detail[0].checkout_id)
+         const checkoutId = new Promise((resolve, reject) => {
+        return event.detail[0].checkout_id
+      });
+         // linkStripe.dataset.checkout = checkout_id
+         checkoutId.then((value) => {
+          const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+           stripe.redirectToCheckout({
+             sessionId: value
+          });
+         })
 
-        const checkoutInput = document.getElementById('stripe');
-        let order_checkout_id = checkoutInput.innerHTML.toString()
-        console.log(order_checkout_id)
-        const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-         stripe.redirectToCheckout({
-           sessionId: order_checkout_id
-        });
-       });
+      });
+
+      // paymentButton.addEventListener('click', (event) => {
+      //   event.preventDefault();
+      //   setTimeout(()=> {
+
+      //   const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+      //    stripe.redirectToCheckout({
+      //      sessionId: checkout_id
+      //   });
+      //   }, 3000)
+      //  });
     </script>
 
   </div>
@@ -86,5 +100,5 @@
   <% end %>
 
 
-<button class="bici-button " id='continue' >Continuer</button>
+<button class="bici-button " id='continue'>Continuer</button>
 

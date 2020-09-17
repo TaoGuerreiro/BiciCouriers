@@ -48,13 +48,13 @@ const getCheckoutId = (mail) => {
 //   await getCheckoutId(mail);
 // };
 
-const testbutton = document.getElementById('mailtest');
+// const testbutton = document.getElementById('mailtest');
 
-testbutton.addEventListener('click', (event) => {
-  const mail = document.getElementById('course_user_email')
-  event.preventDefault();
-  getCheckoutId(mail.value);
-});
+// testbutton.addEventListener('click', (event) => {
+//   const mail = document.getElementById('course_user_email')
+//   event.preventDefault();
+//   getCheckoutId(mail.value);
+// });
 
 //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
 
@@ -149,25 +149,18 @@ testbutton.addEventListener('click', (event) => {
               const link = document.getElementById('save-course');
               link.click()
 
-              document.body.addEventListener('ajax:success', (event) => {
-                 // console.log(event.detail[0].checkout_id)
-                 const checkout_id = event.detail[0].checkout_id
-                 stripeCheckbox.innerHTML = checkout_id
+              // swal.fire({
+              //   // position: 'top-end',
+              //   background: '#FF016C',
+              //   icon: 'success',
+              //   title: 'Bien reçu ! 😎​',
+              //   showConfirmButton: false,
+              //   timer: 1000
+              // }).then(() =>{
+              //   const linkStripe = document.getElementById('pay');
+              //   linkStripe.click()
 
-              });
-
-              swal.fire({
-                // position: 'top-end',
-                background: '#FF016C',
-                icon: 'success',
-                title: 'Bien reçu ! 😎​',
-                showConfirmButton: false,
-                timer: 1000
-              }).then(() =>{
-                const linkStripe = document.getElementById('pay');
-                linkStripe.click()
-
-              });
+              // });
             return
           }
         });
