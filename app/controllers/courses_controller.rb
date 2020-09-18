@@ -179,8 +179,8 @@ class CoursesController < ApplicationController
         session = Stripe::Checkout::Session.create(
           payment_method_types: ['card'],
           line_items: [{
-            name: 'Nouvelle commande',
-            # images: [shopping_cart.photo_url],
+            name: 'Nouvelle livraison',
+            # images: [shopping_cart.photo_url], implémenter la carte google ?
             amount: (@course.price_cents * 1.2).ceil.to_i,
             currency: 'eur',
             quantity: 1
@@ -196,12 +196,7 @@ class CoursesController < ApplicationController
              # format.html
              format.json { render json: { checkout_id: @checkout_id } }
         end
-        # redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux'}
 
-        # redirect_to new_order_payment_path(order)
-        # authorize order
-        # raise
-        # redirect_to root_path, flash: {alert: 'Stripe !'}
       elsif @course.save && payement.nil?
         redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux'}
       else
@@ -379,15 +374,15 @@ private
       else
     end
 
-    case drop_slot
-      when 0..(3600)
-        ticket = 2 + ticket
-      when (3601)..(4 * 3600)
-        ticket = 1 + ticket
-      when (14401)..(11 * 3600)
-        ticket = 0 + ticket
-      else
-    end
+    # case drop_slot
+    #   when 0..(3600)
+    #     ticket = 2 + ticket
+    #   when (3601)..(4 * 3600)
+    #     ticket = 1 + ticket
+    #   when (14401)..(11 * 3600)
+    #     ticket = 0 + ticket
+    #   else
+    # end
     return ticket
   end
 
