@@ -3,7 +3,7 @@
 
   <%= f.fields_for :pickups, remote: true do |pickup| %>
     <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input' } %>
-    <div class='hiddden'>
+    <div class='hidden'>
       <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input"} %>
       <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
       <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
@@ -12,7 +12,7 @@
 
   <%= f.fields_for :drops do |drop| %>
     <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input' } %>
-    <div class='hiddden'>
+    <div class='hidden'>
       <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input"} %>
       <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
       <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>

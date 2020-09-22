@@ -96,7 +96,7 @@ const distance = () => {
       })
       .then(response => response.json())
       .then((data) => {
-        // // console.log(data)
+        console.log(data)
         // urDisplay.innerHTML = data
         // heDisplay.innerHTML = drEnd.value
         // getTotal(sousTotals)
@@ -170,7 +170,8 @@ const distance = () => {
         drEnd.value = event.currentTarget.dataset.end_hour
         stDay.value = event.currentTarget.dataset.start_day
         ndDay.value = event.currentTarget.dataset.end_day
-        getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value, stDay.value, ndDay.value );
+        const tick = getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value, stDay.value, ndDay.value );
+        console.log(tick);
       })
     });
 

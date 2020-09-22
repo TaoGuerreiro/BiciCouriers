@@ -1,65 +1,65 @@
-import  { counter } from '../shared/counter.js';
-import  { sum } from '../shared/slider.js';
+// import  { counter } from '../shared/counter.js';
+// import  { sum } from '../shared/slider.js';
 
-let urgenceTickets = 0
-let urgenceRange = 11
-const urgenceToggle = () => {
-  document.addEventListener("turbolinks:load", (event) => {
-  urgenceTickets = 0
-  const urgence1 = document.querySelector('.urgence-1');
-  const urgence2 = document.querySelector('.urgence-2');
-  const urgence3 = document.querySelector('.urgence-3');
-  const urgence4 = document.querySelector('.urgence-4');
-  if (urgence4 === null) {
-    return
-  }
+// let urgenceTickets = 0
+// let urgenceRange = 11
+// const urgenceToggle = () => {
+//   document.addEventListener("turbolinks:load", (event) => {
+//   urgenceTickets = 0
+//   const urgence1 = document.querySelector('.urgence-1');
+//   const urgence2 = document.querySelector('.urgence-2');
+//   const urgence3 = document.querySelector('.urgence-3');
+//   const urgence4 = document.querySelector('.urgence-4');
+//   if (urgence4 === null) {
+//     return
+//   }
 
-  const unactiveUrgence = () => {
-    const urgences = document.querySelectorAll('.urgence');
-    urgences.forEach((urg) => {
-      urg.classList.remove('active');
-    });
-    displayUrgenceLine();
-  }
+//   const unactiveUrgence = () => {
+//     const urgences = document.querySelectorAll('.urgence');
+//     urgences.forEach((urg) => {
+//       urg.classList.remove('active');
+//     });
+//     displayUrgenceLine();
+//   }
 
-  const displayUrgenceLine = () => {
-    const urgenceLinePrice = document.querySelector('.total-urgence');
-    urgenceLinePrice.classList.remove('hidden');
-  }
+//   const displayUrgenceLine = () => {
+//     const urgenceLinePrice = document.querySelector('.total-urgence');
+//     urgenceLinePrice.classList.remove('hidden');
+//   }
 
-  urgence1.addEventListener('click', (event) => {
-    unactiveUrgence();
-    urgence1.classList.add('active');
-    urgenceTickets = 0
-    urgenceRange = 11
-    setTimeout(counter,100);
-  });
+//   urgence1.addEventListener('click', (event) => {
+//     unactiveUrgence();
+//     urgence1.classList.add('active');
+//     urgenceTickets = 0
+//     urgenceRange = 11
+//     setTimeout(counter,100);
+//   });
 
-  urgence2.addEventListener('click', (event) => {
-    unactiveUrgence();
-    urgence2.classList.add('active');
-    urgenceTickets = 1
-    urgenceRange = 4
-    setTimeout(counter,100);
-    console.log('coucou');
-  });
+//   urgence2.addEventListener('click', (event) => {
+//     unactiveUrgence();
+//     urgence2.classList.add('active');
+//     urgenceTickets = 1
+//     urgenceRange = 4
+//     setTimeout(counter,100);
+//     console.log('coucou');
+//   });
 
-  urgence3.addEventListener('click', (event) => {
-    unactiveUrgence();
-    urgence3.classList.add('active');
-    urgenceTickets = 2
-    urgenceRange = 0.75
-    setTimeout(counter,100);
-  });
+//   urgence3.addEventListener('click', (event) => {
+//     unactiveUrgence();
+//     urgence3.classList.add('active');
+//     urgenceTickets = 2
+//     urgenceRange = 0.75
+//     setTimeout(counter,100);
+//   });
 
-  urgence4.addEventListener('click', (event) => {
-    unactiveUrgence();
-    urgence4.classList.add('active');
-    urgenceTickets = 0
-    urgenceRange = 0.75
-    setTimeout(counter,100);
-  });
-  });
-}
+//   urgence4.addEventListener('click', (event) => {
+//     unactiveUrgence();
+//     urgence4.classList.add('active');
+//     urgenceTickets = 0
+//     urgenceRange = 0.75
+//     setTimeout(counter,100);
+//   });
+//   });
+// }
 
-export { urgenceToggle, urgenceTickets, urgenceRange };
+// export { urgenceToggle, urgenceTickets, urgenceRange };

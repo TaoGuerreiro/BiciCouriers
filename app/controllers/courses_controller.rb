@@ -8,15 +8,6 @@ class CoursesController < ApplicationController
     authorize @course
   end
 
-  # def checkout_id
-  #   request = JSON.parse(mail_params.to_json)
-  #   email = request['mail'].to_s
-  #   user = User.find_by(email: email)
-  #   checkout_id = user.orders.last.checkout_session_id
-
-  #   render json: checkout_id
-  # end
-
   def volume
     volume = JSON.parse(volume_params.to_json)
 
@@ -58,7 +49,7 @@ class CoursesController < ApplicationController
         urgence_0_end = day_end + 86400
         urgence_1_end = day_start + 86400 + city.urgence_one_size
         urgence_2_end = day_start + 86400 + city.urgence_two_size
-      when (now + city.urgence_one_size) > day_end #APRES ''18H''
+      when (now + city.urgence_one_size) > day_end #APRES ''18H15''
         urgence_0_start = day_start + 86400
         urgence_1_start = day_start + 86400
         urgence_2_start = day_start + 86400
@@ -109,6 +100,8 @@ class CoursesController < ApplicationController
   def urgence
 
     data = JSON.parse(urgence_params.to_json)
+    puts "*" * 123
+    puts data["stDate"]
 
     pu_start = Time.new(Time.now.year, Time.now.mon, data["stDate"], data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
     pu_end =   Time.new(Time.now.year, Time.now.mon, data["ndDate"], data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
@@ -117,6 +110,8 @@ class CoursesController < ApplicationController
     now = Time.now
 
     tickets = urge(pu_start, pu_end, dr_start, dr_end)
+    puts "*"*90
+    puts tickets
 
     respond_to do |format|
          # format.html
@@ -394,12 +389,6 @@ private
     )
   end
 
-
-
-
-
-
-
   #______________________V2______________________
 
   def dist(pu, dr)
@@ -440,33 +429,23 @@ private
   def urge(pus, pue, drs, dre)
     city = City.find_by(city_name: "Nantes")
     day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
-    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4), 00)
-    now = Time.now
-    ticket = 0
-    pickup_slot = pue - pus
-    drop_slot = dre - drs
 
-      case
-        when now < day_start #AVANT L'HEURE
-          tickets += 1 if (day_end - day_start) <= city.urgence_two_size
-          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
-        when now > day_end #APRES L'HEURE L'HEURE
-          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
-        when (now + city.urgence_one_size) > day_end #APRES ''18H''
-          tickets += 1 if (day_end - day_start) <= city.urgence_two_size
-          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
-          # urgence = day_end + 86400 if number == 0
-          # urgence = day_start + 86400 + city.urgence_one_size if number == 1
-          # urgence = day_start + 86400 + city.urgence_two_size if number == 2
-        when (now + city.urgence_two_size) > day_end #APRES ''16H''
-          # urgence = day_start + 86400 + city.urgence_two_size if number == 0
-          # urgence = now + city.urgence_one_size if number == 1
-          # urgence = day_end if number == 2
-        when now.between?(day_start, day_end)
-          # urgence = day_end if number == 0
-          # urgence = now + city.urgence_one_size if number == 1
-          # urgence = now + city.urgence_two_size if number == 2
-      end
+    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4), 00)
+    puts pus
+    puts pue
+    puts drs
+    puts dre
+    now = Time.now
+
+    ticket = 0
+
+    case
+      when (pue - pus) <= city.urgence_one_size
+        ticket += 2
+      when (pue - pus) <= city.urgence_two_size
+        ticket += 1
+    end
+
     return ticket
   end
 
@@ -516,7 +495,7 @@ private
   end
 
   def urgence_params
-    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd, :urgence)
+    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
   end
 
   def tickets_params

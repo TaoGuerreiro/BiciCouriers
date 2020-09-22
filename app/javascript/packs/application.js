@@ -35,18 +35,18 @@ cardsFly();
 userLogo();
 //initMap();
 initAutocomplete();
-urgenceToggle();
-bikeToggle();
+// urgenceToggle();
+// bikeToggle();
 initShowMap();
-slider();
+// slider();
 animations();
 counterCircle();
 selectCarnet();
 favoriteFill();
 // simulation();
 datas();
-progressSidebar();
-progressCarnet();
+// progressSidebar();
+// progressCarnet();
 distance();
 
 
