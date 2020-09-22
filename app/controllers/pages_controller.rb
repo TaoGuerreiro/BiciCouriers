@@ -4,7 +4,8 @@ class PagesController < ApplicationController
   def home
     @user = User.new
     @course = Course.new
-    @order = Order.last
+    # @order = Order.last
+    # @city = City.find_by(city_name: "Nantes")
     @drop = @course.drops.build
     @pickup = @course.pickups.build
   end

@@ -21,7 +21,6 @@ puts 'Course'
 Course.destroy_all
 puts 'Carnet'
 Carnet.destroy_all
-
 puts 'User'
 User.destroy_all
 puts 'CarnetTemplate'
@@ -30,6 +29,8 @@ puts 'ShoppingCart'
 ShoppingCart.destroy_all
 puts 'Order'
 Order.destroy_all
+puts 'Cities'
+City.destroy_all
 puts '_________________DROPPING DONE________________'
 
 
@@ -246,6 +247,13 @@ carnet_50 = Carnet.create(
 )
 
 puts '________________CARNETS => OK_________________'
+
+puts '___________________CITIES_____________________'
+
+nantes = City.create(city_name: "Nantes")
+
+
+puts '________________CITIES => OK__________________'
 
 
 

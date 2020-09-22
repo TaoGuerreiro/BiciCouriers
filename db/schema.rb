@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_112948) do
+ActiveRecord::Schema.define(version: 2020_09_18_053005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,18 @@ ActiveRecord::Schema.define(version: 2020_09_09_112948) do
     t.index ["carnet_template_id"], name: "index_carnets_on_carnet_template_id"
     t.index ["shopping_cart_id"], name: "index_carnets_on_shopping_cart_id"
     t.index ["user_id"], name: "index_carnets_on_user_id"
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "start_hour", default: "08:00"
+    t.string "end_hour", default: "19:00"
+    t.integer "cargo_nb", default: 1
+    t.float "distance_per_ticket", default: 3500.0
+    t.integer "urgence_one_size", default: 2700
+    t.integer "urgence_two_size", default: 14400
+    t.string "city_name"
   end
 
   create_table "contacts", force: :cascade do |t|

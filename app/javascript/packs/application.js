@@ -26,7 +26,9 @@ import  { favoriteFill } from '../shared/favorite_fill.js';
 import  { simulation } from '../shared/simulation.js';
 import  { distance } from '../shared/get_distance.js';
 import  { datas } from '../shared/simulation_datas.js';
+import  { toggle } from '../toggle/toggle.js';
 
+toggle();
 
 movement();
 cardsFly();
@@ -41,7 +43,7 @@ animations();
 counterCircle();
 selectCarnet();
 favoriteFill();
-simulation();
+// simulation();
 datas();
 progressSidebar();
 progressCarnet();

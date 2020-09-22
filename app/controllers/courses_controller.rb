@@ -1,21 +1,21 @@
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id]
-  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id]
+  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id, :init_urgences]
+  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id, :init_urgences]
 
   def show
     @course = Course.find(params[:id])
     authorize @course
   end
 
-  def checkout_id
-    request = JSON.parse(mail_params.to_json)
-    email = request['mail'].to_s
-    user = User.find_by(email: email)
-    checkout_id = user.orders.last.checkout_session_id
+  # def checkout_id
+  #   request = JSON.parse(mail_params.to_json)
+  #   email = request['mail'].to_s
+  #   user = User.find_by(email: email)
+  #   checkout_id = user.orders.last.checkout_session_id
 
-    render json: checkout_id
-  end
+  #   render json: checkout_id
+  # end
 
   def volume
     volume = JSON.parse(volume_params.to_json)
@@ -36,17 +36,93 @@ class CoursesController < ApplicationController
     render json: distance
   end
 
+  def init_urgences
+    city = City.find_by(city_name: "Nantes")
+    day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
+    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
+    now = Time.now
+    case
+      when now < day_start #AVANT L'HEURE
+        urgence_0_start = day_start
+        urgence_1_start = day_start
+        urgence_2_start = day_start
+
+        urgence_0_end = day_end
+        urgence_1_end = day_start + city.urgence_one_size
+        urgence_2_end = day_start + city.urgence_two_size
+      when now > day_end #APRES L'HEURE L'HEURE
+        urgence_0_start = day_start + 86400
+        urgence_1_start = day_start + 86400
+        urgence_2_start = day_start + 86400
+
+        urgence_0_end = day_end + 86400
+        urgence_1_end = day_start + 86400 + city.urgence_one_size
+        urgence_2_end = day_start + 86400 + city.urgence_two_size
+      when (now + city.urgence_one_size) > day_end #APRES ''18H''
+        urgence_0_start = day_start + 86400
+        urgence_1_start = day_start + 86400
+        urgence_2_start = day_start + 86400
+
+        urgence_0_end = day_end + 86400 #Demain avant 19H
+        urgence_1_end = day_start + 86400 + city.urgence_one_size
+        urgence_2_end = day_start + 86400 + city.urgence_two_size
+      when (now + city.urgence_two_size) > day_end #APRES ''16H''
+        urgence_0_start = now
+        urgence_1_start = now
+        urgence_2_start = now
+
+        urgence_0_end = day_start + 86400 + city.urgence_two_size #Demain avant 12H
+        urgence_1_end = now + city.urgence_one_size
+        urgence_2_end = day_end
+      when now.between?(day_start, day_end)
+        urgence_0_start = now
+        urgence_1_start = now
+        urgence_2_start = now
+
+        urgence_0_end = day_end
+        urgence_1_end = now + city.urgence_one_size
+        urgence_2_end = now + city.urgence_two_size
+    end
+
+    respond_to do |format|
+      format.json { render json: {
+          urgence_0_day: l(urgence_0_end, format: '%A'),
+          urgence_1_day: l(urgence_1_end, format: '%A'),
+          urgence_2_day: l(urgence_2_end, format: '%A'),
+          urgence_0_start_hour: l(urgence_0_start, format: '%R'),
+          urgence_1_start_hour: l(urgence_1_start, format: '%R'),
+          urgence_2_start_hour: l(urgence_2_start, format: '%R'),
+          urgence_0_end_hour:   l(urgence_0_end, format: '%R'),
+          urgence_1_end_hour:   l(urgence_1_end, format: '%R'),
+          urgence_2_end_hour:   l(urgence_2_end, format: '%R'),
+          urgence_0_start_date: l(urgence_0_start, format: '%d/%m/%Y'),
+          urgence_1_start_date: l(urgence_1_start, format: '%d/%m/%Y'),
+          urgence_2_start_date: l(urgence_2_start, format: '%d/%m/%Y'),
+          urgence_0_end_date:   l(urgence_0_end, format: '%d/%m/%Y'),
+          urgence_1_end_date:   l(urgence_1_end, format: '%d/%m/%Y'),
+          urgence_2_end_date:   l(urgence_2_end, format: '%d/%m/%Y'),
+        }
+      }
+    end
+  end
+
   def urgence
-    urgence = JSON.parse(urgence_params.to_json)
 
-    puStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puStart"].slice(0,2),  urgence["puStart"].slice(3,4), 00)
-    puEnd =   Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["puEnd"].slice(0,2),    urgence["puEnd"].slice(3,4), 00)
-    drStart = Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drStart"].slice(0,2),  urgence["drStart"].slice(3,4), 00)
-    drEnd =   Time.new(Time.now.year, Time.now.mon, Time.now.day, urgence["drEnd"].slice(0,2),    urgence["drEnd"].slice(3,4), 00)
+    data = JSON.parse(urgence_params.to_json)
 
-    tickets_urgence = urge(puStart, puEnd, drStart, drEnd)
+    pu_start = Time.new(Time.now.year, Time.now.mon, data["stDate"], data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
+    pu_end =   Time.new(Time.now.year, Time.now.mon, data["ndDate"], data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
+    dr_start = Time.new(Time.now.year, Time.now.mon, data["stDate"], data["drStart"].slice(0,2),  data["drStart"].slice(3,4), 00)
+    dr_end =   Time.new(Time.now.year, Time.now.mon, data["ndDate"], data["drEnd"].slice(0,2),    data["drEnd"].slice(3,4), 00)
+    now = Time.now
 
-    render json: tickets_urgence
+    tickets = urge(pu_start, pu_end, dr_start, dr_end)
+
+    respond_to do |format|
+         # format.html
+         format.json { render json: { tickets_urgence: tickets } }
+    end
+
 
   end
 
@@ -73,6 +149,7 @@ class CoursesController < ApplicationController
   def new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
     @user = User.new
+
 
     @course = Course.new
     @drop = @course.drops.build
@@ -321,6 +398,8 @@ private
 
 
 
+
+
   #______________________V2______________________
 
   def dist(pu, dr)
@@ -359,30 +438,35 @@ private
   end
 
   def urge(pus, pue, drs, dre)
-    #coder toute la logique d'urgence, en fonction des data utilisateur && carnets
+    city = City.find_by(city_name: "Nantes")
+    day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
+    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4), 00)
+    now = Time.now
     ticket = 0
     pickup_slot = pue - pus
     drop_slot = dre - drs
 
-    case pickup_slot
-      when 0..(3600)
-        ticket = 2 + ticket
-      when (3601)..(4 * 3600)
-        ticket = 1 + ticket
-      when (14401)..(11 * 3600)
-        ticket = 0 + ticket
-      else
-    end
-
-    # case drop_slot
-    #   when 0..(3600)
-    #     ticket = 2 + ticket
-    #   when (3601)..(4 * 3600)
-    #     ticket = 1 + ticket
-    #   when (14401)..(11 * 3600)
-    #     ticket = 0 + ticket
-    #   else
-    # end
+      case
+        when now < day_start #AVANT L'HEURE
+          tickets += 1 if (day_end - day_start) <= city.urgence_two_size
+          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
+        when now > day_end #APRES L'HEURE L'HEURE
+          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
+        when (now + city.urgence_one_size) > day_end #APRES ''18H''
+          tickets += 1 if (day_end - day_start) <= city.urgence_two_size
+          tickets += 2 if (day_end - day_start) <= city.urgence_one_size
+          # urgence = day_end + 86400 if number == 0
+          # urgence = day_start + 86400 + city.urgence_one_size if number == 1
+          # urgence = day_start + 86400 + city.urgence_two_size if number == 2
+        when (now + city.urgence_two_size) > day_end #APRES ''16H''
+          # urgence = day_start + 86400 + city.urgence_two_size if number == 0
+          # urgence = now + city.urgence_one_size if number == 1
+          # urgence = day_end if number == 2
+        when now.between?(day_start, day_end)
+          # urgence = day_end if number == 0
+          # urgence = now + city.urgence_one_size if number == 1
+          # urgence = now + city.urgence_two_size if number == 2
+      end
     return ticket
   end
 
@@ -393,13 +477,46 @@ private
   def email_check(email)
     User.where(email: email).any?
   end
+
+  def urgences_calculation(number)
+
+    city = City.find_by(city_name: "Nantes")
+    day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
+    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
+    now = Time.now
+    case
+      when now < day_start #AVANT L'HEURE
+        drop_end = day_end if number == 0
+        drop_end = day_start + city.urgence_one_size if number == 1
+        drop_end = day_start + city.urgence_two_size if number == 2
+      when now > day_end #APRES L'HEURE L'HEURE
+        drop_end = day_end + 86400 if number == 0
+        drop_end = day_start + 86400 + city.urgence_one_size if number == 1
+        drop_end = day_start + 86400 + city.urgence_two_size if number == 2
+      when (now + city.urgence_one_size) > day_end #APRES ''18H''
+        drop_end = day_end + 86400 if number == 0
+        drop_end = day_start + 86400 + city.urgence_one_size if number == 1
+        drop_end = day_start + 86400 + city.urgence_two_size if number == 2
+      when (now + city.urgence_two_size) > day_end #APRES ''16H''
+        drop_end = day_start + 86400 + city.urgence_two_size if number == 0
+        drop_end = now + city.urgence_one_size if number == 1
+        drop_end = day_end if number == 2
+      when now.between?(day_start, day_end)
+        drop_end = day_end if number == 0
+        drop_end = now + city.urgence_one_size if number == 1
+        drop_end = now + city.urgence_two_size if number == 2
+    end
+      return drop_end
+  end
+
+
   #______________________PARAMS AJAX______________________
   def distance_params
     params.require(:addresses).permit(:puAddressName, :drAddressName)
   end
 
   def urgence_params
-    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd)
+    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd, :urgence)
   end
 
   def tickets_params

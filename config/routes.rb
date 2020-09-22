@@ -47,9 +47,10 @@
   #course building
   post 'course/distance', to: 'courses#distance'
   post 'course/urgence', to: 'courses#urgence'
+  get 'course/init_urgences', to: 'courses#init_urgences'
   post 'course/tickets', to: 'courses#tickets_nb'
   post 'course/volume', to: 'courses#volume'
-  post 'course/checkout', to: 'courses#checkout_id'
+  # post 'course/checkout', to: 'courses#checkout_id'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
