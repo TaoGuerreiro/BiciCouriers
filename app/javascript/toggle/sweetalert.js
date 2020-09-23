@@ -1,8 +1,7 @@
 import  { initGuestAlert } from '../plugins/init_sweetalert.js';
-import { fetchWithToken } from "../utils/fetch_with_token";
 import swal from 'sweetalert2'
 
-const datas = () => {
+const sweetalert_display = () => {
 
   initGuestAlert('#continue',{
     buttonsStyling: false,
@@ -104,5 +103,5 @@ const datas = () => {
   });
 }
 
-export  { datas }
+export  { sweetalert_display }
 

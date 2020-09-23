@@ -23,9 +23,6 @@ import  { selectCarnet } from '../shared/select_carnet.js';
 import  { progressSidebar } from '../shared/progress_sidebar.js';
 import  { progressCarnet } from '../shared/progress_carnet.js';
 import  { favoriteFill } from '../shared/favorite_fill.js';
-import  { simulation } from '../shared/simulation.js';
-import  { distance } from '../shared/get_distance.js';
-import  { datas } from '../shared/simulation_datas.js';
 import  { toggle } from '../toggle/toggle.js';
 
 toggle();
@@ -33,20 +30,18 @@ toggle();
 movement();
 cardsFly();
 userLogo();
-//initMap();
+// initMap();
 initAutocomplete();
-// urgenceToggle();
-// bikeToggle();
+urgenceToggle();
+bikeToggle();
 initShowMap();
-// slider();
+slider();
 animations();
 counterCircle();
 selectCarnet();
 favoriteFill();
-// simulation();
-datas();
-// progressSidebar();
-// progressCarnet();
-distance();
+progressSidebar();
+progressCarnet();
+
 
 

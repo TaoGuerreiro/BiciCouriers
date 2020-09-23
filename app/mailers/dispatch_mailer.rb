@@ -7,7 +7,14 @@ class DispatchMailer < ApplicationMailer
   #
   def new_course
     @course = params[:course] # Instance variable => available in view
-    mail(to: 'contact@bicicouriers.fr', subject: "Nouvelle course pour #{@course.user.company}")
+    mail(to: 'contact@bicicouriers.fr', subject: "Nouvelle course pour #{@course.user.email}")
+    # This will render a view in `app/views/user_mailer`!
+  end
+
+  def new_payement
+    @stripe = params[:stripe]
+    @course = params[:course] # Instance variable => available in view
+    mail(to: 'contact@bicicouriers.fr', subject: "Nouvelle Payement pour #{@course.user.email}")
     # This will render a view in `app/views/user_mailer`!
   end
 

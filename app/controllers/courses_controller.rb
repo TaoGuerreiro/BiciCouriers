@@ -1,14 +1,14 @@
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id, :init_urgences]
-  before_action :skip_authorization, only: [:create, :new, :distance, :urgence, :tickets_nb, :volume, :checkout_id, :init_urgences]
+  before_action :authenticate_user!, except: [:create, :new, :distance, :ticket_urgence, :ticket_distance, :ticket_volume, :init_urgences]
+  before_action :skip_authorization, only: [:create, :new, :distance, :ticket_urgence, :ticket_distance, :ticket_volume, :init_urgences]
 
   def show
     @course = Course.find(params[:id])
     authorize @course
   end
 
-  def volume
+  def ticket_volume
     volume = JSON.parse(volume_params.to_json)
 
     bike_id = volume["size"].to_i
@@ -77,9 +77,9 @@ class CoursesController < ApplicationController
 
     respond_to do |format|
       format.json { render json: {
-          urgence_0_day: l(urgence_0_end, format: '%A'),
-          urgence_1_day: l(urgence_1_end, format: '%A'),
-          urgence_2_day: l(urgence_2_end, format: '%A'),
+          urgence_0_day: day_to_today(urgence_0_end),
+          urgence_1_day: day_to_today(urgence_1_end),
+          urgence_2_day: day_to_today(urgence_2_end),
           urgence_0_start_hour: l(urgence_0_start, format: '%R'),
           urgence_1_start_hour: l(urgence_1_start, format: '%R'),
           urgence_2_start_hour: l(urgence_2_start, format: '%R'),
@@ -97,16 +97,14 @@ class CoursesController < ApplicationController
     end
   end
 
-  def urgence
+  def ticket_urgence
 
     data = JSON.parse(urgence_params.to_json)
-    puts "*" * 123
-    puts data["stDate"]
 
-    pu_start = Time.new(Time.now.year, Time.now.mon, data["stDate"], data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
-    pu_end =   Time.new(Time.now.year, Time.now.mon, data["ndDate"], data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
-    dr_start = Time.new(Time.now.year, Time.now.mon, data["stDate"], data["drStart"].slice(0,2),  data["drStart"].slice(3,4), 00)
-    dr_end =   Time.new(Time.now.year, Time.now.mon, data["ndDate"], data["drEnd"].slice(0,2),    data["drEnd"].slice(3,4), 00)
+    pu_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
+    pu_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
+    dr_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["drStart"].slice(0,2),  data["drStart"].slice(3,4), 00)
+    dr_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["drEnd"].slice(0,2),    data["drEnd"].slice(3,4), 00)
     now = Time.now
 
     tickets = urge(pu_start, pu_end, dr_start, dr_end)
@@ -121,7 +119,7 @@ class CoursesController < ApplicationController
 
   end
 
-  def tickets_nb
+  def ticket_distance
 
     response = JSON.parse(tickets_params.to_json)
     distance = response['distanceM']
@@ -215,7 +213,7 @@ class CoursesController < ApplicationController
     else # USER HORS LIGNE V1.0
       email = params[:course][:user][:email]
       if email_check(email)
-        @user = User.find_by_email(email)
+        @user = User.find_by(email: email)
       else
         @user = User.create({
           email: email,
@@ -234,12 +232,15 @@ class CoursesController < ApplicationController
       drSt = params[:course][:drops_attributes]   ["0"][:start_hour]
       drNd = params[:course][:drops_attributes]   ["0"][:end_hour]
 
-      puSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, puSt.slice(0,2), puSt.slice(3,4), 00)
-      puNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, puNd.slice(0,2), puNd.slice(3,4), 00)
-      drSt = Time.new(Time.now.year, Time.now.mon, Time.now.day, drSt.slice(0,2), drSt.slice(3,4), 00)
-      drNd = Time.new(Time.now.year, Time.now.mon, Time.now.day, drNd.slice(0,2), drNd.slice(3,4), 00)
+      stDate = params[:course][:pickups_attributes]["0"][:date]
+      ndDate = params[:course][:drops_attributes]  ["0"][:date]
 
-      @course.tickets_urgence = urge(puSt, puNd, drSt, drNd)
+      pu_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), puSt.slice(0,2),  puSt.slice(3,4), 00)
+      pu_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), puNd.slice(0,2),  puNd.slice(3,4), 00)
+      dr_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), drSt.slice(0,2),  drSt.slice(3,4), 00)
+      dr_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), drNd.slice(0,2),  drNd.slice(3,4), 00)
+
+      @course.tickets_urgence = urge(pu_start, pu_end, dr_start, dr_end)
       @course.distance = dist(puAddress, drAddress)
       @course.tickets_distance = tick(@course.distance)
       @course.ticket_nb = @course.tickets_distance.to_i + params[:tickets_volume].to_i + @course.tickets_urgence.to_i
@@ -247,6 +248,8 @@ class CoursesController < ApplicationController
       payement = params[:stripe]
       if @course.save && (payement == "on") #STRIPE PAYEMENT
         create_shopping_cart
+        @course.update(shopping_cart: @cart)
+        # raise
         order  = Order.create!(shopping_cart: @cart, amount: @course.price, state: 'pending', user: @user)
         session = Stripe::Checkout::Session.create(
           payment_method_types: ['card'],
@@ -347,6 +350,7 @@ private
 
   def create_shopping_cart
     @cart = ShoppingCart.create(user: @user)
+    return @cart
   end
 
   def user_have_enought_tickets?(course, carnets)
@@ -429,7 +433,6 @@ private
   def urge(pus, pue, drs, dre)
     city = City.find_by(city_name: "Nantes")
     day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
-
     day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4), 00)
     puts pus
     puts pue
@@ -488,6 +491,15 @@ private
       return drop_end
   end
 
+  def day_to_today(date)
+    if date.day == Time.now.day
+      return "Aujourd'hui"
+    elsif date.day == Time.now.day + 1
+      return "Demain"
+    else
+      return date
+    end
+  end
 
   #______________________PARAMS AJAX______________________
   def distance_params

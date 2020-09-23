@@ -57,13 +57,7 @@
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-
-
-
-
-
       document.body.addEventListener('ajax:success', (event) => {
-
         const checkoutId = new Promise((resolve, reject) => {
           console.log("1" + event.detail[0].checkout_id)
           resolve(event.detail[0].checkout_id)
@@ -76,17 +70,10 @@
             sessionId: value
           });
         })
-
       });
-
-
     </script>
-
   </div>
-
-
   <%= f.submit "course", class: "bici-button hidden", id: 'save-course' %> <br>
-
   <% end %>
 
 

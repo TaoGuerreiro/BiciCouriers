@@ -1,4 +1,4 @@
-// const ticketsCounter =() => {
+const ticketsCounter =() => {
 
-// }
-// export { ticketsCounter }
+}
+export { ticketsCounter }
