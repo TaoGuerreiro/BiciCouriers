@@ -17,6 +17,8 @@ puts 'Pickup'
 Pickup.destroy_all
 puts 'Drop'
 Drop.destroy_all
+puts 'Favorite Addresses'
+FavoriteAddress.destroy_all
 puts 'Course'
 Course.destroy_all
 puts 'Carnet'

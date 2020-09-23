@@ -497,7 +497,7 @@ private
     elsif date.day == Time.now.day + 1
       return "Demain"
     else
-      return date
+      return l(date, format: '%A')
     end
   end
 
