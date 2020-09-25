@@ -3,20 +3,26 @@ import { init_urgences } from '../toggle/init_urgences.js';
 import { getUrgence } from '../toggle/get_urgence.js';
 import { getDistance, getDistTicket } from '../toggle/get_distance.js';
 import { getVolume } from '../toggle/get_volume.js';
+import { removeValidationError } from '../toggle/validations.js';
+import { displayTotal } from '../toggle/animations.js';
+
 
 
 const toggle = () => {
   document.addEventListener("turbolinks:load", (event) => {
 
+    const validators = document.querySelectorAll('.validators');
+
     const puAddress = document.getElementById('course_pickups_attributes_0_address');
     const drAddress = document.getElementById('course_drops_attributes_0_address');
     const addressInputs = [puAddress, drAddress]
 
-    const urButtons = document.querySelectorAll('.urgence');
-    const voButtons = document.querySelectorAll('.volume');
+    const urInputs = document.querySelectorAll('.urgence');
+    const voInputs = document.querySelectorAll('.volume');
 
     const sousTotals = document.querySelectorAll('.sous-total');
     const toDisplay = document.getElementById('total-course');
+    const priceDisplay = document.getElementById('total-price');
 
     const diDisplay = document.getElementById('kilometers');
     const urDisplay = document.querySelector('.right-urgence');
@@ -44,11 +50,14 @@ const toggle = () => {
       sous_total_array_input.forEach((number) => {
         total = total + parseInt(number.innerText, 10)
         toDisplay.innerHTML = total
+        priceDisplay.innerHTML = total * 7
       });
     }
 
-    init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urButtons);
-    sweetalert_display();
+    init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs);
+    sweetalert_display(addressInputs, urInputs, voInputs);
+    removeValidationError(addressInputs, urInputs, voInputs);
+    displayTotal(sousTotals);
 
     const removeActive = (array) => {
      array.forEach((button) => {
@@ -75,9 +84,9 @@ const toggle = () => {
 
 // URGENCE______________________________________________________________________
 
-    urButtons.forEach((button) => {
+    urInputs.forEach((button) => {
       button.addEventListener("click", (event) => {
-        removeActive(urButtons);
+        removeActive(urInputs);
         event.target.classList.add('active');
 
         puStart.value = event.currentTarget.dataset.start_hour
@@ -93,15 +102,13 @@ const toggle = () => {
 
 // VOLUME_______________________________________________________________________
 
-    voButtons.forEach( (volume) => {
+    voInputs.forEach( (volume) => {
       volume.addEventListener('click', (event) => {
-        removeActive(voButtons);
+        removeActive(voInputs);
         event.target.classList.add('active');
         let number = parseInt(event.srcElement.dataset.tickets, 10)
         getVolume(number, voDisplay)
         .then(() => getTotal(sousTotals));
-
-        // getTotal(sousTotals);
       });
     });
 

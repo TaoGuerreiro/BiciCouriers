@@ -1,9 +1,9 @@
 import  { initGuestAlert } from '../plugins/init_sweetalert.js';
 import swal from 'sweetalert2'
 
-const sweetalert_display = () => {
+const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator) => {
 
-  initGuestAlert('#continue',{
+  initGuestAlert(addressValidator, urgenceValidator, volumeValidator, '#continue',{
     buttonsStyling: false,
     customClass: {
       confirmButton: 'bici-button mar10'
@@ -22,6 +22,8 @@ const sweetalert_display = () => {
     inputValidator: (value) => {
       if (!value) {
         return 'Même trois fois rien...'
+      } else if (value.length < 3 ) {
+        return "C'est pas grand chose comme infos 😇​"
       }
     }
 
@@ -44,8 +46,9 @@ const sweetalert_display = () => {
         showCancelButton: false,
         inputValidator: (value) => {
           if (!value) {
-            return "Pas d'anonyme chez nous 😀​"
-          }
+            return "Pas d'anonyme chez nous 😀​" }
+          // else if (/\A[^@\s]+@[^@\s]+\z/.test(value)) {
+          // } else { return "cet email n'est pas valide 🤔​" }
         }
       }).then((mail) => {
 

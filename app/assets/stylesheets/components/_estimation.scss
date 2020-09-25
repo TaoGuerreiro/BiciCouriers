@@ -1,12 +1,12 @@
 .main-guest-courses {
   width: 370px;
-  height: 650px;
+  height: 670px;
   // height: 840px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  bottom: -584px;
+  bottom: -614px;
   // bottom: 0px;
   left: 60px;
   text-align: center;
@@ -29,12 +29,14 @@
     }
   }
   .total {
+    line-height: 5px;
     margin: 0px 20px;
-    padding-top: 10px;
+    padding-top: 20px;
     padding-right: 20px;
     border-top: 2px solid white;
     .total-text {
     text-align: right;
+    font-size: 16px;
     }
   }
 
