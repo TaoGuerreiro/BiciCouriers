@@ -6,13 +6,11 @@ const initGuestAlert = (addressValidator = [], urgenceValidator = [], volumeVali
   const swalButton = document.querySelector(selector);
   if (swalButton) { // protect other pages
     swalButton.addEventListener('click', () => {
-      addValidationError(addressValidator, urgenceValidator);
+      addValidationError(addressValidator, urgenceValidator, volumeValidator);
     swal.fire(options).then(callback); // <-- add the `.then(callback)`
     });
   }
 };
-
-
 
 const initUserAlert = (selector, options = {}, callback = () => {}) => {
   const swalButton = document.querySelector(selector);

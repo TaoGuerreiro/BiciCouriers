@@ -1,7 +1,7 @@
 import { fetchWithToken } from "../utils/fetch_with_token";
 
 
-const getVolume = (size, voDisplay) => {
+const getVolume = (size, voDisplay, voInput) => {
 
   let data = { volume: { size:size}}
 
@@ -17,6 +17,7 @@ const getVolume = (size, voDisplay) => {
   .then((data) => {
     // console.log(data)
     voDisplay.innerHTML = data
+    voInput.value = data
     // getTotal(sousTotals)
   });
 

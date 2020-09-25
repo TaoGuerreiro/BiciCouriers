@@ -29,6 +29,7 @@ const toggle = () => {
     const tiDisplay = document.querySelector('.right-distance');
     const heDisplay = document.querySelector('.heure');
     const voDisplay = document.querySelector('.right-volume');
+    const voInput = document.getElementById('bike');
 
 
     const urgence_0_hour = document.querySelector('.urgence-0-hour');
@@ -107,7 +108,7 @@ const toggle = () => {
         removeActive(voInputs);
         event.target.classList.add('active');
         let number = parseInt(event.srcElement.dataset.tickets, 10)
-        getVolume(number, voDisplay)
+        getVolume(number, voDisplay, voInput)
         .then(() => getTotal(sousTotals));
       });
     });

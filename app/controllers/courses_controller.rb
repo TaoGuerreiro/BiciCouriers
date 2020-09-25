@@ -241,9 +241,10 @@ class CoursesController < ApplicationController
       dr_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), drNd.slice(0,2),  drNd.slice(3,4), 00)
 
       @course.tickets_urgence = urge(pu_start, pu_end, dr_start, dr_end)
+      @course.tickets_volume = params[:bike]
       @course.distance = dist(puAddress, drAddress)
       @course.tickets_distance = tick(@course.distance)
-      @course.ticket_nb = @course.tickets_distance.to_i + params[:tickets_volume].to_i + @course.tickets_urgence.to_i
+      @course.ticket_nb = @course.tickets_distance.to_i + @course.tickets_volume.to_i + @course.tickets_urgence.to_i
       @course.price_cents = price(@course.ticket_nb)
       payement = params[:stripe]
       if @course.save && (payement == "on") #STRIPE PAYEMENT
@@ -260,7 +261,7 @@ class CoursesController < ApplicationController
             currency: 'eur',
             quantity: 1
           }],
-          success_url: order_url(order),
+          success_url: 'https://bicicouriers.fr',
           cancel_url: order_url(order)
         )
         order.update(checkout_session_id: session.id)

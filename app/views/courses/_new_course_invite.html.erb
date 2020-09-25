@@ -17,6 +17,9 @@
       <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
       <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
       <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
+
+      <input type="input" id="bike" name="bike">
+      <label for="bike">cargo</label>
     </div>
   <% end %>
 
@@ -28,8 +31,8 @@
 
 
     <div class="div-align" data-volume='0' id="volume">
-      <div class="icon-w fs10"><div class='icon volume volume-1 active' data-tickets='0'></div>Enveloppe ou petit plis</div>
-      <div class="icon-w fs10"><div class='icon volume volume-2' data-tickets='1'></div>Gros colis ou > 5kg</div>
+      <div class="icon-w fs10"><div class='icon volume volume-1 volume-validator' data-tickets='0'></div>Enveloppe ou petit plis</div>
+      <div class="icon-w fs10"><div class='icon volume volume-2 volume-validator' data-tickets='1'></div>Gros colis ou > 5kg</div>
     </div>
   <br>
   <div class="main-toggle-resultat">
