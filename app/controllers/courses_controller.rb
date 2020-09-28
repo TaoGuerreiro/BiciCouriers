@@ -319,12 +319,12 @@ private
 
   def add_course_to_cart(course, cart)
     course.shopping_cart = cart
-    cart.price_cents += (583 * course.ticket_nb)
+    cart.price_cents += (500 * course.ticket_nb)
   end
 
   def remove_course_from_cart(course, cart)
     course.shopping_cart = cart
-    cart.price_cents -= (583 * course.ticket_nb)
+    cart.price_cents -= (500 * course.ticket_nb)
   end
 
   def add_carnet_to_cart(carnet, cart)
@@ -426,7 +426,7 @@ private
     if is_user_and_have_carnet?
       unit_price = current_user.carnets.last.carnet_template.price_cents
     else
-      unit_price = 583
+      unit_price = 500
     end
     return unit_price * ticket_nb
   end

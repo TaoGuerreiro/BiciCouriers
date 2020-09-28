@@ -13,10 +13,9 @@ class UserMailer < ApplicationMailer
 
 
   def new_course
-    @user = params[:user]
-    @stripe = params[:stripe]
     @course = params[:course] # Instance variable => available in view
-    mail(to: @user.email, subject: "Nouvelle livraisons")
+    @user = @course.user
+    mail(to: @user.email, subject: "Livraison confirmée")
     # This will render a view in `app/views/user_mailer`!
   end
 end

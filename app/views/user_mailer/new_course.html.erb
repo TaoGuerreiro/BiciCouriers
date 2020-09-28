@@ -1,0 +1,21 @@
+<h1><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 16pt;">Livraison comfirmée !</span></h1>
+
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Bonjour !</span></p>
+
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Merci de nous faire confiance, nous avons bien prit votre commande en compte 😎​! </span></p>
+<br>
+
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Rammassage en <%= @course.bike == 0 ? 'Sac à dos' : 'cargo' %> au <%= @course.pickups.first.address %></span></p>
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Le <%= @course.pickups.first.date %> entre : <%= @course.pickups.first.start_hour %> ET <%= @course.pickups.first.end_hour %></span></p>
+<br>
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Livraison en <%= @course.bike == 0 ? 'Sac à dos' : 'cargo' %> au <%= @course.drops.first.address %></span></p>
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Le <%= @course.drops.first.date %> entre : <%= @course.drops.first.start_hour %> ET <%= @course.drops.first.end_hour %></span></p>
+<br>
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Détails : <%= @course.drops.first.details %></span></p>
+<br>
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 12pt;">Très bonne journée à vous,</span></p>
+
+<p><span style="color: #333333; font-family: tahoma, arial, helvetica, sans-serif; font-size: 11pt;">L'&eacute;quipe BiciCouriers</span></p>
+<p><span style="font-family: tahoma, arial, helvetica, sans-serif; color: #808080; font-size: 9pt;">07.81.66.03.50<br /><a href="http://www.bicicouriers.fr">www.bicicouriers.fr</a><br /></span></p>
+<p><span style="font-family: tahoma, arial, helvetica, sans-serif; color: #808080;">BiciCouriers - Passage de la Poule Noire - 44000 Nantes</span></p>
+<p><span style="font-family: tahoma, arial, helvetica, sans-serif;"></span><span style="font-family: tahoma, arial, helvetica, sans-serif; font-size: 14pt;"><span style="color: #000000;"><a style="color: #000000;" href="http://www.bicicouriers.fr"><em><strong>Bici</strong>Couriers</em></a></span></span></p>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_053005) do
+ActiveRecord::Schema.define(version: 2020_09_28_074112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 2020_09_18_053005) do
   create_table "drops", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.float "start_hour"
-    t.float "end_hour"
+    t.string "start_hour"
+    t.string "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(version: 2020_09_18_053005) do
   create_table "pickups", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.float "start_hour"
-    t.float "end_hour"
+    t.string "start_hour"
+    t.string "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

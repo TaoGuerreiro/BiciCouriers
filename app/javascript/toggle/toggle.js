@@ -52,7 +52,7 @@ const toggle = () => {
       sous_total_array_input.forEach((number) => {
         total = total + (parseInt(number.innerText, 10) || 0)
         toDisplay.innerHTML = total
-        priceDisplay.innerHTML = total * 7
+        priceDisplay.innerHTML = total * 6
       });
     }
 

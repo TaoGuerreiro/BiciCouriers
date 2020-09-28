@@ -1,8 +1,5 @@
  Rails.application.routes.draw do
 
-
-
-
   devise_for :users, :controllers => { registrations: 'users/registrations' }
 
   resources :users , only: [:create ]
@@ -35,12 +32,6 @@
 
   resources :contacts, only: [:new, :create]
 
-  # resources :simulations, only: [:new, :create] do
-  #   resources :simulation_orders, only: [:show, :create, :index] do
-  #     resources :simulation_payments, only: :new
-  #   end
-  # end
-
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
@@ -53,7 +44,6 @@
   get 'course/init_urgences', to: 'courses#init_urgences'
   post 'course/ticket_distance', to: 'courses#ticket_distance'
   post 'course/ticket_volume', to: 'courses#ticket_volume'
-  # post 'course/checkout', to: 'courses#checkout_id'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
