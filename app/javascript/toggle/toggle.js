@@ -25,6 +25,7 @@ const toggle = () => {
     const priceDisplay = document.getElementById('total-price');
 
     const diDisplay = document.getElementById('kilometers');
+    const voTextDisplay = document.getElementById('vo-text-volume');
     const urDisplay = document.querySelector('.right-urgence');
     const tiDisplay = document.querySelector('.right-distance');
     const heDisplay = document.querySelector('.heure');
@@ -49,13 +50,14 @@ const toggle = () => {
     let getTotal = (sous_total_array_input) => {
       let total = 0
       sous_total_array_input.forEach((number) => {
-        total = total + parseInt(number.innerText, 10)
+        total = total + (parseInt(number.innerText, 10) || 0)
         toDisplay.innerHTML = total
         priceDisplay.innerHTML = total * 7
       });
     }
 
-    init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs);
+    init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
+    setInterval(() => { init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)}, 60000);
     sweetalert_display(addressInputs, urInputs, voInputs);
     removeValidationError(addressInputs, urInputs, voInputs);
     displayTotal(sousTotals);
@@ -75,13 +77,18 @@ const toggle = () => {
         .then(() => getTotal(sousTotals))
       });
     })
-    // addressInputs.forEach((input) => {
-    //   input.addEventListener("input", (event) => {
-    //     getDistance(puAddress.value, drAddress.value, diDisplay)
-    //     .then((dist) => getDistTicket(dist, tiDisplay))
-    //     .then(() => getTotal(sousTotals))
-    //   });
-    // });
+
+    addressInputs.forEach((input) => {
+      input.addEventListener("input", (event) => {
+        getDistance(puAddress.value, drAddress.value, diDisplay)
+        .catch( (e) => console.log('Adresses pas assez précises'))
+        .then((dist) => {
+          getDistTicket(dist, tiDisplay)
+        })
+        .then(() => getTotal(sousTotals))
+      });
+    })
+
 
 // URGENCE______________________________________________________________________
 
@@ -107,6 +114,8 @@ const toggle = () => {
       volume.addEventListener('click', (event) => {
         removeActive(voInputs);
         event.target.classList.add('active');
+        voTextDisplay.innerText = event.currentTarget.dataset.text
+
         let number = parseInt(event.srcElement.dataset.tickets, 10)
         getVolume(number, voDisplay, voInput)
         .then(() => getTotal(sousTotals));

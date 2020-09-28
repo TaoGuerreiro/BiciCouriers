@@ -2,25 +2,25 @@
   "name": "BiciCouriers",
   "private": true,
   "dependencies": {
-    "@oberon-amsterdam/horizontal": "^1.0.2",
-    "@rails/ujs": "^6.0.3-2",
-    "@rails/webpacker": "5.0.1",
-    "bootstrap": "^4.4.1",
-    "flatpickr": "^4.6.3",
-    "jquery": "^3.4.1",
-    "nouislider": "^14.2.0",
-    "places.js": "^1.18.1",
+    "@oberon-amsterdam/horizontal": "^1.0.4",
+    "@rails/ujs": "^6.0.3-3",
+    "@rails/webpacker": "5.2.1",
+    "bootstrap": "^4.5.2",
+    "flatpickr": "^4.6.6",
+    "jquery": "^3.5.1",
+    "nouislider": "^14.6.2",
+    "places.js": "^1.19.0",
     "popper.js": "^1.16.1",
     "progressbar.js": "^1.1.0",
-    "rails-ujs": "^5.2.4-3",
+    "rails-ujs": "^5.2.4-4",
     "stimulus": "^1.1.1",
     "strftime": "^0.10.0",
-    "sweetalert2": "^9.11.0",
-    "swup": "^2.0.9",
+    "sweetalert2": "^10.3.5",
+    "swup": "^2.0.11",
     "turbolinks": "^5.2.0",
     "wnumb": "^1.2.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   }
 }

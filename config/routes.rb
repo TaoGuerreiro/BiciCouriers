@@ -1,5 +1,6 @@
  Rails.application.routes.draw do
-  # devise_for :users
+
+
 
 
   devise_for :users, :controllers => { registrations: 'users/registrations' }
@@ -20,10 +21,12 @@
 
   resources :shopping_carts, only: [:show, :create]
 
+  get '/orders/success'
+  get '/orders/cancel'
+
   resources :orders, only: [:show, :create, :index] do
     resources :payments, only: :new
   end
-
 
 
   resources :services, only: [:index, :show]

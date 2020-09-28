@@ -15,7 +15,7 @@ const getUrgence = (pus, pue, drs, dre, pud, drd, urDisplay, heDisplay) => {
   .then(response => response.json())
   .then((data) => {
     urDisplay.innerHTML = data.tickets_urgence
-    heDisplay.innerHTML = dre
+    heDisplay.innerHTML = "Livraison avant " + dre
     return data.tickets_urgence
   });
 };

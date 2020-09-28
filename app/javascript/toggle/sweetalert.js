@@ -47,8 +47,9 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
         inputValidator: (value) => {
           if (!value) {
             return "Pas d'anonyme chez nous 😀​" }
-          // else if (/\A[^@\s]+@[^@\s]+\z/.test(value)) {
-          // } else { return "cet email n'est pas valide 🤔​" }
+          else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
+            return "cet email n'est pas valide 🤔​"
+          }
         }
       }).then((mail) => {
 
@@ -60,14 +61,17 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
             buttonsStyling: false,
             customClass: {
               confirmButton: 'sw-button-user',
-              cancelButton: 'bici-button sw-button-stripe'
+              denyButton: 'bici-button sw-button-stripe',
+              // cancelButton: 'bici-button sw-button-stripe'
             },
             background: '#FF016C',
             title: "Comment souhaitez vous regler la course ?",
             reverseButtons: true,
-            showCancelButton: true,
+            // showCancelButton: true,
+            showDenyButton: true,
             confirmButtonText: `Déjà client·e ? / Payer à la livraison`,
-            cancelButtonText: `Payer en ligne`
+            // cancelButtonText: `Payer en ligne`,
+            denyButtonText: `Payer en ligne`,
           }).then((payement) => {
 
             if (payement.value) {
@@ -81,7 +85,7 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
                 showConfirmButton: false,
                 timer: 1500
               })
-          } else {
+          } else if (payement.isDenied) {
               const stripeCheckbox = document.getElementById('stripe');
               stripeCheckbox.click()
               const link = document.getElementById('save-course');
@@ -94,6 +98,8 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
                 showConfirmButton: false
               })
             return
+          } else {
+          return
           }
         });
         } else {

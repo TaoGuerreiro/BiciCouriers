@@ -11,7 +11,7 @@ Rails.application.configure do
       FavoriteAddressesController.layout "commandes"
       ShoppingCartsController.layout "commandes"
       PaymentsController.layout "commandes"
-      OrdersController.layout "commandes"
+      OrdersController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
   end
 
   config.action_mailer.delivery_method     = :postmark

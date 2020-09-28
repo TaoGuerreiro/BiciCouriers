@@ -12,7 +12,7 @@ const getDistance = (pickup, drop, display) => {
   })
   .then((response) => response.json())
   .then((dist) => {
-    display.innerHTML = dist/1000
+    display.innerHTML = dist/1000 + ' km'
     return dist
   });
 };

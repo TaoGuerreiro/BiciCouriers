@@ -220,7 +220,6 @@ class CoursesController < ApplicationController
           password: Devise.friendly_token.first(8)
         })
       end
-      # if user already rec
       @course = Course.new(course_params)
       @course.bike_id = Bike.first.id if @course.bike_id.nil?
       @course.user = @user
@@ -261,8 +260,9 @@ class CoursesController < ApplicationController
             currency: 'eur',
             quantity: 1
           }],
-          success_url: 'https://bicicouriers.fr',
-          cancel_url: order_url(order)
+          customer_email: @user.email,
+          success_url: "#{root_url}orders/success?session_id={CHECKOUT_SESSION_ID}",
+          cancel_url: "#{root_url}orders/cancel?session_id={CHECKOUT_SESSION_ID}",
         )
         order.update(checkout_session_id: session.id)
 
@@ -274,7 +274,7 @@ class CoursesController < ApplicationController
         end
 
       elsif @course.save && payement.nil?
-        redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux'}
+        redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux 😎​🚴​'}
       else
         render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}
       end
