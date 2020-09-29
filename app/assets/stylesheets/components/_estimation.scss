@@ -1,24 +1,51 @@
 .main-guest-courses {
   width: 370px;
-  height: 670px;
-  // height: 840px;
+  // height: 720px;
+  height: 720px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  bottom: -614px;
-  bottom: 0px;
+  bottom: -664px;
+  // bottom: 0px;
   left: 60px;
   text-align: center;
-  transition: 0.3s;
+  transition: 0.4s;
+  &:hover {
+    bottom: 0px;
+    cursor: pointer;
+  }
+  .title {
+    height: 40px;
+    // vertical-align : baseline;
+  }
+
+  #addresses {
+    height: 120px;
+  }
+  #urgence {
+    height: 100px;
+  }
+  #volume {
+    height: 100px;
+  }
+
+  .total {
+  }
+
+  .toggle-element {
+    border-top: 1px solid white;
+    padding-top: 10px;
+    margin: 15px;
+    // background-color: $blue;
+  }
 
   .main-toggle-resultat {
     display: flex;
     justify-content: space-between;
-    border-top: 2px solid white;
     padding-top: 10px;
     padding-right: 20px;
-    margin: 0px 20px;
+    // margin: 0px 20px;
     .left-box-resultat {
       text-align: left;
       width: 70%;
@@ -28,6 +55,11 @@
       width: 30%;
     }
   }
+
+  .sous-total {
+    font-weight: 700;
+  }
+
   .total {
     line-height: 5px;
     margin: 0px 20px;
@@ -45,14 +77,6 @@
     font-size: 16px;
     letter-spacing: 2.5px;
     margin-bottom: 20px;
-  }
-  &:hover {
-    bottom: 0px;
-    cursor: pointer;
-  }
-  .title {
-    // height: 50px;
-    // vertical-align : baseline;
   }
   .addresses {
     margin: 10px;
@@ -80,7 +104,7 @@
     margin: 0px auto;
   }
   .icon-w {
-    width: 60px;
+    width: 80px;
     height: 70px;
     color: white;
     margin-bottom: 20px;
@@ -103,6 +127,10 @@
   .active {
     background-image: asset-url("commande/pink-check.svg");
   }
+  // #continue {
+  //  position: relative;
+  //  bottom: -80px;
+  // }
 }
 .sw-button-stripe {
   padding: 30px;
@@ -126,6 +154,64 @@
  }
 }
 
+@media (max-width: 540px) {
+  .main-guest-courses {
+    // width: 370px;
+    height: 556px;
+    margin: 0px auto;
+    width: auto;
+    left: 25px;
+    right: 25px;
+    bottom: -505px;
+    .title {
+      height: 27px;
+    // vertical-align : baseline;
+    }
+    .toggle-element {
+      border-top: 1px solid white;
+      padding-top: 5px;
+      margin: 12px;
+      // background-color: $blue;
+    }
+    #addresses {
+      height: 85px;
+    }
+    #urgence {
+      height: 80px;
+    }
+    #volume {
+      height: 80px;
+    }
+
+    .total {
+      padding-top: 8px;
+      .total-text {
+      text-align: left;
+      font-size: 14px;
+      }
+
+    }
+    .form-group {
+      margin-bottom: -8px;
+    }
+    .main-toggle-resultat {
+      padding-top: 5px;
+      p {
+        font-size: 12px;
+      }
+      // padding-right: 2px;
+      // margin: 0px 20px;
+      .left-box-resultat {
+        text-align: left;
+        width: 70%;
+      }
+      .right-box-resultat {
+        text-align: right;
+        width: 30%;
+      }
+    }
+  }
+}
 
 
 

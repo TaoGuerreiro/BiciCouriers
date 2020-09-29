@@ -1,16 +1,17 @@
-const displayTotal = (sousTotals) => {
-//   sousTotals.forEach((sousTotal) => {
-//     console.log(sousTotal)
-//     sousTotal.addEventListener('DOMCharacterDataModified', (event) => {
+const displayTotal = (inputs) => {
+//     // console.log(inputs)
+//   inputs.forEach((input) => {
+//     input.addEventListener('change', (event) => {
+
 //       console.log(event)
 //     });
-//   });
+//   })
+// }
 
 // var mutationObserver = new MutationObserver(function(mutations) {
 //   mutations.forEach(function(mutation) {
 //     console.log(mutation);
 //   });
-
 // });
 
 // mutationObserver.observe(document.documentElement, {
@@ -21,7 +22,6 @@ const displayTotal = (sousTotals) => {
 //   attributeOldValue: false,
 //   characterDataOldValue: false
 // });
-
-
 }
+
 export { displayTotal }
