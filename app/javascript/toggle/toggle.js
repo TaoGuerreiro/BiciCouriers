@@ -65,6 +65,8 @@ const toggle = () => {
     const removeActive = (array) => {
      array.forEach((button) => {
        button.classList.remove('active');
+       button.nextElementSibling.classList.remove('font-active');
+
      });
     }
 
@@ -96,6 +98,7 @@ const toggle = () => {
       button.addEventListener("click", (event) => {
         removeActive(urInputs);
         event.target.classList.add('active');
+        event.target.nextElementSibling.className ='font-active';
 
         puStart.value = event.currentTarget.dataset.start_hour
         puEnd.value = event.currentTarget.dataset.end_hour
@@ -114,6 +117,7 @@ const toggle = () => {
       volume.addEventListener('click', (event) => {
         removeActive(voInputs);
         event.target.classList.add('active');
+        event.target.nextElementSibling.className ='font-active';
         voTextDisplay.innerText = event.currentTarget.dataset.text
 
         let number = parseInt(event.srcElement.dataset.tickets, 10)

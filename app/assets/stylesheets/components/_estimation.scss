@@ -1,12 +1,12 @@
 .main-guest-courses {
   width: 370px;
   // height: 720px;
-  height: 720px;
+  height: 700px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  bottom: -664px;
+  bottom: -644px;
   // bottom: 0px;
   left: 60px;
   text-align: center;
@@ -45,6 +45,7 @@
     justify-content: space-between;
     padding-top: 10px;
     padding-right: 20px;
+    height: 105px;
     // margin: 0px 20px;
     .left-box-resultat {
       text-align: left;
@@ -104,7 +105,7 @@
     margin: 0px auto;
   }
   .icon-w {
-    width: 80px;
+    width: 88px;
     height: 70px;
     color: white;
     margin-bottom: 20px;
@@ -126,6 +127,10 @@
   }
   .active {
     background-image: asset-url("commande/pink-check.svg");
+  }
+  .font-active {
+    font-size: 13px;
+    font-weight: 600;
   }
   // #continue {
   //  position: relative;
@@ -157,12 +162,12 @@
 @media (max-width: 540px) {
   .main-guest-courses {
     // width: 370px;
-    height: 556px;
+    height: 572px;
     margin: 0px auto;
     width: auto;
     left: 25px;
     right: 25px;
-    bottom: -505px;
+    bottom: -520px;
     .title {
       height: 27px;
     // vertical-align : baseline;
@@ -177,10 +182,10 @@
       height: 85px;
     }
     #urgence {
-      height: 80px;
+      height: 88px;
     }
     #volume {
-      height: 80px;
+      height: 88px;
     }
 
     .total {
@@ -196,6 +201,7 @@
     }
     .main-toggle-resultat {
       padding-top: 5px;
+
       p {
         font-size: 12px;
       }
@@ -211,6 +217,9 @@
       }
     }
   }
+}
+.swal2-content {
+  padding: 0 !important;
 }
 
 
