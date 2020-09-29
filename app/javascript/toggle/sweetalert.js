@@ -62,15 +62,12 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
             customClass: {
               confirmButton: 'sw-button-user',
               denyButton: 'bici-button sw-button-stripe',
-              // cancelButton: 'bici-button sw-button-stripe'
             },
             background: '#FF016C',
             title: "Comment souhaitez vous regler la course ?",
             reverseButtons: true,
-            // showCancelButton: true,
             showDenyButton: true,
             confirmButtonText: `Déjà client·e ? / Payer à la livraison`,
-            // cancelButtonText: `Payer en ligne`,
             denyButtonText: `Payer en ligne`,
           }).then((payement) => {
 
@@ -78,7 +75,6 @@ const sweetalert_display = (addressValidator, urgenceValidator, volumeValidator)
               const link = document.getElementById('save-course');
               link.click();
               swal.fire({
-                // position: 'top-end',
                 background: '#FF016C',
                 icon: 'success',
                 title: 'Bien reçu ! 😎​',

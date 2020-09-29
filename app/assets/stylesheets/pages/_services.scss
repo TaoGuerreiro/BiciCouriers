@@ -6,34 +6,27 @@
   position: relative;
   overflow-x: scroll;
   overflow-y: hidden;
-
   position: absolute;
 }
 
 
 .services-info-container {
-  // background-color: red;
-
   position: absolute;
   width: 300px;
   height: 30%;
   padding-top: 5%;
   margin-left: 8%;
   p {
-  color: $blue;
-
-
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 25px;
+    color: $blue;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 25px;
   }
   h1 {
-  color: $blue;
-
-
-  font-weight: 800;
-  font-size: 68px;
-  line-height: 72px;
+    color: $blue;
+    font-weight: 800;
+    font-size: 68px;
+    line-height: 72px;
   }
 }
 
@@ -74,7 +67,6 @@
 }
 
 .service-board {
-  // background-color: blue;
   overflow-x: scroll;
   display: flex;
   flex-wrap: nowrap;
@@ -92,21 +84,15 @@
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
-
-
   p {
-  color: white;
-
-
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 25px;
-  padding: 15px;
+    color: white;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 15px;
   }
   h2 {
     color: white;
-
-
     font-weight: 800;
     font-size: 20px;
     line-height: 72px;
@@ -136,6 +122,7 @@
     padding-top: 10%;
   }
 }
+
 @media (max-width: 720px) {
   .ellipse-1 {
     display: none;
@@ -144,6 +131,7 @@
     left: 450px;
   }
 }
+
 @media (max-width: 540px) {
   .service-board {
     // background-color: blue;
@@ -162,4 +150,3 @@
     max-width:2000px;
   }
 }
-

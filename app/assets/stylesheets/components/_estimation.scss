@@ -1,23 +1,30 @@
 .main-guest-courses {
   width: 370px;
-  // height: 720px;
-  height: 700px;
+  height: 705px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
   bottom: -644px;
-  // bottom: 0px;
   left: 60px;
   text-align: center;
   transition: 0.4s;
+
+  animation-name: toggle;
   &:hover {
     bottom: 0px;
     cursor: pointer;
   }
   .title {
     height: 40px;
-    // vertical-align : baseline;
+    line-height: 0px;
+    h3 {
+      line-height: 0px;
+    }
+    p {
+      line-height: 0px;
+      font-style: italic;
+    }
   }
 
   #addresses {
@@ -37,7 +44,6 @@
     border-top: 1px solid white;
     padding-top: 10px;
     margin: 15px;
-    // background-color: $blue;
   }
 
   .main-toggle-resultat {
@@ -46,7 +52,6 @@
     padding-top: 10px;
     padding-right: 20px;
     height: 105px;
-    // margin: 0px 20px;
     .left-box-resultat {
       text-align: left;
       width: 70%;
@@ -68,8 +73,8 @@
     padding-right: 20px;
     border-top: 2px solid white;
     .total-text {
-    text-align: right;
-    font-size: 16px;
+      text-align: left;
+      font-size: 16px;
     }
   }
 
@@ -84,9 +89,6 @@
     height: 100px;
   }
 
-  // .testest {
-  //   height: 200px;
-  // }
   .form-control {
     border: none;
     background-color: white !important;
@@ -132,10 +134,6 @@
     font-size: 13px;
     font-weight: 600;
   }
-  // #continue {
-  //  position: relative;
-  //  bottom: -80px;
-  // }
 }
 .sw-button-stripe {
   padding: 30px;
@@ -155,13 +153,12 @@
    border: solid 1px white;
    background-color: $pink;
    color: white !important;
- font-weight: 400 !important;
+   font-weight: 400 !important;
  }
 }
 
 @media (max-width: 540px) {
   .main-guest-courses {
-    // width: 370px;
     height: 572px;
     margin: 0px auto;
     width: auto;
@@ -170,13 +167,11 @@
     bottom: -520px;
     .title {
       height: 27px;
-    // vertical-align : baseline;
-    }
-    .toggle-element {
-      border-top: 1px solid white;
-      padding-top: 5px;
-      margin: 12px;
-      // background-color: $blue;
+  }
+  .toggle-element {
+    border-top: 1px solid white;
+    padding-top: 5px;
+    margin: 12px;
     }
     #addresses {
       height: 85px;
@@ -191,8 +186,8 @@
     .total {
       padding-top: 8px;
       .total-text {
-      text-align: left;
-      font-size: 14px;
+        text-align: left;
+        font-size: 14px;
       }
 
     }
@@ -205,8 +200,6 @@
       p {
         font-size: 12px;
       }
-      // padding-right: 2px;
-      // margin: 0px 20px;
       .left-box-resultat {
         text-align: left;
         width: 70%;
@@ -222,5 +215,55 @@
   padding: 0 !important;
 }
 
+// @keyframes toggle {
+//   from {
+//     bottom: -644px;
+//   }
+//   to {
+//     bottom: -654px;
+//   }
+// }
 
+// @-webkit-keyframes NAME-YOUR-ANIMATION {
+//   0%   { opacity: 0; }
+//   100% { opacity: 1; }
+// }
+// @-moz-keyframes NAME-YOUR-ANIMATION {
+//   0%   { opacity: 0; }
+//   100% { opacity: 1; }
+// }
+// @-o-keyframes NAME-YOUR-ANIMATION {
+//   0%   { opacity: 0; }
+//   100% { opacity: 1; }
+// }
+// @keyframes NAME-YOUR-ANIMATION {
+//   0%   { opacity: 0; }
+//   100% { opacity: 1; }
+// }
+
+// #box {
+//   -webkit-animation: NAME-YOUR-ANIMATION 5s infinite; /* Safari 4+ */
+//   -moz-animation:    NAME-YOUR-ANIMATION 5s infinite; /* Fx 5+ */
+//   -o-animation:      NAME-YOUR-ANIMATION 5s infinite; /* Opera 12+ */
+//   animation:         NAME-YOUR-ANIMATION 5s infinite; /* IE 10+, Fx 29+ */
+// }
+
+@keyframes fontbulger {
+  0% {
+    bottom: -644px;
+  }
+  37% {
+    bottom: -624px;
+  }
+  100% {
+    bottom: -644px;
+  }
+}
+
+#box {
+   animation: fontbulger 0.6s 2s 4 alternate;
+   &:hover {
+    animation: none;
+   }
+}
 
