@@ -11,8 +11,11 @@ import { displayTotal } from '../toggle/animations.js';
 const toggle = () => {
   document.addEventListener("turbolinks:load", (event) => {
 
-    const validators = document.querySelectorAll('.validators');
+    if (window.location.pathname != '/') {
+      return
+    }
 
+    const validators = document.querySelectorAll('.validators');
     const puAddress = document.getElementById('course_pickups_attributes_0_address');
     const drAddress = document.getElementById('course_drops_attributes_0_address');
     const addressInputs = [puAddress, drAddress]
@@ -75,7 +78,9 @@ const toggle = () => {
     addressInputs.forEach((input) => {
       input.addEventListener("change", (event) => {
         getDistance(puAddress.value, drAddress.value, diDisplay)
-        .then((dist) => getDistTicket(dist, tiDisplay))
+        .then((dist) => {
+          getDistTicket(dist, tiDisplay)
+        })
         .then(() => getTotal(sousTotals))
       });
     })
@@ -83,7 +88,6 @@ const toggle = () => {
     addressInputs.forEach((input) => {
       input.addEventListener("input", (event) => {
         getDistance(puAddress.value, drAddress.value, diDisplay)
-        .catch( (e) => console.log('Adresses pas assez précises'))
         .then((dist) => {
           getDistTicket(dist, tiDisplay)
         })

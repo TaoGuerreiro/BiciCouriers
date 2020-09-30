@@ -26,7 +26,6 @@ import  { favoriteFill } from '../shared/favorite_fill.js';
 import  { toggle } from '../toggle/toggle.js';
 
 toggle();
-
 movement();
 cardsFly();
 userLogo();

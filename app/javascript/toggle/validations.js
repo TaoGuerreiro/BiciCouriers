@@ -1,4 +1,8 @@
 const addValidationError = (addressValidator, urgenceValidator, volumeValidator) => {
+      if (addressValidator == null) {
+      return
+    }
+
   switch (true) {
     case (addressValidator[0].value == "") :
       addressValidator[0].style.boxShadow = "0 0 5px 1px #000000";
@@ -23,9 +27,11 @@ const addValidationError = (addressValidator, urgenceValidator, volumeValidator)
   }
 }
 
-
-
 const removeValidationError = (address_inputs, urgence_inputs, volume_inputs) => {
+    if (address_inputs == null) {
+      return
+    }
+
   address_inputs.forEach((input) => {
     input.addEventListener('input', (event) => {
       if (input.value != "") {

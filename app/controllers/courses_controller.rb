@@ -397,20 +397,23 @@ private
   #______________________V2______________________
 
   def dist(pu, dr)
+    begin
+      url = 'https://maps.googleapis.com/maps/api/directions/json?'
+      query = {
+        origin: pu,
+        destination: dr,
+        key: ENV['GOOGLE_API_KEY']
+      }
 
-    url = 'https://maps.googleapis.com/maps/api/directions/json?'
-    query = {
-      origin: pu,
-      destination: dr,
-      key: ENV['GOOGLE_API_KEY']
-    }
+      distance = JSON.parse(HTTParty.get(
+        url,
+        query: query
+      ).body)
 
-    distance = JSON.parse(HTTParty.get(
-      url,
-      query: query
-    ).body)
-
-    return (distance['routes'][0]['legs'][0]['distance']['value'])
+      return (distance['routes'][0]['legs'][0]['distance']['value'])
+    rescue NoMethodError
+        return 0
+    end
   end
 
   def tick(dist)
