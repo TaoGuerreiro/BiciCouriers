@@ -283,5 +283,25 @@
  }
 }
 
+// @keyframes popup {
+//   0% {
+//     transform: translateY(150px);
+//   }
+//   34% {
+//     transform: translateY(20px);
+//   }
+//   37% {
+//     transform: translateY(150px);
+//   }
+//   100% {
+//     transform: translateY(150px);
+//   }
+// }
 
 
+// .urgence_type_1 {
+//   -webkit-animation: popup 0.6s 2s 4 alternate; /* Safari 4+ */
+//   -moz-animation:    popup 0.6s 2s 4 alternate; /* Fx 5+ */
+//   -o-animation:      popup 0.6s 2s 4 alternate; /* Opera 12+ */
+//   animation:         popup 0.6s 2s 4 alternate; /* IE 10+, Fx 29+ */
+// }
