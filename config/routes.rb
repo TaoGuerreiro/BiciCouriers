@@ -2,7 +2,7 @@
 
   devise_for :users, :controllers => { registrations: 'users/registrations' }
 
-  resources :users , only: [:create ]
+  # resources :users , only: [:create ]
 
   root to: 'pages#home'
 
@@ -17,7 +17,7 @@
 
 
 
-  resources :shopping_carts, only: [:show, :create]
+  # resources :shopping_carts, only: [:show, :create]
 
   get '/orders/success'
   get '/orders/cancel'
