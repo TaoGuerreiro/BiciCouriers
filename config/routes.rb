@@ -6,7 +6,8 @@
 
   root to: 'pages#home'
 
-  match 'profil', to: 'users#show', via: 'get'
+  # match 'profil', to: 'users#show', via: 'get'
+
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   get "/histoire", to: "pages#story"
@@ -45,15 +46,15 @@
   post 'course/ticket_distance', to: 'courses#ticket_distance'
   post 'course/ticket_volume', to: 'courses#ticket_volume'
 
-  resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
+  # resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
-  resources :carnets, only: [:new, :create, :index, :show, :destroy] do
-    collection do
-      get :inprogress
-    end
-    collection do
-      get :finished
-    end
-  end
+  # resources :carnets, only: [:new, :create, :index, :show, :destroy] do
+  #   collection do
+  #     get :inprogress
+  #   end
+  #   collection do
+  #     get :finished
+  #   end
+  # end
 
 end

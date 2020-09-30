@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: [:success]
-  before_action :skip_authorization, only: [:success]
+  before_action :authenticate_user!, except: [:success, :cancel]
+  before_action :skip_authorization, only: [:success, :cancel]
 
 
 
