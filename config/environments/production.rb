@@ -6,13 +6,14 @@ Rails.application.configure do
       Devise::UnlocksController.layout "application"
       Devise::PasswordsController.layout "application"
       UsersController.layout "commandes"
-      CoursesController.layout "commandes"
+      CoursesController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
       CarnetsController.layout "commandes"
       FavoriteAddressesController.layout "commandes"
       ShoppingCartsController.layout "commandes"
       PaymentsController.layout "commandes"
-      OrdersController.layout "commandes"
+      OrdersController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
   end
+
   config.action_mailer.delivery_method     = :postmark
 
   config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }

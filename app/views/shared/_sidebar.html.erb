@@ -1,12 +1,12 @@
 <div class="main-side-nav">
 
   <div class="user-infos">
-   <%# if current_user %>
+   <% if current_user == true %>
     <p id="name"> <%= current_user.first_name%> <strong> <%=current_user.last_name %></strong></p>
     <p id="company"> <%= current_user.company %> </p>
     <p id="email"> <%= current_user.email %> </p>
     <p id="phone"> <%= current_user.phone %> </p>
-    <%# end %>
+    <% end %>
   </div>
   <div class="button-list">
     <% if current_user.shopping_carts.present? %>

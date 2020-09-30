@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!, except: [:success]
+  before_action :skip_authorization, only: [:success]
+
 
 
   def index
@@ -30,6 +33,18 @@ class OrdersController < ApplicationController
   def show
     @order = current_user.orders.find(params[:id])
     authorize @order
+  end
+
+  def success
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @customer = @session.customer
+    redirect_to root_path, flash: {alert: 'Course bien envoyé à nos bureaux 😎​🚴​'}
+  end
+
+  def cancel
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @customer = @session.customer
+    redirect_to root_path, flash: {alert: 'Un problème est survenu 😔​'}
   end
 
   private

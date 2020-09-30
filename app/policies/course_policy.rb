@@ -9,10 +9,6 @@ class CoursePolicy < ApplicationPolicy
     end
   end
 
-  def create?
-    true
-  end
-
   def show?
     user_is_owner_or_admin
   end

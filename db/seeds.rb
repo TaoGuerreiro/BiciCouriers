@@ -6,18 +6,37 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 puts "seeding"
+puts '______________DROPPING TABLES_________________'
+puts 'Services'
 Service.destroy_all
+puts 'Avantage'
 Avantage.destroy_all
+puts 'Bike'
 Bike.destroy_all
+puts 'Pickup'
 Pickup.destroy_all
+puts 'Drop'
 Drop.destroy_all
+puts 'Favorite Addresses'
+FavoriteAddress.destroy_all
+puts 'Course'
 Course.destroy_all
+puts 'Carnet'
 Carnet.destroy_all
+puts 'User'
 User.destroy_all
+puts 'CarnetTemplate'
 CarnetTemplate.destroy_all
+puts 'ShoppingCart'
 ShoppingCart.destroy_all
+puts 'Order'
 Order.destroy_all
+puts 'Cities'
+City.destroy_all
+puts '_________________DROPPING DONE________________'
 
+
+puts '___________________SERVICES___________________'
 Service.create(
   {
     title: "Transport urgent",
@@ -27,7 +46,6 @@ Service.create(
 
   }
 )
-
 
 Service.create(
   {
@@ -81,6 +99,9 @@ Service.create(
     Nous proposons également des abonnements et carnets de tickets pour les demandes récurrentes. "
   }
 )
+puts '________________SERVICES => OK________________'
+
+puts '__________________AVANTAGES___________________'
 
 Avantage.create(
   {
@@ -107,6 +128,8 @@ Avantage.create(
     image_pour: "avantages/stress.svg",
   }
 )
+puts '_______________AVANTAGES => OK________________'
+puts '____________________USERS_____________________'
 
 florent = User.create(
   {
@@ -130,6 +153,7 @@ admin = User.create(
     admin: true
   }
 )
+puts '________________USERS => OK___________________'
 
 # ticket_solo = CarnetTemplate.create(
 #   {
@@ -139,13 +163,15 @@ admin = User.create(
 #     image: "tarifs/ticket-1.svg"
 #   }
 # )
+puts '______________CARNETS TEMPLATES_______________'
 
 carnet_10_t = CarnetTemplate.create(
   {
     ticket_nb: 10,
     price_cents: 500,
     description: "Carnet de 10 tickets pour les petits besoins ponctuels.",
-    image: "tarifs/ticket-1.svg"
+    image: "tarifs/ticket-1.svg",
+    distance_max: 3.5
   }
 )
 
@@ -154,7 +180,8 @@ carnet_20_t = CarnetTemplate.create(
     ticket_nb: 20,
     price_cents: 480,
     description: "20 tickets pour une utilisation un peu plus régulière.",
-    image: "tarifs/ticket-1.svg"
+    image: "tarifs/ticket-1.svg",
+    distance_max: 3.5
   }
 )
 
@@ -163,7 +190,8 @@ carnet_50_t = CarnetTemplate.create(
     ticket_nb: 50,
     price_cents: 440,
     description: "Carnet de 50 tickets destinés à des besoins quotidiens !",
-    image: "tarifs/ticket-1.svg"
+    image: "tarifs/ticket-1.svg",
+    distance_max: 3.5
   }
 )
 
@@ -172,9 +200,13 @@ carnet_100_t = CarnetTemplate.create(
     ticket_nb: 100,
     price_cents: 420,
     description: "Carnet de 100 tickets destinés à de gros besoin et économiser sur vos livraisons !",
-    image: "tarifs/ticket-1.svg"
+    image: "tarifs/ticket-1.svg",
+    distance_max: 3.5
   }
 )
+
+puts '___________CARNETS TEMPLATES => OK____________'
+puts '____________________BIKES_____________________'
 
 bike_1 = Bike.create(
   {
@@ -190,209 +222,71 @@ bike_2 = Bike.create(
   }
 )
 
-# Carnet.create(
-#   {
-#   user_id: admin.id,
-#   remaining_tickets: 0,
-#   carnet_template_id: ticket_solo.id
-#   }
-# )
+puts '_________________BIKES => OK__________________'
 
-# carnet_50 = Carnet.create(
-#   {
-#     carnet_template_id: carnet_50_t.id,
-#     user_id: florent.id,
-#     remaining_tickets: 50
-#   }
-# )
+puts '_________________SHOPPING CART________________'
 
-# course_1 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 3,
-#   distance: 3456,
-#   details: "Ouech alors",
-#   status: "pending"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_1.id,
-#   address: "21 rue de la juiverie, 44000, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "C'est un fut de bière donc lourd",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_1.id,
-#   address: "21 rue jeanne d'arc, 44000, Nantes",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un notaire",
-#   date: "21/03/2020"
-#   }
-# )
+shop_1 = ShoppingCart.create(
+  {
+    price_cents: 22000,
+    user_id: florent.id,
+    state: :paid
+  }
+)
 
-# course_2 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 2,
-#   distance: 2341,
-#   details: "Ouech alors",
-#   status: "pending"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_2.id,
-#   address: "21 rue Amirale Du chaffault, 44100, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_2.id,
-#   address: "9 Impasse des Tilleuls",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un avocat",
-#   date: "21/03/2020"
-#   }
-# )
+puts '_____________SHOPPING CART => OK______________'
 
-# course_3 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 2,
-#   distance: 2341,
-#   details: "Ouech alors",
-#   status: "accepted"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_3.id,
-#   address: "21 rue Amirale Du chaffault, 44100, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_3.id,
-#   address: "9 Impasse des Tilleuls",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un avocat",
-#   date: "21/03/2020"
-#   }
-# )
-# course_4 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 2,
-#   distance: 2341,
-#   details: "Ouech alors",
-#   status: "inprogress"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_4.id,
-#   address: "21 rue Amirale Du chaffault, 44100, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_4.id,
-#   address: "9 Impasse des Tilleuls",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un avocat",
-#   date: "21/03/2020"
-#   }
-# )
-# course_5 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 2,
-#   distance: 2341,
-#   details: "Ouech alors",
-#   status: "done"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_5.id,
-#   address: "21 rue Amirale Du chaffault, 44100, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_5.id,
-#   address: "9 Impasse des Tilleuls",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un avocat",
-#   date: "21/03/2020"
-#   }
-# )
-# course_6 = Course.create(
-#   {
-#   user_id: florent.id,
-#   carnet_id: carnet_50.id,
-#   bike_id: bike_1.id,
-#   ticket_nb: 2,
-#   distance: 2341,
-#   details: "Ouech alors",
-#   status: "inprogress"
-#   }
-# )
-# Pickup.create(
-#   {
-#   course_id: course_6.id,
-#   address: "21 rue Amirale Du chaffault, 44100, Nantes",
-#   start_hour: "12:00",
-#   end_hour: "16:00",
-#   details: "",
-#   date: "21/03/2020"
-#   }
-# )
-# Drop.create(
-#   {
-#   course_id: course_6.id,
-#   address: "9 Impasse des Tilleuls",
-#   start_hour: "14:00",
-#   end_hour: "18:00",
-#   details: "Chez un avocat",
-#   date: "21/03/2020"
-#   }
-# )
+puts '___________________CARNETS____________________'
+
+
+carnet_50 = Carnet.create(
+  {
+    carnet_template_id: carnet_50_t.id,
+    user_id: florent.id,
+    remaining_tickets: 50,
+    shopping_cart_id: shop_1.id
+  }
+)
+
+puts '________________CARNETS => OK_________________'
+
+puts '___________________CITIES_____________________'
+
+nantes = City.create(city_name: "Nantes")
+
+
+puts '________________CITIES => OK__________________'
+
+
 
 puts "ok"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_153608) do
+ActiveRecord::Schema.define(version: 2020_09_28_074112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
     t.string "image"
     t.string "description"
     t.integer "price_cents", default: 0, null: false
+    t.float "distance_max", default: 3.5
   end
 
   create_table "carnets", force: :cascade do |t|
@@ -51,6 +52,18 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
     t.index ["user_id"], name: "index_carnets_on_user_id"
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "start_hour", default: "08:00"
+    t.string "end_hour", default: "19:00"
+    t.integer "cargo_nb", default: 1
+    t.float "distance_per_ticket", default: 3500.0
+    t.integer "urgence_one_size", default: 2700
+    t.integer "urgence_two_size", default: 14400
+    t.string "city_name"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -64,17 +77,18 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
     t.bigint "user_id"
     t.bigint "carnet_id"
     t.bigint "bike_id"
-    t.integer "ticket_nb"
+    t.integer "ticket_nb", default: 0
     t.integer "distance"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
-    t.integer "tickets_urgence"
-    t.integer "tickets_volume"
-    t.integer "tickets_distance"
+    t.string "status", default: "pending"
+    t.integer "tickets_urgence", default: 0
+    t.integer "tickets_volume", default: 0
+    t.integer "tickets_distance", default: 0
     t.integer "ticket_overflow", default: 0
     t.bigint "shopping_cart_id"
+    t.integer "price_cents", default: 0, null: false
     t.index ["bike_id"], name: "index_courses_on_bike_id"
     t.index ["carnet_id"], name: "index_courses_on_carnet_id"
     t.index ["shopping_cart_id"], name: "index_courses_on_shopping_cart_id"
@@ -84,8 +98,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
   create_table "drops", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.float "start_hour"
-    t.float "end_hour"
+    t.string "start_hour"
+    t.string "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -122,8 +136,8 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
   create_table "pickups", force: :cascade do |t|
     t.bigint "course_id"
     t.string "address"
-    t.float "start_hour"
-    t.float "end_hour"
+    t.string "start_hour"
+    t.string "end_hour"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -149,32 +163,6 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
     t.bigint "user_id"
     t.string "state", default: "pending"
     t.index ["user_id"], name: "index_shopping_carts_on_user_id"
-  end
-
-  create_table "simulation_orders", force: :cascade do |t|
-    t.string "state", default: "pending"
-    t.integer "amount_cents", default: 0, null: false
-    t.string "checkout_session_id"
-    t.bigint "simulation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["simulation_id"], name: "index_simulation_orders_on_simulation_id"
-  end
-
-  create_table "simulations", force: :cascade do |t|
-    t.string "s_pickup"
-    t.string "s_drop"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "s_distance", default: 0
-    t.integer "s_volume", default: 0
-    t.integer "s_urgence", default: 0
-    t.string "state", default: "pending"
-    t.string "details"
-    t.string "phone"
-    t.string "name"
-    t.integer "price_cents", default: 0, null: false
-    t.string "mail"
   end
 
   create_table "users", force: :cascade do |t|
@@ -213,5 +201,4 @@ ActiveRecord::Schema.define(version: 2020_06_23_153608) do
   add_foreign_key "orders", "users"
   add_foreign_key "pickups", "courses"
   add_foreign_key "shopping_carts", "users"
-  add_foreign_key "simulation_orders", "simulations"
 end

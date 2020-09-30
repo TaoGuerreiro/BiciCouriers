@@ -2,9 +2,14 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home, :tarifs, :story]
 
   def home
-    @simulation = Simulation.new
-    @simulation_order = SimulationOrder.last
+    @user = User.new
+    @course = Course.new
+    # @order = Order.last
+    # @city = City.find_by(city_name: "Nantes")
+    @drop = @course.drops.build
+    @pickup = @course.pickups.build
   end
+
 
   def story
   end

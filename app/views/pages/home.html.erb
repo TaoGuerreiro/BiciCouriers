@@ -9,9 +9,14 @@
       <h1>Les coursiers les plus rapides de Nantes !</h1>
       </div>
       <div class="text">
-        <p>Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “passer une course”, livraison effectuée en moins de 45 minutes !</p>
+        <p>Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de 45 minutes !</p>
       </div>
     </div>
-  <%= render 'shared/estimation', simulation: @simulation, simulation_order: @simulation_order, remote: true %>
+    <div class="main-guest-courses" id="box">
+      <div class="title"><h3><i class="fas fa-biking"></i>Demander un coursier</h3><p>02.85.52.64.80</p> </div>
+      <div class="addresses">
+        <%= render 'courses/new_course_invite', course: @course, user: @user %>
+      </div>
+    </div>
   </div>
 </div>

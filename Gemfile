@@ -28,6 +28,11 @@ gem 'turbolinks_render'
 gem 'money-rails'
 gem 'stripe'
 gem 'stripe_event'
+gem 'faraday'
+gem 'httparty'
+
+
+
 
 
 group :development do
@@ -36,6 +41,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry', '~> 0.13.1'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'listen', '~> 3.0.5'

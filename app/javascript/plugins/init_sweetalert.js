@@ -1,7 +1,18 @@
 import swal from 'sweetalert2'
-import  { simulation } from '../shared/simulation.js';
+import { addValidationError } from '../toggle/validations.js';
 
-const initSweetalert = (selector, options = {}, callback = () => {}) => {
+
+const initGuestAlert = (addressValidator = [], urgenceValidator = [], volumeValidator = [], selector, options = {}, callback = () => {}) => {
+  const swalButton = document.querySelector(selector);
+  if (swalButton) { // protect other pages
+    swalButton.addEventListener('click', () => {
+      addValidationError(addressValidator, urgenceValidator, volumeValidator);
+    swal.fire(options).then(callback); // <-- add the `.then(callback)`
+    });
+  }
+};
+
+const initUserAlert = (selector, options = {}, callback = () => {}) => {
   const swalButton = document.querySelector(selector);
   if (swalButton) { // protect other pages
     swalButton.addEventListener('click', () => {
@@ -11,16 +22,4 @@ const initSweetalert = (selector, options = {}, callback = () => {}) => {
   }
 };
 
-
-
-const initBicialert = (selector, options = {}, callback = () => {}) => {
-  const swalButton = document.querySelector(selector);
-  if (swalButton) { // protect other pages
-    swalButton.addEventListener('click', () => {
-
-    swal.fire(options).then(callback); // <-- add the `.then(callback)`
-    });
-  }
-};
-
-export { initSweetalert };
+export { initGuestAlert };

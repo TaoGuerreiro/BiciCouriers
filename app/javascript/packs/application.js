@@ -7,6 +7,7 @@ import "../plugins/flatpickr"
 
 
 
+
 import  { movement } from '../shared/services.js';
 import  { cardsFly } from '../shared/avantages.js';
 import  { userLogo } from '../shared/navbar.js';
@@ -22,14 +23,13 @@ import  { selectCarnet } from '../shared/select_carnet.js';
 import  { progressSidebar } from '../shared/progress_sidebar.js';
 import  { progressCarnet } from '../shared/progress_carnet.js';
 import  { favoriteFill } from '../shared/favorite_fill.js';
-import  { simulation } from '../shared/simulation.js';
-// import  { datas } from '../shared/simulation_datas.js';
+import  { toggle } from '../toggle/toggle.js';
 
-
+toggle();
 movement();
 cardsFly();
 userLogo();
-initMap();
+// initMap();
 initAutocomplete();
 urgenceToggle();
 bikeToggle();
@@ -39,8 +39,8 @@ animations();
 counterCircle();
 selectCarnet();
 favoriteFill();
-simulation();
-
 progressSidebar();
 progressCarnet();
+
+
 

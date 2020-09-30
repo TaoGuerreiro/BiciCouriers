@@ -9,12 +9,21 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
 
+  monetize :price_cents
+
+  # attr_accessor :email
+
 
   after_create :send_course_info_to_dispatch
+  # after_create :send_course_info_to_user
   private
 
   def send_course_info_to_dispatch
     DispatchMailer.with(course: self).new_course.deliver_now
+  end
+
+  def send_course_info_to_user
+    UserMailer.with(course: self).new_course.deliver_now
   end
 
 
