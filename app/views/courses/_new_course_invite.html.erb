@@ -3,7 +3,7 @@
 
   <div id="addresses">
     <%= f.fields_for :pickups, remote: true do |pickup| %>
-      <%= f.label :address, "Adresse de rammassage" %>
+      <%= pickup.label :address, "Adresse de rammassage" %>
       <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator' } %>
       <div class='hidden'>
         <%= pickup.label :date, "Date de rammassage" %>
@@ -16,11 +16,16 @@
     <% end %>
 
     <%= f.fields_for :drops do |drop| %>
+    <%= drop.label :address, "Adresse de rammassage" %>
       <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator' } %>
       <div class='hidden'>
+        <%= drop.label :date, "Date de rammassage" %>
         <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input"} %>
+        <%= drop.label :start_hour, "Heure pour début de rammassage" %>
         <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
+        <%= drop.label :end_hour, "Heure maximum pour le rammassage" %>
         <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
+        <%= drop.label :details, "détails pour la livraison" %>
         <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
 
         <input type="input" id="bike" name="bike">
