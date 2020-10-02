@@ -49,7 +49,7 @@ Service.create(
 
 Service.create(
   {
-    title: "Equilibre des stocks",
+    title: "Equilibre des vos stocks",
     content: "Facilitez la logistique de vos produits entre vos différents magasins ! Un coursier enlève la marchandise d’un magasin A vers un magasin B ou directement chez votre client, notamment lors des périodes de soldes où les stocks s’écoulent rapidement. Un avantage logistique qui n’est pas dépendant du trafic automobile de la ville.",
     images: "services/gestion_stock_nantes.svg",
     details: "Facilitez la logistique de vos produits entre vos différents magasins ! Un coursier enlève la marchandise d’un magasin A vers un magasin B ou directement chez votre client, notamment lors des périodes de soldes où les stocks s’écoulent rapidement. Un avantage logistique qui n’est pas dépendant du trafic automobile de la ville."
@@ -58,7 +58,7 @@ Service.create(
 
 Service.create(
   {
-    title: "Mutualisation",
+    title: "Mutualisation de vos flux de transport",
     content: "Du ramassage de courrier à la tournée de livraison  de flyers et prospectus commercial, optez pour une solution rapide, économique et eco-friendly. Nos coursiers peuvent récupérer vos colis dans vos agences pour mutualiser la livraison, ou inversement. Profitez de nos vélos cargos pour faire livrer de nombreux colis ou objets encombrants ! ",
     images: "services/mutualisation.svg",
     details: "Du ramassage de courrier à la tournée de livraison  de flyers et prospectus commercial, optez pour une solution rapide, économique et eco-friendly. Nos coursiers peuvent récupérer vos colis dans vos agences pour mutualiser la livraison, ou inversement. Profitez de nos vélos cargos pour faire livrer de nombreux colis ou objets encombrants ! ",
@@ -67,7 +67,7 @@ Service.create(
 
 Service.create(
   {
-    title: "Privatisation",
+    title: "Privatisation de coursiers",
     content: "Privatisez un de nos livreur coursier pour l’organisation et le déroulement de vos événements ! Mettez à votre dispositions des mollets de compétitions pour anticiper et gérer tous vos besoins de transport de matériel et autres éléments avec la plus grande rapidité et réactivité. Adieu le problème des bouchons ! ",
     images: "services/privatisation_de_coursier.svg",
     details: "Privatisez un de nos livreur coursier pour l’organisation et le déroulement de vos événements ! Mettez à votre dispositions des mollets de compétitions pour anticiper et gérer tous vos besoins de transport de matériel et autres éléments avec la plus grande rapidité et réactivité. Adieu le problème des bouchons ! "
@@ -76,7 +76,7 @@ Service.create(
 
 Service.create(
   {
-    title: "Gestion de boîte postale",
+    title: "Gestion du courrier entreprise",
     content: "La légendaire tournée du facteur est trop tardive ?
     Bici Couriers répond à votre demande en toute simplicité. Choisissez une heure de dépôt et de retrait du courrier et laissez vous du temps pour faire autre chose.
     Plus besoin de courir à la poste avant qu’elle ferme !",
@@ -89,10 +89,10 @@ Service.create(
 
 Service.create(
   {
-    title: "Sur mesure",
+    title: "Votre coursier sur mesure",
     content: "Vous avez un besoin ou une demande particulière pour nous ?
-    Bici Couriers s’engage à réaliser tous les défis (dans la limite du réalisable). On vous parie qu’on y arrivera #transportdecanapé.
-    Nous proposons également des abonnements et carnets de tickets pour les demandes récurrentes. ",
+    BiciCouriers s’engage à réaliser tous les défis (dans la limite du réalisable). On vous parie qu’on y arrivera #transportdecanapé.
+    Nous proposons également des abonnements et carnets de tickets pour les demandes récurrentes et des prix attractifs. ",
     images: "services/livraisons_sur_mesure.svg",
     details: "Vous avez un besoin ou une demande particulière pour nous ?
     Bici Couriers s’engage à réaliser tous les défis (dans la limite du réalisable). On vous parie qu’on y arrivera #transportdecanapé.
