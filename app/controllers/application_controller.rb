@@ -1,19 +1,29 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :set_locale
   include Pundit
-
-  # Pundit: white-list approach.
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
   after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
 
+  def set_locale
+    I18n.locale = params.fetch(:locale, I18n.default_locale).to_sym
+  end
+
+  def default_url_options
+    { locale: I18n.locale == I18n.default_locale ? nil : I18n.locale }
+  end
+
+
+  # Pundit: white-list approach.
+
   # Uncomment when you *really understand* Pundit!
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  # def user_not_authorized
-  #   flash[:alert] = "You are not authorized to perform this action."
-  #   redirect_to(root_path)
-  # end
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(root_path)
+  end
 
 
   private
@@ -26,9 +36,9 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :first_name, :last_name, :billing_company, :billing_address, :company, :paper_invoice, :carnet_renewal])
     end
 
-    def default_url_options
-      { host: ENV["DOMAIN"] || "localhost:3000" }
-    end
+    # def default_url_options
+    #   { host: ENV["DOMAIN"] || "localhost:3000" }
+    # end
 
     def skip_pundit?
       devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^avantages$)|(^services$)|(^contacts$)|(^simulations$)|(^simulation_orders$)/

@@ -24,7 +24,7 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  config.i18n.available_locales = :fr
+  config.i18n.available_locales = [:it, :fr]
   config.i18n.default_locale = :fr
 
   # Do not eager load code on boot.

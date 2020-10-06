@@ -25,7 +25,7 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
-  config.i18n.available_locales = :fr
+  config.i18n.available_locales = [:it, :fr]
   config.i18n.default_locale = :fr
 
   # Eager load code on boot. This eager loads most of Rails and
