@@ -149,9 +149,8 @@ class CoursesController < ApplicationController
     @pickup = @course.pickups.build
     @carnet = current_user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').first
 
-
-    # @drop = Drop.geocoded
     # @drop_marker = [lat: @drop.first.latitude, lng: @drop.first.longitude]
+    # @drop = Drop.geocoded
 
     authorize @drop
     authorize @pickup
