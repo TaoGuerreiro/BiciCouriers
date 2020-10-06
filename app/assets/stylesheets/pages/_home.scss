@@ -19,22 +19,22 @@
   margin-top: 15%;
   padding: 15px;
   h4 {
-
-
+    
+    
     font-weight: normal;
     font-size: 22px;
     line-height: 27px;
   }
   p {
-
-
+    
+    
     font-weight: normal;
     font-size: 16px;
     line-height: 25px;
   }
   h1 {
-
-
+    
+    
     font-weight: 800;
     font-size: 72px;
     line-height: 88px;
@@ -52,29 +52,29 @@
 
 @media (max-width: 960px) {
   .cta-container {
-  width: 50%;
-  height: 40%;
-  margin: 0px auto ;
-  margin-top: 15%;
-  padding: 15px;
-  h1 {
-    font-size: 60px;
-  }
+    width: 50%;
+    height: 40%;
+    margin: 0px auto ;
+    margin-top: 15%;
+    padding: 15px;
+    h1 {
+      font-size: 60px;
+    }
   }
 }
 @media (max-width: 720px) {
   .cta-container {
-      width: 70%;
-      height: 40%;
-      margin: 0px auto ;
-      margin-top: 15%;
-      padding: 15px;
-      h1 {
-        font-size: 40px;
-        line-height: 1.7;
-      }
-      }
+    width: 70%;
+    height: 40%;
+    margin: 0px auto ;
+    margin-top: 15%;
+    padding: 15px;
+    h1 {
+      font-size: 40px;
+      line-height: 1.7;
     }
+  }
+}
 @media (max-width: 540px) {
   .cta-container {
     width: 90%;
