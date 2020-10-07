@@ -1,14 +1,15 @@
 .main-guest-courses {
   width: 370px;
-  height: 660px;
+  height: 60px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  bottom: -600px;
+  bottom: 0px;
   left: 60px;
   text-align: center;
   transition: 0.4s;
+  overflow: hidden;
 
   animation-name: toggle;
   &:hover {
@@ -270,7 +271,7 @@
 }
 
 .up {
-  bottom: 0px;
+  height: 660px;
 }
 
 // #box {
