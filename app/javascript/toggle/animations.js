@@ -1,27 +1,18 @@
-const displayTotal = (inputs) => {
-//     // console.log(inputs)
-//   inputs.forEach((input) => {
-//     input.addEventListener('change', (event) => {
+const showToggle = (toggle, home) => {
 
-//       console.log(event)
-//     });
-//   })
-// }
+  toggle.addEventListener('click', (event) => {
+    toggle.classList.add('up')
+  });
 
-// var mutationObserver = new MutationObserver(function(mutations) {
-//   mutations.forEach(function(mutation) {
-//     console.log(mutation);
-//   });
-// });
+  home.addEventListener('click', (event) => {
+    toggle.classList.remove('up')
+  });
 
-// mutationObserver.observe(document.documentElement, {
-//   attributes: true,
-//   characterData: false,
-//   childList: false,
-//   subtree: true,
-//   attributeOldValue: false,
-//   characterDataOldValue: false
-// });
+  document.addEventListener("keydown", (event) => {
+    if (event.code == 'Escape') {
+      toggle.classList.remove('up')
+    }
+  });
 }
 
-export { displayTotal }
+export { showToggle }
