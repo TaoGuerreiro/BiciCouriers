@@ -9,7 +9,8 @@
 
 
 # SEO
-  # match "/old_path_to_services/:id", to: redirect("/services/%{id}s")
+
+  match "/old_path_to_services/:id", to: redirect("/services/%{id}s")
 
   # match 'profil', to: 'users#show', via: 'get'
 
