@@ -53,7 +53,9 @@ const toggle = () => {
     const home = document.querySelector('.home-container');
     const toggle = document.querySelector('.main-guest-courses');
 
-    let getTotal = (sous_total_array_input) => {
+    const dropdown = document.querySelectorAll('.form-group');
+
+    const getTotal = (sous_total_array_input) => {
       let total = 0
       sous_total_array_input.forEach((number) => {
         total = total + (parseInt(number.innerText, 10) || 0)
@@ -77,26 +79,37 @@ const toggle = () => {
     }
 
 // DISTANCE_____________________________________________________________________
+    dropdown.forEach((list) => {
+      list.addEventListener('click', (event) => {
+        getDistance(puAddress.value, drAddress.value, diDisplay)
+          .then((dist) => {
+            getDistTicket(dist, tiDisplay)
+            .then((response) => {
+                getTotal(sousTotals)
+            });
+          })
+      });
+    });
 
     addressInputs.forEach((input) => {
       input.addEventListener("change", (event) => {
         getDistance(puAddress.value, drAddress.value, diDisplay)
         .then((dist) => {
           getDistTicket(dist, tiDisplay)
-        })
         .then(() => getTotal(sousTotals))
+        })
       });
     })
 
-    addressInputs.forEach((input) => {
-      input.addEventListener("input", (event) => {
-        getDistance(puAddress.value, drAddress.value, diDisplay)
-        .then((dist) => {
-          getDistTicket(dist, tiDisplay)
-        })
-        .then(() => getTotal(sousTotals))
-      });
-    })
+    // addressInputs.forEach((input) => {
+    //   input.addEventListener("input", (event) => {
+    //     getDistance(puAddress.value, drAddress.value, diDisplay)
+    //     .then((dist) => {
+    //       getDistTicket(dist, tiDisplay)
+    //     })
+    //     .then(() => getTotal(sousTotals))
+    //   });
+    // })
 
 
 // URGENCE______________________________________________________________________
