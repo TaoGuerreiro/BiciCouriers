@@ -6,7 +6,7 @@ gem 'devise'
 gem 'jbuilder', '~> 2.0'
 gem 'sprockets', '3.7.2'
 gem 'pg', '~> 0.21'
-gem 'puma'
+gem "puma", '>= 4.3.5'
 gem 'rails', '5.2.4.1'
 gem 'redis'
 
@@ -33,10 +33,14 @@ gem 'httparty'
 gem 'friendly_id', '~> 5.4.0'
 gem "breadcrumbs_on_rails"
 
+# fix alert bot
 
-
-
-
+# gem "rack", ">= 2.2.3"
+# gem "websocket-extensions", ">= 0.1.5"
+# gem "activesupport", ">= 5.2.4.3"
+# gem "actionpack", ">= 5.2.4.3"
+# gem "activestorage", ">= 5.2.4.3"
+# gem "actionview", ">= 5.2.4.4"
 
 group :development do
   gem 'web-console', '>= 3.3.0'
