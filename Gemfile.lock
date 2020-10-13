@@ -269,7 +269,6 @@ DEPENDENCIES
   pry-rails
   puma (>= 4.3.5)
   pundit
-  rack (>= 2.2.3)
   rails (= 5.2.4.1)
   rails-i18n (~> 5.1)
   redis
@@ -285,7 +284,6 @@ DEPENDENCIES
   uglifier
   web-console (>= 3.3.0)
   webpacker
-  websocket-extensions (>= 0.1.5)
 
 RUBY VERSION
    ruby 2.6.5p114
