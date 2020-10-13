@@ -2,11 +2,17 @@
 
   devise_for :users, :controllers => { registrations: 'users/registrations' }
 
-  # resources :users , only: [:create ]
+  resources :users , only: [:create ]
 
   root to: 'pages#home'
 
-  # match 'profil', to: 'users#show', via: 'get'
+
+
+# SEO
+
+  match "/old_path_to_services/:id", to: redirect("/services/%{id}s"), via: 'get'
+
+  match 'profil', to: 'users#show', via: 'get'
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
@@ -17,7 +23,7 @@
 
 
 
-  # resources :shopping_carts, only: [:show, :create]
+  resources :shopping_carts, only: [:show, :create]
 
   get '/orders/success'
   get '/orders/cancel'
@@ -46,15 +52,15 @@
   post 'course/ticket_distance', to: 'courses#ticket_distance'
   post 'course/ticket_volume', to: 'courses#ticket_volume'
 
-  # resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
+  resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
-  # resources :carnets, only: [:new, :create, :index, :show, :destroy] do
-  #   collection do
-  #     get :inprogress
-  #   end
-  #   collection do
-  #     get :finished
-  #   end
-  # end
+  resources :carnets, only: [:new, :create, :index, :show, :destroy] do
+    collection do
+      get :inprogress
+    end
+    collection do
+      get :finished
+    end
+  end
 
 end

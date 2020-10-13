@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script type="application/ld+json">
+      {
+        "@context": "http://www.schema.org",
+        "@type": "LocalBusiness",
+        "name": "BiciCouriers",
+        "url": "https://bicicouriers.fr",
+        "logo": "https://lh3.googleusercontent.com/proxy/BMwSQAjST0lVT8WGMQV04Nyl6HOB3xThTYa9n7GKwAgvoGQdsXuuitvc5v6RXB_hK3KbgitZ6Dak-u2S-qzdNH7KVox_hr78ggq2KWESPxVSEyfQcN1PWjkAzvLy6kccN-W9ttU9",
+        "image": "https://www.bicicouriers.fr/assets/story/story-image-025705f034e9b409e11d1522a7152e3ca14f0bc1d8c526e4e56378796db8ddc3.png",
+        "description": "Nous somme les coursiers spécialiste de la livraisons express sur Nantes, nous livrons pour vous professionnel ou particulier plis et colis dans nos offres sur mesures",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Passage de la Poule Noire",
+          "addressLocality": "Nantes",
+          "addressRegion": "Pays de la Loire",
+          "postalCode": "44000",
+          "addressCountry": "France"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "47.211011",
+          "longitude": "-1.549850"
+        },
+        "telephone": "+33285526480",
+        "hasMap": "https://www.google.com/maps/place/47%C2%B012'39.6%22N+1%C2%B032'59.5%22W/@47.2110276,-1.5499881,21z/data=!4m6!3m5!1s0x0:0x0!7e2!8m2!3d47.2110108!4d-1.5498505",
+        "openingHours": "Mo 08:00-19:00 Tu 08:00-19:00 We 08:00-01:00 Th 08:00-19:00 Fr 08:00-19:00 Sa 08:00-19:00"
+      }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= favicon_link_tag %>
@@ -23,10 +51,14 @@
     <meta name="twitter:creator" content="<%= DEFAULT_META["twitter_account"] %>">
     <meta name="twitter:image:src" content="<%= meta_image %>">
 
+    <%# <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <%= javascript_include_tag 'analytics', async: true %>
+
 
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= javascript_include_tag 'application'%>
+
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
