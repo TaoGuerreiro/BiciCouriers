@@ -21,8 +21,8 @@
           </div>
 <!-- horaires -->
           <div class="double-item w-200">
-            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= Time.at(course.pickups.first.start_hour * 3600 ).utc.strftime("%H:%M")%></span> et <span class="text-g"><%= Time.at(course.pickups.first.end_hour* 3600 ).utc.strftime("%H:%M") %></span></p></div>
-            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= Time.at(course.drops.first.start_hour * 3600 ).utc.strftime("%H:%M")%></span> et <span class="text-g"><%= Time.at(course.drops.first.end_hour* 3600 ).utc.strftime("%H:%M") %></span></p></div>
+            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= course.pickups.first.start_hour %></span> et <span class="text-g"><%= course.pickups.first.end_hour %></span></p></div>
+            <div class="ta-l text-f"> <p>entre <span class="text-g"><%= course.drops.first.start_hour %></span> et <span class="text-g"><%= course.drops.first.end_hour %></span></p></div>
           </div>
 
           <div class="double-item mw-80">
