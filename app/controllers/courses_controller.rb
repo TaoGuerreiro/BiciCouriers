@@ -212,6 +212,8 @@ class CoursesController < ApplicationController
       end
     else # USER HORS LIGNE V1.0
       email = params[:course][:user][:email]
+      bike = params[:bike].to_i
+      # raise
       if email_check(email)
         @user = User.find_by(email: email)
       else
@@ -221,7 +223,15 @@ class CoursesController < ApplicationController
         })
       end
       @course = Course.new(course_params)
-      @course.bike_id = Bike.first.id if @course.bike_id.nil?
+      # raise
+
+      if bike == 0
+        @course.bike_id = Bike.first.id
+      else
+        @course.bike_id = Bike.last.id
+      end
+      # @course.bike_id = Bike.first.id if bike == 0
+
       @course.user = @user
       puAddress = params[:course][:pickups_attributes]["0"][:address]
       drAddress = params[:course][:drops_attributes]  ["0"][:address]
