@@ -26,6 +26,7 @@ class CoursesController < ApplicationController
 
     render json: distance
   end
+  
 
   def init_urgences
     city = City.find_by(city_name: "Nantes")
