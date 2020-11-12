@@ -4,7 +4,7 @@ import { getUrgence } from '../toggle/get_urgence.js';
 import { getDistance, getDistTicket } from '../toggle/get_distance.js';
 import { getVolume } from '../toggle/get_volume.js';
 import { removeValidationError } from '../toggle/validations.js';
-import { displayTotal } from '../toggle/animations.js';
+import { showToggle } from '../toggle/animations.js';
 
 
 
@@ -50,7 +50,12 @@ const toggle = () => {
     const stDay = document.getElementById('course_pickups_attributes_0_date');
     const ndDay = document.getElementById('course_drops_attributes_0_date');
 
-    let getTotal = (sous_total_array_input) => {
+    const home = document.querySelector('.home-container');
+    const toggle = document.querySelector('.main-guest-courses');
+
+    const dropdown = document.querySelectorAll('.form-group');
+
+    const getTotal = (sous_total_array_input) => {
       let total = 0
       sous_total_array_input.forEach((number) => {
         total = total + (parseInt(number.innerText, 10) || 0)
@@ -63,7 +68,7 @@ const toggle = () => {
     setInterval(() => { init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)}, 60000);
     sweetalert_display(addressInputs, urInputs, voInputs);
     removeValidationError(addressInputs, urInputs, voInputs);
-    displayTotal(sousTotals);
+    showToggle(toggle, home);
 
     const removeActive = (array) => {
      array.forEach((button) => {
@@ -74,26 +79,37 @@ const toggle = () => {
     }
 
 // DISTANCE_____________________________________________________________________
+    dropdown.forEach((list) => {
+      list.addEventListener('click', (event) => {
+        getDistance(puAddress.value, drAddress.value, diDisplay)
+          .then((dist) => {
+            getDistTicket(dist, tiDisplay)
+            .then((response) => {
+                getTotal(sousTotals)
+            });
+          })
+      });
+    });
 
     addressInputs.forEach((input) => {
       input.addEventListener("change", (event) => {
         getDistance(puAddress.value, drAddress.value, diDisplay)
         .then((dist) => {
           getDistTicket(dist, tiDisplay)
-        })
         .then(() => getTotal(sousTotals))
+        })
       });
     })
 
-    addressInputs.forEach((input) => {
-      input.addEventListener("input", (event) => {
-        getDistance(puAddress.value, drAddress.value, diDisplay)
-        .then((dist) => {
-          getDistTicket(dist, tiDisplay)
-        })
-        .then(() => getTotal(sousTotals))
-      });
-    })
+    // addressInputs.forEach((input) => {
+    //   input.addEventListener("input", (event) => {
+    //     getDistance(puAddress.value, drAddress.value, diDisplay)
+    //     .then((dist) => {
+    //       getDistTicket(dist, tiDisplay)
+    //     })
+    //     .then(() => getTotal(sousTotals))
+    //   });
+    // })
 
 
 // URGENCE______________________________________________________________________

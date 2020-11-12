@@ -1,4 +1,36 @@
 <div class="main-container">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Les Services",
+        "item": "https://bicicouriers.fr/services"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Les Avantages",
+        "item": "https://www.bicicouriers.fr/avantages"
+      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Notre Histoire",
+        "item": "https://bicicouriers.fr/histoire"
+      },{
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Les Tarifs",
+        "item": "https://bicicouriers.fr/tarifs"
+      },{
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Nous Contacter",
+        "item": "https://bicicouriers.fr/contacts/new"
+      }]
+    }
+  </script>
   <%= video_tag "bicilanding.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
   <div class="home-container">
     <div class="cta-container">
@@ -12,11 +44,11 @@
         <p>Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de 45 minutes !</p>
       </div>
     </div>
+  </div>
     <div class="main-guest-courses" id="box">
-      <div class="title"><h3><i class="fas fa-biking"></i>Demander un coursier</h3><p>02.85.52.64.80</p> </div>
+      <div class="title"><h2><i class="fas fa-biking"></i>Demander un coursier</h2><p>02.85.52.64.80</p> </div>
       <div class="addresses">
         <%= render 'courses/new_course_invite', course: @course, user: @user %>
       </div>
     </div>
-  </div>
 </div>

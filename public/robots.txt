@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow:
+Disallow: /users
 Sitemap: https://www.bicicouriers.fr/sitemap.xml
 Host: https://www.bicicouriers.fr

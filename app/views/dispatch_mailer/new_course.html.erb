@@ -1,7 +1,7 @@
 <h1><%= @course.user.company %> </h1>
 <h1><%= @course.id  %> </h1>
 
-Volume : <%= @course.bike == 0 ? 'Sac à dos' : 'cargo' %><br>
+Volume : <%= @course.bike.max_weight <= 6000 ? 'Sac à dos' : 'cargo' %><br>
 Pickup : <%= @course.pickups.first.address %><br>
 Le <%= @course.pickups.first.date %> entre : <%= @course.pickups.first.start_hour %> ET <%= @course.pickups.first.end_hour %>
 <!-- Détails : <% @course.pickups.first.details %><br> -->

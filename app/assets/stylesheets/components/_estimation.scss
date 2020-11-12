@@ -1,24 +1,24 @@
 .main-guest-courses {
   width: 370px;
-  height: 660px;
+  height: 60px;
   background-color: $pink;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   position: absolute;
-  bottom: -600px;
+  bottom: 0px;
   left: 60px;
   text-align: center;
   transition: 0.4s;
+  overflow: hidden;
 
   animation-name: toggle;
   &:hover {
-    bottom: 0px;
     cursor: pointer;
   }
   .title {
     height: 40px;
     line-height: 0px;
-    h3 {
+    h2 {
       line-height: 0px;
     }
     p {
@@ -81,7 +81,7 @@
     }
   }
 
-  h3 {
+  h2 {
     margin-top: 20px;
     font-size: 16px;
     letter-spacing: 2.5px;
@@ -159,15 +159,18 @@
    font-weight: 400 !important;
  }
 }
+.up {
+  height: 660px;
+}
 
 @media (max-width: 540px) {
   .main-guest-courses {
-    height: 585px;
+    height: 60px;
     margin: 0px auto;
     width: auto;
     left: 25px;
     right: 25px;
-    bottom: -517px;
+    bottom: 0px;
     .title {
       height: 40px;
   }
@@ -219,6 +222,9 @@
     -o-animation:      none !important; /* Opera 12+ */
     animation:         none !important;
   }
+  .up {
+  height: 580px;
+}
 }
 
 .swal2-content {
@@ -270,38 +276,19 @@
   }
 }
 
-#box {
-  -webkit-animation: fontbulger 0.6s 2s 4 alternate; /* Safari 4+ */
-  -moz-animation:    fontbulger 0.6s 2s 4 alternate; /* Fx 5+ */
-  -o-animation:      fontbulger 0.6s 2s 4 alternate; /* Opera 12+ */
-  animation:         fontbulger 0.6s 2s 4 alternate; /* IE 10+, Fx 29+ */
-   &:hover {
-  -webkit-animation: none; /* Safari 4+ */
-  -moz-animation:    none; /* Fx 5+ */
-  -o-animation:      none; /* Opera 12+ */
-  animation:         none;
- }
-}
 
-// @keyframes popup {
-//   0% {
-//     transform: translateY(150px);
-//   }
-//   34% {
-//     transform: translateY(20px);
-//   }
-//   37% {
-//     transform: translateY(150px);
-//   }
-//   100% {
-//     transform: translateY(150px);
-//   }
+
+// #box {
+//   -webkit-animation: fontbulger 0.6s 2s 4 alternate; /* Safari 4+ */
+//   -moz-animation:    fontbulger 0.6s 2s 4 alternate; /* Fx 5+ */
+//   -o-animation:      fontbulger 0.6s 2s 4 alternate; /* Opera 12+ */
+//   animation:         fontbulger 0.6s 2s 4 alternate; /* IE 10+, Fx 29+ */
 // }
 
+// .stop-animation {
+//   -webkit-animation: non !important; /* Safari 4+ */
+//   -moz-animation:    non !important; /* Fx 5+ */
+//   -o-animation:      non !important; /* Opera 12+ */
+//   animation:         non !important;
+//  }
 
-// .urgence_type_1 {
-//   -webkit-animation: popup 0.6s 2s 4 alternate; /* Safari 4+ */
-//   -moz-animation:    popup 0.6s 2s 4 alternate; /* Fx 5+ */
-//   -o-animation:      popup 0.6s 2s 4 alternate; /* Opera 12+ */
-//   animation:         popup 0.6s 2s 4 alternate; /* IE 10+, Fx 29+ */
-// }

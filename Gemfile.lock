@@ -49,7 +49,11 @@ GEM
       execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
+<<<<<<< HEAD
     bootsnap (1.4.8)
+=======
+    bootsnap (1.4.9)
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
       msgpack (~> 1.0)
     breadcrumbs_on_rails (4.0.0)
       rails (>= 5.0)
@@ -72,14 +76,22 @@ GEM
       railties (>= 3.2)
     erubi (1.9.0)
     execjs (2.7.0)
-    faraday (1.0.1)
+    faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
+<<<<<<< HEAD
+=======
+      ruby2_keywords
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
     ffi (1.13.1)
     font-awesome-sass (5.6.1)
       sassc (>= 1.11)
     friendly_id (5.4.0)
       activerecord (>= 4.0.0)
+<<<<<<< HEAD
     geocoder (1.6.3)
+=======
+    geocoder (1.6.4)
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     httparty (0.18.1)
@@ -143,7 +155,11 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
+<<<<<<< HEAD
     puma (5.0.2)
+=======
+    puma (5.0.4)
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -187,6 +203,10 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+<<<<<<< HEAD
+=======
+    ruby2_keywords (0.0.2)
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -210,7 +230,11 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+<<<<<<< HEAD
     stripe (5.26.0)
+=======
+    stripe (5.28.0)
+>>>>>>> 756dfff966d5f137894d22c1ea5615c330d1aa36
     stripe_event (2.3.1)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 6)
@@ -267,7 +291,7 @@ DEPENDENCIES
   pry (~> 0.13.1)
   pry-byebug
   pry-rails
-  puma
+  puma (>= 4.3.5)
   pundit
   rails (= 5.2.4.1)
   rails-i18n (~> 5.1)

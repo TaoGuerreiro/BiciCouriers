@@ -16,6 +16,10 @@
 #   # policy.report_uri "/csp-violation-report-endpoint"
 # end
 
+# Rails.application.config.content_security_policy do |policy|
+#   policy.script_src :self, 'https://www.googletagmanager.com', 'https://www.google-analytics.com'
+# end
+
 # If you are using UJS then enable automatic nonce generation
 # Rails.application.config.content_security_policy_nonce_generator = -> request { SecureRandom.base64(16) }
 
