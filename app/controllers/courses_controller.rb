@@ -29,9 +29,9 @@ class CoursesController < ApplicationController
 
   def init_urgences
     city = City.find_by(city_name: "Nantes")
-    day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
-    day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
-    now = Time.now
+    now = Time.now.utc + 3600
+    day_start = Time.new(now.year, now.mon, now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
+    day_end =   Time.new(now.year, now.mon, now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
     case
       when now < day_start #AVANT L'HEURE
         urgence_0_start = day_start
