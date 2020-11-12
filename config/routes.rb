@@ -8,15 +8,18 @@
 
 
 
-# SEO
+# SEO__________________
 
   match "/old_path_to_services/:id", to: redirect("/services/%{id}s"), via: 'get'
+
+#SEO_END_______________
 
   match 'profil', to: 'users#show', via: 'get'
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
   get "/histoire", to: "pages#story"
+  get "/covid_19", to: "pages#covid"
   get "/tarifs", to: "pages#tarifs"
   get "/about", to: "pages#about"
   post "/simulation", to: "contacts#simulation"
