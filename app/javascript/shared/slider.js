@@ -1,6 +1,6 @@
 import noUiSlider from 'nouislider';
 import  { urgenceRange } from '../shared/urgence.js';
-import  { counter } from '../shared/counter.js';
+
 
 let sum = 0
 let urgenceTicketsSurMesure = 0
@@ -209,7 +209,7 @@ const slider = () => {
       } end
       calculSurMesure(stPu, ndPu, stDr, ndDr);
       setValues(values, handle);
-      counter();
+ 
   });
 
 
@@ -228,7 +228,7 @@ const slider = () => {
       } end
       calculSurMesure(stPu, ndPu, stDr, ndDr);
       setValues(values, handle);
-      counter();
+
   });
 
 

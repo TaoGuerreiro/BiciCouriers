@@ -1,4 +1,4 @@
-import  { counter } from '../shared/counter.js';
+
 
 let volumeTickets = 0
 const bikeToggle = () => {
@@ -33,7 +33,7 @@ const bikeToggle = () => {
     volumeTickets = 0
     const velo = document.querySelectorAll('.form-check');
     velo[0].firstChild.checked = true;
-    counter();
+
   });
 
   bike2.addEventListener('click', (event) => {
@@ -48,7 +48,7 @@ const bikeToggle = () => {
     volumeTickets = 1
     const cargo = document.querySelectorAll('.form-check');
     cargo[1].firstChild.checked = true;
-    counter();
+ 
   });
   });
 }

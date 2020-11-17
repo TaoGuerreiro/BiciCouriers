@@ -1,4 +1,4 @@
-import  { counter } from '../shared/counter.js';
+
 import  { sum } from '../shared/slider.js';
 
 let urgenceTickets = 0
@@ -32,7 +32,7 @@ const urgenceToggle = () => {
     urgence1.classList.add('active');
     urgenceTickets = 0
     urgenceRange = 11
-    setTimeout(counter,100);
+
   });
 
   urgence2.addEventListener('click', (event) => {
@@ -40,7 +40,7 @@ const urgenceToggle = () => {
     urgence2.classList.add('active');
     urgenceTickets = 1
     urgenceRange = 4
-    setTimeout(counter,100);
+  
     console.log('coucou');
   });
 
@@ -49,7 +49,7 @@ const urgenceToggle = () => {
     urgence3.classList.add('active');
     urgenceTickets = 2
     urgenceRange = 0.75
-    setTimeout(counter,100);
+    
   });
 
   urgence4.addEventListener('click', (event) => {
@@ -57,7 +57,7 @@ const urgenceToggle = () => {
     urgence4.classList.add('active');
     urgenceTickets = 0
     urgenceRange = 0.75
-    setTimeout(counter,100);
+  
   });
   });
 }
