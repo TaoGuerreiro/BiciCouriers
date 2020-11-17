@@ -55,14 +55,14 @@ const newCourse = () => {
 
     const dropdown = document.querySelectorAll('.form-group');
 
-    // const getTotal = (sous_total_array_input) => {
-    //   let total = 0
-    //   sous_total_array_input.forEach((number) => {
-    //     total = total + (parseInt(number.innerText, 10) || 0)
-    //     toDisplay.innerHTML = total
-    //     priceDisplay.innerHTML = total * 6
-    //   });
-    // }
+    const getTotal = (sous_total_array_input) => {
+      let total = 0
+      sous_total_array_input.forEach((number) => {
+        total = total + (parseInt(number.innerText, 10) || 0)
+        toDisplay.innerHTML = total
+        priceDisplay.innerHTML = total * 6
+      });
+    }
 
     // init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
     // setInterval(() => { init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)}, 60000);
@@ -81,18 +81,14 @@ const newCourse = () => {
 // DISTANCE_____________________________________________________________________
     dropdown.forEach((list) => {
       list.addEventListener('click', (event) => {
-          console.log(puAddress.value)
-          console.log(drAddress.value)
-          console.log(diDisplay)
-        // getDistance(puAddress.value, drAddress.value, diDisplay)
-        //   .then((dist) => {
-        //       console.log(dist)
-        //     // getDistTicket(dist, tiDisplay)
-        //     .then((response) => {
-        //         console.log(response)
-        //         // getTotal(sousTotals)
-        //     });
-        //   })
+        getDistance(puAddress.value, drAddress.value, diDisplay)
+          .then((dist) => {
+            getDistTicket(dist, tiDisplay)
+            .then((response) => {
+                console.log(sousTotals)
+                getTotal(sousTotals)
+            });
+          })
       });
     });
 
@@ -101,7 +97,7 @@ const newCourse = () => {
         getDistance(puAddress.value, drAddress.value, diDisplay)
         .then((dist) => {
           getDistTicket(dist, tiDisplay)
-        // .then(() => getTotal(sousTotals))
+        .then(() => getTotal(sousTotals))
         })
       });
     })
