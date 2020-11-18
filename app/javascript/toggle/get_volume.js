@@ -18,6 +18,7 @@ const getVolume = (size, voDisplay, voInput) => {
     // console.log(data)
     voDisplay.innerHTML = data
     voInput.value = data
+    console.log(data)
     // getTotal(sousTotals)
   });
 

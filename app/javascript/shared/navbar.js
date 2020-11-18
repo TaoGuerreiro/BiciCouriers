@@ -8,4 +8,4 @@ const userLogo = () => {
 });
 }
 
-export { userLogo};
+export { userLogo };

@@ -1,9 +1,9 @@
 // import { sweetalert_display } from '../toggle/sweetalert.js';
-// import { init_urgences } from '../toggle/init_urgences.js';
-// import { getUrgence } from '../toggle/get_urgence.js';
+import { init_urgences } from '../toggle/init_urgences.js';
+import { getUrgence } from '../toggle/get_urgence.js';
 import { getDistance, getDistTicket } from '../toggle/get_distance.js';
+import { getVolume } from '../toggle/get_volume.js';
 
-// import { getVolume } from '../toggle/get_volume.js';
 // import { removeValidationError } from '../toggle/validations.js';
 // import { showToggle } from '../toggle/animations.js';
 
@@ -65,21 +65,23 @@ const newCourse = () => {
         priceDisplay.innerHTML = total * 6
       });
     }
-    initMap();
 
-    // init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
+    initMap(puAddress, drAddress);
+
+    init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
     // setInterval(() => { init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)}, 60000);
     // sweetalert_display(addressInputs, urInputs, voInputs);
     // removeValidationError(addressInputs, urInputs, voInputs);
     // showToggle(toggle, home);
 
-    // const removeActive = (array) => {
-    //  array.forEach((button) => {
-    //    button.classList.remove('active');
-    //    button.nextElementSibling.classList.remove('font-active');
-
-    //  });
-    // }
+    const removeActive = (array) => {
+      // console.log(array)
+      array.forEach((button) => {
+        // console.log(button.classList)
+      button.classList.remove('active');
+      // button.nextElementSibling.classList.remove('font-active');
+     });
+    }
 
 // DISTANCE_____________________________________________________________________
     dropdown.forEach((list) => {
@@ -89,9 +91,8 @@ const newCourse = () => {
             getDistTicket(dist, tiDisplay)
             .then((response) => {
                 getTotal(sousTotals)
-                displayRoute(puAddress, drAddress)
             });
-          })
+          });
       });
     });
 
@@ -101,10 +102,11 @@ const newCourse = () => {
         .then((dist) => {
           getDistTicket(dist, tiDisplay)
         .then(() => getTotal(sousTotals))
-        })
+        });
       });
-      displayRoute(puAddress, drAddress)
     })
+
+    drAddress.addEventListener('change', displayRoute(puAddress, drAddress));
 
     // addressInputs.forEach((input) => {
     //   input.addEventListener("input", (event) => {
@@ -119,37 +121,39 @@ const newCourse = () => {
 
 // URGENCE______________________________________________________________________
 
-    // urInputs.forEach((button) => {
-    //   button.addEventListener("click", (event) => {
-    //     removeActive(urInputs);
-    //     event.target.classList.add('active');
-    //     event.target.nextElementSibling.className ='font-active';
+    urInputs.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        removeActive(urInputs);
+        event.target.classList.add('active');
+        // event.target.nextElementSibling.className ='font-active';
 
-    //     puStart.value = event.currentTarget.dataset.start_hour
-    //     puEnd.value = event.currentTarget.dataset.end_hour
-    //     drStart.value = event.currentTarget.dataset.start_hour
-    //     drEnd.value = event.currentTarget.dataset.end_hour
-    //     stDay.value = event.currentTarget.dataset.start_day
-    //     ndDay.value = event.currentTarget.dataset.end_day
-    //     getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value, stDay.value, ndDay.value, urDisplay, heDisplay )
-    //     .then(() => getTotal(sousTotals));
-    //   })
-    // });
+        puStart.value = event.currentTarget.dataset.start_hour
+        puEnd.value = event.currentTarget.dataset.end_hour
+        drStart.value = event.currentTarget.dataset.start_hour
+        drEnd.value = event.currentTarget.dataset.end_hour
+        stDay.value = event.currentTarget.dataset.start_day
+        ndDay.value = event.currentTarget.dataset.end_day
+        getUrgence(puStart.value, puEnd.value, drStart.value, drEnd.value, stDay.value, ndDay.value, urDisplay, heDisplay )
+        .then(() => getTotal(sousTotals));
+      })
+    });
 
 // VOLUME_______________________________________________________________________
 
-    // voInputs.forEach( (volume) => {
-    //   volume.addEventListener('click', (event) => {
-    //     removeActive(voInputs);
-    //     event.target.classList.add('active');
-    //     event.target.nextElementSibling.className ='font-active';
-    //     voTextDisplay.innerText = event.currentTarget.dataset.text
-
-    //     let number = parseInt(event.srcElement.dataset.tickets, 10)
-    //     getVolume(number, voDisplay, voInput)
-    //     .then(() => getTotal(sousTotals));
-    //   });
-    // });
+    voInputs.forEach( (volume) => {
+      volume.addEventListener('click', (event) => {
+        removeActive(voInputs);
+        event.target.parentNode.classList.add('active');
+        // console.log(event.target)
+        // event.target.nextElementSibling.className ='font-active';
+        console.log(event.currentTarget.firstChildSibling)
+        voTextDisplay.innerText = event.currentTarget.parentNode.dataset.text
+          
+        let number = parseInt(event.srcElement.nextElementSibling.dataset.tickets, 10)
+        getVolume(number, voDisplay, voInput)
+        .then(() => getTotal(sousTotals));
+      });
+    });
 
 
   });

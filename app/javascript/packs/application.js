@@ -19,19 +19,19 @@ import  { progressSidebar } from '../shared/progress_sidebar.js';
 import  { progressCarnet } from '../shared/progress_carnet.js';
 import  { favoriteFill } from '../shared/favorite_fill.js';
 
-import  { toggle } from '../toggle/main.js';
+import  { newCourseGuest } from '../toggle/main.js';
 import  { newCourse } from '../courses/main.js';
-import  { initMap } from '../courses/init_map.js';
 
-toggle();
+
+newCourseGuest();
 newCourse();
+
 movement();
 cardsFly();
 userLogo();
-initMap();
 initAutocomplete();
 urgenceToggle();
-bikeToggle();
+// bikeToggle();
 initShowMap();
 // slider();
 animations();

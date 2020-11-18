@@ -5,31 +5,23 @@
       <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
       <div class="rammassage">
         <%= f.fields_for :pickups, remote: true do |pickup| %>
-          <%= pickup.label :address, "Adresse de rammassage", class: 'hidden' %>
           <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator' } %>
-          <div class='hidden'>
-            <%= pickup.label :date, "Date de rammassage" %>
-            <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input"} %>
-            <%= pickup.label :start_hour, "Heure pour début de rammassage" %>
+          <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input datepicker"} %>
+          <div class='hiddden'>
             <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
-            <%= pickup.label :end_hour, "Heure maximum pour le rammassage" %>
             <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
+            <%= pickup.input :details, as: :string, placeholder: 'details', label: false, required: true %>
           </div>
         <% end %>
       </div>
       <!-- __________ ADRESSE DE LIVRAISON __________ -->
       <div class="livraison">
         <%= f.fields_for :drops do |drop| %>
-          <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
           <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator' } %>
-          <div class='hidden'>
-            <%= drop.label :date, "Date de rammassage" %>
-            <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input"} %>
-            <%= drop.label :start_hour, "Heure pour début de rammassage" %>
+          <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input datepicker"} %>
+          <div class='hiddden'>
             <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
-            <%= drop.label :end_hour, "Heure maximum pour le rammassage" %>
             <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
-            <%= drop.label :details, "détails pour la livraison" %>
             <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
 
             <input type="input" id="bike" name="bike">
@@ -49,17 +41,21 @@
 
           <div class="button-second urgence-options"><p>C'est urgent ?</p><i class="fas fa-caret-down"></i></div>
           <div class="options">
-            <div class="urgence-1 urgence active">
+            <%# <div class="icon-w fs10"></div>
+            <div class="icon-w fs10"></div>
+            <div class="icon-w fs10"></div> %>
+
+            <div class="urgence-1 urgence">
               <div class="urgence-image"></div>
-              <p>Aujourd'hui</p>
+              <div class='icon urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p>
             </div>
             <div class="urgence-2 urgence">
               <div class="urgence-image"></div>
-              <p>Avant <span id='4heures'>XX:XX</span></p>
+            <div class='icon urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p>
             </div>
             <div class="urgence-3 urgence">
               <div class="urgence-image"></div>
-              <p>Avant <span id='45min'>XX:XX</span></p>
+              <div class='icon urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p>
             </div>
             <div class="urgence-4 urgence">
               <div class="urgence-image"></div>
@@ -74,19 +70,25 @@
 
           <div class="bike-options button-second"><p>Type de marchandise</p><i class="fas fa-caret-down"></i></div>
           <div class="options">
-            <div class="bike-1 bike active">
+
+            <div class="bike-1 bike volume active">
               <div class="bike-1-image"></div>
-              <p>Enveloppe / petit colis</p>
+              <div class='icon volume volume-1 volume-validator' data-tickets='0' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p>
             </div>
-            <div class="bike-2 bike">
+            <div class="bike-2 volume bike">
               <div class="bike-2-image"></div>
-              <p>Gros colis</p>
+              <div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p>
             </div>
-            <div class="bike-2 bike">
+            <div class="bike-3 volume bike">
               <div class="bike-2-image"></div>
-              <p>Miam</p>
+              <div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Miam</p>
             </div>
           </div>
+
+    <div class="icon-w fs10"></div>
+    <div class="icon-w fs10"><div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p></div>
+ 
+
 
 
         </div>
@@ -94,8 +96,8 @@
         <div class="total-container" data-carnet-price='<%= @carnet.blank? ? 583 : @carnet.carnet_template.price_cents %>'>
         <div class="total-title price-line">                           <div class="column1"><p>Prestation</p></div>                      <div class="column2 euro-image"></div>                   <div class="column3 ticket-image"></div>                      </div>
         <div class="vi-sous-total total-distance price-line">          <div class="column1" ><p id="kilometers">Distance</p></div>       <div class="column2"><p id="distance-e">inclu</p></div>  <div class="column3"><p class="sous-total right-distance">0</p></div>    </div>
-        <div class="vi-sous-total total-urgence price-line">           <div class="column1"><p>Urgence</p></div>                         <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p class="sous-total" id="urgence-t">0</p></div>            </div>
-        <div class="vi-sous-total total-cargo price-line">             <div class="column1"><p>Volume/poids</p></div>                    <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p class="sous-total" id="cargo-t">0</p></div>              </div>
+        <div class="vi-sous-total total-urgence price-line">           <div class="column1 "><p class="heure">Urgence</p></div>                        <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p class="sous-total right-urgence id="urgence-t">0</p></div>            </div>
+        <div class="vi-sous-total total-cargo price-line">             <div class="column1"><p id='vo-text-volume'>Volume/poids</p></div>                    <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p class="sous-total right-volume" id="cargo-t">0</p></div>              </div>
         <div class="total total-ticket price-line">                    <div class="column1"><p>Total</p></div>                           <div class="column2"><p id="total-price">0.00</p></div>      <div class="column3"><p id="total-course">0</p></div>         </div>
       <% if @carnet.blank? %>
         <div class="carnet-diff">

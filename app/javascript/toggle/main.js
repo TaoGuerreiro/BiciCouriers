@@ -8,7 +8,7 @@ import { showToggle } from './animations.js';
 
 
 
-const toggle = () => {
+const newCourseGuest = () => {
   document.addEventListener("turbolinks:load", (event) => {
 
     if (window.location.pathname != '/') {
@@ -150,4 +150,4 @@ const toggle = () => {
   });
 }
 
-export { toggle }
+export { newCourseGuest }
