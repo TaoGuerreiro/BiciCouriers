@@ -2,10 +2,12 @@
 // import { init_urgences } from '../toggle/init_urgences.js';
 // import { getUrgence } from '../toggle/get_urgence.js';
 import { getDistance, getDistTicket } from '../toggle/get_distance.js';
+
 // import { getVolume } from '../toggle/get_volume.js';
 // import { removeValidationError } from '../toggle/validations.js';
 // import { showToggle } from '../toggle/animations.js';
 
+import  { initMap, displayRoute } from '../courses/init_map.js';
 
 
 const newCourse = () => {
@@ -63,6 +65,7 @@ const newCourse = () => {
         priceDisplay.innerHTML = total * 6
       });
     }
+    initMap();
 
     // init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
     // setInterval(() => { init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)}, 60000);
@@ -85,8 +88,8 @@ const newCourse = () => {
           .then((dist) => {
             getDistTicket(dist, tiDisplay)
             .then((response) => {
-                console.log(sousTotals)
                 getTotal(sousTotals)
+                displayRoute(puAddress, drAddress)
             });
           })
       });
@@ -100,6 +103,7 @@ const newCourse = () => {
         .then(() => getTotal(sousTotals))
         })
       });
+      displayRoute(puAddress, drAddress)
     })
 
     // addressInputs.forEach((input) => {
