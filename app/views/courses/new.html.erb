@@ -1,28 +1,30 @@
-<div class="course-main-container">
+<div class="course-main-container" data-controller="distance urgence">
   <%= simple_form_for @course, remote: true do |f| %>
 
     <div class="first-container">
       <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
       <div class="rammassage">
         <%= f.fields_for :pickups, remote: true do |pickup| %>
-          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator' } %>
-          <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input datepicker"} %>
+          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul", :'data-target' => "distance.pickup" } %>
+          <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateStart"} %>
           <div class='hiddden'>
-            <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
-            <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
+            <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true, input_html: { :'data-target' => "urgence.hourPickupStart" } %>
+            <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true, input_html: { :'data-target' => "urgence.hourPickupEnd" } %>
             <%= pickup.input :details, as: :string, placeholder: 'details', label: false, required: true %>
+            <div class="slider-container hiddden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
           </div>
         <% end %>
       </div>
       <!-- __________ ADRESSE DE LIVRAISON __________ -->
       <div class="livraison">
         <%= f.fields_for :drops do |drop| %>
-          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator' } %>
-          <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input datepicker"} %>
+          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul", :'data-target' => "distance.drop" } %>
+          <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateEnd"} %>
           <div class='hiddden'>
-            <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
-            <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
+            <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true, input_html: { :'data-target' => "urgence.hourDropStart" } %>
+            <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true, input_html: { :'data-target' => "urgence.hourDropEnd" } %>
             <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
+            <div class="slider-container hiddden-trans"><div id="slider-drop"></div><span id="slider-drop-value" class="hidden"></span></div>
 
             <input type="input" id="bike" name="bike">
             <label for="bike">cargo</label>
@@ -45,15 +47,15 @@
             <div class="icon-w fs10"></div>
             <div class="icon-w fs10"></div> %>
 
-            <div class="urgence-1 urgence">
+            <div class="urgence-1 urgence" data-action="click->urgence#ticket">
               <div class="urgence-image"></div>
               <div class='icon urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p>
             </div>
-            <div class="urgence-2 urgence">
+            <div class="urgence-2 urgence" data-action="click->urgence#ticket">
               <div class="urgence-image"></div>
             <div class='icon urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p>
             </div>
-            <div class="urgence-3 urgence">
+            <div class="urgence-3 urgence" data-action="click->urgence#ticket">
               <div class="urgence-image"></div>
               <div class='icon urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p>
             </div>
@@ -95,8 +97,8 @@
         <!-- __________ TOTAL __________ -->
         <div class="total-container" data-carnet-price='<%= @carnet.blank? ? 583 : @carnet.carnet_template.price_cents %>'>
         <div class="total-title price-line">                           <div class="column1"><p>Prestation</p></div>                      <div class="column2 euro-image"></div>                   <div class="column3 ticket-image"></div>                      </div>
-        <div class="vi-sous-total total-distance price-line">          <div class="column1" ><p id="kilometers">Distance</p></div>       <div class="column2"><p id="distance-e">inclu</p></div>  <div class="column3"><p class="sous-total right-distance">0</p></div>    </div>
-        <div class="vi-sous-total total-urgence price-line">           <div class="column1 "><p class="heure">Urgence</p></div>                        <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p class="sous-total right-urgence id="urgence-t">0</p></div>            </div>
+        <div class="vi-sous-total total-distance price-line">          <div class="column1" ><p data-target="distance.distance">Distance</p></div>       <div class="column2"><p id="distance-e" >inclu</p></div>  <div class="column3"><p class="sous-total right-distance" data-target="distance.distanceTicket">0</p></div>    </div>
+        <div class="vi-sous-total total-urgence price-line">           <div class="column1 "><p data-target="urgence.text" class="heure">Urgence</p></div>                        <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p class="sous-total right-urgence id="urgence-t" data-target="urgence.ticket">0</p></div>            </div>
         <div class="vi-sous-total total-cargo price-line">             <div class="column1"><p id='vo-text-volume'>Volume/poids</p></div>                    <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p class="sous-total right-volume" id="cargo-t">0</p></div>              </div>
         <div class="total total-ticket price-line">                    <div class="column1"><p>Total</p></div>                           <div class="column2"><p id="total-price">0.00</p></div>      <div class="column3"><p id="total-course">0</p></div>         </div>
       <% if @carnet.blank? %>

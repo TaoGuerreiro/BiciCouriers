@@ -24,8 +24,8 @@ const displayRoute = (pickup, drop, display, service) => {
   if (pickup.value === "" || drop.value === "") {
     return 
   }
-  console.log(pickup.value)
-  console.log(drop.value)
+  // console.log(pickup.value)
+  // console.log(drop.value)
   const request = {
     origin: pickup.value,
     destination: drop.value,
@@ -33,9 +33,9 @@ const displayRoute = (pickup, drop, display, service) => {
   };
   service.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      console.log(status)
-      display.setDirections(response);
-      console.log(response)        } else {
+      // console.log(status)
+      display.setDirections(response); 
+    } else {
       console.log("Erreur, une des adresses doit être problèmatique => " + status);
     }
   });

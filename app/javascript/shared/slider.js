@@ -1,5 +1,5 @@
 import noUiSlider from 'nouislider';
-import  { urgenceRange } from '../shared/urgence.js';
+// import  { urgenceRange } from '../shared/urgence.js';
 
 
 let sum = 0
@@ -42,6 +42,7 @@ const slider = () => {
 
       return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
   }
+
   function round(value, step) {
       step || (step = 0.25);
       const inv = 1.0 / step;
@@ -58,8 +59,8 @@ const slider = () => {
   const start = 8
   const end = 19
 
-  Qminutes.innerText = (hm + 0.75).toHHMMSS();
-  Qheures.innerText = (hm + 4).toHHMMSS();
+//   Qminutes.innerText = (hm + 0.75).toHHMMSS();
+//   Qheures.innerText = (hm + 4).toHHMMSS();
 
 
 
@@ -86,7 +87,7 @@ const slider = () => {
       start: [now, now + 2],
       behaviour: 'drag-tap',
       connect: true,
-      margin: urgenceRange,
+    //   margin: urgenceRange,
       padding: [now-8, 0],
       step: 0.25,
       tooltips: [true, true],
@@ -108,7 +109,7 @@ const slider = () => {
       start: [now, now + 2],
       behaviour: 'drag-tap',
       connect: true,
-      margin: urgenceRange,
+    //   margin: urgenceRange,
       padding: [now-8, 0],
       step: 0.25,
       tooltips: [true, true],
@@ -119,44 +120,8 @@ const slider = () => {
   });
 
 
-  function timeStringToFloat(time) {
-    var hoursMinutes = time.split(/[.:]/);
-    var hours = parseInt(hoursMinutes[0], 10);
-    var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
-    return hours + minutes / 60;
-  }
-  const calculSurMesure = (pu1, pu2, dr1, dr2) => {
-    const test = document.querySelector('.noUi-touch-area');
-    sum=0
-
-    if((pu2-pu1)== 0.75) {
-      sum = sum + 2 }
-    end
-    if((dr2-dr1)== 0.75) {
-      sum = sum + 2 }
-    end
-    if((dr2-pu1)<= 0.75) {
-      sum = sum + 2 }
-    end
-    // if((pu2-pu1)== 4) {
-    //   sum = sum + 1 }
-    // end
-    // if((dr2-dr1)== 4) {
-    //   sum = sum + 1 }
-    // end
-    if((dr2-pu1)< 4) {
-      sum = sum + 1 }
-    end
-    if (sum > 2) {
-      sum = 2
-    } end
-    urgenceTicketsSurMesure = sum
-  }
-
-  let stPu = now
-  let ndPu = now + 2
-  let stDr = now
-  let ndDr = now + 2
+  
+// set the values to the inputs__________________________________________________________________
 
   const setValues = (values, handle) => {
     sliderValueDrop.innerHTML = values[handle];
@@ -167,25 +132,15 @@ const slider = () => {
     const ndPickupInput = document.getElementById('course_pickups_attributes_0_end_hour')
     const stDropInput = document.getElementById('course_drops_attributes_0_start_hour')
     const ndDropInput = document.getElementById('course_drops_attributes_0_end_hour')
-    console.log(ndDropInput)
-    stPickupInput.value = timeStringToFloat(pickupsValues[0]);
-    ndPickupInput.value = timeStringToFloat(pickupsValues[1]);
-    stDropInput.value = timeStringToFloat(dropsValues[0]);
-    ndDropInput.value = timeStringToFloat(dropsValues[1]);
-    stPu = timeStringToFloat(pickupsValues[0])
-    ndPu = timeStringToFloat(pickupsValues[1])
-    stDr = timeStringToFloat(dropsValues[0])
-    ndDr = timeStringToFloat(dropsValues[1])
-
-
-    const urgenceDiv = document.getElementById('urgence-t');
-    const urgenceDivPrice = document.getElementById('urgence-e');
-    urgenceDiv.innerHTML = sum
-    urgenceDivPrice.innerHTML = `${(sum * price /100).toFixed(2)} €`
-    urgenceTicketsSurMesure = sum
-
-
+  
+    stPickupInput.value = pickupsValues[0];
+    ndPickupInput.value = pickupsValues[1];
+    stDropInput.value = dropsValues[0];
+    ndDropInput.value = dropsValues[1];
   }
+
+  // Event when draging the sliders_______________________________________________________________
+
   sliderPickup.noUiSlider.on('update', (values, handle) => {
       setValues(values, handle);
   });
@@ -207,7 +162,6 @@ const slider = () => {
         start: [stDr, ndPu]
         });
       } end
-      calculSurMesure(stPu, ndPu, stDr, ndDr);
       setValues(values, handle);
  
   });
@@ -226,16 +180,9 @@ const slider = () => {
         start: [stPu, ndDr]
         });
       } end
-      calculSurMesure(stPu, ndPu, stDr, ndDr);
       setValues(values, handle);
 
   });
-
-
-
-
-
-
 
   urgences.forEach((urgence) => {
     urgence.addEventListener('click', function () {

@@ -4,7 +4,7 @@ document.addEventListener("turbolinks:load", (event) => {
   flatpickr(".datepicker", {
 
     altInput: true,
-    allowInput: true,
+    // allowInput: true,
     defaultDate: new Date(),
     minDate: new Date(),
     weekNumbers: true,

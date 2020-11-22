@@ -15,13 +15,10 @@ const getVolume = (size, voDisplay, voInput) => {
   })
   .then(response => response.json())
   .then((data) => {
-    // console.log(data)
     voDisplay.innerHTML = data
     voInput.value = data
     console.log(data)
-    // getTotal(sousTotals)
   });
-
 };
 
 export { getVolume }
