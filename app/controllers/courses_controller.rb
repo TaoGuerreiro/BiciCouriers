@@ -99,6 +99,7 @@ class CoursesController < ApplicationController
   end
 
   def ticket_urgence
+    # binding.pry
 
     data = JSON.parse(urgence_params.to_json)
 

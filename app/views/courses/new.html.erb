@@ -5,7 +5,7 @@
       <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
       <div class="rammassage">
         <%= f.fields_for :pickups, remote: true do |pickup| %>
-          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul", :'data-target' => "distance.pickup" } %>
+          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul input->distance#calcul", :'data-target' => "distance.pickup" } %>
           <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateStart"} %>
           <div class='hiddden'>
             <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true, input_html: { :'data-target' => "urgence.hourPickupStart" } %>
@@ -18,7 +18,7 @@
       <!-- __________ ADRESSE DE LIVRAISON __________ -->
       <div class="livraison">
         <%= f.fields_for :drops do |drop| %>
-          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul", :'data-target' => "distance.drop" } %>
+          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul change->input#calcul", :'data-target' => "distance.drop" } %>
           <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateEnd"} %>
           <div class='hiddden'>
             <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true, input_html: { :'data-target' => "urgence.hourDropStart" } %>
@@ -47,18 +47,36 @@
             <div class="icon-w fs10"></div>
             <div class="icon-w fs10"></div> %>
 
-            <div class="urgence-1 urgence" data-action="click->urgence#ticket">
+            <div class="urgence-1 urgence" data-action="click->urgence#ticket" data-target="urgence.urgence" >
               <div class="urgence-image"></div>
-              <div class='icon urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p>
+              <div class='icon urgence-1 urgence-validator' data-tickets='0'></div>
+              <p>
+                <span class='urgence-0-day' data-target="urgence.urgenceDayText"></span> 
+                avant 
+                <span class='urgence-0-hour' data-target="urgence.urgenceHourText"></span>
+              </p>
             </div>
-            <div class="urgence-2 urgence" data-action="click->urgence#ticket">
+
+            <div class="urgence-2 urgence" data-action="click->urgence#ticket" data-target="urgence.urgence">
               <div class="urgence-image"></div>
-            <div class='icon urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p>
+              <div class='icon urgence-2 urgence-validator' data-tickets='2'></div>
+              <p>
+                <span class='urgence-2-day' data-target="urgence.urgenceDayText"></span>
+                avant 
+                <span class='urgence-2-hour' data-target="urgence.urgenceHourText"></span>
+              </p>
             </div>
-            <div class="urgence-3 urgence" data-action="click->urgence#ticket">
+
+            <div class="urgence-3 urgence" data-action="click->urgence#ticket" data-target="urgence.urgence">
               <div class="urgence-image"></div>
-              <div class='icon urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p>
+              <div class='icon urgence-3 urgence-validator' data-tickets='1'></div>
+              <p>
+                <span class='urgence-1-day' data-target="urgence.urgenceDayText"></span>
+                avant 
+                <span class='urgence-1-hour' data-target="urgence.urgenceHourText"></span>
+              </p>
             </div>
+
             <div class="urgence-4 urgence">
               <div class="urgence-image"></div>
               <p>Sur mesure</p>
