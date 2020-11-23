@@ -38,8 +38,8 @@ export default class extends Controller {
     console.log("coucou j'ai changé")
   }
 
-  connect() {
-    console.log("Connexion de l'urgence controller")
+  init = () => {
+    console.log("reset des horaires d'urgence")
     // console.log(this.urgence0Target)
 
     return fetchWithToken("/course/init_urgences", {
@@ -81,6 +81,11 @@ export default class extends Controller {
       this.urgenceTargets[2].dataset.end_day = data.urgence_1_end_date
       this.urgenceTargets[1].dataset.end_day = data.urgence_2_end_date
     });
+  }
 
+  connect() {
+    console.log("Connexion de l'urgence controller")
+
+    setInterval(this.init, 60000)
   }
 }
