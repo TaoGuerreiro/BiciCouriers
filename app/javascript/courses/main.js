@@ -1,38 +1,38 @@
 // import { sweetalert_display } from '../toggle/sweetalert.js';
-import { getVolume } from '../toggle/get_volume.js';
-import  { initMap, displayRoute } from '../courses/init_map.js';
+// import { getVolume } from '../toggle/get_volume.js';
+import  { initMap } from '../courses/init_map.js';
 
 
 const newCourse = () => {
-  document.addEventListener("turbolinks:load", (event) => {
+//   document.addEventListener("turbolinks:load", (event) => {
 
-    if (window.location.pathname != '/courses/new') {
-      return
-    }
+//     if (window.location.pathname != '/courses/new') {
+//       return
+//     }
     const puAddress = document.getElementById('course_pickups_attributes_0_address');
     const drAddress = document.getElementById('course_drops_attributes_0_address');
   
 
-    const voInputs = document.querySelectorAll('.volume');
+//     const voInputs = document.querySelectorAll('.volume');
 
-    const sousTotals = document.querySelectorAll('.sous-total');
-    const toDisplay = document.getElementById('total-course');
-    const priceDisplay = document.getElementById('total-price');
+//     const sousTotals = document.querySelectorAll('.sous-total');
+//     const toDisplay = document.getElementById('total-course');
+//     const priceDisplay = document.getElementById('total-price');
 
-    const voTextDisplay = document.getElementById('vo-text-volume');
-    const voDisplay = document.querySelector('.right-volume');
-    const voInput = document.getElementById('bike');
+//     const voTextDisplay = document.getElementById('vo-text-volume');
+//     const voDisplay = document.querySelector('.right-volume');
+//     const voInput = document.getElementById('bike');
 
 
   
-    const getTotal = (sous_total_array_input) => {
-      let total = 0
-      sous_total_array_input.forEach((number) => {
-        total = total + (parseInt(number.innerText, 10) || 0)
-        toDisplay.innerHTML = total
-        priceDisplay.innerHTML = total * 6
-      });
-    }
+//     const getTotal = (sous_total_array_input) => {
+//       let total = 0
+//       sous_total_array_input.forEach((number) => {
+//         total = total + (parseInt(number.innerText, 10) || 0)
+//         toDisplay.innerHTML = total
+//         priceDisplay.innerHTML = total * 6
+//       });
+//     }
 
     initMap(puAddress, drAddress);
 
@@ -103,23 +103,23 @@ const newCourse = () => {
 
 // VOLUME_______________________________________________________________________
 
-    voInputs.forEach( (volume) => {
-      volume.addEventListener('click', (event) => {
-        removeActive(voInputs);
-        event.target.parentNode.classList.add('active');
-        // console.log(event.target)
-        // event.target.nextElementSibling.className ='font-active';
-        console.log(event.currentTarget.lastElementChild.innerText)
-        voTextDisplay.innerText = event.currentTarget.lastElementChild.innerText
+    // voInputs.forEach( (volume) => {
+    //   volume.addEventListener('click', (event) => {
+    //     // removeActive(voInputs);
+    //     event.target.parentNode.classList.add('active');
+    //     // console.log(event.target)
+    //     // event.target.nextElementSibling.className ='font-active';
+    //     console.log(event.currentTarget.lastElementChild.innerText)
+    //     voTextDisplay.innerText = event.currentTarget.lastElementChild.innerText
           
-        let number = parseInt(event.srcElement.nextElementSibling.dataset.tickets, 10)
-        getVolume(number, voDisplay, voInput)
-        .then(() => getTotal(sousTotals));
-      });
-    });
+    //     let number = parseInt(event.srcElement.nextElementSibling.dataset.tickets, 10)
+    //     getVolume(number, voDisplay, voInput)
+    //     .then(() => getTotal(sousTotals));
+    //   });
+    // });
 
 
-  });
+  // });
 }
 
 export { newCourse }
