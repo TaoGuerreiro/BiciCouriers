@@ -34,7 +34,7 @@ const newCourse = () => {
 //       });
 //     }
 
-    initMap(puAddress, drAddress);
+    // initMap(puAddress, drAddress);
 
     // init_urgences(urgence_0_hour, urgence_0_day, urgence_1_hour, urgence_1_day, urgence_2_hour, urgence_2_day, urInputs)
     // sweetalert_display(addressInputs, urInputs, voInputs);
