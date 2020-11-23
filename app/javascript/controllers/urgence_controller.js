@@ -85,7 +85,7 @@ export default class extends Controller {
 
   connect() {
     console.log("Connexion de l'urgence controller")
-
+    this.init()
     setInterval(this.init, 60000)
   }
 }
