@@ -4,38 +4,42 @@ import { fetchWithToken } from "../utils/fetch_with_token";
 export default class extends Controller {
   static targets = [ 'text', 'ticket', 'hourPickupStart', 'hourPickupEnd', 'hourDropStart', 'hourDropEnd', 'dateStart', 'dateEnd', 'urgence', 'urgenceDayText', 'urgenceHourText' ]
 
-ticket(event) {
-    // console.log(event.target.parentNode.dataset.start_day)
-    
-    const pus = event.target.parentNode.dataset.start_hour
-    const pue = event.target.parentNode.dataset.end_hour
-    const drs = event.target.parentNode.dataset.start_hour
-    const dre = event.target.parentNode.dataset.end_hour
-    const pud = event.target.parentNode.dataset.start_day
-    const drd = event.target.parentNode.dataset.end_day
+  ticket(event) {
+      // console.log(event.target.parentNode.dataset.start_day)
+      
+      const pus = event.target.parentNode.dataset.start_hour
+      const pue = event.target.parentNode.dataset.end_hour
+      const drs = event.target.parentNode.dataset.start_hour
+      const dre = event.target.parentNode.dataset.end_hour
+      const pud = event.target.parentNode.dataset.start_day
+      const drd = event.target.parentNode.dataset.end_day
 
-    this.urgenceTargets.forEach((urgence) => urgence.classList.remove('active'))
-    event.target.parentNode.classList.add('active')
+      this.urgenceTargets.forEach((urgence) => urgence.classList.remove('active'))
+      event.target.parentNode.classList.add('active')
 
-    let data = { urgence: { puStart:pus, puEnd:pue, drStart:drs, drEnd:dre, stDate:pud, ndDate:drd }}
-    return fetchWithToken("/course/ticket_urgence", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then((data) => {
-      this.ticketTarget.textContent = data.tickets_urgence
-      this.textTarget.textContent = "Livraison avant " + dre
-      return data.tickets_urgence
-    });
-}
+      let data = { urgence: { puStart:pus, puEnd:pue, drStart:drs, drEnd:dre, stDate:pud, ndDate:drd }}
+      return fetchWithToken("/course/ticket_urgence", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then((data) => {
+        this.ticketTarget.textContent = data.tickets_urgence
+        this.textTarget.textContent = "Livraison avant " + dre
+        return data.tickets_urgence
+      });
+  }
 
-  connect() {
-    console.log("Connexion de l'urgence controller")
+  test() {
+    console.log("coucou j'ai changé")
+  }
+
+  init = () => {
+    console.log("reset des horaires d'urgence")
     // console.log(this.urgence0Target)
 
     return fetchWithToken("/course/init_urgences", {
@@ -77,6 +81,11 @@ ticket(event) {
       this.urgenceTargets[2].dataset.end_day = data.urgence_1_end_date
       this.urgenceTargets[1].dataset.end_day = data.urgence_2_end_date
     });
+  }
 
+  connect() {
+    console.log("Connexion de l'urgence controller")
+
+    setInterval(this.init, 60000)
   }
 }

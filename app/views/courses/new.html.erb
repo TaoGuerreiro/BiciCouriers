@@ -1,4 +1,4 @@
-<div class="course-main-container" data-controller="distance urgence">
+<div class="course-main-container" data-controller="distance urgence volume">
   <%= simple_form_for @course, remote: true do |f| %>
 
     <div class="first-container">
@@ -91,17 +91,17 @@
           <div class="bike-options button-second"><p>Type de marchandise</p><i class="fas fa-caret-down"></i></div>
           <div class="options">
 
-            <div class="bike-1 bike volume active">
+            <div class="bike-1 bike volume" data-tickets='0' data-action="click->volume#ticket" data-target="volume.size">
               <div class="bike-1-image"></div>
-              <div class='icon volume volume-1 volume-validator' data-tickets='0' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p>
+              <div class='icon volume volume-1 volume-validator' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p>
             </div>
-            <div class="bike-2 volume bike">
+            <div class="bike-2 volume bike" data-tickets='1' data-action="click->volume#ticket" data-target="volume.size">
               <div class="bike-2-image"></div>
-              <div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p>
+              <div class='icon volume volume-2 volume-validator' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p>
             </div>
-            <div class="bike-3 volume bike">
+            <div class="bike-3 volume bike" data-tickets='2' data-action="click->volume#ticket" data-target="volume.size">
               <div class="bike-2-image"></div>
-              <div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Miam</p>
+              <div class='icon volume volume-2 volume-validator' data-text='Gros colis ou > 5kg'></div><p>Miam</p>
             </div>
           </div>
 
@@ -117,7 +117,7 @@
         <div class="total-title price-line">                           <div class="column1"><p>Prestation</p></div>                      <div class="column2 euro-image"></div>                   <div class="column3 ticket-image"></div>                      </div>
         <div class="vi-sous-total total-distance price-line">          <div class="column1" ><p data-target="distance.distance">Distance</p></div>       <div class="column2"><p id="distance-e" >inclu</p></div>  <div class="column3"><p class="sous-total right-distance" data-target="distance.distanceTicket">0</p></div>    </div>
         <div class="vi-sous-total total-urgence price-line">           <div class="column1 "><p data-target="urgence.text" class="heure">Urgence</p></div>                        <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p class="sous-total right-urgence id="urgence-t" data-target="urgence.ticket">0</p></div>            </div>
-        <div class="vi-sous-total total-cargo price-line">             <div class="column1"><p id='vo-text-volume'>Volume/poids</p></div>                    <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p class="sous-total right-volume" id="cargo-t">0</p></div>              </div>
+        <div class="vi-sous-total total-cargo price-line">             <div class="column1"><p data-target="volume.text" id='vo-text-volume'>Volume/poids</p></div>                    <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p class="sous-total right-volume" id="cargo-t" data-target="volume.ticket" >0</p></div>              </div>
         <div class="total total-ticket price-line">                    <div class="column1"><p>Total</p></div>                           <div class="column2"><p id="total-price">0.00</p></div>      <div class="column3"><p id="total-course">0</p></div>         </div>
       <% if @carnet.blank? %>
         <div class="carnet-diff">
