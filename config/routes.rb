@@ -45,8 +45,10 @@
   resources :courses, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
-
   end
+  # resources :cities, only: [:current]
+
+  get 'cities/current', to: 'cities#current'
 
   #course building
   post 'course/distance', to: 'courses#distance'

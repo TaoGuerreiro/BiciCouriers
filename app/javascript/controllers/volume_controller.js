@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 import { fetchWithToken } from "../utils/fetch_with_token";
 
 export default class extends Controller {
-  static targets = [ 'text', 'ticket', 'size' ]
+  static targets = [ 'text', 'ticket', 'size', 'input' ]
 
 
   ticket(event)   {
@@ -27,9 +27,9 @@ export default class extends Controller {
         .then(response => response.json())
         .then((data) => {
             this.ticketTarget.textContent = data
-            // this.ticketTarget.textContent = data
+            this.inputTarget.value = data
         //   voInput.value = data
-        //   console.log(data)
+          console.log(data)
         });       
   }
 
