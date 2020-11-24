@@ -28,14 +28,21 @@ export default class extends Controller {
       })
       .then(response => response.json())
       .then((data) => {
+        this.fillInputs(pus, pue, drs, dre, pud, drd)
         this.ticketTarget.textContent = data.tickets_urgence
         this.textTarget.textContent = "Livraison avant " + dre
         return data.tickets_urgence
       });
   }
 
-  test() {
-    console.log("coucou j'ai changé")
+  fillInputs = (pus, pue, drs, dre, pud, drd) => {
+    this.hourPickupStartTarget.value = pus
+    this.hourPickupEndTarget.value = pue
+    this.hourDropStartTarget.value = drs
+    this.hourDropEndTarget.value = dre
+    this.dateStartTarget.value = pud
+    this.dateEndTarget.value = drd
+    
   }
 
   init = () => {
@@ -59,13 +66,19 @@ export default class extends Controller {
         // ça interpole pas la variable, mais le text de la variable
         //   i ++
         // })
+      this.hourPickupStartTarget.value = data.urgence_0_start_hour
+      this.hourPickupEndTarget.value = data.urgence_0_end_hour
+      this.hourDropStartTarget.value = data.urgence_0_start_hour
+      this.hourDropEndTarget.value = data.urgence_0_end_hour
+      this.dateStartTarget.value = data.urgence_0_start_date
+      this.dateEndTarget.value = data.urgence_0_end_date
 
       this.urgenceHourTextTargets[0].innerText = data.urgence_0_end_hour
       this.urgenceDayTextTargets[0].innerText = data.urgence_0_day
-      this.urgenceHourTextTargets[1].innerText = data.urgence_1_end_hour
-      this.urgenceDayTextTargets[1].innerText = data.urgence_1_day
-      this.urgenceHourTextTargets[2].innerText = data.urgence_2_end_hour
-      this.urgenceDayTextTargets[2].innerText = data.urgence_2_day
+      this.urgenceHourTextTargets[2].innerText = data.urgence_1_end_hour
+      this.urgenceDayTextTargets[2].innerText = data.urgence_1_day
+      this.urgenceHourTextTargets[1].innerText = data.urgence_2_end_hour
+      this.urgenceDayTextTargets[1].innerText = data.urgence_2_day
 
       this.urgenceTargets[0].dataset.start_hour = data.urgence_0_start_hour
       this.urgenceTargets[2].dataset.start_hour = data.urgence_1_start_hour

@@ -41,6 +41,6 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log('Connexion du distance controller')
+    console.log('Connexion du distance controller') 
   }
 }
