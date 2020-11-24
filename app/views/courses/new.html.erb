@@ -8,7 +8,7 @@
           <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-target' => "distance.pickup map.pickup" } %>
           <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateStart"} %>
           <%= pickup.input :details, as: :string, placeholder: 'details', label: false, required: true %>
-          <div class='hidden'>
+          <div class='hiddden'>
             <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true, input_html: { :'data-target' => "urgence.hourPickupStart" } %>
             <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true, input_html: { :'data-target' => "urgence.hourPickupEnd" } %>
             <div class="slider-container hiddden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
@@ -21,7 +21,7 @@
           <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator', :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-target' => "distance.drop map.drop" } %>
           <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateEnd"} %>
           <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
-          <div class='hidden'>
+          <div class='hiddden'>
             <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true, input_html: { :'data-target' => "urgence.hourDropStart" } %>
             <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true, input_html: { :'data-target' => "urgence.hourDropEnd" } %>
             <div class="slider-container hiddden-trans"><div id="slider-drop"></div><span id="slider-drop-value" class="hidden"></span></div>
@@ -41,13 +41,13 @@
         <!-- __________ URGENCES __________ -->
         <div class="urgences-container dropdown-options">
 
-          <div class="button-second urgence-options"><p>C'est urgent ?</p><i class="fas fa-caret-down"></i></div>
+          <div class="button-second urgence-options "><p>C'est urgent ?</p><i class="fas fa-caret-down"></i></div>
           <div class="options">
             <%# <div class="icon-w fs10"></div>
             <div class="icon-w fs10"></div>
             <div class="icon-w fs10"></div> %>
 
-            <div class="urgence-1 urgence" data-action="click->urgence#ticket" data-target="urgence.urgence" >
+            <div class="urgence-1 urgence active" data-action="click->urgence#ticket" data-target="urgence.urgence" >
               <div class="urgence-image"></div>
               <div class='icon urgence-1 urgence-validator' data-tickets='0'></div>
               <p>

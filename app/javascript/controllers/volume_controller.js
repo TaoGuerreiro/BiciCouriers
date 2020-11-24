@@ -34,6 +34,6 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log('Connexion du volume controller')
+    console.log('Connexion du volume controller') 
   }
 }
