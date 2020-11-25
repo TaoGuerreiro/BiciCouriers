@@ -1,0 +1,2 @@
+class Urgence < ApplicationRecord
+end
