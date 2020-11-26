@@ -18,11 +18,11 @@ import  { progressCarnet } from '../shared/progress_carnet.js';
 import  { favoriteFill } from '../shared/favorite_fill.js';
 
 import  { newCourseGuest } from '../toggle/main.js';
-import  { newCourse } from '../courses/main.js';
+
 
 
 newCourseGuest();
-newCourse();
+
 
 movement();
 cardsFly();
@@ -30,7 +30,7 @@ userLogo();
 initAutocomplete();
 // bikeToggle();
 initShowMap();
-// slider();
+slider();
 animations();
 counterCircle();
 selectCarnet();
