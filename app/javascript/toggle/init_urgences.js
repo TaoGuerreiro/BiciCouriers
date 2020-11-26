@@ -12,6 +12,7 @@ const init_urgences = (urgence_0_hour_input, urgence_0_day_input, urgence_1_hour
       })
       .then(response => response.json())
       .then((data) => {
+        
         urgence_0_hour_input.innerText = data.urgence_0_end_hour
         urgence_0_day_input.innerText = data.urgence_0_day
         urgence_1_hour_input.innerText = data.urgence_1_end_hour

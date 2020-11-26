@@ -1,0 +1,163 @@
+<div class="course-main-container">
+
+<%= simple_form_for @course, remote: true do |f| %>
+
+<div class="first-container">
+
+  <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
+  <div class="rammassage">
+
+<!-- Essayer de render un partial avec les nouvelles valeurs ? -->
+      <%#= select("post", "favorite_address_id",   @favorite_addresses.collect {|p| [ p.title, p.address, p.title ] }, { include_blank: true}, id: 'fav-drop-pu') %>
+
+
+
+
+
+      <%= f.fields_for :pickups, remote: true do |pickup| %>
+      <div class="one-line-address-contact">
+        <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input' } %>
+        <% if @favorite_addresses.blank? %>
+          <%= link_to 'Favoris', favorite_addresses_path, class: 'bici-button' %>
+        <% else %>
+          <% if @favorite_addresses.present? %>
+            <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-pickup' %>
+          <% end %>
+        <% end %>
+      </div>
+
+
+
+      <div class="containere">
+        <div class="form-wrapper">
+            <%= pickup.input :date, as: :string, value: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+            <%#= f.input :starts_at, as: :string, required: false, input_html: {class: "datepicker"} %>
+            <%#= f.input :ends_at, as: :string, required: false, input_html: {class: "datepicker"} %>
+        </div>
+      </div>
+
+      <%= pickup.input :details, label: false, as: :text, placeholder: "Rendez un coursier heureux, donnez un max d'infos pour le ramassage !", class: 'inline-form' %>
+      <div class='hidden'> <%= pickup.input :start_hour, label: false %> </div>
+      <div class='hidden'> <%= pickup.input :end_hour, label: false %> </div>
+      <div class="slider-container hidden-trans"><div id="slider-pickup"></div><span id="slider-pickup-value" class="hidden"></span></div>
+    <% end %>
+  </div>
+
+
+
+
+
+
+ <!-- __________ ADRESSE DE LIVRAISON __________ -->
+  <div class="livraison">
+    <%= f.fields_for :drops do |drop| %>
+      <div class="one-line-address-contact">
+        <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input' } %>
+        <% if @favorite_addresses.blank? %>
+          <%= link_to 'Favoris', new_favorite_address_path, class: 'bici-button' %>
+        <% else %>
+          <% if @favorite_addresses.present? %>
+            <%= select_tag :address, options_for_select(@favorite_addresses.map { |obj| [obj['title'], obj['address']] }) , include_blank: 'Favoris', id: 'favorite-drop' %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="form-wrapper">
+        <%= drop.input :date, as: :string, defaults: Date.today, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker"} %>
+      </div>
+      <%= drop.input :details, label: false, as: :text, placeholder: "Le rendre doublement plus heureux ? C'est ici !", class: 'inline-form' %>
+      <div class='hidden'> <%= drop.input :start_hour, label: false  %> </div>
+      <div class='hidden'> <%= drop.input :end_hour, label: false %> </div>
+      <div class="slider-container hidden-trans"><div id="slider-drop"></div><span id="slider-drop-value" class="hidden"></span></div>
+    <% end %>
+  </div>
+</div>
+<div class="second-container">
+
+ <!-- __________ MAP __________ -->
+  <div
+  id="map-container"
+  data-google-api-key="<%= ENV['GOOGLE_API_KEY'] %>">
+  </div>
+
+  <div class="options-container">
+
+ <!-- __________ URGENCES __________ -->
+
+    <div class="urgences-container dropdown-options">
+      <div class="button-second urgence-options"><p>C'est urgent ?</p><i class="fas fa-caret-down"></i></div>
+      <div class="options">
+        <div class="urgence-1 urgence active">
+          <div class="urgence-image"></div>
+          <p>Aujourd'hui</p>
+        </div>
+        <div class="urgence-2 urgence">
+          <div class="urgence-image"></div>
+          <p>Avant <span id='4heures'>XX:XX</span></p>
+        </div>
+        <div class="urgence-3 urgence">
+          <div class="urgence-image"></div>
+          <p>Avant <span id='45min'>XX:XX</span></p>
+        </div>
+        <div class="urgence-4 urgence">
+          <div class="urgence-image"></div>
+          <p>Sur mesure</p>
+        </div>
+       </div>
+    </div>
+
+ <!-- __________ VOLUME __________ -->
+
+    <div class="bikes-container dropdown-options">
+      <div class="bike-options button-second"><p>C'est volumineux ?</p><i class="fas fa-caret-down"></i></div>
+      <div class="options">
+        <div class="bike-1 bike active">
+          <div class="bike-1-image"></div>
+          <p>Sac à dos</p>
+        </div>
+        <div class="bike-2 bike">
+          <div class="bike-2-image"></div>
+          <p>Vélo cargo</p>
+        </div>
+      </div>
+
+      <%= f.input :bike, as: :radio_buttons, wrapper_html: { style: "display: none" } %>
+    </div>
+
+
+ <!-- __________ TOTAL __________ -->
+
+    <div class="total-container"
+          data-carnet-price='<%= @carnet.blank? ? 583 : @carnet.carnet_template.price_cents %>'>
+      <div class="total-title price-line">                        <div class="column1"><p>Prestation</p></div>   <div class="column2 euro-image"></div>                   <div class="column3 ticket-image"></div>                      </div>
+      <div class="sous-total total-distance price-line">          <div class="column1"><p>Distance</p></div>     <div class="column2"><p id="distance-e">inclu</p></div>  <div class="column3"><p id="distance-t">0</p></div>           </div>
+      <div class="sous-total total-urgence price-line hidden">    <div class="column1"><p>Urgence</p></div>      <div class="column2"><p id="urgence-e">inclu</p></div>   <div class="column3"><p id="urgence-t">0</p></div>            </div>
+      <div class="sous-total total-cargo price-line hidden">      <div class="column1"><p>Volume/poids</p></div> <div class="column2"><p id="cargo-e">inclu</p></div>     <div class="column3"><p id="cargo-t">0</p></div>              </div>
+      <div class="total total-ticket price-line">                 <div class="column1"><p>Total</p></div>        <div class="column2"><p id="total-e">0.00</p></div>      <div class="column3"><p id="total-t">0</p></div>              </div>
+
+
+      <%= f.input_field :distance, hint: "distance", class: "hidden distance-input" %>
+      <%= f.input_field :tickets_urgence, hint: "ticket urgence", class: "hidden tickets-urgence" %>
+      <%= f.input_field :tickets_volume, hint: "ticket volume", class: "hidden tickets-volume" %>
+      <%= f.input_field :tickets_distance, hint: "ticket distance", class: "hidden tickets-distance" %>
+      <%= f.input_field :ticket_nb, hint: "ticket total", class: "hidden tickets-input" %>
+      <%= f.input_field :status, value: "pending", class: "hidden" %>
+      <% if @carnet.blank? %>
+        <div class="carnet-diff">
+          <%= f.submit "Ajouter au panier", class: "bici-button" %> <br>
+
+          <p>Avec nos différents carnet économisez sur vos livraisons</p>
+          <p>Cette course pour seulement <strong><span id="best-price">0.00</span></strong> h.t avec un carnet de 100 tickets !</p>
+          <%= link_to "Nos carnets", new_carnet_path, class: "bici-button" %>
+        </div>
+      <% else %>
+        <div class="carnet-diff">
+          <%= f.submit "Commander", class: "bici-button" %> <br>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+<% end %>
+</div>
+

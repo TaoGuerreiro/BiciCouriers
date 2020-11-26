@@ -1,14 +1,14 @@
-import { sweetalert_display } from '../toggle/sweetalert.js';
-import { init_urgences } from '../toggle/init_urgences.js';
-import { getUrgence } from '../toggle/get_urgence.js';
-import { getDistance, getDistTicket } from '../toggle/get_distance.js';
-import { getVolume } from '../toggle/get_volume.js';
-import { removeValidationError } from '../toggle/validations.js';
-import { showToggle } from '../toggle/animations.js';
+import { sweetalert_display } from './sweetalert.js';
+import { init_urgences } from './init_urgences.js';
+import { getUrgence } from './get_urgence.js';
+import { getDistance, getDistTicket } from './get_distance.js';
+import { getVolume } from './get_volume.js';
+import { removeValidationError } from './validations.js';
+import { showToggle } from './animations.js';
 
 
 
-const toggle = () => {
+const newCourseGuest = () => {
   document.addEventListener("turbolinks:load", (event) => {
 
     if (window.location.pathname != '/') {
@@ -150,4 +150,4 @@ const toggle = () => {
   });
 }
 
-export { toggle }
+export { newCourseGuest }
