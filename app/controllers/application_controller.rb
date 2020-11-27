@@ -18,19 +18,19 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def configure_permitted_parameters
-    # For additional fields in app/views/devise/registrations/new.html.erb
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :company])
+  def configure_permitted_parameters
+  # For additional fields in app/views/devise/registrations/new.html.erb
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :company])
 
-    # For additional in app/views/devise/registrations/edit.html.erb
-      devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :first_name, :last_name, :billing_company, :billing_address, :company, :paper_invoice, :carnet_renewal])
-    end
+  # For additional in app/views/devise/registrations/edit.html.erb
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :address, :first_name, :last_name, :billing_company, :billing_address, :company, :paper_invoice, :carnet_renewal])
+  end
 
-    def default_url_options
-      { host: ENV["DOMAIN"] || "localhost:3000" }
-    end
+  def default_url_options
+    { host: ENV["DOMAIN"] || "localhost:3000" }
+  end
 
-    def skip_pundit?
-      devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^avantages$)|(^services$)|(^contacts$)|(^simulations$)|(^simulation_orders$)/
-    end
+  def skip_pundit?
+    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^avantages$)|(^services$)|(^contacts$)|(^simulations$)|(^simulation_orders$)/
+  end
 end

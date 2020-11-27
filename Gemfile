@@ -7,7 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sprockets', '3.7.2'
 gem 'pg', '~> 0.21'
 gem "puma", '>= 4.3.5'
-gem 'rails', '5.2.4.1'
+gem 'rails', '~> 6.0'
 gem 'redis'
 
 gem 'autoprefixer-rails'
@@ -21,7 +21,7 @@ gem 'postmark-rails'
 
 gem 'geocoder'
 gem 'pundit'
-gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
+gem 'rails-i18n', '~> 6.0'
 gem 'devise-i18n'
 gem 'turbolinks', '~> 5.2.0'
 gem 'turbolinks_render'
