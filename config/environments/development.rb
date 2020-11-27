@@ -1,22 +1,21 @@
 Rails.application.configure do
   config.to_prepare do
-      Devise::SessionsController.layout "application"
-      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
-      Devise::ConfirmationsController.layout "application"
-      Devise::UnlocksController.layout "application"
-      Devise::PasswordsController.layout "application"
-      UsersController.layout "commandes"
-      CoursesController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
-      CarnetsController.layout "commandes"
-      FavoriteAddressesController.layout "commandes"
-      ShoppingCartsController.layout "commandes"
-      PaymentsController.layout "commandes"
-      OrdersController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
+    Devise::SessionsController.layout "application"
+    Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
+    Devise::ConfirmationsController.layout "application"
+    Devise::UnlocksController.layout "application"
+    Devise::PasswordsController.layout "application"
+    UsersController.layout "commandes"
+    CoursesController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
+    CarnetsController.layout "commandes"
+    FavoriteAddressesController.layout "commandes"
+    ShoppingCartsController.layout "commandes"
+    PaymentsController.layout "commandes"
+    OrdersController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
   end
 
-  # config.action_mailer.delivery_method = :smtp
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
+  config.i18n.available_locales = :fr
+  config.i18n.default_locale = :fr
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -24,19 +23,17 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  config.i18n.available_locales = :fr
-  config.i18n.default_locale = :fr
-
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.s
+  # Show full error reports.
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
@@ -48,12 +45,14 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options)
+  # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
@@ -68,12 +67,12 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = false
+  config.assets.debug = true
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations
+  # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
