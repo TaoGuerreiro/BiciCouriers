@@ -160,6 +160,7 @@ class CoursesController < ApplicationController
   end
 
   def create
+    raise
     if user_signed_in? # USER EN LIGNE OLD VERSION
       @user = current_user
       @course = Course.new(course_params)
