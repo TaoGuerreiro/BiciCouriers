@@ -5,7 +5,7 @@
       <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
       <div class="rammassage">
         <%= f.fields_for :pickups, remote: true do |pickup| %>
-          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-target' => "distance.pickup map.pickup" } %>
+          <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class:"address-input" , :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-target' => "distance.pickup map.pickup" } %>
           <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateStart"} %>
           <%= pickup.input :details, as: :string, placeholder: 'details', label: false, required: true %>
           <div class='hiddden'>
@@ -18,7 +18,7 @@
       <!-- __________ ADRESSE DE LIVRAISON __________ -->
       <div class="livraison">
         <%= f.fields_for :drops do |drop| %>
-          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-target' => "distance.drop map.drop" } %>
+          <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class:"address-input" , :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-target' => "distance.drop map.drop" } %>
           <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateEnd"} %>
           <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
           <div class='hiddden'>

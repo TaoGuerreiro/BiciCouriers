@@ -7,13 +7,24 @@ export default class extends Controller {
 
     connect() {
         console.log('Connexion du map controller')
-        this.displayRoutes()
+        const nantes = {lat: 47.2173, lng: -1.5534};
+        const myOptions = {
+            zoom:13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: nantes
+        }
+        const map = new google.maps.Map(this.mapTarget, myOptions);
+
+        
     }   
 
 
     displayRoutes = () => {
         const directionsDisplay = new google.maps.DirectionsRenderer();
         const directionsService = new google.maps.DirectionsService();
+        if (this.pickupTarget.value === "" || this.dropTarget.value === ""  ) {
+            return
+        } else {
   
         const nantes = {lat: 47.2173, lng: -1.5534};
         const myOptions = {
@@ -25,12 +36,9 @@ export default class extends Controller {
 
         directionsDisplay.setMap(map);
         // console.log(this.pickupTarget.nextElementSibling)
-        if (this.pickupTarget.nextElementSibling === null || this.dropTarget.nextElementSibling === null  ) {
-            return
-        } else {
             const request = {
-            origin: this.pickupTarget.nextElementSibling.innerHTML,
-            destination: this.dropTarget.nextElementSibling.innerHTML,
+            origin: this.pickupTarget.value,
+            destination: this.dropTarget.value,
             travelMode: google.maps.DirectionsTravelMode.WALKING
             };
             directionsService.route(request, function(response, status) {

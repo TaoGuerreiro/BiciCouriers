@@ -5,8 +5,8 @@ export default class extends Controller {
   static targets = [ 'distance', 'distanceTicket', 'pickup', 'drop']
 
   calcul() {
-      const pu = this.pickupTarget.nextElementSibling.innerHTML
-      const dr = this.dropTarget.nextElementSibling.innerHTML
+      const pu = this.pickupTarget.value
+      const dr = this.dropTarget.value
         let input = { addresses: { puAddressName:pu, drAddressName:dr }}
         return fetchWithToken("/course/distance", {
           method: "POST",
