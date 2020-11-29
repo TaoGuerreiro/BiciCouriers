@@ -3,9 +3,6 @@ class CarnetsController < ApplicationController
 
   def index
     @inprogress = policy_scope(Carnet).joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :desc)
-
-    RentalRequest.joins(:instrument).where(instruments: { user: current_user })
-    # raise
     @oldone = policy_scope(Carnet).where('remaining_tickets <= ?', 0).order(created_at: :desc)
   end
 

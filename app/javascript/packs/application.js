@@ -1,6 +1,6 @@
 require("turbolinks").start()
-import "bootstrap";
-import 'nouislider/distribute/nouislider.css';
+import '../stylesheets/application.scss';
+// import 'nouislider/distribute/nouislider.css';
 import "controllers"
 import "../plugins/flatpickr"
 
@@ -9,7 +9,7 @@ import  { cardsFly } from '../shared/avantages.js';
 import  { userLogo } from '../shared/navbar.js';
 import  { initAutocomplete } from '../shared/init_autocomplete.js';
 import  { initShowMap } from '../shared/init_show.js';
-import  { slider } from '../shared/slider.js';
+// import  { slider } from '../shared/slider.js';
 import  { animations } from '../shared/animations.js';
 import  { counterCircle } from '../shared/loading_bar.js';
 import  { selectCarnet } from '../shared/select_carnet.js';
@@ -30,7 +30,7 @@ userLogo();
 initAutocomplete();
 // bikeToggle();
 initShowMap();
-slider();
+// slider();
 animations();
 counterCircle();
 selectCarnet();

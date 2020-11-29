@@ -3,7 +3,7 @@
 
     <div class="first-container">
       <!-- __________ ADRESSE DE RAMMASSAGE __________ -->
-      <div class="rammassage">
+      <div class="rammassage ">
         <%= f.fields_for :pickups, remote: true do |pickup| %>
           <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class:"address-input" , :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-target' => "distance.pickup map.pickup" } %>
           <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-target' => "urgence.dateStart"} %>
