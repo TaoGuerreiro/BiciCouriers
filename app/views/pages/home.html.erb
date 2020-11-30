@@ -31,24 +31,18 @@
       }]
     }
   </script>
-  <%= video_tag "bicilanding.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
-  <div class="home-container">
-    <div class="cta-container">
-      <div class="tag">
-        <h2>#fastandcouriers</h2>
-      </div>
-      <div class="title text-cyan-600">
-      <h1>Les coursiers les plus rapides de Nantes !</h1>
-      </div>
-      <div class="text text-gray-900">
-        <p>Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de 45 minutes !</p>
-      </div>
+  <div class="w-full h-full flex justify-center items-center z-10 bg-opacity-0 absolute">
+    <div class="w-1/2 h-1/2 ">
+      <p class="text-lg pb-4">#fastandcouriers</p>
+      <h1 class="text-7xl pb-6 font-bold">Les coursiers les plus rapides de Nantes !</h1>
+      <p class="text-gray-100 text-xl">Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de <span class="text-white font-semibold">45 minutes !</span></p>
     </div>
   </div>
-    <div class="main-guest-courses" id="box">
-      <div class="title"><h2><i class="fas fa-biking"></i>Demander un coursier</h2><p>02.85.52.64.80</p> </div>
-      <div class="addresses">
-        <%= render 'courses/new_course_invite', course: @course, user: @user %>
-      </div>
+  <%= video_tag "bicilanding.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "z-0 w-full h-full object-cover absolute" %>
+  <div class="main-guest-courses" id="box">
+    <div class="title"><h2><i class="fas fa-biking"></i>Demander un coursier</h2><p>02.85.52.64.80</p> </div>
+    <div class="addresses">
+      <%= render 'courses/new_course_invite', course: @course, user: @user %>
     </div>
+  </div>
 </div>
