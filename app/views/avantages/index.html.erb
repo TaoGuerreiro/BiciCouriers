@@ -35,7 +35,7 @@
 
           <% @avantages.each do |avantage| %>
           <div class="inset-x-48 inset-y-56 absolute">
-            <div data-action="click->avantage#fly" data-target="avantage.card" class="cursor-pointer"><%= image_tag avantage.image_pour, alt: "les-avantages-de-bicicouriers", class: "object-contain", data: { action: "click->avantage#fly"} %></div>
+            <div data-action="click->avantage#fly" data-target="avantage.card" class="cursor-pointer"><%= image_tag avantage.image_pour, alt: "les-avantages-de-bicicouriers", class: "object-contain z-30", data: { action: "click->avantage#fly"} %></div>
           </div>
           <% end %>
         </div>

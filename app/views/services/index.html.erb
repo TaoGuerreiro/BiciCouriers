@@ -39,58 +39,65 @@
 }
 </script>
 
-<div class="long-container">
+<div data-controller="service" class="h-screen w-screen flex relative overflow-y-hidden overflow-x-hidden">
 
-
-  <div class="long-line dashed">
-    <%= image_tag 'services/long_dashed_line.svg', alt: "ligne-design" %>
+  <div class="absolute bottom-4 left-24">
+    <svg width="3028" height="207" viewBox="0 0 3028 207" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="9" cy="31.6521" r="9" fill="#FFCC00"/>
+      <path d="M14 35.6519C45 64.9852 137.5 122.952 259.5 120.152C412 116.652 482 8.15186 623 10.1519C764 12.1519 940.5 200.652 1131 191.652C1321.5 182.652 1438.5 -94.3479 1782 35.6519C1942.83 96.5192 2134 207.152 2367 205.152C2553.4 203.552 2935.17 106.152 3027.5 56.1519" stroke="#FFCC00" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="5 5"/>
+    </svg>
   </div>
 
-  <div class="long-line plein">
-    <%= image_tag 'services/long_line.svg', alt: "ligne-design"  %>
+  <div data-target="service.line" class="absolute bottom-4 left-24 w-80 overflow-hidden">
+    <svg width="3028" height="207" viewBox="0 0 3028 207" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="9" cy="31.6521" r="9" fill="#FFCC00"/>
+      <path d="M14 35.6519C45 64.9852 137.5 122.952 259.5 120.152C412 116.652 482 8.15186 623 10.1519C764 12.1519 940.5 200.652 1131 191.652C1321.5 182.652 1438.5 -94.3479 1782 35.6519C1942.83 96.5192 2134 207.152 2367 205.152C2553.4 203.552 2935.17 106.152 3027.5 56.1519" stroke="#FFCC00" stroke-opacity="0.6" stroke-width="2"/>
+    </svg>
   </div>
 
   <div class="ellipse-1">
     <%= image_tag 'services/ellipse.svg', alt: "elipse-design" %>
   </div>
 
-  <div class="oeuf-1">
-    <%= image_tag 'services/oeuf_1.svg', alt: "oeuf-sur-le-plat-design" %>
+  <div data-target="service.egg" class="absolute top-20 overflow">
+    <%= image_tag 'services/oeuf_1.svg', alt: "oeuf-sur-le-plat-design", class: "h-64" %>
   </div>
 
-  <div class="services-container">
+  <div class="oeuf-2">
+    <%= image_tag 'services/oeuf_2.svg', alt: "oeuf-sur-le-plat-design" %>
+  </div>
 
-    <div class="services-info-container">
-      <div class="services-info-title">
-        <h1>Nos Services</h1>
+
+  <div data-target="service.container" class=" h-screen my-auto flex long-container overflow-x-scroll ">
+
+    <div class=" h-screen pl-80 pt-80">
+      <div class="w-80">
+        <h1 class="text-6xl mb-6 text-blue-bici font-bold">Nos Services</h1>
       </div>
       <div class="services-info-text">
-        <p>En tant que coursiers professionnels à Nantes, nous mettons tout en oeuvre pour répondre à vos besoins de façon professionnelle, rapide et efficace. Nous sommes des experts en livraison urgente et express. Nos vélos cargos nous permettent de transporter même les marchandises les plus encombrantes.</p>
-      </div>
+        <p class="text-lg text-blue-bici">En tant que coursiers professionnels à Nantes, nous mettons tout en oeuvre pour répondre à vos besoins de façon professionnelle, rapide et efficace. Nous sommes des experts en livraison urgente et express. Nos vélos cargos nous permettent de transporter même les marchandises les plus encombrantes.</p>
+      </div> 
     </div>
 
-    <div class="service-board">
+    <div class=" h-screen w-auto flex px-24">
       <% @services.each do |service| %>
-      <div class="ghost-card_service">
-        <div class="card-service">
-          <div class="service-title">
-            <h2> <%= service.title %> </h2>
+        <div class=" bg-blue-bici mx-4 my-auto h-96 flex flex-col items-center justify-between rounded-xl p-4">
+          <div class="w-72 h-full pb-10 flex flex-col items-center justify-between">
+            <div class="text-center">
+              <h2 class="text-2xl"> <%= service.title %> </h2>
+            </div>
+            <div class="text-center">
+              <p> <%= service.content %> </p>
+            </div>
           </div>
-          <div class="service-content">
-            <p> <%= service.content %> </p>
+          <div class="-mb-8">
+            <%= link_to "En savoir plus", service_path(service), class: 'btn-bici-lg' %>
           </div>
         </div>
-        <div class="service-button">
-          <%= link_to "En savoir plus", service_path(service), class: 's-button' %>
-        </div>
-      </div>
       <% end %>
     </div>
 
   </div>
 
-  <div class="oeuf-2">
-    <%#= image_tag 'services/oeuf_2.svg', alt: "oeuf-sur-le-plat-design" %>
-  </div>
 
 </div>
