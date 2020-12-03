@@ -1,32 +1,33 @@
-<div class="contact-main-container">
-  <div class="contact-eggs-1">
-    <%= image_tag "contact/oeuf-1.svg", alt: "oeuf-sur-le-plat-design" %>
-  </div>
-  <div class="contact-eggs-2">
-    <%= image_tag "contact/oeuf-2.svg", alt: "oeuf-sur-le-plat-design" %>
-  </div>
+<div class="absolute bottom-0 left-0">
+  <%= image_tag "contact/oeuf-1.svg", alt: "oeuf-sur-le-plat-design" %>
+</div>
+<div class="absolute top-0 right-0">
+  <%= image_tag "contact/oeuf-2.svg", alt: "oeuf-sur-le-plat-design" %>
+</div>
 
-  <div class="contact-second-container">
+<div class="flex w-screen h-screen ">
+  <%# <div class="contact-second-container"> %>
 
-    <div class="contact-container">
-      <div class="title-container">
-        <h1>Contactez-nous*,</h1>
-        <h2>demandez-nous un devis !</h2>
-        <p>*Internet c’est bien pratique, mais vous pouvez aussi nous appeler, ou profitons de vivre à Nantes pour échanger ? Passez nous voir !</p>
+    <div class=" h-screen p-40">
+      <div class="">
+        <h1 class="text-6xl text-blue-bici font-extrabold">Contactez-nous*,</h1>
+        <h2 class="text-4xl text-blue-bici pb-4">demandez-nous un devis !</h2>
+        <p class="text-lg text-blue-bici pb-8">*Internet c’est bien pratique, mais vous pouvez aussi nous appeler, ou profitons de vivre à Nantes pour échanger ? <br>
+        Passez nous voir !</p>
       </div>
-      <div class="form-container">
-        <h3>Nous écrire</h3>
+      <div class="">
+        <h3 class="text-4xl text-blue-bici pb-4">Nous écrire</h3>
 
         <%= simple_form_for @contact do |f| %>
-          <%= f.input :name, label: false, :required => true, :placeholder => 'nom*', class: "bici-form" %>
-          <%= f.input :email, label: false, :required => true, :placeholder => 'email*' %>
-          <%= f.input :phone, label: false, :required => true, :placeholder => 'téléphone*' %>
-          <%= f.input :message, label: false, :as => :text, :required => true,:placeholder => 'message' %>
+          <%= f.input :name, label: false, required: true, :placeholder => 'Nom*', input_html: { class: "w-full border-b-2 border-yellow-bici mb-4 rounded-sm bg-transparent p-2 focus:border-transparent placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-bici" } %>
+          <%= f.input :email, label: false, :required => true, :placeholder => 'Email*', input_html: { class: "w-full border-b-2 border-yellow-bici mb-4 rounded-sm bg-transparent p-2 focus:border-transparent placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-bici" } %> 
+          <%= f.input :phone, label: false, :required => true, :placeholder => 'Téléphone*', input_html: { class: "w-full border-b-2 border-yellow-bici mb-4 rounded-sm bg-transparent p-2 focus:border-transparent placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-bici" } %> 
+          <%= f.input :message, label: false, :as => :text, :required => true, :placeholder => 'Message', input_html: { class: "w-full border-b-2 border-yellow-bici mb-4 rounded-sm bg-transparent p-2 focus:border-transparent placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-bici  h-40" } %> 
           <div class= "hidden">
             <%= f.input :nickname, :hint => 'Leave this field blank!', class: "hidden" %>
           </div>
-          <div>
-            <%= f.button :submit, 'Envoyer', :class=> "btn bici-button" %>
+          <div class="flex justify-end">
+            <%= f.button :submit, 'Envoyer', :class=> "btn-bici-lg" %>
           </div>
         <% end %>
 
@@ -34,16 +35,35 @@
       </div>
     </div>
 
-    <div class="address-container">
-      <div class="address">
-        <p><strong> BiciCouriers – Le Grand Bain, 21 Allée Baco, 44000 Nantes</strong></p>
-        <p>08:00 à 19:00</p>
-        <p>02.85.52.64.80</p>
-        <p>07.81.66.03.50</p>
-        <p>bicicouriersnantes@gmail.com</p>
-      </div>
+    <div class=" h-screen w-1/3 px-32 py-80">
+   
+        <p class="text-blue-bici text-xl"><strong> BiciCouriers   <br> 8 Passage de la Poule Noire,<br> 44000 Nantes</strong></p>
+        <p class="text-blue-bici text-xl">08:00 à 19:00</p>
+        <p class="text-blue-bici text-xl">02.85.52.64.80</p>
+        <p class="text-blue-bici text-xl">07.81.66.03.50</p>
+        <p class="text-blue-bici text-xl">contact@bicicouriers.fr</p>
+   
     </div>
 
-  </div>
+  <%# </div> %>
 
 </div>
+<%# .form-control {
+//   width: 100% !important;
+//   border:none;
+//   border-bottom: 2px $yellow solid;
+//   background-color: transparent !important;
+//   margin-bottom: 20px;
+
+
+//   font-weight: 300;
+//   font-size: 15px;
+//   line-height: 25px;
+//   color: white;
+//   &:active {
+//     box-shadow: none;
+//   }
+//   &:disabled {
+
+//   }
+// } %>
