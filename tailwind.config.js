@@ -17,7 +17,10 @@ module.exports = {
     variants: {
       extend: {
         borderStyle: ['hover', 'focus'],
-        fontWeight: ['hover', 'focus']
+        fontWeight: ['hover', 'focus'],
+        rotate: ['active', 'group-hover'],
+        transform: ['group-hover'],
+        transformOrigin: ['group-hover'],
       },
     },
     plugins: [],
