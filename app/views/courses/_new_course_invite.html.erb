@@ -1,13 +1,13 @@
 
 <%= simple_form_for course, remote: true do |f| %>
 
-  <div id="addresses">
+  <div id="">
     <%= f.fields_for :pickups, remote: true do |pickup| %>
       <%= pickup.label :address, "Adresse de rammassage", class: 'hidden' %>
-      <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator' } %>
+      <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input w-full' } %>
       <div class='hidden'>
         <%= pickup.label :date, "Date de rammassage" %>
-        <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input"} %>
+        <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: ""} %>
         <%= pickup.label :start_hour, "Heure pour début de rammassage" %>
         <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
         <%= pickup.label :end_hour, "Heure maximum pour le rammassage" %>
@@ -17,10 +17,10 @@
 
     <%= f.fields_for :drops do |drop| %>
     <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-      <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator' } %>
+      <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input w-full mt-4' } %>
       <div class='hidden'>
         <%= drop.label :date, "Date de rammassage" %>
-        <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input"} %>
+        <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: ""} %>
         <%= drop.label :start_hour, "Heure pour début de rammassage" %>
         <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
         <%= drop.label :end_hour, "Heure maximum pour le rammassage" %>

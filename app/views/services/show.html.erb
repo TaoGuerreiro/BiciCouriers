@@ -10,8 +10,8 @@
     <%= link_to services_path, class: "text-white font-semibold" do %>
        <i class="fas fa-angle-left text-white"></i> RETOUR
     <% end %>
-    <h1 class="text-4xl font-bold my-8"><%= @service.title %></h1>
-    <p class="text-lg mb-10"> <%= @service.details %></p>
+    <h1 class="text-white text-4xl font-bold my-8"><%= @service.title %></h1>
+    <p class="text-white text-lg mb-10"> <%= @service.details %></p>
     <%= link_to "DEMANDER UN DEVIS",  new_contact_path, class: "btn-bici-lg" %>
   </div>
 

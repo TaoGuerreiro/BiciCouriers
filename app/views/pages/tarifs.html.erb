@@ -20,42 +20,42 @@
 
   <div class="sm:grid sm:grid-cols-4 lg:grid-cols-3 gap-8 w-4/5 mx-auto h-full mx-8 mb-10">
     <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-span-2 lg:col-auto">
-      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Formule à la course</h2>
-      <p>Reservez et payez votre course en un clic. </p>
+      <h2 class="text-white text-3xl lg:text-4xl mb-2 lg:mb-4">Formule à la course</h2>
+      <p class="text-white ">Reservez et payez votre course en un clic. </p>
       <%= image_tag "tarifs/ticket-1.svg", alt: "ticket-de-carnet", class: "lg:h-20 h-14 mx-auto my-2 lg:my-4" %>
-      <p>5,83€ ht</p>
-      <p class="mb-4 lg:mb-8">le ticket</p>
+      <p class="text-white ">5,83€ ht</p>
+      <p class="text-white mb-4 lg:mb-8">le ticket</p>
       <div><%= link_to "Passer commande", root_path, class: "btn-bici" %></div>
     </div> 
 
     <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-span-2 lg:col-auto">
-      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Carnets de tickets</h2>
+      <h2 class="text-white text-3xl lg:text-4xl mb-2 lg:mb-4">Carnets de tickets</h2>
 
-      <p>Taille de carnet évolutif pour tous vos types de besoins.</p>
+      <p class="text-white ">Taille de carnet évolutif pour tous vos types de besoins.</p>
 
       <div class="my-4 flex grow">
         <div class="text-center m-auto flex-grow">
-          <p class="text-lg my-3">10</p>
+          <p class="text-white text-lg my-3">10</p>
           <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
-          <p>5,00€ ht</p>
+          <p class="text-white ">5,00€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
-          <p class="text-lg my-3">20</p>
+          <p class="text-white text-lg my-3">20</p>
           <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
-          <p>4,80€ ht</p>
+          <p class="text-white ">4,80€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
-          <p class="text-lg my-3">50</p>
+          <p class="text-white text-lg my-3">50</p>
           <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
-          <p>4,40€ ht</p>
+          <p class="text-white ">4,40€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
-          <p class="text-lg my-3">100</p>
+          <p class="text-white text-lg my-3">100</p>
           <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
-          <p>4,20€ ht</p>
+          <p class="text-white ">4,20€ ht</p>
           <p><br> </p>
         </div>
       </div>
@@ -63,8 +63,8 @@
     </div>
 
     <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-start-2 lg:cols-start-auto sm:col-span-2 lg:col-auto">
-      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Abonnement</h2>
-      <p>Pour tout service récurrent n’hésitez pas à nous contacter, nous vous créerons un devis sur-mesure.</p>
+      <h2 class="text-white text-3xl lg:text-4xl mb-2 lg:mb-4">Abonnement</h2>
+      <p class="text-white mx-8">Pour tout service récurrent n’hésitez pas à nous contacter, nous vous créerons un devis sur-mesure.</p>
       <%= image_tag "tarifs/devis.svg", alt: "image-de-devis", class: "mx-auto my-4 w-14 lg:w-20" %> <br>
       <div><%= link_to "Demander un devis", new_contact_path, class: "bici-button"  %></div>
     </div>
