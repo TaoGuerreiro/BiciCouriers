@@ -4,19 +4,19 @@
 
 
 
-<div class=" h-auto sm:h-screen w-full flex sm:flex-row flex-col-reverse  bg-blue-bici pt-10">
+<div class="px-8 py-16 bg-blue-bici lg:flex md:h-screen lg:items-center">
 
-  <div class="lg:m-32 p-4 w-full flex items-center">
-   <%= image_tag @service.images, alt: "service-de-bicicouriers"  %>
-  </div>
-  <div class="lg:m-32  h-3/4 p-4 w-full">
+  <div class="mb-10 lg:w-3/4">
     <%= link_to services_path, class: "text-white font-semibold" do %>
        <i class="fas fa-angle-left text-white"></i> RETOUR
     <% end %>
-
-
-    <h1 class="text-4xl xl:my-20 font-bold"><%= @service.title %></h1>
-    <p class="text-lg xl:my-20 "> <%= @service.details %></p>
-    <%= link_to "DEMANDER UN DEVIS",  new_contact_path, class: "btn-bici-lg w-80" %>
+    <h1 class="text-4xl font-bold my-8"><%= @service.title %></h1>
+    <p class="text-lg mb-10"> <%= @service.details %></p>
+    <%= link_to "DEMANDER UN DEVIS",  new_contact_path, class: "btn-bici-lg" %>
   </div>
+
+  <div class=" ">
+   <%= image_tag @service.images, alt: "service-de-bicicouriers"  %>
+  </div>
+
 </div>
