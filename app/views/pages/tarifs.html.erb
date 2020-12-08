@@ -1,59 +1,60 @@
 <div class="w-full h-full absolute">
-  <div class="absolute bottom-0  ">
+  <div class="absolute bottom-0 invisible sm:visible ">
     <%= image_tag "tarifs/oeuf-1.svg", alt: "oeuf-sur-le-plat-design" %>
   </div>
   <div class="absolute top-0 right-0">
     <%= image_tag "tarifs/oeuf-2.svg", alt: "oeuf-sur-le-plat-design" %>
   </div>
-  <div class=" absolute bottom-0 right-0">
+  <div class=" absolute bottom-0 right-0 invisible sm:visible">
     <%= image_tag "tarifs/oeuf-3.svg", alt: "oeuf-sur-le-plat-design" %>
   </div>
 </div>
+
 <div class="absolute w-full">
 
-  <div class="mt-20 ml-80">
+  <div class="mt-20 mx-8 md:ml-80">
     <h1 class="text-6xl text-blue-bici  ">Les tarifs</h1>
     <p class="text-xl text-blue-bici my-5">Des formules adaptées à vos besoins</p>
   </div>
 
 
-  <div class="grid grid-cols-3 gap-8 w-4/5 mx-auto h-full mx-8 mb-10">
-    <div class=" bg-blue-bici text-center flex flex-col justify-between  pb-8 pt-4 rounded-lg">
-      <h2 class="text-4xl mb-4">Formule à la course</h2>
+  <div class="sm:grid sm:grid-cols-4 lg:grid-cols-3 gap-8 w-4/5 mx-auto h-full mx-8 mb-10">
+    <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-span-2 lg:col-auto">
+      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Formule à la course</h2>
       <p>Reservez et payez votre course en un clic. </p>
-      <%= image_tag "tarifs/ticket-1.svg", alt: "ticket-de-carnet", class: "mx-auto my-4" %>
+      <%= image_tag "tarifs/ticket-1.svg", alt: "ticket-de-carnet", class: "lg:h-20 h-14 mx-auto my-2 lg:my-4" %>
       <p>5,83€ ht</p>
-      <p class="mb-8">le ticket</p>
+      <p class="mb-4 lg:mb-8">le ticket</p>
       <div><%= link_to "Passer commande", root_path, class: "btn-bici" %></div>
     </div> 
 
-    <div class=" bg-blue-bici text-center flex flex-col justify-between  pb-8 pt-4 rounded-lg">
-      <h2 class="text-4xl mb-4">Carnets de tickets</h2>
+    <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-span-2 lg:col-auto">
+      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Carnets de tickets</h2>
 
       <p>Taille de carnet évolutif pour tous vos types de besoins.</p>
 
       <div class="my-4 flex grow">
         <div class="text-center m-auto flex-grow">
           <p class="text-lg my-3">10</p>
-          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-16" %>
+          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
           <p>5,00€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
           <p class="text-lg my-3">20</p>
-          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-16" %>
+          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
           <p>4,80€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
           <p class="text-lg my-3">50</p>
-          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-16" %>
+          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
           <p>4,40€ ht</p>
           <p><br> </p>
         </div>
         <div class="m-auto flex-grow">
           <p class="text-lg my-3">100</p>
-          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-16" %>
+          <%= image_tag "tarifs/ticket-2.svg", alt: "ticket-de-carnet", class: "mx-auto my-3 w-10 lg:w-16" %>
           <p>4,20€ ht</p>
           <p><br> </p>
         </div>
@@ -61,10 +62,10 @@
       <div><%= link_to "Acheter mon carnet", new_contact_path, class: "btn-bici" %></div> 
     </div>
 
-    <div class=" bg-blue-bici text-center flex flex-col justify-between pb-8 pt-4 rounded-lg">
-      <h2 class="text-4xl mb-4">Abonnement</h2>
+    <div class="mb-8 bg-blue-bici text-center flex flex-col justify-between pb-6 lg:pb-8 pt-4 rounded-lg sm:col-start-2 lg:cols-start-auto sm:col-span-2 lg:col-auto">
+      <h2 class="text-3xl lg:text-4xl mb-2 lg:mb-4">Abonnement</h2>
       <p>Pour tout service récurrent n’hésitez pas à nous contacter, nous vous créerons un devis sur-mesure.</p>
-      <%= image_tag "tarifs/devis.svg", alt: "image-de-devis", class: "mx-auto my-4" %> <br>
+      <%= image_tag "tarifs/devis.svg", alt: "image-de-devis", class: "mx-auto my-4 w-14 lg:w-20" %> <br>
       <div><%= link_to "Demander un devis", new_contact_path, class: "bici-button"  %></div>
     </div>
     
@@ -73,7 +74,7 @@
       <p class="text-blue-bici text-4xl mb-4">Une tarification évolutive au plus proche de vous</p> 
     </div>
 
-    <div class="col-span-3 text-center border-2 border-blue-bici rounded-lg">
+    <div class="lg:col-span-3 text-center border-2 border-blue-bici rounded-lg sm:col-span-4">
       <h3 class="text-blue-bici font-bold text-xl my-3">1 ticket = 1 course*</h3>
       <p class="text-blue-bici my-3">*3,5 km de distance maximum</p>
       <p class="text-blue-bici my-3">Livraison dans la journée (délais de 4h minimum)</p>
@@ -89,7 +90,7 @@
       <div class="w-full my-4 border-2 border-blue-bici rounded-lg p-4 text-center"><p class="text-blue-bici">2 tickets pour une course en moins de 45 min</p></div>
     </div>
 
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center sm:col-span-2 lg:col-auto"">
       <div class="">
         <p class="text-blue-bici text-5xl ">+</p>
       </div>
