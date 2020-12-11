@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_084714) do
+ActiveRecord::Schema.define(version: 2020_12_09_104921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,10 +89,14 @@ ActiveRecord::Schema.define(version: 2020_11_27_084714) do
     t.integer "ticket_overflow", default: 0
     t.bigint "shopping_cart_id"
     t.integer "price_cents", default: 0, null: false
+    t.bigint "urgence_id"
+    t.bigint "volume_id"
     t.index ["bike_id"], name: "index_courses_on_bike_id"
     t.index ["carnet_id"], name: "index_courses_on_carnet_id"
     t.index ["shopping_cart_id"], name: "index_courses_on_shopping_cart_id"
+    t.index ["urgence_id"], name: "index_courses_on_urgence_id"
     t.index ["user_id"], name: "index_courses_on_user_id"
+    t.index ["volume_id"], name: "index_courses_on_volume_id"
   end
 
   create_table "drops", force: :cascade do |t|
@@ -183,6 +187,7 @@ ActiveRecord::Schema.define(version: 2020_11_27_084714) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ticket"
   end
 
   create_table "users", force: :cascade do |t|
@@ -208,13 +213,24 @@ ActiveRecord::Schema.define(version: 2020_11_27_084714) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "volumes", force: :cascade do |t|
+    t.integer "max_weight"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "ticket"
+    t.integer "max_size"
+  end
+
   add_foreign_key "carnets", "carnet_templates"
   add_foreign_key "carnets", "shopping_carts"
   add_foreign_key "carnets", "users"
   add_foreign_key "courses", "bikes"
   add_foreign_key "courses", "carnets"
   add_foreign_key "courses", "shopping_carts"
+  add_foreign_key "courses", "urgences"
   add_foreign_key "courses", "users"
+  add_foreign_key "courses", "volumes"
   add_foreign_key "drops", "courses"
   add_foreign_key "favorite_addresses", "users"
   add_foreign_key "orders", "shopping_carts"

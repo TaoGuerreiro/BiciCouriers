@@ -7,29 +7,29 @@ export default class extends Controller {
 
   ticket(event)   {
 
-    this.sizeTargets.forEach((size) => size.classList.remove('active'))
-    event.target.parentNode.classList.add('active')
+    // this.sizeTargets.forEach((size) => size.classList.remove('active'))
+    // event.target.parentNode.classList.add('active')
 
     //   console.log(event.target.parentNode.dataset.tickets)
-      let number = parseInt(event.target.parentNode.dataset.tickets, 10)
+      // let number = parseInt(event.target.parentNode.dataset.tickets, 10)
     // const getVolume = (size, voDisplay, voInput) => {
 
-        let data = { volume: { size:number}}
+        let data = { volume: { id:event.target.value }}
+        // console.log(event.target.value )
       
         return fetchWithToken("/course/ticket_volume", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
         })
         .then(response => response.json())
         .then((data) => {
             this.ticketTarget.textContent = data
-            this.inputTarget.value = data
+            // this.inputTarget.value = data
         //   voInput.value = data
-          console.log(data)
         });       
   }
 

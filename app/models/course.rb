@@ -1,7 +1,11 @@
 class Course < ApplicationRecord
+  
+
   belongs_to :user, required: true
   belongs_to :carnet, optional: true
-  belongs_to :bike, required: true
+  belongs_to :bike
+  belongs_to :urgence, required: true
+  belongs_to :volume, required: true
   belongs_to :shopping_cart, optional: true
 
   has_many :drops, dependent: :destroy, inverse_of: :course

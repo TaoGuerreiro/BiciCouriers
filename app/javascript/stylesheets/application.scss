@@ -11,4 +11,7 @@
     .btn-bici-lg {
       @apply py-4 px-8 text-center bg-white text-pink-bici font-normal rounded-md shadow-md hover:bg-pink-bici hover:text-white border border-pink-bici hover:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
     }
+    .category-selector-tw {
+      @apply absolute transform scale-0
+    }
   }

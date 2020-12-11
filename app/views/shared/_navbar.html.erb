@@ -68,7 +68,7 @@
             </div>
           </div>
 
-          <div data-target="navbar.userMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+          <div data-navbar-target="userMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
             <%= link_to "Mon compte", profil_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
             <%= link_to "Mes courses", courses_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
             <%= link_to "Mes carnets", carnets_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
@@ -92,7 +92,7 @@
             </div>
           </div>
 
-          <div data-target="navbar.userMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+          <div data-navbar-target="userMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
             <%= link_to "Connnexion", new_user_session_path, class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
           </div>
         </div>
@@ -108,7 +108,7 @@
 
     Menu open: "block", Menu closed: "hidden"
   -->
-  <div data-target="navbar.responsiveMenu"class="hidden sm:hidden">
+  <div data-navbar-target="responsiveMenu"class="hidden sm:hidden">
     <div class="px-2 pt-2 pb-3 space-y-1 bg-white rounded-md mx-3">
       <%= link_to "Les services", services_path, class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici" %>
       <%= link_to "Les avantages", avantages_path, class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici" %>
