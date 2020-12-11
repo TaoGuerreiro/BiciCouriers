@@ -5,7 +5,8 @@ module.exports = {
       extend: {
         backgroundImage: theme => ({
 
-          'bridge-image': "url('../../assets/images/story/story-image.png')"
+          'bridge-image': "url('../../assets/images/story/story-image.png')",
+          'bridge-large-image': "url('../../assets/images/velo-sur-pont-nantes.png')"
          }),
         colors: {
           'blue-bici': '#153A7E',
