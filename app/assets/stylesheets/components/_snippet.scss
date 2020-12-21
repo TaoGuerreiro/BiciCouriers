@@ -1,0 +1,39 @@
+.category-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  flex: 0 0 30%;
+  text-align: center;
+  // justify-content: center;
+  // align-items: center;
+}
+
+.category-selector {
+  position: absolute;
+  transform: scale(0);
+}
+
+.category-selector + label {
+  display: block;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.category-selector:checked + label {
+  color: black !important;
+  background-color: #FF016C;
+  opacity: 0.2;
+  // border-color: #fc3437;
+  font-weight: 700;
+}
+

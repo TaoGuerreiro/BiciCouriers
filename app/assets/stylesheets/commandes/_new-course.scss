@@ -74,25 +74,25 @@
 .form-wrapper {
   width: 100% !important
 }
-.form-control {
-  width: 100% !important;
-  border:none;
-  border-bottom: 2px $yellow solid;
-  background-color: transparent !important;
-  margin-bottom: 20px;
+// .form-control {
+//   width: 100% !important;
+//   border:none;
+//   border-bottom: 2px $yellow solid;
+//   background-color: transparent !important;
+//   margin-bottom: 20px;
 
 
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 25px;
-  color: $white;
-  &:active {
-    box-shadow: none;
-  }
-  &:disabled {
+//   font-weight: 300;
+//   font-size: 15px;
+//   line-height: 25px;
+//   color: white;
+//   &:active {
+//     box-shadow: none;
+//   }
+//   &:disabled {
 
-  }
-}
+//   }
+// }
 
 .second-container {
   display: flex;

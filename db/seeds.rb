@@ -13,6 +13,10 @@ puts 'Avantage'
 Avantage.destroy_all
 puts 'Bike'
 Bike.destroy_all
+puts 'Urgence'
+Urgence.destroy_all
+puts 'Volume'
+Volume.destroy_all
 puts 'Pickup'
 Pickup.destroy_all
 puts 'Drop'
@@ -223,7 +227,58 @@ bike_2 = Bike.create(
 )
 
 puts '_________________BIKES => OK__________________'
+puts '____________________URGENCE___________________'
 
+urgence_1 = Urgence.create!(
+  {
+    range: 2700,
+    name: "Moins de 45 minutes",
+    ticket: 2
+  }
+)
+
+urgence_2 = Urgence.create!(
+  {
+    range: 14400,
+    name: 'Moins de 4 heures',
+    ticket: 1
+  }
+)
+
+puts '_________________URGENCE => OK________________'
+puts '____________________VOLUME___________________'
+
+volume_1 = Volume.create!(
+  {
+    max_weight: 6000,
+    name: "- de 6 kilos",
+    ticket: 0
+  }
+)
+
+volume_2 = Volume.create!(
+  {
+    max_weight: 15000,
+    name: '- de 15 kilos',
+    ticket: 1
+  }
+)
+
+volume_3 = Volume.create!(
+  {
+    max_weight: 25000,
+    name: '- de 25 kilos',
+    ticket: 2
+  }
+)
+volume_4 = Volume.create!(
+  {
+    max_weight: 35000,
+    name: '- de 35 kilos',
+    ticket: 3
+  }
+)
+puts '_________________VOLUME => OK________________'
 puts '_________________SHOPPING CART________________'
 
 shop_1 = ShoppingCart.create(

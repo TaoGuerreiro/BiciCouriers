@@ -1,30 +1,30 @@
-
+<div class="" data-controller="distance urgence volume application">
 <%= simple_form_for course, remote: true do |f| %>
 
-  <div id="addresses">
+  <div id="">
     <%= f.fields_for :pickups, remote: true do |pickup| %>
       <%= pickup.label :address, "Adresse de rammassage", class: 'hidden' %>
-      <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input address-validator' } %>
-      <div class='hidden'>
+      <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input w-full' , :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-distance-target' => "pickup", :'data-map-target' => "pickup" } %>
+      <div class='hiddden'>
         <%= pickup.label :date, "Date de rammassage" %>
-        <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "pickup-date-input"} %>
+        <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-urgence-target' => "dateStart"} %>
         <%= pickup.label :start_hour, "Heure pour début de rammassage" %>
-        <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true%>
+        <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true, input_html: { :'data-urgence-target' => "hourPickupStart" } %>
         <%= pickup.label :end_hour, "Heure maximum pour le rammassage" %>
-        <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true%>
+        <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true, input_html: { :'data-urgence-target' => "hourPickupEnd" } %>
       </div>
     <% end %>
 
     <%= f.fields_for :drops do |drop| %>
     <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-      <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input address-validator' } %>
-      <div class='hidden'>
+      <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input w-full mt-4' , :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-distance-target' => "drop", :'data-map-target' => "drop" } %>
+      <div class='hiddden'>
         <%= drop.label :date, "Date de rammassage" %>
-        <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "drop-date-input"} %>
+        <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-urgence-target' => "dateEnd"} %>
         <%= drop.label :start_hour, "Heure pour début de rammassage" %>
-        <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true%>
+        <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true, input_html: { :'data-urgence-target' => "hourDropStart" }%>
         <%= drop.label :end_hour, "Heure maximum pour le rammassage" %>
-        <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true%>
+        <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true, input_html: { :'data-urgence-target' => "hourDropEnd" }%>
         <%= drop.label :details, "détails pour la livraison" %>
         <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
 
@@ -35,30 +35,41 @@
   </div>
 
   <div class="div-align toggle-element" data-urgence='0' id="urgence">
-    <div class="icon-w fs10"><div class='icon urgence urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p></div>
-    <div class="icon-w fs10"><div class='icon urgence urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p></div>
-    <div class="icon-w fs10"><div class='icon urgence urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p></div>
-  </div>
-  <div class="div-align toggle-element" data-volume='0' id="volume">
-    <div class="icon-w fs10"><div class='icon volume volume-1 volume-validator' data-tickets='0' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p></div>
-    <div class="icon-w fs10"><div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p></div>
-  </div>
+  
 
-  <div class="main-toggle-resultat toggle-element">
-    <div class="left-box-resultat">
-      <p class="left-distance"><span id="kilometers"> </span></p>
-      <p class="left-urgence"><span class="heure"> </span></p>
-      <p class="left-volume" id='vo-text-volume'> </p>
-    </div>
-    <div class="right-box-resultat">
-      <p class="right-distance sous-total"></p>
-      <p class="right-urgence sous-total"></p>
-      <p class="right-volume sous-total"></p>
-    </div>
+  <%= f.input :urgence,
+            as: :radio_buttons,
+            collection_wrapper_tag: 'div',
+            collection_wrapper_class: 'category-wrapper',
+            item_wrapper_class: 'category-item',
+            input_html: {class: 'category-selector', 'data-action': "click->urgence#choosing"},
+            collection: Urgence.all.map { |category| [category.name, category.id]} %>
+
+  <%= f.input :volume,
+            as: :radio_buttons,
+            collection_wrapper_tag: 'div',
+            collection_wrapper_class: 'category-wrapper',
+            item_wrapper_class: 'category-item',
+            input_html: {class: 'category-selector', 'data-action': "click->volume#ticket click->application#total"},
+            collection: Volume.first(3).map { |category| [category.name, category.id, category.ticket]} %>
+
+
+  <div>
+    <span data-distance-target="distance">Distance</span>
+    <span data-distance-target="distanceTicket" data-application-target="distance">0</span>
   </div>
+  <div>
+    <span data-urgence-target="text">Urgence</span>
+    <span data-urgence-target="ticket" data-application-target="urgence">0</span>
+  </div>
+  <div>         
+    <span data-volume-target="text">Volume/poids</span>
+    <span data-volume-target="ticket" data-application-target="volume">0</span>
+  </div>
+  
 
   <div class="total toggle-element">
-    <p class="total-text">Avec abonnement : <b><span id='total-course'>0</span> ticket(s)</b></p>
+    <p class="total-text">Avec abonnement : <b><span data-application-target="total" >0</span> ticket(s)</b></p>
     <p class="total-text">Sans abonnement : <b><span id='total-price'>0</span> €</b></p>
   </div>
 
@@ -95,3 +106,25 @@
 
 <button class="bici-button " id='continue'>Continuer</button>
 
+</div>
+    <!--<div class="icon-w fs10"><div class='icon urgence urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p></div>
+    <div class="icon-w fs10"><div class='icon urgence urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p></div>
+    <div class="icon-w fs10"><div class='icon urgence urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p></div>
+  </div>
+  <div class="div-align toggle-element" data-volume='0' id="volume">
+    <div class="icon-w fs10"><div class='icon volume volume-1 volume-validator' data-tickets='0' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p></div>
+    <div class="icon-w fs10"><div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p></div>
+  </div>
+
+  <div class="main-toggle-resultat toggle-element">
+    <div class="left-box-resultat">
+      <p class="left-distance"><span id="kilometers"> </span></p>
+      <p class="left-urgence"><span class="heure"> </span></p>
+      <p class="left-volume" id='vo-text-volume'> </p>
+    </div>
+    <div class="right-box-resultat">
+      <p class="right-distance sous-total"></p>
+      <p class="right-urgence sous-total"></p>
+      <p class="right-volume sous-total"></p>
+    </div>
+  </div>-->

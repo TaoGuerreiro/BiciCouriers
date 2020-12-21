@@ -1,39 +1,46 @@
-<div class="avantages-main-container">
-  <div class="a-oeuf-1">
-    <%= image_tag 'avantages/oeuf-1.svg', alt: "oeuf-sur-le-plat-design" %>
-  </div>
 
-  <div class="a-line">
-    <%= image_tag 'avantages/line.svg', alt: "ligne-design" %>
-  </div>
-    <div class="dual-container">
-      <div class="avantages-details">
-        <h1>Nos Avantages</h1>
-        <p>Nous proposons tout un tas de services pour répondre au mieux à vos besoins. N'hésitez surtout pas à nous contacter car cette liste est loin d'être exhaustive !</p>
+
+<div class="absolute bottom-0 left-0 invisible lg:visible" data-controller="avantage">
+  <%= image_tag 'avantages/oeuf-1.svg', alt: "oeuf-sur-le-plat-design" %>
+</div>
+
+<div class="w-full absolute overflow-hidden bottom-40 z-0">
+  <svg class="z-0" width="2500" height="347" viewBox="0 0 1440 347" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M-1251 37.2201C-1221.97 78.8405 -1135.35 161.088 -1021.1 157.115C-878.292 152.149 -812.74 -1.79909 -680.7 1.03866C-548.661 3.87641 -365.894 277.77 -187.5 265C-9.10577 252.23 187 111.2 452 206.5C600.997 260.082 710.278 345.5 913 345.5C1115.72 345.5 1180 75.5 1445.5 130" stroke="#FFCC00" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="5 5"/>
+  </svg>
+</div>
+
+<div class="w-screen h-auto">
+
+    <div class="lg:grid flex flex-col lg:flex-none lg:grid-cols-2 h-auto lg:h-screen">
+      <div class="mt-20 lg:my-64 lg:ml-64 mx-4">
+        <h1 class="text-6xl text-blue-bici font-bold mb-8 z-20">Nos Avantages</h1>
+        <p class="text-lg text-blue-bici z-20">Nous proposons tout un tas de services pour répondre au mieux à vos besoins. N'hésitez surtout pas à nous contacter car cette liste est loin d'être exhaustive !</p>
       </div>
 
-      <div class="avantages-cards">
-        <div class="back-card">
+      <div>
+        <div class="relative group w-full h-full flex justify-center lg:items-center">
 
-          <div class="a-oeuf-2">
-            <%= image_tag 'avantages/oeuf-2.svg', alt: "oeuf-sur-le-plat-design" %>
+          <div class="mt-20 w-3/4 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
+            <%= image_tag 'avantages/oeuf-2.svg', alt: "oeuf-sur-le-plat-design", class: "mb-10 lg:mb-0" %>
           </div>
 
-          <div class="avantages-card back-card-one">
-            <div class="card-images"><%= image_tag "avantages/blue_1.svg", alt: "carte-design" %></div>
+         <div class="mt-20 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
+            <div class="card-images"><%= image_tag "avantages/blue_1.svg", alt: "carte-design", class: "transition group-hover:transform group-hover:origin-center group-hover:rotate-12" %></div>
           </div>
 
-          <div class="avantages-card back-card-two">
-            <div class="card-images"><%= image_tag "avantages/blue_2.svg", alt: "carte-design" %></div>
+          <div class="mt-20 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
+            <div class="card-images"><%= image_tag "avantages/blue_2.svg", alt: "carte-design", class:"transition group-hover:transform group-hover:origin-center group-hover:-rotate-12" %></div>
           </div>
 
           <% @avantages.each do |avantage| %>
-          <div class="avantages-card">
-            <div class="card-images"><%= image_tag avantage.image_pour, alt: "les-avantages-de-bicicouriers" %></div>
-          </div>
+            <div class="mt-20 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
+              <div data-action="click->avantage#fly" data-target="avantage.card" class="cursor-pointer"><%= image_tag avantage.image_pour, alt: "les-avantages-de-bicicouriers", class: " z-30", data: { action: "click->avantage#fly"} %></div>
+            </div> 
           <% end %>
+          
         </div>
     </div>
-  </div>
 
+  </div>
 </div>

@@ -4,36 +4,19 @@
 
 
 
-<div class="show-service-container">
+<div class="px-8 py-16 bg-blue-bici lg:flex md:h-screen lg:items-center">
 
-  <div class="show-service-img">
+  <div class="mb-10 lg:w-3/4">
+    <%= link_to services_path, class: "text-white font-semibold" do %>
+       <i class="fas fa-angle-left text-white"></i> RETOUR
+    <% end %>
+    <h1 class="text-white text-4xl font-bold my-8"><%= @service.title %></h1>
+    <p class="text-white text-lg mb-10"> <%= @service.details %></p>
+    <%= link_to "DEMANDER UN DEVIS",  new_contact_path, class: "btn-bici-lg" %>
+  </div>
+
+  <div class=" ">
    <%= image_tag @service.images, alt: "service-de-bicicouriers"  %>
   </div>
-  <div class="show-service-details">
-    <%= link_to services_path do %>
-       <i class="fas fa-angle-left"></i><%= "  RETOUR AU SERVICE"%>
-    <% end %>
 
-
-    <h1><%= @service.title %></h1>
-    <p> <%= @service.details %></p>
-    <%= link_to "DEMANDER UN DEVIS",  new_contact_path, class: "d-button" %>
-  </div>
 </div>
-
-<%# <script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Service",
-  "name": "Transport urgent",
-  "image": "https://www.bicicouriers.fr/assets/services/transport_urgent_nantes-58a842dc3764ba1de01ddcf4dfda68b6f0c1e7fc1ce0a95da3c2ac0638090c21.svg",
-  "description": "Vous avez une demande express ? Vous souhaitez faire livrer une lettre ou un colis pendant les heures de pointes ? La livraison express par coursiers à vélos sur Nantes est la plus rapide ! Nos coursiers pratique le cyclisme sportif et mettent leur efficacité à votre service en livrant votre colis 45 minutes seulement après votre demande.",
-  "brand": "BiciCouriers",
-  "offers": {
-    "@type": "Offer",
-    "url": "https://www.bicicouriers.fr/services/transport-urgent",
-    "priceCurrency": "EUR",
-    "price": ""
-  }
-}
-</script> %>

@@ -9,11 +9,14 @@ class CoursesController < ApplicationController
   end
 
   def ticket_volume
-    volume = JSON.parse(volume_params.to_json)
+    data = JSON.parse(volume_params.to_json)
+    
+    # binding.pry
+    
 
-    bike_id = volume["size"].to_i
+    id = Volume.find(data["id"].to_i)
 
-    render json: bike_id
+    render json: id.ticket
   end
 
   def distance
@@ -102,20 +105,27 @@ class CoursesController < ApplicationController
     # binding.pry
 
     data = JSON.parse(urgence_params.to_json)
+    id = data["id"]
+    urgence = Urgence.find(id.to_i)
 
-    pu_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
-    pu_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
-    dr_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["drStart"].slice(0,2),  data["drStart"].slice(3,4), 00)
-    dr_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["drEnd"].slice(0,2),    data["drEnd"].slice(3,4), 00)
-    now = Time.now
+    pu_start = Time.new()
+    pu_end =   Time.new + urgence.range
+    dr_start = Time.new()
+    dr_end =   Time.new + urgence.range
 
-    tickets = urge(pu_start, pu_end, dr_start, dr_end)
+    # pu_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["puStart"].slice(0,2),  data["puStart"].slice(3,4), 00)
+    # pu_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["puEnd"].slice(0,2),    data["puEnd"].slice(3,4), 00)
+    # dr_start = Time.new(data["stDate"].slice(6..9), data["stDate"].slice(3..4), data["stDate"].slice(0..1), data["drStart"].slice(0,2),  data["drStart"].slice(3,4), 00)
+    # dr_end =   Time.new(data["ndDate"].slice(6..9), data["ndDate"].slice(3..4), data["ndDate"].slice(0..1), data["drEnd"].slice(0,2),    data["drEnd"].slice(3,4), 00)
+    # now = Time.now
+
+    tickets = urge(pu_start.round, pu_end.round, dr_start.round, dr_end.round)
     puts "*"*90
     puts tickets
 
     respond_to do |format|
          # format.html
-         format.json { render json: { tickets_urgence: tickets } }
+         format.json { render json: { tickets_urgence: tickets, pus: pu_start.strftime("%H:%M"), pue: pu_end.strftime("%H:%M"), drs: dr_start.strftime("%H:%M"), dre: dr_end.strftime("%H:%M") } }
     end
 
 
@@ -160,7 +170,8 @@ class CoursesController < ApplicationController
   end
 
   def create
-    raise
+    # raise
+    # binding.pry
     if user_signed_in? # USER EN LIGNE OLD VERSION
       @user = current_user
       @course = Course.new(course_params)
@@ -217,6 +228,9 @@ class CoursesController < ApplicationController
       email = params[:course][:user][:email]
       bike = params[:bike].to_i
       # raise
+      urgence = Urgence.find(params[:course][:urgence])
+      volume = Volume.find(params[:course][:urgence])
+      # raise
       if email_check(email)
         @user = User.find_by(email: email)
       else
@@ -225,17 +239,20 @@ class CoursesController < ApplicationController
           password: Devise.friendly_token.first(8)
         })
       end
-      @course = Course.new(course_params)
-      # raise
 
-      if bike == 0
-        @course.bike_id = Bike.first.id
-      else
-        @course.bike_id = Bike.last.id
-      end
+      @course = Course.new(course_params)
+      @course.urgence = urgence
+      @course.volume = volume
+      @course.user = @user
+      raise
+
+      # if bike == 0
+      #   @course.bike_id = Bike.first.id
+      # else
+      #   @course.bike_id = Bike.last.id
+      # end
       # @course.bike_id = Bike.first.id if bike == 0
 
-      @course.user = @user
       puAddress = params[:course][:pickups_attributes]["0"][:address]
       drAddress = params[:course][:drops_attributes]  ["0"][:address]
 
@@ -456,6 +473,7 @@ private
     puts drs
     puts dre
     now = Time.now
+    p pue  - pus
 
     ticket = 0
 
@@ -524,7 +542,7 @@ private
   end
 
   def urgence_params
-    params.require(:urgence).permit(:puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
+    params.require(:urgence).permit(:id, :puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
   end
 
   def tickets_params
@@ -532,7 +550,7 @@ private
   end
 
   def volume_params
-    params.require(:volume).permit(:size)
+    params.require(:volume).permit(:id)
   end
 
   def mail_params
