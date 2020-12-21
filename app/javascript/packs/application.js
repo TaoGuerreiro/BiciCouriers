@@ -1,4 +1,5 @@
 require("turbolinks").start()
+require("channels")
 import '../stylesheets/application.scss';
 // import 'nouislider/distribute/nouislider.css';
 import "controllers"

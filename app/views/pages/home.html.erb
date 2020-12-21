@@ -36,6 +36,14 @@
       <p class="text-white text-lg pb-4">#fastandcouriers</p>
       <h1 class="text-white text-4xl md:text-7xl pb-6 font-bold">Les coursiers les plus rapides de Nantes !</h1>
       <p class="text-gray-100 text-lg md:text-xl">Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de <span class="text-white font-semibold">45 minutes !</span></p>
+      
+        
+        <input type="text" value="<%= @words %>" data-reflex="keyup->Example#words">
+        <div><%= @words %></div>
+        <div><%= @words&.reverse %></div>
+        <div><%= @test %> </div>
+      
+
     </div>
   </div>
   <%= video_tag "bicilanding.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "z-0 w-full h-full object-cover absolute" %>
