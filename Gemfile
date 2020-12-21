@@ -9,6 +9,7 @@ gem 'pg', '~> 0.21'
 gem "puma", '>= 4.3.5'
 gem 'rails', '~> 6.0'
 gem 'redis'
+gem 'redis-rails'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
@@ -58,3 +59,5 @@ group :development, :test do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
 end
+
+gem "stimulus_reflex", "~> 3.4"
