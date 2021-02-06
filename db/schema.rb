@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_09_104921) do
+ActiveRecord::Schema.define(version: 2021_02_06_124814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2020_12_09_104921) do
     t.datetime "updated_at", null: false
     t.integer "remaining_tickets"
     t.bigint "carnet_template_id"
-    t.integer "course_overflow", default: 0
     t.bigint "shopping_cart_id"
     t.index ["carnet_template_id"], name: "index_carnets_on_carnet_template_id"
     t.index ["shopping_cart_id"], name: "index_carnets_on_shopping_cart_id"
