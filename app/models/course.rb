@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  
+
 
   belongs_to :user, required: true
   belongs_to :carnet, optional: true
@@ -12,6 +12,9 @@ class Course < ApplicationRecord
   has_many :pickups, dependent: :destroy
   accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
+
+  has_many :course_options
+  # has_many :user_options, through: :user
 
   monetize :price_cents
 

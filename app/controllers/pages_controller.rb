@@ -9,7 +9,7 @@ class PagesController < ApplicationController
     end
     @course = Course.new
     # @order = Order.last
-    # @city = City.find_by(city_name: "Nantes")
+    @city = City.find_by(name: "Nantes")
     @drop = @course.drops.build
     @pickup = @course.pickups.build
   end

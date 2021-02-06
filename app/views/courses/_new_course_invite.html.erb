@@ -3,33 +3,25 @@
 
   <div id="">
     <%= f.fields_for :pickups, remote: true do |pickup| %>
-      <%= pickup.label :address, "Adresse de rammassage", class: 'hidden' %>
-      <%= pickup.input :address, label: false, required: :true, placeholder: 'Adresse de rammassage', input_html: { class: 'address-input w-full' , :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-distance-target' => "pickup", :'data-map-target' => "pickup" } %>
-      <div class='hiddden'>
-        <%= pickup.label :date, "Date de rammassage" %>
-        <%= pickup.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-urgence-target' => "dateStart"} %>
-        <%= pickup.label :start_hour, "Heure pour début de rammassage" %>
-        <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', label: false, required: true, input_html: { :'data-urgence-target' => "hourPickupStart" } %>
-        <%= pickup.label :end_hour, "Heure maximum pour le rammassage" %>
-        <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', label: false, required: true, input_html: { :'data-urgence-target' => "hourPickupEnd" } %>
+      <%= pickup.input :address, required: :true, placeholder: 'Adresse de rammassage', default: "ok", input_html: { value: "Nantes", class: 'address-input w-full' , :'data-action' => "change->distance#calcul input->distance#calcul change->map#displayRoutes", :'data-distance-target' => "pickup", :'data-map-target' => "pickup" } %>
+        <%= pickup.input :date, as: :string, placeholder: 'Date', required: true, input_html: {class: "datepicker", value: (Date.today) } %>
+      <div class='hidden'>
+        <%= pickup.input :start_hour, as: :string, placeholder: 'pu start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
+        <%= pickup.input :end_hour, as: :string, placeholder: 'pu end', required: true, input_html: { value: @city.end_hour } %>
       </div>
     <% end %>
 
     <%= f.fields_for :drops do |drop| %>
     <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-      <%= drop.input :address, label: false, required: :true, placeholder: 'Adresse de livraison', input_html: { class: 'address-input w-full mt-4' , :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-distance-target' => "drop", :'data-map-target' => "drop" } %>
-      <div class='hiddden'>
-        <%= drop.label :date, "Date de rammassage" %>
-        <%= drop.input :date, as: :string, placeholder: 'Date', label: false, required: true, input_html: {class: "datepicker", :'data-urgence-target' => "dateEnd"} %>
-        <%= drop.label :start_hour, "Heure pour début de rammassage" %>
-        <%= drop.input :start_hour, as: :string, placeholder: 'dr start', label: false, required: true, input_html: { :'data-urgence-target' => "hourDropStart" }%>
-        <%= drop.label :end_hour, "Heure maximum pour le rammassage" %>
-        <%= drop.input :end_hour, as: :string, placeholder: 'dr end', label: false, required: true, input_html: { :'data-urgence-target' => "hourDropEnd" }%>
-        <%= drop.label :details, "détails pour la livraison" %>
-        <%= drop.input :details, as: :string, placeholder: 'details', label: false, required: true %>
-
-        <input type="input" id="bike" name="bike">
-        <label for="bike">cargo</label>
+      <%= drop.input :address,
+                    required: :true,
+                    placeholder: 'Adresse de livraison',
+                    input_html: { class: 'address-input w-full mt-4' , :'data-action' => "change->distance#calcul change->input#calcul change->map#displayRoutes", :'data-distance-target' => "drop", :'data-map-target' => "drop" } %>
+        <%= drop.input :date, as: :string, placeholder: 'Date', required: true, input_html: {class: "datepicker", value: (Date.today) } %>
+        <%= drop.input :start_hour, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
+      <div class='hidden'>
+        <%= drop.input :end_hour, as: :string, placeholder: 'dr end', required: true, input_html: { value: @city.end_hour } %>
+        <%= drop.input :details, as: :string, placeholder: 'details', required: true %>
       </div>
     <% end %>
   </div>

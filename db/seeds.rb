@@ -37,6 +37,15 @@ puts 'Order'
 Order.destroy_all
 puts 'Cities'
 City.destroy_all
+puts 'Options'
+
+Option.destroy_all
+
+puts 'UserOptions'
+UserOption.destroy_all
+puts 'CourseOptions'
+CourseOption.destroy_all
+
 puts '_________________DROPPING DONE________________'
 
 
@@ -281,7 +290,7 @@ volume_4 = Volume.create!(
 puts '_________________VOLUME => OK________________'
 puts '_________________SHOPPING CART________________'
 
-shop_1 = ShoppingCart.create(
+shop_1 = ShoppingCart.create!(
   {
     price_cents: 22000,
     user_id: florent.id,
@@ -294,7 +303,7 @@ puts '_____________SHOPPING CART => OK______________'
 puts '___________________CARNETS____________________'
 
 
-carnet_50 = Carnet.create(
+carnet_50 = Carnet.create!(
   {
     carnet_template_id: carnet_50_t.id,
     user_id: florent.id,
@@ -307,41 +316,30 @@ puts '________________CARNETS => OK_________________'
 
 puts '___________________CITIES_____________________'
 
-nantes = City.create(city_name: "Nantes")
-
+nantes = City.create!(name: "Nantes")
 
 puts '________________CITIES => OK__________________'
+
+puts '___________________OPTIONS_____________________'
+
+deux_heures = Option.create!({name: "Moins de 2 heures", urgence: 1, volume: 0})
+quarante_cinq_minutes = Option.create({name: "Moins de 45 minutes", urgence: 2, volume: 0})
+gros_volume = Option.create!({name: "Cargo", urgence: 0, volume: 1})
+tres_gros_volume = Option.create({name: "Cargo plein", urgence: 0, volume: 2})
+
+
+puts '________________OPTIONS => OK__________________'
+
+puts '___________________USER OPTIONS_____________________'
+
+option_1 = UserOption.create!({user_id: florent.id, option_id: deux_heures.id})
+option_2 = UserOption.create!({user_id: florent.id, option_id: tres_gros_volume.id})
+
+
+puts '________________USER OPTIONS => OK__________________'
+
+
 
 
 
 puts "ok"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_06_124814) do
+ActiveRecord::Schema.define(version: 2021_02_06_185629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.float "distance_per_ticket", default: 3500.0
     t.integer "urgence_one_size", default: 2700
     t.integer "urgence_two_size", default: 14400
-    t.string "city_name"
+    t.string "name"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -70,6 +70,15 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "course_options", force: :cascade do |t|
+    t.bigint "user_options_id", null: false
+    t.bigint "courses_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courses_id"], name: "index_course_options_on_courses_id"
+    t.index ["user_options_id"], name: "index_course_options_on_user_options_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -135,6 +144,14 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "options", force: :cascade do |t|
+    t.string "name"
+    t.integer "urgence"
+    t.integer "volume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string "state"
     t.integer "amount_cents", default: 0, null: false
@@ -189,6 +206,15 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.integer "ticket"
   end
 
+  create_table "user_options", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_user_options_on_option_id"
+    t.index ["user_id"], name: "index_user_options_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -224,6 +250,8 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
   add_foreign_key "carnets", "carnet_templates"
   add_foreign_key "carnets", "shopping_carts"
   add_foreign_key "carnets", "users"
+  add_foreign_key "course_options", "courses", column: "courses_id"
+  add_foreign_key "course_options", "user_options", column: "user_options_id"
   add_foreign_key "courses", "bikes"
   add_foreign_key "courses", "carnets"
   add_foreign_key "courses", "shopping_carts"
@@ -236,4 +264,6 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
   add_foreign_key "orders", "users"
   add_foreign_key "pickups", "courses"
   add_foreign_key "shopping_carts", "users"
+  add_foreign_key "user_options", "options"
+  add_foreign_key "user_options", "users"
 end
