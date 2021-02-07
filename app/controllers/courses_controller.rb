@@ -154,6 +154,7 @@ class CoursesController < ApplicationController
   def new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
     @user = User.new
+    @availible_options = Option.joins(:user_options).where('user_id = ?', current_user.id)
 
 
 

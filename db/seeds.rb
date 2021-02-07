@@ -147,6 +147,7 @@ puts '____________________USERS_____________________'
 florent = User.create(
   {
     email: "kiki@bicicouriers.fr",
+    address: '8 passage de la Poule Noire, 44000 Nantes',
     password: "secret",
     phone: "0674236080",
     first_name: "Florent",
@@ -322,18 +323,24 @@ puts '________________CITIES => OK__________________'
 
 puts '___________________OPTIONS_____________________'
 
-deux_heures = Option.create!({name: "Moins de 2 heures", urgence: 1, volume: 0})
-quarante_cinq_minutes = Option.create({name: "Moins de 45 minutes", urgence: 2, volume: 0})
-gros_volume = Option.create!({name: "Cargo", urgence: 0, volume: 1})
-tres_gros_volume = Option.create({name: "Cargo plein", urgence: 0, volume: 2})
+deux_heures = Urgence.create!({name: "Moins de 2 heures", ticket: 1, range: 7200})
+quarante_cinq_minutes = Urgence.create({name: "Moins de 45 minutes", ticket: 2, range: 2700})
+
+gros_volume = Volume.create!({name: "Cargo", ticket: 1, max_weight: 15, max_size: 500})
+tres_gros_volume = Volume.create({name: "Cargo plein", ticket: 2, max_weight: 80, max_size: 1000})
+
+nourriture = Option.create({name: "Nourriture", urgence: 1, volume: 0, groupe: 3})
 
 
 puts '________________OPTIONS => OK__________________'
 
 puts '___________________USER OPTIONS_____________________'
 
-option_1 = UserOption.create!({user_id: florent.id, option_id: deux_heures.id})
-option_2 = UserOption.create!({user_id: florent.id, option_id: tres_gros_volume.id})
+option_1 = UserOption.create!({user_id: florent.id, urgence_id: deux_heures.id})
+option_3 = UserOption.create!({user_id: florent.id, urgence_id: quarante_cinq_minutes.id})
+option_2 = UserOption.create!({user_id: florent.id, volume_id: gros_volume.id})
+option_4 = UserOption.create!({user_id: florent.id, volume_id: tres_gros_volume.id})
+option_5 = UserOption.create!({user_id: florent.id, option_id: nourriture.id})
 
 
 puts '________________USER OPTIONS => OK__________________'

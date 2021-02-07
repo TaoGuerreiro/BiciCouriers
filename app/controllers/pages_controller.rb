@@ -12,6 +12,15 @@ class PagesController < ApplicationController
     @city = City.find_by(name: "Nantes")
     @drop = @course.drops.build
     @pickup = @course.pickups.build
+    @course_option = @course.course_options.build
+
+if current_user
+    @availible_urgences = Urgence.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+    @availible_volumes = Volume.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+    @availible_supplements = Option.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+end
+
+
   end
 
   def story
