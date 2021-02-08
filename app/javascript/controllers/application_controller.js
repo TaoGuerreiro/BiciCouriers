@@ -69,7 +69,7 @@ export default class extends Controller {
 //   static targets = [ 'distance', 'volume', 'urgence', 'total']
 
 //   connect() {
-//     console.log("Connexion de l'application controller") 
+//     console.log("Connexion de l'application controller")
 //   }
 
 //   total() {
@@ -81,9 +81,3 @@ export default class extends Controller {
 
 
 // }
-
-
-
-
-
-   
