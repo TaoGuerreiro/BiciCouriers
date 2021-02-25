@@ -3,33 +3,28 @@
 class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
 
-  # DATA = ({
-  #   start: 'Nantes',
-  #   end: 'Vertou',
-  #   urgence: 0,
-  #   volume: 0,
-  #   distance: 0,
-  #   total:0
-  # })
+  # after_reflex :total
 
   def urgence
     urgence = Urgence.find(element[:value])
-    @ticket_urgence = urgence.ticket
-    # DATA[:urgence] = @ticket_urgence
-    # total()
+    morph "#urgence-ticket-nb", urgence.ticket
+
+    morph "#testmorph", element[:checked]
+
+  def volume
+    volume = Volume.find(element[:value])
+    morph "#volume-ticket-nb", volume.ticket
   end
 
   def distance
-    @start = params[:course][:pickups_attributes]["0"][:address]
-    @end = params[:course][:drops_attributes]["0"][:address]
-    # DATA[:start] = @start
-    # DATA[:end] = @end
+    start_address = params[:course][:pickups_attributes]["0"][:address]
+    end_address = params[:course][:drops_attributes]["0"][:address]
 
     begin
       url = 'https://maps.googleapis.com/maps/api/directions/json?'
       query = {
-        origin: @start,
-        destination: @end,
+        origin: start_address,
+        destination: end_address,
         key: ENV['GOOGLE_API_KEY']
       }
 
@@ -38,20 +33,22 @@ class OptionReflex < ApplicationReflex
         query: query
       ).body)
 
-      @distance = (distance['routes'][0]['legs'][0]['distance']['value']) / 1000.000
-      # DATA[:distance] = @distance
+      distance = (distance['routes'][0]['legs'][0]['distance']['value']) / 1000.000
+      distance_ticket = (distance / 3.5).ceil
+
+      morph "#distance-ticket-nb", distance_ticket
+      morph "#distance-km-nb", distance
+
     rescue NoMethodError
-      @distance = 0
-      # DATA[:distance] = @distance
-    end
-    # total()
+      # distance = "Je calcul..."
+     end
   end
 
-  # def total
-  #   @distance = DATA[:distance]
-  #   @urgence = DATA[:urgence]
-  # end
+  private
 
-
+  def total
+    test = params
+    morph "#testmorph", test
+  end
 
 end

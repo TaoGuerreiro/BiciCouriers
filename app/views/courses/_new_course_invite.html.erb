@@ -1,153 +1,132 @@
-<div class="" data-reflex-root="[test],[distance],[urgence],[volume]">
+<div>
+<span id="testmorph">"test"</span>
+  <%= simple_form_for course, remote: true do |f| %>
+    <div id="">
+      <%= f.fields_for :pickups, remote: true do |pickup| %>
+      <p test><%= @test %></p>
+        <%= pickup.input :address,
+                      label: false,
+                      required: :true,
+                      placeholder: 'Adresse de rammassage',
+                      input_html: { value: @start, class: 'address-input w-full', 'data-reflex': "change->Option#distance"  } %>
+        <div class='hidden'>
+          <%= pickup.input :date,
+                      label: false,
+                      as: :string,
+                      placeholder: 'Date',
+                      required: true,
+                      input_html: {class: "datepicker", value: (Date.today)} %>
 
-<%= simple_form_for course, remote: true do |f| %>
-  <div id="">
-    <%= f.fields_for :pickups, remote: true do |pickup| %>
-     <p test><%= @test %></p>
-      <%= pickup.input :address,
-                    label: false,
-                    required: :true,
-                    placeholder: 'Adresse de rammassage',
-                    input_html: { value: @start, class: 'address-input w-full', 'data-reflex': "keyup->Option#distance"  } %>
-      <div class='hidden'>
-        <%= pickup.input :date,
-                    label: false,
-                    as: :string,
-                    placeholder: 'Date',
-                    required: true,
-                    input_html: {class: "datepicker", value: (Date.today)} %>
+          <%= pickup.input :start_hour, label: false, as: :string, placeholder: 'pu start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
+          <%= pickup.input :end_hour,   label: false, as: :string, placeholder: 'pu end',   required: true, input_html: { value: @city.end_hour } %>
+        </div>
+      <% end %>
 
-        <%= pickup.input :start_hour, label: false, as: :string, placeholder: 'pu start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
-        <%= pickup.input :end_hour,   label: false, as: :string, placeholder: 'pu end',   required: true, input_html: { value: @city.end_hour } %>
-      </div>
-    <% end %>
+      <%= f.fields_for :drops do |drop| %>
+      <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
+        <%= drop.input :address,
+                      label: false,
+                      required: :true,
+                      placeholder: 'Adresse de livraison',
+                      input_html: { class: 'address-input w-full mt-4', value: (current_user ? current_user.address : @city.name), 'data-reflex': "change->Option#distance"   } %>
+        <div class='hidden'>
+          <%= drop.input :date,
+                      label: false,
+                      as: :string,
+                      placeholder: 'Date',
+                      required: true,
+                      input_html: {class: "datepicker", value: (Date.today) } %>
 
-    <%= f.fields_for :drops do |drop| %>
-    <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-      <%= drop.input :address,
-                    label: false,
-                    required: :true,
-                    placeholder: 'Adresse de livraison',
-                    input_html: { class: 'address-input w-full mt-4', value: (current_user ? current_user.address : @city.name) } %>
-        <%= drop.input :date,
-                    label: false,
-                    as: :string,
-                    placeholder: 'Date',
-                    required: true,
-                    input_html: {class: "datepicker", value: (Date.today) } %>
+          <%= drop.input :start_hour, label: false, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
+          <%= drop.input :end_hour,   label: false, as: :string, placeholder: 'dr end',   required: true, input_html: { value: @city.end_hour } %>
+          <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
+        </div>
+      <% end %>
+    </div>
 
-      <div class='hidden'>
-        <%= drop.input :start_hour, label: false, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
-        <%= drop.input :end_hour,   label: false, as: :string, placeholder: 'dr end',   required: true, input_html: { value: @city.end_hour } %>
-        <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="div-align toggle-element" data-urgence='0' id="urgence">
-  <%= @test  %>
-
-    <%= f.fields_for :course_options, remote: true do |optn| %>
-      <%= optn.input :user_options,
-              as: :radio_buttons,
-              collection_wrapper_tag: 'div',
-              collection_wrapper_class: 'category-wrapper',
-              item_wrapper_class: 'category-item',
-              input_html: {class: 'category-selector', 'data-reflex': 'click->Option#urgence'},
-              collection: @availible_urgences %>
-    <% end %>
-    <%= f.fields_for :course_options, remote: true do |optn| %>
-      <%= optn.input :user_options,
-              as: :radio_buttons,
-              collection_wrapper_tag: 'div',
-              collection_wrapper_class: 'category-wrapper',
-              item_wrapper_class: 'category-item',
-              input_html: {class: 'category-selector'},
-              collection: @availible_volumes %>
-    <% end %>
-    <%= f.fields_for :course_options, remote: true do |optn| %>
-      <%= optn.input :user_options,
-              as: :check_boxes,
-              collection_wrapper_tag: 'div',
-              collection_wrapper_class: 'category-wrapper',
-              item_wrapper_class: 'category-item',
-              input_html: {class: 'category-selector'},
-              collection: @availible_supplements %>
-    <% end %>
+    <div class="div-align toggle-element" data-urgence='0' id="urgence">
 
 
-
-  <div>
-    <span>Distance</span>
-    <span distance><%= @distance %></span>
-  </div>
-  <div>
-    <span>Urgence</span>
-    <span urgence><%= @ticket_urgence %></span>
-  </div>
-  <div>
-    <span>Volume</span>
-    <span volume>0</span>
-  </div>
-
-
-  <div class="total toggle-element">
-    <p class="total-text">Avec abonnement : <b><span data-application-target="total" >0</span> ticket(s)</b></p>
-    <p class="total-text">Sans abonnement : <b><span id='total-price'>0</span> €</b></p>
-  </div>
-
-
-  <div class='hidden'>
-    <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
-      <%= user.input :email %>
-    <% end %>
-    <input type="checkbox" id="stripe" name="stripe">
-    <label for="stripe">stripe</label>
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-      document.body.addEventListener('ajax:success', (event) => {
-        const checkoutId = new Promise((resolve, reject) => {
-          console.log("1" + event.detail[0].checkout_id)
-          resolve(event.detail[0].checkout_id)
-        }, console.log("gerer l'erreur"));
-
-        checkoutId.then((value) => {
-          console.log(value)
-          const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-          stripe.redirectToCheckout({
-            sessionId: value
-          });
-        })
-      });
-    </script>
-  </div>
-
-  <%= f.submit "course", class: "bici-button hidden", id: 'save-course' %>
-<% end %>
+      <%= f.fields_for :course_options, remote: true do |optn| %>
+        <%= optn.input :user_options,
+                as: :radio_buttons,
+                collection_wrapper_tag: 'div',
+                collection_wrapper_class: 'category-wrapper',
+                item_wrapper_class: 'category-item',
+                input_html: {class: 'category-selector', 'data-reflex': 'click->Option#urgence'},
+                collection: @availible_urgences %>
+      <% end %>
+      <%= f.fields_for :course_options, remote: true do |optn| %>
+        <%= optn.input :user_options,
+                as: :radio_buttons,
+                collection_wrapper_tag: 'div',
+                collection_wrapper_class: 'category-wrapper',
+                item_wrapper_class: 'category-item',
+                input_html: {class: 'category-selector', 'data-reflex': 'click->Option#volume'},
+                collection: @availible_volumes %>
+      <% end %>
+      <%= f.fields_for :course_options, remote: true do |optn| %>
+        <%= optn.input :user_options,
+                as: :check_boxes,
+                collection_wrapper_tag: 'div',
+                collection_wrapper_class: 'category-wrapper',
+                item_wrapper_class: 'category-item',
+                input_html: {class: 'category-selector'},
+                collection: @availible_supplements %>
+      <% end %>
 
 
-<button class="bici-button " id='continue'>Continuer</button>
+
+    <div>
+      <span>Distance</span>
+      <span><span id="distance-km-nb">0</span> km soit <span id="distance-ticket-nb">0</span></span>
+    </div>
+    <div>
+      <span>Urgence</span>
+      <span id="urgence-ticket-nb">0</span>
+    </div>
+    <div>
+      <span>Volume</span>
+      <span id="volume-ticket-nb">0</span>
+    </div>
+
+
+    <div class="total toggle-element">
+      <p class="total-text" total>Avec abonnement : <b><span data-application-target="total" ><%= pluralize(@total, 'ticket') %></span></b></p>
+      <p class="total-text" >Sans abonnement : <b><span id='total-price'>    </span> €</b></p>
+    </div>
+
+
+    <div class='hidden'>
+      <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
+        <%= user.input :email %>
+      <% end %>
+      <input type="checkbox" id="stripe" name="stripe">
+      <label for="stripe">stripe</label>
+
+      <script src="https://js.stripe.com/v3/"></script>
+      <script>
+        document.body.addEventListener('ajax:success', (event) => {
+          const checkoutId = new Promise((resolve, reject) => {
+            console.log("1" + event.detail[0].checkout_id)
+            resolve(event.detail[0].checkout_id)
+          }, console.log("gerer l'erreur"));
+
+          checkoutId.then((value) => {
+            console.log(value)
+            const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+            stripe.redirectToCheckout({
+              sessionId: value
+            });
+          })
+        });
+      </script>
+    </div>
+
+    <%= f.submit "course", class: "bici-button hidden", id: 'save-course' %>
+  <% end %>
+
+
+  <button class="bici-button " id='continue'>Continuer</button>
 
 </div>
-    <!--<div class="icon-w fs10"><div class='icon urgence urgence-1 urgence-validator' data-tickets='0'></div><p><span class='urgence-0-day'></span> avant <span class='urgence-0-hour'></span></p></div>
-    <div class="icon-w fs10"><div class='icon urgence urgence-2 urgence-validator' data-tickets='2'></div><p><span class='urgence-2-day'></span> avant <span class='urgence-2-hour'></span></p></div>
-    <div class="icon-w fs10"><div class='icon urgence urgence-3 urgence-validator' data-tickets='1'></div><p><span class='urgence-1-day'></span> avant <span class='urgence-1-hour'></span></p></div>
-  </div>
-  <div class="div-align toggle-element" data-volume='0' id="volume">
-    <div class="icon-w fs10"><div class='icon volume volume-1 volume-validator' data-tickets='0' data-text='Enveloppe ou petit colis'></div><p>Enveloppe ou petit colis</p></div>
-    <div class="icon-w fs10"><div class='icon volume volume-2 volume-validator' data-tickets='1' data-text='Gros colis ou > 5kg'></div><p>Gros colis ou > 5kg</p></div>
-  </div>
-
-  <div class="main-toggle-resultat toggle-element">
-    <div class="left-box-resultat">
-      <p class="left-distance"><span id="kilometers"> </span></p>
-      <p class="left-urgence"><span class="heure"> </span></p>
-      <p class="left-volume" id='vo-text-volume'> </p>
-    </div>
-    <div class="right-box-resultat">
-      <p class="right-distance sous-total"></p>
-      <p class="right-urgence sous-total"></p>
-      <p class="right-volume sous-total"></p>
-    </div>
-  </div>-->
