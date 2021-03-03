@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.float "distance_per_ticket", default: 3500.0
     t.integer "urgence_one_size", default: 2700
     t.integer "urgence_two_size", default: 14400
-    t.string "city_name"
+    t.string "name"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 2021_02_06_124814) do
     t.integer "tickets_urgence", default: 0
     t.integer "tickets_volume", default: 0
     t.integer "tickets_distance", default: 0
-    t.integer "ticket_overflow", default: 0
     t.bigint "shopping_cart_id"
     t.integer "price_cents", default: 0, null: false
     t.bigint "urgence_id"
