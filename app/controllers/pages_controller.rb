@@ -9,9 +9,18 @@ class PagesController < ApplicationController
     end
     @course = Course.new
     # @order = Order.last
-    # @city = City.find_by(city_name: "Nantes")
+    @city = City.find_by(name: "Nantes")
     @drop = @course.drops.build
     @pickup = @course.pickups.build
+    @course_option = @course.course_options.build
+
+if current_user
+    @availible_urgences = Urgence.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+    @availible_volumes = Volume.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+    @availible_supplements = Option.joins(:user_options).where('user_options.user_id = ?', current_user.id)
+end
+
+
   end
 
   def story

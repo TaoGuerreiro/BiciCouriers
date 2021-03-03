@@ -37,6 +37,15 @@ puts 'Order'
 Order.destroy_all
 puts 'Cities'
 City.destroy_all
+puts 'Options'
+
+Option.destroy_all
+
+puts 'UserOptions'
+UserOption.destroy_all
+puts 'CourseOptions'
+CourseOption.destroy_all
+
 puts '_________________DROPPING DONE________________'
 
 
@@ -138,6 +147,7 @@ puts '____________________USERS_____________________'
 florent = User.create(
   {
     email: "kiki@bicicouriers.fr",
+    address: '8 passage de la Poule Noire, 44000 Nantes',
     password: "secret",
     phone: "0674236080",
     first_name: "Florent",
@@ -281,7 +291,7 @@ volume_4 = Volume.create!(
 puts '_________________VOLUME => OK________________'
 puts '_________________SHOPPING CART________________'
 
-shop_1 = ShoppingCart.create(
+shop_1 = ShoppingCart.create!(
   {
     price_cents: 22000,
     user_id: florent.id,
@@ -294,7 +304,7 @@ puts '_____________SHOPPING CART => OK______________'
 puts '___________________CARNETS____________________'
 
 
-carnet_50 = Carnet.create(
+carnet_50 = Carnet.create!(
   {
     carnet_template_id: carnet_50_t.id,
     user_id: florent.id,
@@ -307,41 +317,36 @@ puts '________________CARNETS => OK_________________'
 
 puts '___________________CITIES_____________________'
 
-nantes = City.create(city_name: "Nantes")
-
+nantes = City.create!(name: "Nantes")
 
 puts '________________CITIES => OK__________________'
+
+puts '___________________OPTIONS_____________________'
+
+deux_heures = Urgence.create!({name: "Moins de 2 heures", ticket: 1, range: 7200})
+quarante_cinq_minutes = Urgence.create({name: "Moins de 45 minutes", ticket: 2, range: 2700})
+
+gros_volume = Volume.create!({name: "Cargo", ticket: 1, max_weight: 15, max_size: 500})
+tres_gros_volume = Volume.create({name: "Cargo plein", ticket: 2, max_weight: 80, max_size: 1000})
+
+nourriture = Option.create({name: "Nourriture", urgence: 1, volume: 0, groupe: 3})
+
+
+puts '________________OPTIONS => OK__________________'
+
+puts '___________________USER OPTIONS_____________________'
+
+option_1 = UserOption.create!({user_id: florent.id, urgence_id: deux_heures.id})
+option_3 = UserOption.create!({user_id: florent.id, urgence_id: quarante_cinq_minutes.id})
+option_2 = UserOption.create!({user_id: florent.id, volume_id: gros_volume.id})
+option_4 = UserOption.create!({user_id: florent.id, volume_id: tres_gros_volume.id})
+option_5 = UserOption.create!({user_id: florent.id, option_id: nourriture.id})
+
+
+puts '________________USER OPTIONS => OK__________________'
+
+
 
 
 
 puts "ok"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

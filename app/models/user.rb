@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :carnets, dependent: :destroy
   has_many :courses, dependent: :destroy
+  has_many :user_options, dependent: :destroy
   has_many :shopping_carts, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :favorite_addresses, dependent: :destroy

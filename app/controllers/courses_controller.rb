@@ -10,9 +10,9 @@ class CoursesController < ApplicationController
 
   def ticket_volume
     data = JSON.parse(volume_params.to_json)
-    
+
     # binding.pry
-    
+
 
     id = Volume.find(data["id"].to_i)
 
@@ -29,11 +29,11 @@ class CoursesController < ApplicationController
 
     render json: distance
   end
-  
+
 
   def init_urgences
     city = City.find_by(city_name: "Nantes")
-    now = Time.now.utc + 3600 
+    now = Time.now.utc + 3600
     day_start = Time.new(now.year, now.mon, now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
     day_end =   Time.new(now.year, now.mon, now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
     case
@@ -154,6 +154,8 @@ class CoursesController < ApplicationController
   def new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
     @user = User.new
+    @availible_options = Option.joins(:user_options).where('user_id = ?', current_user.id)
+
 
 
     @course = Course.new
@@ -558,7 +560,3 @@ private
   end
 
 end
-
-
-
-
