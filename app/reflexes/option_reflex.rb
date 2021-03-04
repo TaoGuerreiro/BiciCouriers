@@ -1,15 +1,12 @@
-# frozen_string_literal: true
-
 class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
 
-  # after_reflex :total
+  after_reflex :total
 
   def urgence
     urgence = Urgence.find(element[:value])
     morph "#urgence-ticket-nb", urgence.ticket
-
-    morph "#testmorph", element[:checked]
+  end
 
   def volume
     volume = Volume.find(element[:value])
@@ -47,8 +44,7 @@ class OptionReflex < ApplicationReflex
   private
 
   def total
-    test = params
-    morph "#testmorph", test
+
   end
 
 end
