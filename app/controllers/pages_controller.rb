@@ -7,7 +7,7 @@ class PagesController < ApplicationController
       # request.env['warden'].set_user(1)
       cookies[:guest] = SecureRandom.hex(16)
     end
-    @course = Course.new
+    @course ||= Course.new
     # @order = Order.last
     @city = City.find_by(name: "Nantes")
     @drop = @course.drops.build

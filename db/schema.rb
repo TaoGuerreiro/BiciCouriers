@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_135317) do
+ActiveRecord::Schema.define(version: 2021_03_10_095947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,12 +73,12 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
   end
 
   create_table "course_options", force: :cascade do |t|
-    t.bigint "user_options_id", null: false
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_option_id"
     t.index ["course_id"], name: "index_course_options_on_course_id"
-    t.index ["user_options_id"], name: "index_course_options_on_user_options_id"
+    t.index ["user_option_id"], name: "index_course_options_on_user_option_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -252,7 +252,6 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
   add_foreign_key "carnets", "shopping_carts"
   add_foreign_key "carnets", "users"
   add_foreign_key "course_options", "courses"
-  add_foreign_key "course_options", "user_options", column: "user_options_id"
   add_foreign_key "courses", "bikes"
   add_foreign_key "courses", "carnets"
   add_foreign_key "courses", "shopping_carts"
