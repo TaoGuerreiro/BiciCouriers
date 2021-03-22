@@ -1,88 +1,99 @@
 <div data-reflex-root="[distance],[urgence],[volume],[total]">
-
+<div>
   <%= simple_form_for course, remote: true do |f| %>
+    <div class="div-align toggle-element mt-5 hiden" id="page-1">
+      <div>
+        <%= f.fields_for :pickups, remote: true do |pickup| %>
+          <%= pickup.input :address,
+                        label: false,
+                        required: :true,
+                        placeholder: 'Adresse de rammassage',
+                        input_html: { value: @course.pickups.first.address,
+                                      class: 'address-input w-full',
+                                      'data-reflex': "blur->Option#distance"  } %>
+          <div class='hidden'>
+            <%= pickup.input :date,
+                        label: false,
+                        as: :string,
+                        placeholder: 'Date',
+                        required: true,
+                        input_html: { class: "datepicker",
+                                      value: (Date.today)} %>
 
-    <div id="">
-      <%= f.fields_for :pickups, remote: true do |pickup| %>
-        <%= pickup.input :address,
-                      label: false,
-                      required: :true,
-                      placeholder: 'Adresse de rammassage',
-                      input_html: { value: @course.pickups.first.address,
-                                    class: 'address-input w-full',
-                                    'data-reflex': "blur->Option#distance"  } %>
-        <div class='hidden'>
-          <%= pickup.input :date,
-                      label: false,
-                      as: :string,
-                      placeholder: 'Date',
-                      required: true,
-                      input_html: { class: "datepicker",
-                                    value: (Date.today)} %>
+            <%= pickup.input :start_hour,
+                            label: false,
+                            as: :string,
+                            placeholder: 'pu start',
+                            required: true,
+                            input_html: { value: Time.now.strftime("%H:%M") } %>
 
-          <%= pickup.input :start_hour,
-                          label: false,
-                          as: :string,
-                          placeholder: 'pu start',
-                          required: true,
-                          input_html: { value: Time.now.strftime("%H:%M") } %>
+            <%= pickup.input :end_hour, label: false, as: :string, placeholder: 'pu end',   required: true, input_html: { value: @city.end_hour } %>
+          </div>
+        <% end %>
 
-          <%= pickup.input :end_hour, label: false, as: :string, placeholder: 'pu end',   required: true, input_html: { value: @city.end_hour } %>
-        </div>
-      <% end %>
+        <%= f.fields_for :drops do |drop| %>
+          <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
+          <%= drop.input :address,
+                        label: false,
+                        required: :true,
+                        placeholder: 'Adresse de livraison',
+                        input_html: { class: 'address-input w-full mt-4',
+                                      value: @course.drops.first.address,
+                                    'data-reflex': "blur->Option#distance" } %>
+          <div class='hidden'>
+            <%= drop.input :date,
+                        label: false,
+                        as: :string,
+                        placeholder: 'Date',
+                        required: true,
+                        input_html: {class: "datepicker", value: (Date.today) } %>
 
-      <%= f.fields_for :drops do |drop| %>
-        <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-        <%= drop.input :address,
-                      label: false,
-                      required: :true,
-                      placeholder: 'Adresse de livraison',
-                      input_html: { class: 'address-input w-full mt-4',
-                                    value: @course.drops.first.address,
-                                   'data-reflex': "blur->Option#distance" } %>
-        <div class='hidden'>
-          <%= drop.input :date,
-                      label: false,
-                      as: :string,
-                      placeholder: 'Date',
-                      required: true,
-                      input_html: {class: "datepicker", value: (Date.today) } %>
+            <%= drop.input :start_hour, label: false, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
+            <%= drop.input :end_hour,   label: false, as: :string, placeholder: 'dr end',   required: true, input_html: { value: @city.end_hour } %>
+            <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
+          </div>
+        <% end %>
+      </div>
 
-          <%= drop.input :start_hour, label: false, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
-          <%= drop.input :end_hour,   label: false, as: :string, placeholder: 'dr end',   required: true, input_html: { value: @city.end_hour } %>
-          <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
-        </div>
-      <% end %>
-    </div>
 
-    <div class="div-align toggle-element mt-5" id="page-1">
 
-      <%= f.fields_for :course_options do |optn| %>
-        <%= optn.association :user_option,
+      <%# IMPLEMENTATION IMAGE %>
+            <%#= f.fields_for :course_options do |optn| %>
+              <%#= optn.collection_radio_buttons(:user_option, @availible_urgences, :id, :name) do |b|
+              # raise
+              # b.label(class: 'categorsy-selector', 'data-reflex': 'change->Option#urgence') { image_tag("commande/bike-white.svg") + b.radio_button }
+
+              # end %>
+            <%# end %>
+      <%# IMPLEMENTATION IMAGE %>
+
+      <%= f.fields_for :course_options do |urge| %>
+        <%= urge.association :option,
                 legend_tag: false,
-                # as: :radio_buttons,
-                collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'categorvy-wrapper mb-5',
-                item_wrapper_class: 'category-ivtem',
-                input_html: {class: 'category-selecvtor', 'data-reflex': 'change->Option#urgence'},
-                collection: @availible_urgences,
-                selected: @selected_urgence %>
-      <% end %>
-
-      <%= f.fields_for :course_options do |optn| %>
-        <%= optn.association :user_option,
-                legend_tag: false,
-                # as: :radio_buttons,
+                # label: false,
+                as: :check_boxes,
                 collection_wrapper_tag: 'div',
                 collection_wrapper_class: 'categosry-wrapper mb-5',
                 item_wrapper_class: 'category-istem',
-                input_html: {class: 'categorsy-selector', 'data-reflex': 'change->Option#volume'},
-                collection: @availible_volumes,
-                selected: @selected_volume %>
+                input_html: {class: 'categorsy-selector mt-2 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
+                collection: @availible_options %>
       <% end %>
 
-      <%= f.fields_for :course_options do |optn| %>
-        <%= optn.association :user_option,
+      <%#= f.fields_for :course_options do |vol| %>
+        <%#= vol.association :user_option,
+                legend_tag: false,
+                # label: false,
+                # as: :radio_buttons,
+                collection_wrapper_tag: 'div',
+                collection_wrapper_class: 'categosry-wrapper',
+                item_wrapper_class: 'category-istem',
+                input_html: {class: 'categorsy-selector my-5 py-1 rounded w-full ', 'data-reflex': 'change->Option#volume'},
+                collection: @availible_volumes,
+                selected: @availible_volumes.first %>
+      <%# <% end %>
+
+      <%#= f.fields_for :course_options do |optn| %>
+        <%#= optn.association :user_option,
                 legend_tag: false,
                 # as: :check_boxes,
                 collection_wrapper_tag: 'div',
@@ -90,27 +101,36 @@
                 item_wrapper_class: 'categorsy-item',
                 input_html: {class: 'categosry-selector'},
                 collection: @availible_supplements %>
-      <% end %>
+      <%# end %>
+
+    </div>
+
+    <div class="div-align toggle-element mt-5" id="page-2">
+      <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
+      <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
+
+      <%= f.submit "course", class: "btn-bici hiden", id: 'save-course' %>
+    </div>
 
       <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
 
       <div distance>
         <span class="font-bold">Distance :</span>
         <span><span id="distance-km-nb"><%= @course.distance.nil? ? 0 : (@course.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @course.tickets_distance.nil? ? 0 : (@course.tickets_distance) %> </span></span>
-        <%= f.input :distance, input_html: { value: @course.distance }  %>
-        <%= f.input :tickets_distance, input_html: { value: @course.tickets_distance }  %>
+        <%= f.input :distance, label: false, input_html: { value: @course.distance, class:"hidden"}  %>
+        <%= f.input :tickets_distance, label: false, input_html: { value: @course.tickets_distance, class:"hidden" }  %>
       </div>
 
       <div urgence>
         <span class="font-bold">Urgence :</span>
         <span id="urgence-ticket-nb"><%= @course.tickets_urgence.nil? ? 0 : @course.tickets_urgence %></span>
-        <%= f.input :tickets_urgence, input_html: { value: @course.tickets_urgence }  %>
+        <%= f.input :tickets_urgence, label: false, input_html: { value: @course.tickets_urgence, class:"hidden" }  %>
       </div>
 
       <div volume>
         <span class="font-bold">Volume :</span>
         <span id="volume-ticket-nb"><%= @course.tickets_volume.nil? ? 0 : @course.tickets_volume %></span>
-        <%= f.input :tickets_volume, input_html: { value: @course.tickets_volume }  %>
+        <%= f.input :tickets_volume,label: false, input_html: { value: @course.tickets_volume, class:"hidden" }  %>
       </div>
 
       <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
@@ -121,9 +141,9 @@
       </div>
 
       <div class='hidden'>
-        <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
-          <%= user.input :email %>
-        <% end %>
+        <%#= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
+          <%#= user.input :email %>
+        <%# end %>
         <input type="checkbox" id="stripe" name="stripe">
         <label for="stripe">stripe</label>
 
@@ -145,13 +165,7 @@
           });
         </script>
       </div>
-    </div>
 
-    <div class="div-align toggle-element mt-5" id="page-2">
-      <%= f.input :details, as: :text %>
-
-      <%= f.submit "course", class: "btn-bici hiden", id: 'save-course' %>
-    </div>
 
 
 
