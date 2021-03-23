@@ -1,10 +1,7 @@
 class ShoppingCart < ApplicationRecord
-  has_many :courses, dependent: :destroy
-  has_many :carnets, dependent: :destroy
-  has_many :orders, dependent: :destroy
-  belongs_to :user
-
-  monetize :price_cents
+  belongs_to :order
+  belongs_to :delivery
+  belongs_to :tikets_book
 
   # after_save :create_new_cart, on: :update
 

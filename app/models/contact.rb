@@ -7,6 +7,8 @@ class Contact < ApplicationRecord
 
   after_create :new_contact
 
+  belongs_to :city
+
 private
 
   def new_contact
