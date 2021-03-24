@@ -1,4 +1,4 @@
-class ShoppingCart < ApplicationRecord
+class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :delivery
   belongs_to :tikets_book

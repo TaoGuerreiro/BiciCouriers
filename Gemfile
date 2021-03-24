@@ -48,6 +48,8 @@ group :development do
   gem 'letter_opener'
   gem 'guard-livereload', '~> 2.4', require: false
   gem 'rack-livereload'
+  gem 'pgreset'
+
 end
 
 group :development, :test do

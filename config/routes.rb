@@ -26,7 +26,7 @@
 
 
 
-  resources :shopping_carts, only: [:show, :create]
+  # resources :shopping_carts, only: [:show, :create]
 
   get '/orders/success'
   get '/orders/cancel'
@@ -42,7 +42,7 @@
 
   resources :contacts, only: [:new, :create]
 
-  resources :courses, only: [:new, :create, :index, :show, :destroy] do
+  resources :deliveries, only: [:new, :create, :index, :show, :destroy] do
     resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
   end
@@ -51,15 +51,15 @@
   get 'cities/current', to: 'cities#current'
 
   #course building
-  post 'course/distance', to: 'courses#distance'
-  post 'course/ticket_urgence', to: 'courses#ticket_urgence'
-  get 'course/init_urgences', to: 'courses#init_urgences'
-  post 'course/ticket_distance', to: 'courses#ticket_distance'
-  post 'course/ticket_volume', to: 'courses#ticket_volume'
+  post 'delivery/distance', to: 'deliveries#distance'
+  post 'delivery/ticket_urgence', to: 'deliveries#ticket_urgence'
+  get 'delivery/init_urgences', to: 'deliveries#init_urgences'
+  post 'delivery/ticket_distance', to: 'deliveries#ticket_distance'
+  post 'delivery/ticket_volume', to: 'deliveries#ticket_volume'
 
   resources :favorite_addresses, only: [:new, :create, :index, :show, :destroy]
 
-  resources :carnets, only: [:new, :create, :index, :show, :destroy] do
+  resources :tickets_books, only: [:new, :create, :index, :show, :destroy] do
     collection do
       get :inprogress
     end

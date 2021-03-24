@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_192326) do
+ActiveRecord::Schema.define(version: 2021_03_24_134705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,17 +44,11 @@ ActiveRecord::Schema.define(version: 2021_03_23_192326) do
     t.datetime "updated_at", null: false
     t.string "start_hour", default: "08:00"
     t.string "end_hour", default: "19:00"
-<<<<<<< HEAD
     t.integer "cargo_nb", default: 1
     t.float "distance_per_ticket", default: 3500.0
     t.integer "urgence_one_size", default: 2700
     t.integer "urgence_two_size", default: 14400
     t.string "name"
-=======
-    t.string "name"
-    t.string "phone"
-    t.string "email"
->>>>>>> 0bc4189b66332859570e5503299e1c42ad162387
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -77,13 +71,20 @@ ActiveRecord::Schema.define(version: 2021_03_23_192326) do
     t.datetime "updated_at", null: false
     t.string "status", default: "pending"
     t.integer "tickets_distance", default: 0
-<<<<<<< HEAD
     t.bigint "shopping_cart_id"
-=======
->>>>>>> 0bc4189b66332859570e5503299e1c42ad162387
     t.integer "price_cents", default: 0, null: false
     t.boolean "tour", default: false
     t.index ["user_id"], name: "index_deliveries_on_user_id"
+  end
+
+  create_table "delivery_books", force: :cascade do |t|
+    t.bigint "delivery_id"
+    t.bigint "tickets_book_id"
+    t.integer "tickets", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["delivery_id"], name: "index_delivery_books_on_delivery_id"
+    t.index ["tickets_book_id"], name: "index_delivery_books_on_tickets_book_id"
   end
 
   create_table "delivery_options", force: :cascade do |t|
@@ -234,6 +235,8 @@ ActiveRecord::Schema.define(version: 2021_03_23_192326) do
   end
 
   add_foreign_key "deliveries", "users"
+  add_foreign_key "delivery_books", "deliveries"
+  add_foreign_key "delivery_books", "tickets_books"
   add_foreign_key "delivery_options", "deliveries"
   add_foreign_key "delivery_options", "options"
   add_foreign_key "drops", "deliveries"
