@@ -1,43 +1,34 @@
-# frozen_string_literal: true
-
 class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
-
-  # after_reflex :total
+  before_reflex :build
+  after_reflex :total
 
   def urgence
-    urgence = Urgence.find(element[:value])
-    morph "#urgence-ticket-nb", urgence.ticket
-
-    morph "#testmorph", element[:checked]
+    # binding.pry
+    @selected_urgence = Urgence.find(element[:value])
+    @course.tickets_urgence = @selected_urgence.ticket
+  end
 
   def volume
-    volume = Volume.find(element[:value])
-    morph "#volume-ticket-nb", volume.ticket
+    @selected_volume = Volume.find(element[:value])
+    @course.tickets_volume = @selected_volume.ticket
   end
 
   def distance
-    start_address = params[:course][:pickups_attributes]["0"][:address]
-    end_address = params[:course][:drops_attributes]["0"][:address]
-
     begin
       url = 'https://maps.googleapis.com/maps/api/directions/json?'
       query = {
-        origin: start_address,
-        destination: end_address,
+        origin: @course.pickups.first.address,
+        destination: @course.drops.first.address,
         key: ENV['GOOGLE_API_KEY']
       }
-
       distance = JSON.parse(HTTParty.get(
         url,
         query: query
       ).body)
 
-      distance = (distance['routes'][0]['legs'][0]['distance']['value']) / 1000.000
-      distance_ticket = (distance / 3.5).ceil
-
-      morph "#distance-ticket-nb", distance_ticket
-      morph "#distance-km-nb", distance
+      @course.distance = (distance['routes'][0]['legs'][0]['distance']['value'])
+      @course.tickets_distance = ((@course.distance / 1000) / 3.5).ceil
 
     rescue NoMethodError
       # distance = "Je calcul..."
@@ -46,9 +37,26 @@ class OptionReflex < ApplicationReflex
 
   private
 
-  def total
-    test = params
-    morph "#testmorph", test
+  def build
+    # binding.pry
+    @course = Course.new(course_params)
+    # @course.drops.reset
+    # @course.pickups.reset
+    # @course.course_options.reset
   end
+
+  def total
+    @test = Course.new(course_params)
+    @total = (@test.tickets_distance) + (@test.tickets_volume) + (@test.tickets_urgence)
+    # binding.pry
+  end
+
+  def course_params
+    params.require(:course).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume,
+                                    drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
+                                    pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
+                                    course_options_attributes:[ :user_option_id, :user_option])
+  end
+
 
 end

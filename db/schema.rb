@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_135317) do
+ActiveRecord::Schema.define(version: 2021_03_23_192326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,26 +29,14 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "carnet_templates", force: :cascade do |t|
+  create_table "book_templates", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "ticket_nb"
     t.string "image"
     t.string "description"
     t.integer "price_cents", default: 0, null: false
-    t.float "distance_max", default: 3.5
-  end
-
-  create_table "carnets", force: :cascade do |t|
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "remaining_tickets"
-    t.bigint "carnet_template_id"
-    t.bigint "shopping_cart_id"
-    t.index ["carnet_template_id"], name: "index_carnets_on_carnet_template_id"
-    t.index ["shopping_cart_id"], name: "index_carnets_on_shopping_cart_id"
-    t.index ["user_id"], name: "index_carnets_on_user_id"
+    t.integer "max_distance", default: 0
+    t.integer "tickets_count", default: 0, null: false
   end
 
   create_table "cities", force: :cascade do |t|
@@ -56,11 +44,9 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.datetime "updated_at", null: false
     t.string "start_hour", default: "08:00"
     t.string "end_hour", default: "19:00"
-    t.integer "cargo_nb", default: 1
-    t.float "distance_per_ticket", default: 3500.0
-    t.integer "urgence_one_size", default: 2700
-    t.integer "urgence_two_size", default: 14400
     t.string "name"
+    t.string "phone"
+    t.string "email"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -70,41 +56,35 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.string "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_contacts_on_city_id"
   end
 
-  create_table "course_options", force: :cascade do |t|
-    t.bigint "user_options_id", null: false
-    t.bigint "course_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_options_on_course_id"
-    t.index ["user_options_id"], name: "index_course_options_on_user_options_id"
-  end
-
-  create_table "courses", force: :cascade do |t|
+  create_table "deliveries", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "carnet_id"
-    t.bigint "bike_id"
-    t.integer "ticket_nb", default: 0
+    t.integer "tickets_count", default: 0
     t.integer "distance"
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "pending"
-    t.integer "tickets_urgence", default: 0
-    t.integer "tickets_volume", default: 0
     t.integer "tickets_distance", default: 0
-    t.integer "ticket_overflow", default: 0
-    t.bigint "shopping_cart_id"
     t.integer "price_cents", default: 0, null: false
-    t.index ["bike_id"], name: "index_courses_on_bike_id"
-    t.index ["carnet_id"], name: "index_courses_on_carnet_id"
-    t.index ["shopping_cart_id"], name: "index_courses_on_shopping_cart_id"
-    t.index ["user_id"], name: "index_courses_on_user_id"
+    t.boolean "tour", default: false
+    t.index ["user_id"], name: "index_deliveries_on_user_id"
+  end
+
+  create_table "delivery_options", force: :cascade do |t|
+    t.bigint "delivery_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "option_id", null: false
+    t.index ["delivery_id"], name: "index_delivery_options_on_delivery_id"
+    t.index ["option_id"], name: "index_delivery_options_on_option_id"
   end
 
   create_table "drops", force: :cascade do |t|
-    t.bigint "course_id"
+    t.bigint "delivery_id"
     t.string "address"
     t.string "start_hour"
     t.string "end_hour"
@@ -114,7 +94,7 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.float "latitude"
     t.float "longitude"
     t.date "date"
-    t.index ["course_id"], name: "index_drops_on_course_id"
+    t.index ["delivery_id"], name: "index_drops_on_delivery_id"
   end
 
   create_table "favorite_addresses", force: :cascade do |t|
@@ -142,27 +122,35 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
 
   create_table "options", force: :cascade do |t|
     t.string "name"
-    t.integer "urgence"
-    t.integer "volume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "groupe"
+    t.integer "tickets", default: 0
+    t.string "type"
+    t.integer "max_value", default: 0
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "item_type"
+    t.bigint "item_id"
+    t.bigint "order_id"
+    t.index ["item_type", "item_id"], name: "index_order_items_on_item_type_and_item_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "state"
+    t.string "status"
     t.integer "amount_cents", default: 0, null: false
     t.string "checkout_session_id"
     t.bigint "user_id"
-    t.bigint "shopping_cart_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["shopping_cart_id"], name: "index_orders_on_shopping_cart_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pickups", force: :cascade do |t|
-    t.bigint "course_id"
+    t.bigint "delivery_id"
     t.string "address"
     t.string "start_hour"
     t.string "end_hour"
@@ -172,7 +160,7 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.float "latitude"
     t.float "longitude"
     t.date "date"
-    t.index ["course_id"], name: "index_pickups_on_course_id"
+    t.index ["delivery_id"], name: "index_pickups_on_delivery_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -183,24 +171,23 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.string "details"
     t.string "images"
     t.string "slug"
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_services_on_city_id"
     t.index ["slug"], name: "index_services_on_slug", unique: true
   end
 
-  create_table "shopping_carts", force: :cascade do |t|
-    t.integer "price_cents", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "tickets_books", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "state", default: "pending"
-    t.index ["user_id"], name: "index_shopping_carts_on_user_id"
-  end
-
-  create_table "urgences", force: :cascade do |t|
-    t.integer "range"
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "ticket"
+    t.integer "remaining_tickets"
+    t.bigint "book_templates_id"
+    t.bigint "order_items"
+    t.string "status", default: "draft"
+    t.integer "price_cents", default: 0, null: false
+    t.index ["book_templates_id"], name: "index_tickets_books_on_book_templates_id"
+    t.index ["order_items"], name: "index_tickets_books_on_order_items"
+    t.index ["user_id"], name: "index_tickets_books_on_user_id"
   end
 
   create_table "user_options", force: :cascade do |t|
@@ -208,12 +195,8 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.bigint "option_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "urgence_id"
-    t.bigint "volume_id"
     t.index ["option_id"], name: "index_user_options_on_option_id"
-    t.index ["urgence_id"], name: "index_user_options_on_urgence_id"
     t.index ["user_id"], name: "index_user_options_on_user_id"
-    t.index ["volume_id"], name: "index_user_options_on_volume_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -232,39 +215,22 @@ ActiveRecord::Schema.define(version: 2021_02_07_135317) do
     t.string "billing_address"
     t.boolean "paper_invoice", default: false
     t.boolean "admin", default: false
-    t.integer "pool", default: 0
-    t.boolean "carnet_renewal", default: true
+    t.boolean "tickets_book_renewal", default: true
     t.string "billing_company"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "volumes", force: :cascade do |t|
-    t.integer "max_weight"
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "ticket"
-    t.integer "max_size"
-  end
-
-  add_foreign_key "carnets", "carnet_templates"
-  add_foreign_key "carnets", "shopping_carts"
-  add_foreign_key "carnets", "users"
-  add_foreign_key "course_options", "courses"
-  add_foreign_key "course_options", "user_options", column: "user_options_id"
-  add_foreign_key "courses", "bikes"
-  add_foreign_key "courses", "carnets"
-  add_foreign_key "courses", "shopping_carts"
-  add_foreign_key "courses", "users"
-  add_foreign_key "drops", "courses"
+  add_foreign_key "deliveries", "users"
+  add_foreign_key "delivery_options", "deliveries"
+  add_foreign_key "delivery_options", "options"
+  add_foreign_key "drops", "deliveries"
   add_foreign_key "favorite_addresses", "users"
-  add_foreign_key "orders", "shopping_carts"
   add_foreign_key "orders", "users"
-  add_foreign_key "pickups", "courses"
-  add_foreign_key "shopping_carts", "users"
+  add_foreign_key "pickups", "deliveries"
+  add_foreign_key "tickets_books", "book_templates", column: "book_templates_id"
+  add_foreign_key "tickets_books", "order_items", column: "order_items"
+  add_foreign_key "tickets_books", "users"
   add_foreign_key "user_options", "options"
-  add_foreign_key "user_options", "urgences"
   add_foreign_key "user_options", "users"
-  add_foreign_key "user_options", "volumes"
 end

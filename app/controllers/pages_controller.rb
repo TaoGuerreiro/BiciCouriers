@@ -7,18 +7,16 @@ class PagesController < ApplicationController
       # request.env['warden'].set_user(1)
       cookies[:guest] = SecureRandom.hex(16)
     end
-    @course = Course.new
+    @course ||= Course.new
     # @order = Order.last
     @city = City.find_by(name: "Nantes")
     @drop = @course.drops.build
     @pickup = @course.pickups.build
     @course_option = @course.course_options.build
 
-if current_user
-    @availible_urgences = Urgence.joins(:user_options).where('user_options.user_id = ?', current_user.id)
-    @availible_volumes = Volume.joins(:user_options).where('user_options.user_id = ?', current_user.id)
-    @availible_supplements = Option.joins(:user_options).where('user_options.user_id = ?', current_user.id)
-end
+  if current_user
+    @availible_options = Option.includes(:user_options).where(user_options: { user: current_user })
+  end
 
 
   end
