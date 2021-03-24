@@ -3,17 +3,8 @@ class OrderItem < ApplicationRecord
   belongs_to :delivery
   belongs_to :tikets_book
 
+  belongs_to :orderable, polymorphic: true
+
   # after_save :create_new_cart, on: :update
-
-
-  private
-
-  # def create_new_cart
-  #   ShoppingCart.create(
-  #     {
-  #       user_id: self.id
-  #     }
-  #   )
-  # end
 
 end

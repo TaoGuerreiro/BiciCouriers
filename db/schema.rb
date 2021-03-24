@@ -44,11 +44,9 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
     t.datetime "updated_at", null: false
     t.string "start_hour", default: "08:00"
     t.string "end_hour", default: "19:00"
-    t.integer "cargo_nb", default: 1
-    t.float "distance_per_ticket", default: 3500.0
-    t.integer "urgence_one_size", default: 2700
-    t.integer "urgence_two_size", default: 14400
     t.string "name"
+    t.string "phone"
+    t.string "email"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -71,7 +69,6 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
     t.datetime "updated_at", null: false
     t.string "status", default: "pending"
     t.integer "tickets_distance", default: 0
-    t.bigint "shopping_cart_id"
     t.integer "price_cents", default: 0, null: false
     t.boolean "tour", default: false
     t.index ["user_id"], name: "index_deliveries_on_user_id"
