@@ -1,5 +1,5 @@
 class Pickup < ApplicationRecord
-  belongs_to :course
+  belongs_to :delivery
 
 
   validates :address, presence: true

@@ -34,9 +34,7 @@ class ExampleReflex < ApplicationReflex
   # Learn more at: https://docs.stimulusreflex.com/reflexes#reflex-classes
 
   def words
-    user = User.find_by(email: element[:value])
-    @words = user.company
-    
+    @words = element[:value]
   end
 
 end

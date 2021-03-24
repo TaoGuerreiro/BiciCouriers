@@ -4,11 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :carnets, dependent: :destroy
-  has_many :courses, dependent: :destroy
-  has_many :shopping_carts, dependent: :destroy
+  has_many :tickets_books, dependent: :destroy
+  has_many :deliveries, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :user_options, dependent: :destroy
   has_many :favorite_addresses, dependent: :destroy
+
 
   # after_create :send_welcome_email
 

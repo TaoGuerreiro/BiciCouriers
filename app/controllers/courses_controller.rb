@@ -10,9 +10,9 @@ class CoursesController < ApplicationController
 
   def ticket_volume
     data = JSON.parse(volume_params.to_json)
-    
+
     # binding.pry
-    
+
 
     id = Volume.find(data["id"].to_i)
 
@@ -29,11 +29,11 @@ class CoursesController < ApplicationController
 
     render json: distance
   end
-  
+
 
   def init_urgences
-    city = City.find_by(city_name: "Nantes")
-    now = Time.now.utc + 3600 
+    city = City.find_by(name: "Nantes")
+    now = Time.now.utc + 3600
     day_start = Time.new(now.year, now.mon, now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
     day_end =   Time.new(now.year, now.mon, now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
     case
@@ -154,6 +154,8 @@ class CoursesController < ApplicationController
   def new
     @favorite_addresses = policy_scope(FavoriteAddress).order(title: :asc)
     @user = User.new
+    @availible_options = Option.joins(:user_options).where('user_id = ?', current_user.id)
+
 
 
     @course = Course.new
@@ -181,6 +183,7 @@ class CoursesController < ApplicationController
       all_user_carnets = @user.carnets.joins(:shopping_cart).where('remaining_tickets > ? AND shopping_carts.state = ?', 0, 'paid').order(created_at: :asc)
       @cart = @user.shopping_carts.last
 
+      raise
 
       if (all_user_carnets.last.present? && @course.ticket_nb > all_user_carnets.last.carnet_template.ticket_nb)
         redirect_to new_course_path, flash: {alert: 'Bien trop de tickets pour une si grosse course ! :o'}
@@ -330,7 +333,10 @@ private
   # end
 
   def course_params
-    params.require(:course).permit(:details, :bike_id, drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address], pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address])
+    params.require(:course).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
+                                    drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
+                                    pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
+                                    course_options_attributes:[ :user_option_id, :user_option])
   end
 
   def user_have_a_carnet?(user)
@@ -465,7 +471,7 @@ private
   end
 
   def urge(pus, pue, drs, dre)
-    city = City.find_by(city_name: "Nantes")
+    city = City.find_by(name: "Nantes")
     day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
     day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4), 00)
     puts pus
@@ -497,7 +503,7 @@ private
 
   def urgences_calculation(number)
 
-    city = City.find_by(city_name: "Nantes")
+    city = City.find_by(name: "Nantes")
     day_start = Time.new(Time.now.year, Time.now.mon, Time.now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
     day_end =   Time.new(Time.now.year, Time.now.mon, Time.now.day, city.end_hour.slice(0,2),   city.end_hour.slice(3,4),   00)
     now = Time.now
@@ -558,7 +564,3 @@ private
   end
 
 end
-
-
-
-

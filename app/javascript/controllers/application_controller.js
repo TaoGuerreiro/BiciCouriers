@@ -15,7 +15,7 @@ import StimulusReflex from 'stimulus_reflex'
 export default class extends Controller {
   connect () {
     StimulusReflex.register(this)
-    console.log('reflex')
+    // console.log('reflex')
   }
 
   /* Application-wide lifecycle methods
@@ -34,10 +34,28 @@ export default class extends Controller {
    *
    *   reflexId - a UUID4 or developer-provided unique identifier for each Reflex
    */
+  beforeReflex(element, reflex, noop, reflexId) {
+    // const form = document.querySelector('#new_course')
+    // const formData = new FormData(form)
+    // // console.log(form_data.values())
+    // for(var pair of formData.entries()) {
+    //   console.log(pair[0]+ ', '+ pair[1]);
+    // }
 
-  beforeReflex (element, reflex, noop, reflexId) {
-    // document.body.classList.add('wait')
-    console.log('before reflex')
+    // const data = Array.from(formData, e => e.map(encodeURIComponent).join('='))
+
+    // console.log(new Set(data))
+
+    // console.log(Array.from(new Set(data)).join('&'))
+
+    // // [form_data.entries()].forEach( pair => {
+    // //     console.log(pair[0], " ", pair[1])
+    // // });
+
+    // // console.log(element.reflexData[reflexId])
+    // const { params } = element.reflexData[reflexId]
+    // console.log(params)
+    // element.reflexData[reflexId].params = { ...params, foo: true, bar: false }
   }
 
   reflexSuccess (element, reflex, noop, reflexId) {
@@ -54,7 +72,10 @@ export default class extends Controller {
   }
 
   afterReflex (element, reflex, noop, reflexId) {
-    // document.body.classList.remove('wait')
+    // // document.body.classList.remove('wait')
+    // const { params } = element.reflexData[reflexId]
+    // element.reflexData[reflexId].params = { ...params, foo: true, bar: false }
+    // console.log()
   }
 
   finalizeReflex (element, reflex, noop, reflexId) {
@@ -69,7 +90,7 @@ export default class extends Controller {
 //   static targets = [ 'distance', 'volume', 'urgence', 'total']
 
 //   connect() {
-//     console.log("Connexion de l'application controller") 
+//     console.log("Connexion de l'application controller")
 //   }
 
 //   total() {
@@ -81,9 +102,3 @@ export default class extends Controller {
 
 
 // }
-
-
-
-
-
-   

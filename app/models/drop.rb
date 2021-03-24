@@ -1,5 +1,5 @@
 class Drop < ApplicationRecord
-  belongs_to :course, inverse_of: :drops
+  belongs_to :delivery, inverse_of: :drops
 
 
   validates :address, presence: true

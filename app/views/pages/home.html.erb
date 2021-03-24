@@ -38,10 +38,11 @@
       <p class="text-gray-100 text-lg md:text-xl">Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de <span class="text-white font-semibold">45 minutes !</span></p>
 
 
+      <div data-reflex-root="[forward],[backward]">
         <input type="text" value="<%= @words %>" data-reflex="keyup->Example#words">
-        <div><%= @words %></div>
-        <div><%= @words&.reverse %></div>
-        <div><%= @test %> </div>
+        <div forward><%= @words %></div>
+        <div backward><%= @words&.reverse %></div>
+      </div>
 
 
     </div>
