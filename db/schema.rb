@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_134705) do
+ActiveRecord::Schema.define(version: 2021_03_25_172740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
     t.string "name"
     t.string "phone"
     t.string "email"
+  end
+
+  create_table "city_options", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "option_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_city_options_on_city_id"
+    t.index ["option_id"], name: "index_city_options_on_option_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -191,12 +200,10 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "remaining_tickets"
-    t.bigint "book_templates_id"
-    t.bigint "order_items"
+    t.bigint "book_template_id"
     t.string "status", default: "draft"
     t.integer "price_cents", default: 0, null: false
-    t.index ["book_templates_id"], name: "index_tickets_books_on_book_templates_id"
-    t.index ["order_items"], name: "index_tickets_books_on_order_items"
+    t.index ["book_template_id"], name: "index_tickets_books_on_book_template_id"
     t.index ["user_id"], name: "index_tickets_books_on_user_id"
   end
 
@@ -231,6 +238,8 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "city_options", "cities"
+  add_foreign_key "city_options", "options"
   add_foreign_key "deliveries", "users"
   add_foreign_key "delivery_books", "deliveries"
   add_foreign_key "delivery_books", "tickets_books"
@@ -240,8 +249,7 @@ ActiveRecord::Schema.define(version: 2021_03_24_134705) do
   add_foreign_key "favorite_addresses", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "pickups", "deliveries"
-  add_foreign_key "tickets_books", "book_templates", column: "book_templates_id"
-  add_foreign_key "tickets_books", "order_items", column: "order_items"
+  add_foreign_key "tickets_books", "book_templates"
   add_foreign_key "tickets_books", "users"
   add_foreign_key "user_options", "options"
   add_foreign_key "user_options", "users"

@@ -112,27 +112,27 @@ puts '________________SERVICES => OK________________'
 
 puts '__________________AVANTAGES___________________'
 
-  Avantage.create(
+  Avantage.create!(
     {
       image_pour: "avantages/co2.svg",
     }
   )
-  Avantage.create(
+  Avantage.create!(
     {
       image_pour: "avantages/logique.svg",
     }
   )
-  Avantage.create(
+  Avantage.create!(
     {
       image_pour: "avantages/courbature.svg",
     }
   )
-  Avantage.create(
+  Avantage.create!(
     {
       image_pour: "avantages/sympa.svg",
     }
   )
-  Avantage.create(
+  Avantage.create!(
     {
       image_pour: "avantages/stress.svg",
     }
@@ -141,7 +141,7 @@ puts '_______________AVANTAGES => OK________________'
 
 puts '____________________USERS_____________________'
 
-  florent = User.create(
+  florent = User.create!(
     {
       email: "kiki@bicicouriers.fr",
       address: '8 passage de la Poule Noire, 44000 Nantes',
@@ -153,7 +153,7 @@ puts '____________________USERS_____________________'
     }
   )
 
-  admin = User.create(
+  admin = User.create!(
     {
       email: "florent@bicicouriers.fr",
       password: "secret",
@@ -168,7 +168,7 @@ puts '________________USERS => OK___________________'
 
 puts '______________TICKETSBOOK TEMPLATES_______________'
 
-  carnet_10_t = BookTemplate.create(
+  carnet_10_t = BookTemplate.create!(
     {
       tickets_count: 10,
       price_cents: 500,
@@ -178,7 +178,7 @@ puts '______________TICKETSBOOK TEMPLATES_______________'
     }
   )
 
-  carnet_20_t = BookTemplate.create(
+  carnet_20_t = BookTemplate.create!(
     {
       tickets_count: 20,
       price_cents: 480,
@@ -188,7 +188,7 @@ puts '______________TICKETSBOOK TEMPLATES_______________'
     }
   )
 
-  carnet_50_t = BookTemplate.create(
+  carnet_50_t = BookTemplate.create!(
     {
       tickets_count: 50,
       price_cents: 440,
@@ -198,7 +198,7 @@ puts '______________TICKETSBOOK TEMPLATES_______________'
     }
   )
 
-  carnet_100_t = BookTemplate.create(
+  carnet_100_t = BookTemplate.create!(
     {
       tickets_count: 100,
       price_cents: 420,
@@ -227,58 +227,73 @@ puts '____________________BIKES_____________________'
   )
 
 puts '_________________BIKES => OK__________________'
-# puts '____________________URGENCE___________________'
+puts '____________________URGENCE___________________'
 
-# urgence_1 = Urgence.create!(
-#   {
-#     range: 2700,
-#     name: "Moins de 45 minutes",
-#     ticket: 2
-#   }
-# )
+urgence_1 = Option.create!(
+  {
+    max_value: 86400,
+    name: 'Dans la journée',
+    tickets: 0,
+    type: 'Urgence'
+  }
+)
+urgence_2 = Option.create!(
+  {
+    max_value: 2700,
+    name: "Moins de 45 minutes",
+    tickets: 2,
+    type: 'Urgence'
+  }
+)
 
-# urgence_2 = Urgence.create!(
-#   {
-#     range: 14400,
-#     name: 'Moins de 4 heures',
-#     ticket: 1
-#   }
-# )
+urgence_3 = Option.create!(
+  {
+    max_value: 14400,
+    name: 'Moins de 4 heures',
+    tickets: 1,
+    type: 'Urgence'
+  }
+)
 
-# puts '_________________URGENCE => OK________________'
-# puts '____________________VOLUME___________________'
 
-# volume_1 = Volume.create!(
-#   {
-#     max_weight: 6000,
-#     name: "- de 6 kilos",
-#     ticket: 0
-#   }
-# )
+puts '_________________URGENCE => OK________________'
+puts '____________________VOLUME___________________'
 
-# volume_2 = Volume.create!(
-#   {
-#     max_weight: 15000,
-#     name: '- de 15 kilos',
-#     ticket: 1
-#   }
-# )
+volume_1 = Option.create!(
+  {
+    max_value: 6000,
+    name: "- de 6 kilos",
+    tickets: 0,
+    type: 'Volume'
+  }
+)
 
-# volume_3 = Volume.create!(
-#   {
-#     max_weight: 25000,
-#     name: '- de 25 kilos',
-#     ticket: 2
-#   }
-# )
-# volume_4 = Volume.create!(
-#   {
-#     max_weight: 35000,
-#     name: '- de 35 kilos',
-#     ticket: 3
-#   }
-# )
-# puts '_________________VOLUME => OK________________'
+volume_2 = Option.create!(
+  {
+    max_value: 15000,
+    name: '- de 15 kilos',
+    tickets: 1,
+    type: 'Volume'
+  }
+)
+
+volume_3 = Option.create!(
+  {
+    max_value: 25000,
+    name: '- de 25 kilos',
+    tickets: 2,
+    type: 'Volume'
+  }
+)
+volume_4 = Option.create!(
+  {
+    max_value: 35000,
+    name: '- de 35 kilos',
+    tickets: 3,
+    type: 'Volume'
+  }
+)
+puts '_________________VOLUME => OK________________'
 
 # puts '_________________SHOPPING CART________________'
 
@@ -295,13 +310,15 @@ puts '_________________BIKES => OK__________________'
 puts '___________________TICKETS BOOK____________________'
 
 
-  # carnet_50 = TicketsBook.create!(
-  #   {
-  #     book_template_id: carnet_50_t.id,
-  #     user_id: florent.id,
-  #     remaining_tickets: 50,
-  #   }
-  # )
+  carnet_50 = TicketsBook.create!(
+    {
+      book_template_id: carnet_50_t.id,
+      user_id: florent.id,
+      remaining_tickets: 50,
+      status: 'draft',
+      price_cents: carnet_50_t.price_cents
+    }
+  )
 
 puts '________________CARNETS => OK_________________'
 
@@ -311,18 +328,18 @@ puts '___________________CITIES_____________________'
 
 puts '________________CITIES => OK__________________'
 
-puts '___________________OPTIONS_____________________'
+puts '___________________CITY OPTIONS_____________________'
 
-  # deux_heures = Option.create!({name: "Moins de 2 heures", ticket_nb: 1})
-  # quarante_cinq_minutes = Option.create({name: "Moins de 45 minutes", ticket_nb: 2})
+option_1 = CityOption.create!({city_id: nantes.id, option_id: urgence_1.id})
+option_3 = CityOption.create!({city_id: nantes.id, option_id: urgence_2.id})
+option_2 = CityOption.create!({city_id: nantes.id, option_id: urgence_3.id})
+option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_1.id})
+option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_2.id})
+option_5 = CityOption.create!({city_id: nantes.id, option_id: volume_3.id})
 
-  # gros_volume = Option.create!({name: "Cargo", ticket_nb: 1})
-  # tres_gros_volume = Option.create({name: "Cargo plein", ticket_nb: 2})
 
-  # nourriture = Option.create({name: "Nourriture", ticket_nb: 1})
+puts '________________CITY OPTIONS => OK__________________'
 
-
-puts '________________OPTIONS => OK__________________'
 
 puts '___________________USER OPTIONS_____________________'
 

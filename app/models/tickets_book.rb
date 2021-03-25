@@ -1,5 +1,5 @@
 class TicketsBook < ApplicationRecord
-  belongs_to :books_template, required: true
+  belongs_to :book_template, required: true
   belongs_to :user, required: true
 
   has_many :order_items, as: :orderable
