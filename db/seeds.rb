@@ -44,6 +44,12 @@ DeliveryOption.destroy_all
 
 puts '_________________DROPPING DONE________________'
 
+puts '___________________CITIES_____________________'
+
+  nantes = City.create!(name: "Nantes")
+
+puts '________________CITIES => OK__________________'
+
 
 puts '___________________SERVICES___________________'
   Service.create(
@@ -115,26 +121,31 @@ puts '__________________AVANTAGES___________________'
   Avantage.create!(
     {
       image_pour: "avantages/co2.svg",
+      city_id: nantes.id
     }
   )
   Avantage.create!(
     {
       image_pour: "avantages/logique.svg",
+      city_id: nantes.id
     }
   )
   Avantage.create!(
     {
       image_pour: "avantages/courbature.svg",
+      city_id: nantes.id
     }
   )
   Avantage.create!(
     {
       image_pour: "avantages/sympa.svg",
+      city_id: nantes.id
     }
   )
   Avantage.create!(
     {
       image_pour: "avantages/stress.svg",
+      city_id: nantes.id
     }
   )
 puts '_______________AVANTAGES => OK________________'
@@ -234,7 +245,8 @@ urgence_1 = Option.create!(
     max_value: 86400,
     name: 'Dans la journée',
     tickets: 0,
-    type: 'Urgence'
+    type: 'Urgence',
+    image: 'white-box.svg'
   }
 )
 urgence_2 = Option.create!(
@@ -242,7 +254,8 @@ urgence_2 = Option.create!(
     max_value: 2700,
     name: "Moins de 45 minutes",
     tickets: 2,
-    type: 'Urgence'
+    type: 'Urgence',
+    image: 'white-box.svg'
   }
 )
 
@@ -251,7 +264,8 @@ urgence_3 = Option.create!(
     max_value: 14400,
     name: 'Moins de 4 heures',
     tickets: 1,
-    type: 'Urgence'
+    type: 'Urgence',
+    image: 'white-box.svg'
   }
 )
 
@@ -264,7 +278,8 @@ volume_1 = Option.create!(
     max_value: 6000,
     name: "- de 6 kilos",
     tickets: 0,
-    type: 'Volume'
+    type: 'Volume',
+    image: 'white-box.svg'
   }
 )
 
@@ -273,7 +288,8 @@ volume_2 = Option.create!(
     max_value: 15000,
     name: '- de 15 kilos',
     tickets: 1,
-    type: 'Volume'
+    type: 'Volume',
+    image: 'white-box.svg'
   }
 )
 
@@ -282,7 +298,8 @@ volume_3 = Option.create!(
     max_value: 25000,
     name: '- de 25 kilos',
     tickets: 2,
-    type: 'Volume'
+    type: 'Volume',
+    image: 'white-box.svg'
   }
 )
 volume_4 = Option.create!(
@@ -290,7 +307,8 @@ volume_4 = Option.create!(
     max_value: 35000,
     name: '- de 35 kilos',
     tickets: 3,
-    type: 'Volume'
+    type: 'Volume',
+    image: 'white-box.svg'
   }
 )
 puts '_________________VOLUME => OK________________'
@@ -321,12 +339,6 @@ puts '___________________TICKETS BOOK____________________'
   )
 
 puts '________________CARNETS => OK_________________'
-
-puts '___________________CITIES_____________________'
-
-  nantes = City.create!(name: "Nantes")
-
-puts '________________CITIES => OK__________________'
 
 puts '___________________CITY OPTIONS_____________________'
 

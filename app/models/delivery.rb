@@ -5,12 +5,14 @@ class Delivery < ApplicationRecord
   has_many :pickups, dependent: :destroy
   has_many :drops, dependent: :destroy
 
-  has_many :order_items, as: :orderable
-  has_many :delivery_books
+  has_many :order_items, as: :orderable, dependent: :destroy
+  has_many :delivery_books, dependent: :destroy
 
   accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
   accepts_nested_attributes_for :delivery_options
+
+  has_one :urgence, through: :delivery_option
 
   monetize :price_cents
 

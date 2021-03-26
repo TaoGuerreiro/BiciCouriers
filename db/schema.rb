@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_172740) do
+ActiveRecord::Schema.define(version: 2021_03_26_174859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2021_03_25_172740) do
     t.datetime "updated_at", null: false
     t.string "image_pour"
     t.string "image_contre"
+    t.bigint "city_id", null: false
+    t.index ["city_id"], name: "index_avantages_on_city_id"
   end
 
   create_table "bikes", force: :cascade do |t|
@@ -146,6 +148,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_172740) do
     t.integer "tickets", default: 0
     t.string "type"
     t.integer "max_value", default: 0
+    t.string "image"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -238,6 +241,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_172740) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "avantages", "cities"
   add_foreign_key "city_options", "cities"
   add_foreign_key "city_options", "options"
   add_foreign_key "deliveries", "users"

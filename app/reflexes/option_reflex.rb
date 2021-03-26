@@ -6,12 +6,12 @@ class OptionReflex < ApplicationReflex
   def urgence
     # binding.pry
     @selected_urgence = Urgence.find(element[:value])
-    @course.tickets_urgence = @selected_urgence.ticket
+    # @selected_urgence.tickets
   end
 
   def volume
     @selected_volume = Volume.find(element[:value])
-    @course.tickets_volume = @selected_volume.ticket
+    # @course.tickets_volume = @selected_volume.ticket
   end
 
   def distance
@@ -47,7 +47,7 @@ class OptionReflex < ApplicationReflex
 
   def total
     @test = Delivery.new(course_params)
-    @total = (@test.tickets_distance)# + (@test.tickets_volume) + (@test.tickets_urgence)
+    @total = (@test.tickets_distance) + (@test.delivery_options.first.option.tickets) + (@test.delivery_options.last.option.tickets)
     # binding.pry
   end
 
@@ -55,7 +55,7 @@ class OptionReflex < ApplicationReflex
     params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
-                                    course_options_attributes:[ :user_option_id, :user_option])
+                                    delivery_options_attributes:[ :option_id, :user_option])
   end
 
 

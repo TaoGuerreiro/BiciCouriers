@@ -8,7 +8,6 @@ class PagesController < ApplicationController
       cookies[:guest] = SecureRandom.hex(16)
     end
     @delivery ||= Delivery.new
-    # @order = Order.last
     @city = City.find_by(name: "Nantes")
     @drop = @delivery.drops.build
     @pickup = @delivery.pickups.build
@@ -16,6 +15,9 @@ class PagesController < ApplicationController
 
   if current_user
     @availible_options = Option.includes(:user_options).where(user_options: { user: current_user })
+  else
+    @availible_urgence_options = Urgence.includes(:city_options)
+    @availible_volume_options = Volume.includes(:city_options)
   end
 
 

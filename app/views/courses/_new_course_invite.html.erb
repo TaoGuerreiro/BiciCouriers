@@ -71,37 +71,31 @@
         <%= urge.association :option,
                 legend_tag: false,
                 # label: false,
-                as: :check_boxes,
+                # as: :radio_buttons,
                 collection_wrapper_tag: 'div',
                 collection_wrapper_class: 'categosry-wrapper mb-5',
                 item_wrapper_class: 'category-istem',
                 input_html: {class: 'categorsy-selector mt-2 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
-                collection: @availible_options %>
+                collection: @availible_urgence_options.map { |r| [r.name, r.id, { 'data-image': r.image }] },
+                selected: @availible_urgence_options.first %>
       <% end %>
 
-      <%#= f.fields_for :delivery_options do |vol| %>
-        <%#= vol.association :user_option,
+      <%=   %>
+
+      <%= f.simple_fields_for :delivery_options do |vol| %>
+        <%= vol.association :option,
                 legend_tag: false,
                 # label: false,
-                # as: :radio_buttons,
+                 as: :radio_buttons,
                 collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'categosry-wrapper',
-                item_wrapper_class: 'category-istem',
-                input_html: {class: 'categorsy-selector my-5 py-1 rounded w-full ', 'data-reflex': 'change->Option#volume'},
-                collection: @availible_volumes,
-                selected: @availible_volumes.first %>
-      <%# <% end %>
-
-      <%#= f.fields_for :delivery_options do |optn| %>
-        <%#= optn.association :user_option,
-                legend_tag: false,
-                # as: :check_boxes,
-                collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'catsegory-wrapper mb-5',
-                item_wrapper_class: 'categorsy-item',
-                input_html: {class: 'categosry-selector'},
-                collection: @availible_supplements %>
-      <%# end %>
+                collection_wrapper_class: 'category-wrapper m-4',
+                item_wrapper_class: 'category-item m-1',
+                input_html: {class: 'category-selector my-5 py-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
+                label_html: {class: 'cette classe marche pas'},
+                collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
+                selected: @availible_volume_options.first %>
+        <%# <%= vol.label :option, input_html: { class: 'ccoucocucoucoccoucocucoucocuccoucocucoucocuccoucocucoucocuccoucocucoucocuccoucocucoucocucu'}  %> %>
+      <%  end %>
 
     </div>
 
@@ -123,14 +117,14 @@
 
       <div urgence>
         <span class="font-bold">Urgence :</span>
-        <%# <span id="urgence-ticket-nb"><%= @delivery.tickets_urgence.nil? ? 0 : @delivery.tickets_urgence %></span> %>
-        <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.tickets_urgence, class:"hidden" }  %> %>
+        <span id="urgence-ticket-nb"><%= @delivery.delivery_options.first.option.nil? ? 0 : @delivery.delivery_options.first.option.tickets %></span>
+        <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
       </div>
 
       <div volume>
         <span class="font-bold">Volume :</span>
-        <%# <span id="volume-ticket-nb"><%= @delivery.tickets_volume.nil? ? 0 : @delivery.tickets_volume %></span> %>
-        <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.tickets_volume, class:"hidden" }  %> %>
+        <span id="volume-ticket-nb"><%= @delivery.delivery_options.last.option.nil? ? 0 : @delivery.delivery_options.last.option.tickets %></span>
+        <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
       </div>
 
       <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
