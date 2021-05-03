@@ -33,6 +33,7 @@ gem 'faraday'
 gem 'httparty'
 gem 'friendly_id', '~> 5.4.0'
 gem "breadcrumbs_on_rails"
+gem "stimulus_reflex", "~> 3.4"
 
 # fix alert bot
 
@@ -62,4 +63,3 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
-gem "stimulus_reflex", "~> 3.4"

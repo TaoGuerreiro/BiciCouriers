@@ -75,7 +75,7 @@ export default class extends Controller {
     // // document.body.classList.remove('wait')
     // const { params } = element.reflexData[reflexId]
     // element.reflexData[reflexId].params = { ...params, foo: true, bar: false }
-    // console.log()
+    // console.log(element.reflexData[reflexId])
   }
 
   finalizeReflex (element, reflex, noop, reflexId) {

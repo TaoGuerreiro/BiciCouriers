@@ -1,4 +1,5 @@
 <div data-reflex-root="[distance],[urgence],[volume],[total]">
+<%# <div data-reflex-root=""> %>
 <div>
   <%= simple_form_for delivery, remote: true do |f| %>
     <div class="div-align toggle-element mt-5 hiden" id="page-1">
@@ -69,33 +70,30 @@
 
       <%= f.fields_for :delivery_options do |urge| %>
         <%= urge.association :option,
-                legend_tag: false,
                 # label: false,
                 # as: :radio_buttons,
+                # collection_wrapper_class: 'categosry-wrapper mb-5',
+                # item_wrapper_class: 'category-istem',
+                legend_tag: false,
                 collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'categosry-wrapper mb-5',
-                item_wrapper_class: 'category-istem',
                 input_html: {class: 'categorsy-selector mt-2 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
                 collection: @availible_urgence_options.map { |r| [r.name, r.id, { 'data-image': r.image }] },
                 selected: @availible_urgence_options.first %>
       <% end %>
 
-      <%=   %>
-
       <%= f.simple_fields_for :delivery_options do |vol| %>
         <%= vol.association :option,
-                legend_tag: false,
                 # label: false,
-                 as: :radio_buttons,
+                #  as: :radio_buttons,
+                # collection_wrapper_class: 'catsegory-wrapper m-4',
+                # item_wrapper_class: 'category-istem m-1',
+                # label_html: {class: 'cette classe marche pas'},
+                legend_tag: false,
                 collection_wrapper_tag: 'div',
-                collection_wrapper_class: 'category-wrapper m-4',
-                item_wrapper_class: 'category-item m-1',
-                input_html: {class: 'category-selector my-5 py-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
-                label_html: {class: 'cette classe marche pas'},
+                input_html: {class: 'catesgory-selector my-5 py-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
                 collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
                 selected: @availible_volume_options.first %>
-        <%# <%= vol.label :option, input_html: { class: 'ccoucocucoucoccoucocucoucocuccoucocucoucocuccoucocucoucocuccoucocucoucocuccoucocucoucocucu'}  %> %>
-      <%  end %>
+      <% end %>
 
     </div>
 
@@ -109,10 +107,10 @@
       <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
 
       <div distance>
-        <span class="font-bold">Distance :</span>
+                <span class="font-bold">Distance :</span>
         <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 0 : (@delivery.tickets_distance) %> </span></span>
-        <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
-        <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
+        <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidhden"}  %>
+        <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidhden" }  %>
       </div>
 
       <div urgence>
