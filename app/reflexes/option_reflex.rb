@@ -1,12 +1,14 @@
 class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
-  # before_reflex :build
-  after_reflex :total
+  before_reflex :build
+  # after_reflex :total
 
   def urgence
-    # binding.pry
+    @delivery = Delivery.new(course_params)
     @selected_urgence = Urgence.find(element[:value])
-
+    # @delivery.options << @selected_urgence
+    
+    binding.pry
     # puts "*" * 200
     # puts @selected_urgence.tickets
     # puts "*" * 200
@@ -15,8 +17,8 @@ class OptionReflex < ApplicationReflex
   end
 
   def volume
-    # binding.pry
     @selected_volume = Volume.find(element[:value])
+    # binding.pry
 
     # puts "*" * 200
     # puts @selected_volume.tickets
@@ -53,7 +55,7 @@ class OptionReflex < ApplicationReflex
       # puts "PARAMS_end" * 200
       # @builded_delivery = Delivery.new(@delivery)
       # return @delivery
-      display_params
+      # display_params
       # binding.pry
 
     rescue NoMethodError
@@ -65,6 +67,10 @@ class OptionReflex < ApplicationReflex
 
   def build
     @delivery = Delivery.new(course_params)
+    puts "XXXXXXXX" 
+    puts params
+    puts "XXXXXXXX" 
+
     # @total = (@delivery.tickets_distance) + ( 50 || (@delivery.delivery_options.first.option.tickets)) + ( 100 || (@delivery.delivery_options.last.option.tickets))
     # binding.pry
     # @course.drops.reset
@@ -75,8 +81,8 @@ class OptionReflex < ApplicationReflex
   def total
     # @total_delivery = Delivery.new(course_params)
     # @total = (@delivery.tickets_distance) + ( 55 || (@delivery.delivery_options.first.option.tickets)) + ( 66 || (@delivery.delivery_options.last.option.tickets))
-    # binding.pry
-    display_params
+    binding.pry
+    # display_params
   end
 
   def course_params
@@ -88,9 +94,7 @@ class OptionReflex < ApplicationReflex
 
   def display_params
     puts "XXXXXXXX" 
-    print "Ditance ="
-    puts params[:delivery][:distance]
-    puts session[:value] 
+    puts params
     puts "XXXXXXXX" 
   end
 

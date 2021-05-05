@@ -313,18 +313,6 @@ volume_4 = Option.create!(
 )
 puts '_________________VOLUME => OK________________'
 
-# puts '_________________SHOPPING CART________________'
-
-# shop_1 = ShoppingCart.create!(
-#   {
-#     price_cents: 22000,
-#     user_id: florent.id,
-#     state: :paid
-#   }
-# )
-
-# puts '_____________SHOPPING CART => OK______________'
-
 puts '___________________TICKETS BOOK____________________'
 
 
