@@ -8,10 +8,14 @@ class PagesController < ApplicationController
       cookies[:guest] = SecureRandom.hex(16)
     end
     @delivery ||= Delivery.new
-    @city = City.find_by(name: "Nantes")
-    @drop = @delivery.drops.build
-    @pickup = @delivery.pickups.build
-    @delivery_option = @delivery.delivery_options.build
+    @city ||= City.find_by(name: "Nantes")
+    @drop ||= @delivery.drops.build
+    @pickup ||= @delivery.pickups.build
+    @delivery_option ||= @delivery.delivery_options.build
+    @urgence ||= Urgence.find_by(name: 'Dans la journée')
+    @volume ||= Volume.find_by(name: '- de 6 kilos')
+    # @volume_option = @delivery.delivery_options.build
+    # DeliveryOption.new(delivery: @delivery, option)
 
   if current_user
     @availible_options = Option.includes(:user_options).where(user_options: { user: current_user })

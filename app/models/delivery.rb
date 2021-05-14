@@ -1,11 +1,19 @@
 class Delivery < ApplicationRecord
   belongs_to :user, required: true
 
-  has_many :delivery_options, dependent: :destroy
+  has_many :delivery_options, dependent: :destroy, inverse_of: :delivery
 
-  has_many :options, through: :delivery_options, inverse_of: :delivery
-  has_one :urgence, through: :delivery_options
-  has_one :volume, through: :delivery_options
+  has_many :options, through: :delivery_options
+  # has_many :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
+  # has_many :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
+
+  def urgence
+    @urgence ||= options.find_by(type: 'Urgence')
+  end
+
+  def volume
+    @volume ||= options.find_by(type: 'Volume')
+  end
 
 
   has_many :pickups, dependent: :destroy

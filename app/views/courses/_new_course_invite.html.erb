@@ -78,7 +78,7 @@
                 collection_wrapper_tag: 'div',
                 input_html: {class: 'categorsy-selector mt-2 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
                 collection: @availible_urgence_options.map { |r| [r.name, r.id, { 'data-image': r.image }] },
-                selected: @availible_urgence_options.first %>
+                selected: @urgence %>
       <% end %>
 
       <%= f.simple_fields_for :delivery_options do |vol| %>
@@ -92,7 +92,7 @@
                 collection_wrapper_tag: 'div',
                 input_html: {class: 'catesgory-selector my-5 py-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
                 collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
-                selected: @availible_volume_options.first %>
+                selected: @volume %>
       <% end %>
 
     </div>
@@ -115,13 +115,13 @@
 
       <div urgence>
         <span class="font-bold">Urgence :</span>
-        <span id="urgence-ticket-nb"><%= @delivery.options.where(type: 'Urgence').blank? ? 0 : 50 %></span>
+        <span id="urgence-ticket-nb"><%= @urgence.tickets %></span>
         <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
       </div>
 
       <div volume>
         <span class="font-bold">Volume :</span>
-        <span id="volume-ticket-nb"><%= @delivery.options.where(type: 'Volume').blank? ? 10 : 60 %></span>
+        <span id="volume-ticket-nb"><%= @volume.tickets %></span>
         <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
       </div>
  
