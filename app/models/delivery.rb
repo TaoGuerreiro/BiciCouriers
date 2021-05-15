@@ -4,16 +4,24 @@ class Delivery < ApplicationRecord
   has_many :delivery_options, dependent: :destroy
 
   has_many :options, through: :delivery_options
-  has_one :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
-  has_one :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
+  # has_one :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
+  # has_one :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
 
-  # def urgence
-  #   @urgence ||= options.find_by(type: 'Urgence')
-  # end
+  def urgence
+    if new_record?
+      options.find { |option| option.is_a?(Urgence) }
+    else
+      options.find_by(type: 'Urgence')
+    end
+  end
+  def volume
+    if new_record?
+      options.find { |option| option.is_a?(Volume) }
+    else
+      options.find_by(type: 'Volume')
+    end
+  end
 
-  # def volume
-  #   @volume ||= options.find_by(type: 'Volume')
-  # end
 
 
   has_many :pickups, dependent: :destroy

@@ -9,7 +9,8 @@ end
 # user = User.first
 # del = Delivery.new(user: user)
 # optn = Option.first
-# deloptn = del.delivery_options.new(option: optn, delivery_id: del.id)
+# deloptn = del.delivery_options.new(option: optn, delivery: del)
+# del.options = [optn]
 
 # deloptn = DeliveryOption.create(option: optn, delivery_id: del.id)
 # del.options = [optn]

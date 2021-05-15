@@ -1,4 +1,4 @@
-<div data-reflex-root="[distance],[urgence],[volume],[total], #volume-ticket-nb">
+<div data-reflex-root="[distance],[urgence],[volume],[total], #volume-ticket-nb"  data-controller="option">
 <%# <div data-reflex-root=""> %>
 <div>
   <%= simple_form_for delivery, remote: true do |f| %>
@@ -109,8 +109,8 @@
       <div distance>
         <span class="font-bold">Distance :</span>
         <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 0 : (@delivery.tickets_distance) %> </span></span>
-        <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidhden"}  %>
-        <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidhden" }  %>
+        <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
+        <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
       </div>
 
       <div urgence>
@@ -124,12 +124,12 @@
         <span id="volume-ticket-nb"><%= @volume.tickets %></span>
         <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
       </div>
- 
+
       <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
 
       <div total>
         <p class="font-bold" >Avec abonnement : <b><span><%= @total %> tickets</span></b></p>
-        <p class="font-bold" >Sans abonnement : <b><span> </span> €</b></p>
+        <p class="font-bold" >Sans abonnement : <b><span> <%= @delivery.price_cents %> </span> €</b></p>
       </div>
 
       <div class='hidden'>
