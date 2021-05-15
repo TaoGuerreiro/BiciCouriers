@@ -1,19 +1,19 @@
 class Delivery < ApplicationRecord
   belongs_to :user, required: true
 
-  has_many :delivery_options, dependent: :destroy, inverse_of: :delivery
+  has_many :delivery_options, dependent: :destroy
 
   has_many :options, through: :delivery_options
-  # has_many :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
-  # has_many :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
+  has_one :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
+  has_one :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
 
-  def urgence
-    @urgence ||= options.find_by(type: 'Urgence')
-  end
+  # def urgence
+  #   @urgence ||= options.find_by(type: 'Urgence')
+  # end
 
-  def volume
-    @volume ||= options.find_by(type: 'Volume')
-  end
+  # def volume
+  #   @volume ||= options.find_by(type: 'Volume')
+  # end
 
 
   has_many :pickups, dependent: :destroy
@@ -22,7 +22,7 @@ class Delivery < ApplicationRecord
   has_many :order_items, as: :orderable, dependent: :destroy
   has_many :delivery_books, dependent: :destroy
 
-  accepts_nested_attributes_for :drops  
+  accepts_nested_attributes_for :drops
   accepts_nested_attributes_for :pickups
   accepts_nested_attributes_for :delivery_options
 
