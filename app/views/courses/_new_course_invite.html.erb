@@ -1,8 +1,7 @@
-<div data-reflex-root="[distance],[urgence],[volume],[total], #volume-ticket-nb"  data-controller="option">
-<%# <div data-reflex-root=""> %>
+<div data-reflex-root="[distance],[urgence],[volume],[total], #volume-ticket-nb"  data-controller="option toggle">
 <div>
   <%= simple_form_for delivery, remote: true do |f| %>
-    <div class="div-align toggle-element mt-5 hiden" id="page-1">
+    <div class="div-align toggle-element mt-5 hiden" id="page-1" data-toggle-target="page_1">
       <div>
         <%= f.fields_for :pickups, remote: true do |pickup| %>
           <%= pickup.input :address,
@@ -97,7 +96,7 @@
 
     </div>
 
-    <div class="div-align toggle-element mt-5" id="page-2">
+    <div class="div-align toggle-element mt-5 hidden" id="page-2" data-toggle-target="page_2">
       <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
       <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
 
@@ -108,26 +107,27 @@
 
       <div distance>
         <span class="font-bold">Distance :</span>
-        <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 0 : (@delivery.tickets_distance) %> </span></span>
+        <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 1 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 0 : (@delivery.tickets_distance) %> </span> ticket</span>
         <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
         <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
       </div>
 
       <div urgence>
         <span class="font-bold">Urgence :</span>
-        <span id="urgence-ticket-nb"><%= @urgence.tickets %></span>
+        <span id="urgence-ticket-nb"><%= (@urgence.tickets)%> <%='ticket'.pluralize(@urgence.tickets)  %></span>
         <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
       </div>
 
       <div volume>
         <span class="font-bold">Volume :</span>
-        <span id="volume-ticket-nb"><%= @volume.tickets %></span>
+        <span id="volume-ticket-nb"><%= @volume.tickets %> ticket</span>
         <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
       </div>
 
       <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
 
       <div total>
+        <p class="font-bold" >Livraison <%= @day  %> avant <%= @before %></p>
         <p class="font-bold" >Avec abonnement : <b><span><%= @total %> tickets</span></b></p>
         <p class="font-bold" >Sans abonnement : <b><span> <%= @delivery.price_cents %> </span> €</b></p>
       </div>
@@ -162,8 +162,8 @@
 
 
   <% end %>
-
-  <div class="flex justify-end my-5">
-    <button class="btn-bici" id='continue'>Continuer ></button>
-  </div>
-</div>
+    <div class="grid justify-items-stretch my-5">
+      <button class="btn-bici justify-self-start hidden" id='previous' data-action="click->toggle#toggle" data-toggle-target="previous">Retour</button>
+      <button class="btn-bici justify-self-end" id='continue' data-action="click->toggle#toggle" data-toggle-target="next">Continuer</button>
+    </div>
+ </div>
