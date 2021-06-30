@@ -31,7 +31,7 @@ class DeliveriesController < ApplicationController
   end
 
 
-  def init_urgences
+   def init_urgences
     city = City.find_by(name: "Nantes")
     now = Time.now.utc + 3600
     day_start = Time.new(now.year, now.mon, now.day, city.start_hour.slice(0,2), city.start_hour.slice(3,4), 00)
@@ -99,7 +99,7 @@ class DeliveriesController < ApplicationController
         }
       }
     end
-  end
+  end 
 
   def ticket_urgence
     # binding.pry
@@ -156,8 +156,6 @@ class DeliveriesController < ApplicationController
     @user = User.new
     @availible_options = Option.joins(:user_options).where('user_id = ?', current_user.id)
 
-
-
     @delivery = Delivery.new
     @drop = @delivery.drops.build
     @pickup = @delivery.pickups.build
@@ -172,8 +170,7 @@ class DeliveriesController < ApplicationController
   end
 
   def create
-    # raise
-    # binding.pry
+
     if user_signed_in? # USER EN LIGNE OLD VERSION
       @user = current_user
       @delivery = Delivery.new(delivery_params)
@@ -231,8 +228,9 @@ class DeliveriesController < ApplicationController
       email = params[:delivery][:user][:email]
       bike = params[:bike].to_i
       # raise
-      urgence = Urgence.find(params[:delivery][:urgence])
-      volume = Volume.find(params[:delivery][:urgence])
+      # binding.pry
+      urgence = Urgence.find(params[:delivery][:delivery_options_attributes]["0"][:option_id])
+      volume = Volume.find(params[:delivery][:delivery_options_attributes]["1"][:option_id])
       # raise
       if email_check(email)
         @user = User.find_by(email: email)
@@ -244,10 +242,10 @@ class DeliveriesController < ApplicationController
       end
 
       @delivery = Delivery.new(delivery_params)
-      @delivery.urgence = urgence
-      @delivery.volume = volume
+      @delivery.options << urgence
+      @delivery.options << volume
       @delivery.user = @user
-      raise
+      # raise
 
       # if bike == 0
       #   @delivery.bike_id = Bike.first.id
@@ -256,28 +254,28 @@ class DeliveriesController < ApplicationController
       # end
       # @delivery.bike_id = Bike.first.id if bike == 0
 
-      puAddress = params[:delivery][:pickups_attributes]["0"][:address]
-      drAddress = params[:delivery][:drops_attributes]  ["0"][:address]
+      # puAddress = params[:delivery][:pickups_attributes]["0"][:address]
+      # drAddress = params[:delivery][:drops_attributes]  ["0"][:address]
 
-      puSt = params[:delivery][:pickups_attributes] ["0"][:start_hour]
-      puNd = params[:delivery][:pickups_attributes] ["0"][:end_hour]
-      drSt = params[:delivery][:drops_attributes]   ["0"][:start_hour]
-      drNd = params[:delivery][:drops_attributes]   ["0"][:end_hour]
+      # puSt = params[:delivery][:pickups_attributes] ["0"][:start_hour]
+      # puNd = params[:delivery][:pickups_attributes] ["0"][:end_hour]
+      # drSt = params[:delivery][:drops_attributes]   ["0"][:start_hour]
+      # drNd = params[:delivery][:drops_attributes]   ["0"][:end_hour]
 
-      stDate = params[:delivery][:pickups_attributes]["0"][:date]
-      ndDate = params[:delivery][:drops_attributes]  ["0"][:date]
+      # stDate = params[:delivery][:pickups_attributes]["0"][:date]
+      # ndDate = params[:delivery][:drops_attributes]  ["0"][:date]
 
-      pu_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), puSt.slice(0,2),  puSt.slice(3,4), 00)
-      pu_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), puNd.slice(0,2),  puNd.slice(3,4), 00)
-      dr_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), drSt.slice(0,2),  drSt.slice(3,4), 00)
-      dr_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), drNd.slice(0,2),  drNd.slice(3,4), 00)
+      # pu_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), puSt.slice(0,2),  puSt.slice(3,4), 00)
+      # pu_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), puNd.slice(0,2),  puNd.slice(3,4), 00)
+      # dr_start = Time.new(stDate.slice(6..9), stDate.slice(3..4), stDate.slice(0..1), drSt.slice(0,2),  drSt.slice(3,4), 00)
+      # dr_end =   Time.new(ndDate.slice(6..9), ndDate.slice(3..4), ndDate.slice(0..1), drNd.slice(0,2),  drNd.slice(3,4), 00)
 
-      @delivery.tickets_urgence = urge(pu_start, pu_end, dr_start, dr_end)
-      @delivery.tickets_volume = params[:bike]
-      @delivery.distance = dist(puAddress, drAddress)
-      @delivery.tickets_distance = tick(@delivery.distance)
-      @delivery.ticket_nb = @delivery.tickets_distance.to_i + @delivery.tickets_volume.to_i + @delivery.tickets_urgence.to_i
-      @delivery.price_cents = price(@delivery.ticket_nb)
+      # @delivery.tickets_urgence = urge(pu_start, pu_end, dr_start, dr_end)
+      # @delivery.tickets_volume = params[:bike]
+      # @delivery.distance = dist(puAddress, drAddress)
+      # @delivery.tickets_distance = tick(@delivery.distance)
+      # @delivery.ticket_nb = @delivery.tickets_distance.to_i + @delivery.tickets_volume.to_i + @delivery.tickets_urgence.to_i
+      # @delivery.price_cents = price(@delivery.ticket_nb)
       payement = params[:stripe]
       if @delivery.save && (payement == "on") #STRIPE PAYEMENT
         create_order_item

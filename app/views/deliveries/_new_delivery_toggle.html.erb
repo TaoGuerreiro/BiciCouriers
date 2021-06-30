@@ -11,7 +11,7 @@
                         input_html: { value: @delivery.pickups.first.address,
                                       class: 'address-input w-full',
                                       'data-reflex': "blur->Option#distance"  } %>
-          <div class='hidden'>
+          <div class='hiddden'>
             <%= pickup.input :date,
                         label: false,
                         as: :string,
@@ -40,7 +40,7 @@
                         input_html: { class: 'address-input w-full mt-4',
                                       value: @delivery.drops.first.address,
                                     'data-reflex': "blur->Option#distance" } %>
-          <div class='hidden'>
+          <div class='hiddden'>
             <%= drop.input :date,
                         label: false,
                         as: :string,
@@ -99,22 +99,22 @@
     <div class="div-align toggle-element mt-5 hidden" id="page-2" data-toggle-target="page_2">
       <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
       <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
-        <%= simple_form_for @user do |f| %>
-          <%= f.label :email, label: "Email" %>
-          <%= f.input :email, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
-          <%= f.input :phone, input_html: {class: "mt-2 w-full rounded h-full"} %>
-          <%# <%= f.label :already_client, label: "Vous êtes déjà client de BiciCouriers ?" %> %>
-          <%# <%= f.input :already_client, as: :boolean, input_html: {class: ""} %> %>
-        <% end %>
 
-      
+
+      <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
+        <%= user.input :email, input_html: { class: 'mt-2 w-full rounded h-full p-2' } %>
+        <%= user.input :phone, input_html: { class: 'mt-2 w-full rounded h-full p-2' }  %>
+      <% end %>
+      <input type="checkbox" id="stripe" name="stripe">
+      <label for="stripe">stripe</label>
+        
     </div>
 
       <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
 
       <div distance>
         <span class="font-bold">Distance :</span>
-        <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 1 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 0 : (@delivery.tickets_distance) %> </span> ticket</span>
+        <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 1 : (@delivery.tickets_distance) %> </span> ticket</span>
         <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
         <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
       </div>

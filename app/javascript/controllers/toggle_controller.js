@@ -8,6 +8,7 @@ export default class extends Controller {
   }
 
   toggle(event) {
+    event.preventDefault();
     this.page_1Target.classList.toggle("hidden")
     this.page_2Target.classList.toggle("hidden")
     this.previousTarget.classList.toggle("hidden")

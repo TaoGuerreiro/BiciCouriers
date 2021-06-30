@@ -43,6 +43,7 @@ class OptionReflex < ApplicationReflex
   private
 
   def build
+    @user = User.new()
     @city = City.find_by(name: "Nantes")
     @delivery = Delivery.new(course_params)
     @urgence = Urgence.find_by(id: course_params[:delivery_options_attributes]["0"]["option_id"])
@@ -80,6 +81,13 @@ class OptionReflex < ApplicationReflex
 
   def course_params
     params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume,
+                                    drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
+                                    pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
+                                    delivery_options_attributes:[ :option_id, :user_option])
+  end
+
+  def user_params
+    params.require(:user).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
                                     delivery_options_attributes:[ :option_id, :user_option])
