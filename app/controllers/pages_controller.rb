@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home, :tarifs, :story, :covid]
 
   def home
-    # @user = User.new
+    @user = User.new
     unless user_signed_in?
       # request.env['warden'].set_user(1)
       cookies[:guest] = SecureRandom.hex(16)

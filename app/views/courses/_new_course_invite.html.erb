@@ -99,8 +99,15 @@
     <div class="div-align toggle-element mt-5 hidden" id="page-2" data-toggle-target="page_2">
       <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
       <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
+        <%= simple_form_for @user do |f| %>
+          <%= f.label :email, label: "Email" %>
+          <%= f.input :email, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
+          <%= f.input :phone, input_html: {class: "mt-2 w-full rounded h-full"} %>
+          <%# <%= f.label :already_client, label: "Vous êtes déjà client de BiciCouriers ?" %> %>
+          <%# <%= f.input :already_client, as: :boolean, input_html: {class: ""} %> %>
+        <% end %>
 
-      <%= f.submit "course", class: "btn-bici hiden", id: 'save-course' %>
+      
     </div>
 
       <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
@@ -161,9 +168,10 @@
 
 
 
-  <% end %>
     <div class="grid justify-items-stretch my-5">
       <button class="btn-bici justify-self-start hidden" id='previous' data-action="click->toggle#toggle" data-toggle-target="previous">Retour</button>
       <button class="btn-bici justify-self-end" id='continue' data-action="click->toggle#toggle" data-toggle-target="next">Continuer</button>
+      <%= f.submit "Envoyer la demande !", class: "btn-bici hidden justify-self-end", id: 'save-course', 'data-toggle-target': 'submit'  %>
     </div>
+  <% end %>
  </div>
