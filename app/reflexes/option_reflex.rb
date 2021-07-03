@@ -6,6 +6,9 @@ class OptionReflex < ApplicationReflex
   def urgence
     @urgence = Urgence.find(element[:value])
     @delivery.options << @urgence
+
+    @delivery.pickups.first.end_hour = next_availible_delivery_time(@delivery, @city).strftime("%k:%M")
+    @delivery.drops.first.end_hour = next_availible_delivery_time(@delivery, @city).strftime("%k:%M")
     # DeliveryOption.new(option: @urgence, delivery: @delivery)
   end
 
@@ -46,43 +49,55 @@ class OptionReflex < ApplicationReflex
     @user = User.new()
     @city = City.find_by(name: "Nantes")
     @delivery = Delivery.new(course_params)
+
     @urgence = Urgence.find_by(id: course_params[:delivery_options_attributes]["0"]["option_id"])
     @volume = Volume.find_by(id: course_params[:delivery_options_attributes]["1"]["option_id"])
     @delivery.options << @urgence
     @delivery.options << @volume
+    @drop = @delivery.drops.first
+    @pickup = @delivery.pickups.first
+    # binding.pry
   end
 
   def sum
     @total = @delivery.tickets_distance + @delivery.urgence.tickets + @delivery.volume.tickets
     @delivery.price_cents = (@total * (600))/100.00
-    @before = next_availible_delivery_time(@delivery.urgence.max_value, @city.start_hour, @city.end_hour).strftime("%k:%M")
-    @day = next_availible_delivery_time(@delivery.urgence.max_value, @city.start_hour, @city.end_hour).strftime("%A")
+    @before = next_availible_delivery_time(@delivery, @city).strftime("%k:%M")
+    @day = next_availible_delivery_time(@delivery, @city).strftime("%A")
     # binding.pry
   end
 
-  def next_availible_delivery_time(max_value, hh_mm_day_start, hh_mm_day_end)
-    now = Time.now
-    heure_start, min_start = hh_mm_day_start.split(':').map(&:to_i)
-    heure_end, min_end = hh_mm_day_end.split(':').map(&:to_i)
+  def next_availible_delivery_time(delivery, city)
+    urgences = city.city_options
+
+    choosen_city_option_rank = delivery.delivery_options.find_by( option_id: delivery.urgence).rank # les urgence n'on pas de rank obviously !!!! Et les delivery_options non plus, idiot.
+    choosen_city_option_max_value = delivery.urgence.max_value.second
+
+    previous_city_option = CityOption.find_by(rank: (choosen_option_rank + 1))
+    previous_city_option_max_value = previous_city_option.option.max_value.second
+    
+    heure_start, min_start = city.start_hour.split(':').map(&:to_i)
+    heure_end, min_end = city.end_hour.split(':').map(&:to_i)
     today_start = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_start, min_start)
     today_end = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_end, min_end)
-    delivery_limit = now + max_value
-
+    now = Time.now
+    # delivery_limit = now + max_value
+    
     case 
-      when delivery_limit < today_start
-        result = today_start + max_value
-      when delivery_limit > today_end
-        result = today_start + 1.day + max_value.second
+      when (today_end - previous_city_option_max_value) > now # si tu n'es pas encore rentré.e dans la prochaine urgence, alors ok pour fin de journée avec cette urgence.
+        result = today_end
+      when (today_end - previous_city_option_max_value) < now
+        result = today_start + 1.day + choosen_city_option_max_value
       else
-        result = now + max_value.second
+        result = now + max_value
     end
     return result
   end
 
   def course_params
     params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume,
-                                    drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
-                                    pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
+                                    drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour],
+                                    pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour],
                                     delivery_options_attributes:[ :option_id, :user_option])
   end
 

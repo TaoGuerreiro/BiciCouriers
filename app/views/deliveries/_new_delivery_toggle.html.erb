@@ -1,4 +1,4 @@
-<div data-reflex-root="[distance],[urgence],[volume],[total], #volume-ticket-nb"  data-controller="option toggle">
+<div data-reflex-root="[distance],[urgence],[volume],[total],[pickup_hours],[drop_hours], #volume-ticket-nb"  data-controller="option toggle">
 <div>
   <%= simple_form_for delivery, remote: true do |f| %>
     <div class="div-align toggle-element mt-5 hiden" id="page-1" data-toggle-target="page_1">
@@ -11,7 +11,7 @@
                         input_html: { value: @delivery.pickups.first.address,
                                       class: 'address-input w-full',
                                       'data-reflex': "blur->Option#distance"  } %>
-          <div class='hiddden'>
+          <div class='hiddden' pickup_hours>
             <%= pickup.input :date,
                         label: false,
                         as: :string,
@@ -20,14 +20,8 @@
                         input_html: { class: "datepicker",
                                       value: (Date.today)} %>
 
-            <%= pickup.input :start_hour,
-                            label: false,
-                            as: :string,
-                            placeholder: 'pu start',
-                            required: true,
-                            input_html: { value: Time.now.strftime("%H:%M") } %>
-
-            <%= pickup.input :end_hour, label: false, as: :string, placeholder: 'pu end',   required: true, input_html: { value: @city.end_hour } %>
+            <%= pickup.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.start_hour || Time.now.strftime("%H:%M") } %>
+            <%= pickup.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.end_hour || @city.end_hour } %>
           </div>
         <% end %>
 
@@ -40,7 +34,7 @@
                         input_html: { class: 'address-input w-full mt-4',
                                       value: @delivery.drops.first.address,
                                     'data-reflex': "blur->Option#distance" } %>
-          <div class='hiddden'>
+          <div class='hiddden' drop_hours>
             <%= drop.input :date,
                         label: false,
                         as: :string,
@@ -48,8 +42,8 @@
                         required: true,
                         input_html: {class: "datepicker", value: (Date.today) } %>
 
-            <%= drop.input :start_hour, label: false, as: :string, placeholder: 'dr start', required: true, input_html: { value: Time.now.strftime("%H:%M") } %>
-            <%= drop.input :end_hour,   label: false, as: :string, placeholder: 'dr end',   required: true, input_html: { value: @city.end_hour } %>
+            <%= drop.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.start_hour || Time.now.strftime("%H:%M")  } %>
+            <%= drop.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.end_hour || @city.end_hour  } %>
             <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
           </div>
         <% end %>

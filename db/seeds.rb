@@ -242,7 +242,7 @@ puts '____________________URGENCE___________________'
 
 urgence_1 = Option.create!(
   {
-    max_value: 86400,
+    max_value: 39600,
     name: 'Dans la journée',
     tickets: 0,
     type: 'Urgence',
@@ -330,9 +330,9 @@ puts '________________CARNETS => OK_________________'
 
 puts '___________________CITY OPTIONS_____________________'
 
-option_1 = CityOption.create!({city_id: nantes.id, option_id: urgence_1.id})
-option_3 = CityOption.create!({city_id: nantes.id, option_id: urgence_2.id})
-option_2 = CityOption.create!({city_id: nantes.id, option_id: urgence_3.id})
+option_1 = CityOption.create!({city_id: nantes.id, option_id: urgence_1.id, rank: 1})
+option_3 = CityOption.create!({city_id: nantes.id, option_id: urgence_2.id, rank: 2})
+option_2 = CityOption.create!({city_id: nantes.id, option_id: urgence_3.id, rank: 3})
 option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_1.id})
 option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_2.id})
 option_5 = CityOption.create!({city_id: nantes.id, option_id: volume_3.id})
