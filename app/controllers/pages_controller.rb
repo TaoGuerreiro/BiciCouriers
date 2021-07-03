@@ -8,7 +8,7 @@ class PagesController < ApplicationController
       cookies[:guest] = SecureRandom.hex(16)
     end
     @delivery ||= Delivery.new
-    @city ||= City.find_by(name: "Nantes")
+    @city = City.find_by(name: "Nantes")
     @drop ||= @delivery.drops.build
     @pickup ||= @delivery.pickups.build
     @delivery_option ||= @delivery.delivery_options.build

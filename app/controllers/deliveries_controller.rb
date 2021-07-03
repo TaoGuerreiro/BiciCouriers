@@ -225,13 +225,16 @@ class DeliveriesController < ApplicationController
         end
       end
     else # USER HORS LIGNE V1.0
+      # @city = City.find_by(name: "Nantes")
+      # @availible_urgence_options = Urgence.includes(:city_options)
+      # @availible_volume_options = Volume.includes(:city_options)
+      # binding.pry
       email = params[:delivery][:user][:email]
       bike = params[:bike].to_i
-      # raise
-      # binding.pry
+
       urgence = Urgence.find(params[:delivery][:delivery_options_attributes]["0"][:option_id])
       volume = Volume.find(params[:delivery][:delivery_options_attributes]["1"][:option_id])
-      # raise
+  
       if email_check(email)
         @user = User.find_by(email: email)
       else
@@ -242,10 +245,8 @@ class DeliveriesController < ApplicationController
       end
 
       @delivery = Delivery.new(delivery_params)
-      @delivery.options << urgence
-      @delivery.options << volume
       @delivery.user = @user
-      # raise
+
 
       # if bike == 0
       #   @delivery.bike_id = Bike.first.id
@@ -306,8 +307,10 @@ class DeliveriesController < ApplicationController
 
       elsif @delivery.save && payement.nil?
         redirect_to root_path, flash: {alert: 'Delivery bien envoyé à nos bureaux 😎​🚴​'}
+        # raise
       else
         render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}
+        # raise
       end
     end
   end
@@ -334,7 +337,7 @@ private
     params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
-                                    delivery_options_attributes:[ :user_option_id, :user_option])
+                                    delivery_options_attributes:[ :option_id, :user_option])
   end
 
   def user_have_a_tickets_book?(user)
