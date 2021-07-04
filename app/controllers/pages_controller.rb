@@ -16,6 +16,9 @@ class PagesController < ApplicationController
     @volume ||= Volume.find_by(name: '- de 6 kilos')
     # @volume_option = @delivery.delivery_options.build
     # DeliveryOption.new(delivery: @delivery, option)
+    @before ||= DateTime.new(Time.now.year, Time.now.month, Time.now.day, 19, 00).utc.strftime("%k:%M")
+    @day ||= DateTime.new(Time.now.year, Time.now.month, Time.now.day).strftime("%A")
+    @total ||= 0
 
   if current_user
     @availible_options = Option.includes(:user_options).where(user_options: { user: current_user })

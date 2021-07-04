@@ -249,11 +249,12 @@ urgence_1 = Option.create!(
     image: 'white-box.svg'
   }
 )
+
 urgence_2 = Option.create!(
   {
-    max_value: 2700,
-    name: "Moins de 45 minutes",
-    tickets: 2,
+    max_value: 14400,
+    name: 'Moins de 4 heures',
+    tickets: 1,
     type: 'Urgence',
     image: 'white-box.svg'
   }
@@ -261,9 +262,9 @@ urgence_2 = Option.create!(
 
 urgence_3 = Option.create!(
   {
-    max_value: 14400,
-    name: 'Moins de 4 heures',
-    tickets: 1,
+    max_value: 2700,
+    name: "Moins de 45 minutes",
+    tickets: 2,
     type: 'Urgence',
     image: 'white-box.svg'
   }

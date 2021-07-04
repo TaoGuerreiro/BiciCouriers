@@ -1,5 +1,6 @@
 <div data-reflex-root="[distance],[urgence],[volume],[total],[pickup_hours],[drop_hours], #volume-ticket-nb"  data-controller="option toggle">
 <div>
+<% now = Time.now.utc %>
   <%= simple_form_for delivery, remote: true do |f| %>
     <div class="div-align toggle-element mt-5 hiden" id="page-1" data-toggle-target="page_1">
       <div>
@@ -11,7 +12,7 @@
                         input_html: { value: @delivery.pickups.first.address,
                                       class: 'address-input w-full',
                                       'data-reflex': "blur->Option#distance"  } %>
-          <div class='hiddden' pickup_hours>
+          <div class='hidden' pickup_hours>
             <%= pickup.input :date,
                         label: false,
                         as: :string,
@@ -20,7 +21,7 @@
                         input_html: { class: "datepicker",
                                       value: (Date.today)} %>
 
-            <%= pickup.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.start_hour || Time.now.strftime("%H:%M") } %>
+            <%= pickup.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.start_hour ||now.strftime("%H:%M") } %>
             <%= pickup.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.end_hour || @city.end_hour } %>
           </div>
         <% end %>
@@ -31,10 +32,10 @@
                         label: false,
                         required: :true,
                         placeholder: 'Adresse de livraison',
-                        input_html: { class: 'address-input w-full mt-4',
+                        input_html: { class: 'address-input w-full my-4',
                                       value: @delivery.drops.first.address,
                                     'data-reflex': "blur->Option#distance" } %>
-          <div class='hiddden' drop_hours>
+          <div class='hidden' drop_hours>
             <%= drop.input :date,
                         label: false,
                         as: :string,
@@ -42,7 +43,7 @@
                         required: true,
                         input_html: {class: "datepicker", value: (Date.today) } %>
 
-            <%= drop.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.start_hour || Time.now.strftime("%H:%M")  } %>
+            <%= drop.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.start_hour || now.strftime("%H:%M")  } %>
             <%= drop.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.end_hour || @city.end_hour  } %>
             <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
           </div>
@@ -62,28 +63,30 @@
       <%# IMPLEMENTATION IMAGE %>
 
       <%= f.fields_for :delivery_options do |urge| %>
+        <%= urge.label :option, label: "Choisis ton urgence" %>
         <%= urge.association :option,
-                # label: false,
+                label: false,
                 # as: :radio_buttons,
                 # collection_wrapper_class: 'categosry-wrapper mb-5',
                 # item_wrapper_class: 'category-istem',
                 legend_tag: false,
                 collection_wrapper_tag: 'div',
-                input_html: {class: 'categorsy-selector mt-2 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
-                collection: @availible_urgence_options.map { |r| [r.name, r.id, { 'data-image': r.image }] },
+                input_html: {class: ' mb-2 mt-1 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
+                collection: @availible_urgence_options.map { |r| [next_availible_delivery_time(r, @city).strftime('%A avant %H:%M'), r.id, { 'data-image': r.image }] },
                 selected: @urgence %>
       <% end %>
 
       <%= f.simple_fields_for :delivery_options do |vol| %>
+        <%= vol.label :option, label: "Quel volume à transporter ?", input_html: { class: 'mt-5'} %>
         <%= vol.association :option,
-                # label: false,
+                label: false,
                 #  as: :radio_buttons,
                 # collection_wrapper_class: 'catsegory-wrapper m-4',
                 # item_wrapper_class: 'category-istem m-1',
                 # label_html: {class: 'cette classe marche pas'},
                 legend_tag: false,
                 collection_wrapper_tag: 'div',
-                input_html: {class: 'catesgory-selector my-5 py-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
+                input_html: {class: 'mb-5 py-1 mt-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
                 collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
                 selected: @volume %>
       <% end %>

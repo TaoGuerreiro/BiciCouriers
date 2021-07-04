@@ -2,6 +2,7 @@ class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
   before_reflex :build
   after_reflex :sum
+  
 
   def urgence
     @urgence = Urgence.find(element[:value])
@@ -56,6 +57,7 @@ class OptionReflex < ApplicationReflex
     @delivery.options << @volume
     @drop = @delivery.drops.first
     @pickup = @delivery.pickups.first
+    
     # binding.pry
   end
 
@@ -70,24 +72,49 @@ class OptionReflex < ApplicationReflex
   def next_availible_delivery_time(delivery, city)
     urgences = city.city_options
 
-    choosen_city_option_rank = delivery.delivery_options.find_by( option_id: delivery.urgence).rank # les urgence n'on pas de rank obviously !!!! Et les delivery_options non plus, idiot.
+    choosen_city_option_rank = delivery.urgence.city_options.find_by( option_id: delivery.urgence).rank # les urgence n'on pas de rank obviously !!!! Et les delivery_options non plus, idiot.
     choosen_city_option_max_value = delivery.urgence.max_value.second
 
-    previous_city_option = CityOption.find_by(rank: (choosen_option_rank + 1))
-    previous_city_option_max_value = previous_city_option.option.max_value.second
+    previous_city_option = CityOption.find_by(rank: (choosen_city_option_rank + 1)) || delivery.urgence.city_options.find_by( option_id: delivery.urgence)
+    previous_city_option_max_value = previous_city_option.option.max_value.second 
     
     heure_start, min_start = city.start_hour.split(':').map(&:to_i)
     heure_end, min_end = city.end_hour.split(':').map(&:to_i)
-    today_start = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_start, min_start)
-    today_end = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_end, min_end)
-    now = Time.now
+    today_start = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_start, min_start).utc
+    today_end = DateTime.new(Time.now.year, Time.now.month, Time.now.day, heure_end, min_end).utc
+    now = Time.now.utc
     # delivery_limit = now + max_value
     
     case 
-      when (today_end - previous_city_option_max_value) > now # si tu n'es pas encore rentré.e dans la prochaine urgence, alors ok pour fin de journée avec cette urgence.
-        result = today_end
-      when (today_end - previous_city_option_max_value) < now
-        result = today_start + 1.day + choosen_city_option_max_value
+      when choosen_city_option_rank == 1 #urgence 1 est toujoursdans la journée,
+        if (today_end - choosen_city_option_max_value) > now
+          result = now + choosen_city_option_max_value
+        elsif (today_end - previous_city_option_max_value) > now
+          result = today_end
+        elsif (today_end - previous_city_option_max_value) < now
+          result = today_start + 1.day + choosen_city_option_max_value
+        end
+
+      when now < today_start
+        result = today_start + choosen_city_option_max_value
+      when choosen_city_option_rank == 2
+        if (today_end - choosen_city_option_max_value) > now
+          result = now + choosen_city_option_max_value
+        elsif (today_end - previous_city_option_max_value) > now
+          result = today_end
+        elsif (today_end - previous_city_option_max_value) < now
+          result = today_start + 1.day + choosen_city_option_max_value
+        end
+
+      when choosen_city_option_rank == 3
+        if (today_end - choosen_city_option_max_value) > now
+          result = now + choosen_city_option_max_value
+        elsif (today_end - previous_city_option_max_value) > now
+          result = today_end
+        elsif (today_end - previous_city_option_max_value) < now
+          result = today_start + 1.day + choosen_city_option_max_value
+        end
+
       else
         result = now + max_value
     end
