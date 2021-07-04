@@ -9,6 +9,16 @@ export default class extends Controller {
 
   toggle(event) {
     event.preventDefault();
+    this.page_1Target.classList.toggle("opacity-100")
+    this.page_2Target.classList.toggle("opacity-100")
+    this.previousTarget.classList.toggle("opacity-100")
+    this.nextTarget.classList.toggle("opacity-100")
+    this.submitTarget.classList.toggle("opacity-100")
+    this.page_1Target.classList.toggle("opacity-0")
+    this.page_2Target.classList.toggle("opacity-0")
+    this.previousTarget.classList.toggle("opacity-0")
+    this.nextTarget.classList.toggle("opacity-0")
+    this.submitTarget.classList.toggle("opacity-0")
     this.page_1Target.classList.toggle("hidden")
     this.page_2Target.classList.toggle("hidden")
     this.previousTarget.classList.toggle("hidden")

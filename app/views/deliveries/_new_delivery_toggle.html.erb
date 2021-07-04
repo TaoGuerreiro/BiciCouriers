@@ -1,150 +1,141 @@
 <div data-reflex-root="[distance],[urgence],[volume],[total],[pickup_hours],[drop_hours], #volume-ticket-nb"  data-controller="option toggle">
-<div>
-<% now = Time.now.utc %>
+  <% now = Time.now.utc %>
   <%= simple_form_for delivery, remote: true do |f| %>
-    <div class="div-align toggle-element mt-5 hiden" id="page-1" data-toggle-target="page_1">
-      <div>
-        <%= f.fields_for :pickups, remote: true do |pickup| %>
-          <%= pickup.input :address,
-                        label: false,
-                        required: :true,
-                        placeholder: 'Adresse de rammassage',
-                        input_html: { value: @delivery.pickups.first.address,
-                                      class: 'address-input w-full',
-                                      'data-reflex': "blur->Option#distance"  } %>
-          <div class='hidden' pickup_hours>
-            <%= pickup.input :date,
-                        label: false,
-                        as: :string,
-                        placeholder: 'Date',
-                        required: true,
-                        input_html: { class: "datepicker",
-                                      value: (Date.today)} %>
+    <div class="relative h-72">
+      <div class="div-align toggle-element mt-2 opacity-100 duration-500 absolute w-full h-full" id="page-1" data-toggle-target="page_1">
+        <div>
+          <%= f.fields_for :pickups, remote: true do |pickup| %>
+            <%= pickup.input :address,
+                          label: false,
+                          required: :true,
+                          placeholder: 'Adresse de rammassage',
+                          input_html: { value: @delivery.pickups.first.address,
+                                        class: 'address-input w-full',
+                                        'data-reflex': "blur->Option#distance"  } %>
+            <div class='hidden' pickup_hours>
+              <%= pickup.input :date,
+                          label: false,
+                          as: :string,
+                          placeholder: 'Date',
+                          required: true,
+                          input_html: { class: "datepicker",
+                                        value: (Date.today)} %>
 
-            <%= pickup.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.start_hour ||now.strftime("%H:%M") } %>
-            <%= pickup.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.end_hour || @city.end_hour } %>
-          </div>
+              <%= pickup.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.start_hour ||now.strftime("%H:%M") } %>
+              <%= pickup.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.pickups.first.end_hour || @city.end_hour } %>
+            </div>
+          <% end %>
+
+          <%= f.fields_for :drops do |drop| %>
+            <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
+            <%= drop.input :address,
+                          label: false,
+                          required: :true,
+                          placeholder: 'Adresse de livraison',
+                          input_html: { class: 'address-input w-full my-3',
+                                        value: @delivery.drops.first.address,
+                                      'data-reflex': "blur->Option#distance" } %>
+            <div class='hidden' drop_hours>
+              <%= drop.input :date,
+                          label: false,
+                          as: :string,
+                          placeholder: 'Date',
+                          required: true,
+                          input_html: {class: "datepicker", value: (Date.today) } %>
+
+              <%= drop.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.start_hour || now.strftime("%H:%M")  } %>
+              <%= drop.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.end_hour || @city.end_hour  } %>
+              <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
+            </div>
+          <% end %>
+        </div>
+
+        <%# IMPLEMENTATION IMAGE %>
+              <%#= f.fields_for :delivery_options do |optn| %>
+                <%#= optn.collection_radio_buttons(:user_option, @availible_urgences, :id, :name) do |b|
+                # raise
+                # b.label(class: 'categorsy-selector', 'data-reflex': 'change->Option#urgence') { image_tag("commande/bike-white.svg") + b.radio_button }
+
+                # end %>
+              <%# end %>
+        <%# IMPLEMENTATION IMAGE %>
+
+        <%= f.fields_for :delivery_options do |urge| %>
+          <%= urge.label :option, label: "Choisis ton urgence" %>
+          <%= urge.association :option,
+                  label: false,
+                  # as: :radio_buttons,
+                  # collection_wrapper_class: 'categosry-wrapper mb-5',
+                  # item_wrapper_class: 'category-istem',
+                  legend_tag: false,
+                  collection_wrapper_tag: 'div',
+                  input_html: {class: 'mb-3 py-2 mt-1 rounded w-full h-full', 'data-reflex': 'change->Option#urgence'},
+                  collection: @availible_urgence_options.map { |r| [next_availible_delivery_time(r, @city).strftime('%A avant %H:%M'), r.id, { 'data-image': r.image }] },
+                  selected: @urgence %>
         <% end %>
 
-        <%= f.fields_for :drops do |drop| %>
-          <%= drop.label :address, "Adresse de rammassage", class: 'hidden'  %>
-          <%= drop.input :address,
-                        label: false,
-                        required: :true,
-                        placeholder: 'Adresse de livraison',
-                        input_html: { class: 'address-input w-full my-4',
-                                      value: @delivery.drops.first.address,
-                                    'data-reflex': "blur->Option#distance" } %>
-          <div class='hidden' drop_hours>
-            <%= drop.input :date,
-                        label: false,
-                        as: :string,
-                        placeholder: 'Date',
-                        required: true,
-                        input_html: {class: "datepicker", value: (Date.today) } %>
-
-            <%= drop.input :start_hour, label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.start_hour || now.strftime("%H:%M")  } %>
-            <%= drop.input :end_hour,   label: false, as: :string, required: true, input_html: { value: @delivery.drops.first.end_hour || @city.end_hour  } %>
-            <%= drop.input :details,    label: false, as: :string, placeholder: 'details',  required: true %>
-          </div>
+        <%= f.simple_fields_for :delivery_options do |vol| %>
+          <%= vol.label :option, label: "Quel volume à transporter ?"%>
+          <%= vol.association :option,
+                  label: false,
+                  #  as: :radio_buttons,
+                  # collection_wrapper_class: 'catsegory-wrapper m-4',
+                  # item_wrapper_class: 'category-istem m-1',
+                  # label_html: {class: 'cette classe marche pas'},
+                  legend_tag: false,
+                  collection_wrapper_tag: 'div',
+                  input_html: {class: 'mb-3 py-2 mt-1 rounded w-full h-full', 'data-reflex': 'change->Option#volume'},
+                  collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
+                  selected: @volume %>
         <% end %>
       </div>
 
+      <div class="div-align toggle-element mt-5 opacity-0 hidden duration-500 absolute w-full h-full" id="page-2" data-toggle-target="page_2">
+        <%# <%= f.label :details, label: "Informations", input_html: {class: ''}  %> 
+        <%= f.input :details, as: :text, label: false, placeholder: "détails de la commande, tout ce qui peut rendre un.e coursier.e heureux.se !", input_html: {class: " mb-2 p-2 w-full rounded h-24"} %>
 
 
-      <%# IMPLEMENTATION IMAGE %>
-            <%#= f.fields_for :delivery_options do |optn| %>
-              <%#= optn.collection_radio_buttons(:user_option, @availible_urgences, :id, :name) do |b|
-              # raise
-              # b.label(class: 'categorsy-selector', 'data-reflex': 'change->Option#urgence') { image_tag("commande/bike-white.svg") + b.radio_button }
+        <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
+          <%= user.input :email, input_html: { class: 'mb-3 p-2 mt-1 rounded w-full h-full' } %>
+          <%= user.input :phone, input_html: { class: 'mb-3 p-2 mt-1 rounded w-full h-full' }  %>
+        <% end %>
+        <label class="hidden" for="stripe">stripe</label>
+        <input class="hidden" type="checkbox" id="stripe" name="stripe">
+          
+      </div>
+    </div>
+    <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
 
-              # end %>
-            <%# end %>
-      <%# IMPLEMENTATION IMAGE %>
-
-      <%= f.fields_for :delivery_options do |urge| %>
-        <%= urge.label :option, label: "Choisis ton urgence" %>
-        <%= urge.association :option,
-                label: false,
-                # as: :radio_buttons,
-                # collection_wrapper_class: 'categosry-wrapper mb-5',
-                # item_wrapper_class: 'category-istem',
-                legend_tag: false,
-                collection_wrapper_tag: 'div',
-                input_html: {class: ' mb-2 mt-1 py-1 rounded w-full', 'data-reflex': 'change->Option#urgence'},
-                collection: @availible_urgence_options.map { |r| [next_availible_delivery_time(r, @city).strftime('%A avant %H:%M'), r.id, { 'data-image': r.image }] },
-                selected: @urgence %>
-      <% end %>
-
-      <%= f.simple_fields_for :delivery_options do |vol| %>
-        <%= vol.label :option, label: "Quel volume à transporter ?", input_html: { class: 'mt-5'} %>
-        <%= vol.association :option,
-                label: false,
-                #  as: :radio_buttons,
-                # collection_wrapper_class: 'catsegory-wrapper m-4',
-                # item_wrapper_class: 'category-istem m-1',
-                # label_html: {class: 'cette classe marche pas'},
-                legend_tag: false,
-                collection_wrapper_tag: 'div',
-                input_html: {class: 'mb-5 py-1 mt-1 rounded w-full', 'data-reflex': 'change->Option#volume'},
-                collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
-                selected: @volume %>
-      <% end %>
-
+    <div distance>
+      <span class="font-bold">Distance :</span>
+      <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 1 : (@delivery.tickets_distance) %> </span> ticket</span>
+      <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
+      <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
     </div>
 
-    <div class="div-align toggle-element mt-5 hidden" id="page-2" data-toggle-target="page_2">
-      <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
-      <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
-
-
-      <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
-        <%= user.input :email, input_html: { class: 'mt-2 w-full rounded h-full p-2' } %>
-        <%= user.input :phone, input_html: { class: 'mt-2 w-full rounded h-full p-2' }  %>
-      <% end %>
-      <input type="checkbox" id="stripe" name="stripe">
-      <label for="stripe">stripe</label>
-        
+    <div urgence>
+      <span class="font-bold">Urgence :</span>
+      <span id="urgence-ticket-nb"><%= (@urgence.tickets)%> <%='ticket'.pluralize(@urgence.tickets)  %></span>
+      <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
     </div>
 
-      <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
+    <div volume>
+      <span class="font-bold">Volume :</span>
+      <span id="volume-ticket-nb"><%= @volume.tickets %> ticket</span>
+      <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
+    </div>
 
-      <div distance>
-        <span class="font-bold">Distance :</span>
-        <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 1 : (@delivery.tickets_distance) %> </span> ticket</span>
-        <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
-        <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
-      </div>
+    <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
 
-      <div urgence>
-        <span class="font-bold">Urgence :</span>
-        <span id="urgence-ticket-nb"><%= (@urgence.tickets)%> <%='ticket'.pluralize(@urgence.tickets)  %></span>
-        <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
-      </div>
+    <div total>
+      <p class="font-bold" >Livraison <%= @day  %> avant <%= @before %></p>
+      <p class="font-bold" >Avec abonnement : <b><span><%= @total %> tickets</span></b></p>
+      <p class="font-bold" >Sans abonnement : <b><span> <%= @delivery.price_cents %> </span> €</b></p>
+    </div>
 
-      <div volume>
-        <span class="font-bold">Volume :</span>
-        <span id="volume-ticket-nb"><%= @volume.tickets %> ticket</span>
-        <%# <%= f.input :tickets_volume,label: false, input_html: { value: @delivery.delivery_options.last.option.tickets, class:"hidden" }  %>
-      </div>
-
-      <div class="border-b-2 border-white my-4 text-white font-bold">Total</div>
-
-      <div total>
-        <p class="font-bold" >Livraison <%= @day  %> avant <%= @before %></p>
-        <p class="font-bold" >Avec abonnement : <b><span><%= @total %> tickets</span></b></p>
-        <p class="font-bold" >Sans abonnement : <b><span> <%= @delivery.price_cents %> </span> €</b></p>
-      </div>
-
-      <div class='hidden'>
-        <%#= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
-          <%#= user.input :email %>
-        <%# end %>
-        <input type="checkbox" id="stripe" name="stripe">
-        <label for="stripe">stripe</label>
-
-        <script src="https://js.stripe.com/v3/"></script>
-        <script>
+    <div class='hidden'>
+      <script src="https://js.stripe.com/v3/"></script>
+      <script>
           document.body.addEventListener('ajax:success', (event) => {
             const checkoutId = new Promise((resolve, reject) => {
               console.log("1" + event.detail[0].checkout_id)
@@ -160,15 +151,12 @@
             })
           });
         </script>
-      </div>
+    </div>
 
-
-
-
-    <div class="grid justify-items-stretch my-5">
-      <button class="btn-bici justify-self-start hidden" id='previous' data-action="click->toggle#toggle" data-toggle-target="previous">Retour</button>
-      <button class="btn-bici justify-self-end" id='continue' data-action="click->toggle#toggle" data-toggle-target="next">Continuer</button>
-      <%= f.submit "Envoyer la demande !", class: "btn-bici hidden justify-self-end", id: 'save-course', 'data-toggle-target': 'submit'  %>
+    <div class="grid grid-cols-2 my-5 duration-500">
+      <button class="duration-500 btn-bici-sec justify-self-start self-start opacity-0 hidden" id='previous' data-action="click->toggle#toggle" data-toggle-target="previous">Retour</button>
+      <button class="duration-500 btn-bici opacity-100 col-start-2" id='continue' data-action="click->toggle#toggle" data-toggle-target="next">Continuer</button>
+      <%= f.submit "Commander !", class: "duration-500 self-stretch btn-bici opacity-0 hidden ", id: 'save-course', 'data-toggle-target': 'submit'  %>
     </div>
   <% end %>
- </div>
+</div>
