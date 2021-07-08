@@ -1,4 +1,4 @@
-@import "tailwindcss/base";
+@import "tailwindcss/base.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
@@ -13,5 +13,11 @@
     }
     .category-selector-tw {
       @apply absolute transform scale-0
+    }
+    .m-fadeOut {
+      @apply hidden opacity-0 transition-all
+    }
+    .m-fadeIn {
+      @apply visible opacity-100 transition-all
     }
   }
