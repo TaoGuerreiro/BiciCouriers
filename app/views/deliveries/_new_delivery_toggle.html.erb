@@ -6,6 +6,7 @@
       <div class="div-align toggle-element duration-500 absolute w-full h-full" id="page-1" data-toggle-target="page_1">
         <div>
           <%= f.fields_for :pickups do |pickup| %>
+
             <%= pickup.input :address,
                           label: false,
                           required: :true,
@@ -34,6 +35,7 @@
                           required: :true,
                           placeholder: 'Adresse de livraison',
                           input_html: { class: 'address-input w-full my-3',
+
                                         value: @delivery.drops.first.address,
                                       'data-reflex': "blur->Option#distance" } %>
             <div class='hidden' drop_hours>
@@ -77,6 +79,7 @@
 
         <%= f.simple_fields_for :delivery_options do |vol| %>
           <%= vol.label :option, label: "Quel volume à transporter ?"%>
+
           <%= vol.association :option,
                   label: false,
                   #  as: :radio_buttons,
@@ -89,12 +92,17 @@
                   collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
                   selected: @volume %>
         <% end %>
-      </div>
 
       <div class="div-align toggle-element hidden duration-500 absolute w-full h-full" id="page-2" data-toggle-target="page_2">
         <%# <%= f.label :details, label: "Informations", input_html: {class: ''}  %> 
         <%= f.input :details, as: :text, label: false, placeholder: "détails de la commande, tout ce qui peut rendre un.e coursier.e heureux.se !", input_html: {class: " mb-2 p-2 w-full rounded h-24"} %>
 
+      </div>
+
+
+      <div class="div-align toggle-element mt-5 transition-all overflow-hidden w-0 absolute" id="page-2" data-toggle-target="page_2">
+        <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
+        <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
 
         <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
           <%= user.input :email, input_html: { class: 'mb-3 p-2 mt-1 rounded w-full h-full' } %>
@@ -105,6 +113,7 @@
           
       </div>
     </div>
+
     <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
 
     <div distance>
@@ -119,7 +128,6 @@
       <span id="urgence-ticket-nb"><%= (@urgence.tickets)%> <%='ticket'.pluralize(@urgence.tickets)  %></span>
       <%# <%= f.input :tickets_urgence, label: false, input_html: { value: @delivery.delivery_options.first.option.tickets, class:"hidden" }  %>
     </div>
-
     <div volume>
       <span class="font-bold">Volume :</span>
       <span id="volume-ticket-nb"><%= @volume.tickets %> ticket</span>
@@ -159,6 +167,7 @@
       <button class="duration-500 btn-bici col-start-2" id='continue' data-action="click->toggle#toggle" data-toggle-target="next">Continuer</button>
       <%# <button class="duration-500 btn-bici col-start-2 hidden" id='continue' data-reflex="click->Delivery#create" data-toggle-target="submit">Commander !</button> %>
       <%= f.submit "Commander !", class: "duration-500 self-stretch btn-bici hidden ", id: 'save-course', 'data-toggle-target': 'submit'  %>
+
     </div>
   <% end %>
 </div>
