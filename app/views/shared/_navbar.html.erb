@@ -70,8 +70,8 @@
 
           <div data-navbar-target="userMenu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
             <%= link_to "Mon compte", profil_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
-            <%= link_to "Mes courses", courses_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
-            <%= link_to "Mes carnets", carnets_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
+            <%= link_to "Mes courses", deliveries_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
+            <%= link_to "Mes carnets", tickets_books_path,  class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
             <%= link_to "Quitter", destroy_user_session_path, method: :delete, class:"block px-4 py-2 text-sm text-black rounded hover:bg-pink-bici mx-1" %>
           </div>
         </div>

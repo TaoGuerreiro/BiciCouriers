@@ -43,8 +43,8 @@
   resources :contacts, only: [:new, :create]
 
   resources :deliveries, only: [:new, :create, :index, :show, :destroy] do
-    resources :drops, only: [ :new, :create ]
     resources :pickups, only: [ :new, :create ]
+    resources :drops, only: [ :new, :create ]
   end
   # resources :cities, only: [:current]
 

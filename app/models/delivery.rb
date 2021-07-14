@@ -36,6 +36,11 @@ class Delivery < ApplicationRecord
 
 
   monetize :price_cents
+  # validates_associated :drops
+  # validates_associated :pickups
+  # validates_associated :volume
+  # validates_associated :urgence
+  # validates :drops, presence: true
 
   # before_validation :add_default_options
 
