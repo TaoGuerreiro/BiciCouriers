@@ -247,6 +247,8 @@ class DeliveriesController < ApplicationController
       @delivery = Delivery.new(delivery_params)
       @delivery.user = @user
 
+      # binding.pry
+
 
       # if bike == 0
       #   @delivery.bike_id = Bike.first.id

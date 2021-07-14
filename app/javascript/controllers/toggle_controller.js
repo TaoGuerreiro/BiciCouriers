@@ -9,19 +9,12 @@ export default class extends Controller {
 
   toggle(event) {
     event.preventDefault();
-    this.page_1Target.classList.toggle("overflow-hidden")
-    this.page_2Target.classList.toggle("overflow-hidden")
-    this.previousTarget.classList.toggle("overflow-hidden")
-    this.nextTarget.classList.toggle("overflow-hidden")
-    this.submitTarget.classList.toggle("overflow-hidden")
-    this.page_1Target.classList.toggle("w-0")
-    this.page_2Target.classList.toggle("w-0")
-    this.previousTarget.classList.toggle("w-0")
-    this.nextTarget.classList.toggle("w-0")
-    this.submitTarget.classList.toggle("w-0")
-    this.page_1Target.classList.toggle("w-full")
-    this.page_2Target.classList.toggle("w-full")
-    
+    this.page_1Target.classList.toggle("hidden")
+    this.page_2Target.classList.toggle("hidden")
+    this.previousTarget.classList.toggle("hidden")
+    this.nextTarget.classList.toggle("hidden")
+    this.submitTarget.classList.toggle("hidden")
+
   }
 
 

@@ -14,10 +14,7 @@
     .category-selector-tw {
       @apply absolute transform scale-0
     }
-    .m-fadeOut {
-      @apply hidden opacity-0 transition-all
-    }
-    .m-fadeIn {
-      @apply visible opacity-100 transition-all
+    .btn-bici-sec {
+      @apply py-2 px-4 text-center text-white font-normal rounded-md hover:bg-pink-bici-dark hover:text-white border border-pink-bici hover:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
     }
   }

@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :user_options, dependent: :destroy
   has_many :favorite_addresses, dependent: :destroy
 
+  validates :email, presence: true
+  validates :phone, presence: true
+
 
   # after_create :send_welcome_email
 

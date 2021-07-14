@@ -1,0 +1,14 @@
+<h1>coucou</h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%= simple_form_for [@delivery, @pickup], url: '', data: {reflex: 'submit->Pickup#create'} do |f| %>
+  <%= f.input :address  %>
+  <%= f.input :details  %>
+  <%= f.input :start_hour %>
+  <%= f.input :end_hour %>
+  <%= f.input :date %>
+  <%= f.submit %>
+<% end %>
