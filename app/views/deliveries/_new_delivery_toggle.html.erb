@@ -5,7 +5,7 @@
     <div class="relative h-72">
       <div class="div-align toggle-element duration-500 absolute w-full h-full" id="page-1" data-toggle-target="page_1">
         <div>
-          <%= f.fields_for :pickups do |pickup| %>
+          <%= f.simple_fields_for :pickups do |pickup| %>
 
             <%= pickup.input :address,
                           label: false,
@@ -34,7 +34,7 @@
                           label: false,
                           required: :true,
                           placeholder: 'Adresse de livraison',
-                          input_html: { class: 'address-input w-full my-3',
+                          input_html: { class: 'address-input w-full',
 
                                         value: @delivery.drops.first.address,
                                       'data-reflex': "blur->Option#distance" } %>
@@ -72,7 +72,7 @@
                   # item_wrapper_class: 'category-istem',
                   legend_tag: false,
                   collection_wrapper_tag: 'div',
-                  input_html: {class: 'mb-3 py-2 mt-1 rounded w-full h-full', 'data-reflex': 'change->Option#urgence'},
+                  input_html: {'data-reflex': 'change->Option#urgence'},
                   collection: @availible_urgence_options.map { |r| [next_availible_delivery_time(r, @city).strftime('%A avant %H:%M'), r.id, { 'data-image': r.image }] },
                   selected: @availible_urgence_options.first %>
         <% end %>
@@ -88,7 +88,7 @@
                   # label_html: {class: 'cette classe marche pas'},
                   legend_tag: false,
                   collection_wrapper_tag: 'div',
-                  input_html: {class: 'mb-3 py-2 mt-1 rounded w-full h-full', 'data-reflex': 'change->Option#volume'},
+                  input_html: {'data-reflex': 'change->Option#volume'},
                   collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
                   selected: @volume %>
         <% end %>
@@ -112,7 +112,14 @@
 
     <div distance>
       <span class="font-bold">Distance :</span>
-      <span><span id="distance-km-nb"><%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> </span> km soit <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 1 : (@delivery.tickets_distance) %> </span> ticket</span>
+      <span>
+        <span id="distance-km-nb">
+          <%= @delivery.distance.nil? ? 0 : (@delivery.distance / 1000.000) %> 
+        </span> 
+        km soit 
+        <span id="distance-ticket-nb"> <%= @delivery.tickets_distance.nil? ? 1 : (@delivery.tickets_distance) %> </span>
+        ticket
+      </span>
       <%= f.input :distance, label: false, input_html: { value: @delivery.distance, class:"hidden"}  %>
       <%= f.input :tickets_distance, label: false, input_html: { value: @delivery.tickets_distance, class:"hidden" }  %>
     </div>

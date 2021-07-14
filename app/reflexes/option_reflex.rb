@@ -1,6 +1,6 @@
 class OptionReflex < ApplicationReflex
   delegate :current_user, to: :connection
-  before_reflex :build
+  # before_reflex :build
   after_reflex :sum
   
   def urgence

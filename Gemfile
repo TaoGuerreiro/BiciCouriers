@@ -34,6 +34,7 @@ gem 'httparty'
 gem 'friendly_id', '~> 5.4.0'
 gem "breadcrumbs_on_rails"
 gem "stimulus_reflex", "~> 3.4"
+gem 'simple_form-tailwind'
 
 # fix alert bot
 
