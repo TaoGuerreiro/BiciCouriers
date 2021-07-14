@@ -92,26 +92,20 @@
                   collection: @availible_volume_options.map { |r| [r.name, r.id, { 'data-image': r.image}] },
                   selected: @volume %>
         <% end %>
+      </div>
 
       <div class="div-align toggle-element hidden duration-500 absolute w-full h-full" id="page-2" data-toggle-target="page_2">
         <%# <%= f.label :details, label: "Informations", input_html: {class: ''}  %> 
         <%= f.input :details, as: :text, label: false, placeholder: "détails de la commande, tout ce qui peut rendre un.e coursier.e heureux.se !", input_html: {class: " mb-2 p-2 w-full rounded h-24"} %>
-
-      </div>
-
-
-      <div class="div-align toggle-element mt-5 transition-all overflow-hidden w-0 absolute" id="page-2" data-toggle-target="page_2">
-        <%= f.label :details, label: "Informations", input_html: {class: ''}  %>
-        <%= f.input :details, as: :text, label: false, input_html: {class: "mt-2 w-full rounded h-full"} %>
-
+                
         <%= f.fields_for(resource, as: resource_name, url: registration_path(resource_name)) do |user| %>
           <%= user.input :email, input_html: { class: 'mb-3 p-2 mt-1 rounded w-full h-full' } %>
           <%= user.input :phone, input_html: { class: 'mb-3 p-2 mt-1 rounded w-full h-full' }  %>
         <% end %>
         <label class="hidden" for="stripe">stripe</label>
         <input class="hidden" type="checkbox" id="stripe" name="stripe">
-          
       </div>
+
     </div>
 
     <div class="border-b-2 border-white mb-4 font-bold text-white">Options</div>
