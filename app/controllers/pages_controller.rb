@@ -3,11 +3,16 @@ class PagesController < ApplicationController
 
   def home
     @user = User.new
+    @city = City.find_by(name: "Nantes")
     unless user_signed_in?
       # request.env['warden'].set_user(1)
       cookies[:guest] = SecureRandom.hex(16)
     end
 
+    @pickup ||= Pickup.new
+    @drop ||= Drop.new
+
+    @delivery = Delivery.last
 
   end
 

@@ -5,12 +5,8 @@ before_reflex :skip_authorization, only: [:create]
 
 
   def create
-    # binding.pry
-    @delivery = Delivery.find(params[:delivery_id])
-
-    @pickup = @delivery.pickups.create(pickup_params)
-    @pickup = Pickup.new if @pickup.persisted?
-    authorize @pickup
+    @delivery = Delivery.find_by
+    @pickup = Pickup.create
   end
 
   private
