@@ -12,6 +12,7 @@ class DeliveryReflex < ApplicationReflex
       @pickup = delivery.pickups.create!(pickup_params)
     # end
     # @pickup = Pickup.new if @pickup.persisted?
+    morph :nothing
   end
 
   def create_drop
@@ -23,8 +24,33 @@ class DeliveryReflex < ApplicationReflex
       @drop = delivery.drops.create!(drop_params)
     # end
     # @drop = Pickup.new if @drop.persisted?
+    morph :nothing
   end
 
+  def distance
+    binding.pry
+    # begin
+    #   url = 'https://maps.googleapis.com/maps/api/directions/json?'
+    #   query = {
+    #     origin: @delivery.pickups.first.address,
+    #     destination: @delivery.drops.first.address,
+    #     mode: "walking",
+    #     key: ENV['GOOGLE_API_KEY']
+    #   }
+    #   distance = JSON.parse(HTTParty.get(
+    #     url,
+    #     query: query
+    #   ).body)
+
+    #   @delivery.distance = (distance['routes'][0]['legs'][0]['distance']['value'])
+    #   @delivery.tickets_distance = ((@delivery.distance / 1000) / 3.5).ceil
+
+    #   # sum
+
+    # rescue NoMethodError
+    #   # distance = "Je calcul..."
+    #  end
+  end
 
 
 

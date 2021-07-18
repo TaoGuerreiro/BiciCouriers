@@ -2,14 +2,14 @@
   <div class="bg-pink-bici m-auto h-full rounded-xl grid grid-cols-2">
     <div class="bg-blue-100 w-full p-4">
       <%= simple_form_for [@delivery, @pickup] do |f|%>
-        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_pickup', 'data-delivery_id': @delivery.id, 'data-delivery-target': "pickup" } %>
+        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_pickup', 'data-reflex': 'change->Delivery#distance', 'data-delivery_id': @delivery.id, 'data-delivery-target': "pickup" } %>
         <%= f.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
         <%= f.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
       <% end %>
     </div>
     <div class="bg-blue-300 w-full h-24 p-4">
       <%= simple_form_for [@delivery, @drop] do |f|%>
-        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_drop', 'data-delivery_id': @delivery.id } %>
+        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_drop', 'data-delivery_id': @delivery.id, 'data-delivery-target': "drop"  } %>
         <%= f.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
         <%= f.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
       <% end %>
