@@ -1,0 +1,5 @@
+<div class="bg-blue-100 w-full">
+  <%= @field.fields_for @delivery_options do |option| %>
+    <%= option.association :option, label: 'Délais de livraison', collection: Urgence.all, selected: Urgence.first %>
+  <% end %>
+</div>

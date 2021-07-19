@@ -1,0 +1,16 @@
+<div id="total" class="col-span-full flex">
+  <div class="w-1/2 bg-blue-100">
+    <p><span><%= distance %> </span> km</p>
+    <p><span>0</span></p>
+    <p><span>0</span></p>
+  </div>
+  <div class="bg-blue-100 w-1/2 flex flex-col items-stretch text-right ">
+    <div><%= @delivery.tickets_distance || 0 %> <span>€</span></div>
+    <div>0 <span>€</span></div>
+    <div>0 <span>€</span></div>
+  </div>
+</div>
+<div class="border-t col-span-full justify-between flex">
+  <div>Total</div>
+  <div>0 <span>€</span></div>
+</div>

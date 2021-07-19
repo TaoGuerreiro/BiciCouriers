@@ -1,11 +1,21 @@
 class Delivery < ApplicationRecord
+
+  has_many :drops, dependent: :destroy
+  has_many :pickups, dependent: :destroy
+  has_many :delivery_options, dependent: :destroy
+  has_many :options, through: :delivery_options
+
+  has_many :order_items, as: :orderable, dependent: :destroy
+  has_many :delivery_books, dependent: :destroy
   belongs_to :user, required: true
 
-  has_many :delivery_options, dependent: :destroy
+  accepts_nested_attributes_for :pickups, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :drops, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :delivery_options, reject_if: :all_blank, allow_destroy: true
+  # abymize :pickups, permit: :all_attributes
+  # abymize :drops, permit: :all_attributes
 
-  has_many :options, through: :delivery_options
-  # has_one :urgence, -> { where(type: 'Urgence') }, through: :delivery_options, source: :option
-  # has_one :volume, -> { where(type: 'Volume') }, through: :delivery_options, source: :option
+
 
   def urgence
     if new_record?
@@ -22,27 +32,7 @@ class Delivery < ApplicationRecord
     end
   end
 
-
-
-  has_many :pickups, dependent: :destroy
-  has_many :drops, dependent: :destroy
-
-  has_many :order_items, as: :orderable, dependent: :destroy
-  has_many :delivery_books, dependent: :destroy
-
-  accepts_nested_attributes_for :drops
-  accepts_nested_attributes_for :pickups
-  accepts_nested_attributes_for :delivery_options
-
-
   monetize :price_cents
-  # validates_associated :drops
-  # validates_associated :pickups
-  # validates_associated :volume
-  # validates_associated :urgence
-  # validates :drops, presence: true
-
-  # before_validation :add_default_options
 
   # after_create :send_delivery_info_to_dispatch
   private

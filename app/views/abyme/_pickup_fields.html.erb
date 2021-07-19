@@ -1,0 +1,11 @@
+<%= f.fields_for :pickup do |d|%>
+  <%= d.input :address, input_html: {'data-reflex': 'change->Delivery#create_pickup', 'data-delivery_id': @delivery.id, 'data-delivery-target': "pickup"  } %>
+  <%= d.hidden_field :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
+  <%= d.hidden_field :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
+<% end %>
+<%# Partial for pickup fields %>
+
+
+<%= f.hidden_field :_destroy %>
+<%= remove_associated_record content: "Remove pickup" %>
+        

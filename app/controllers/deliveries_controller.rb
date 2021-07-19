@@ -99,7 +99,7 @@ class DeliveriesController < ApplicationController
         }
       }
     end
-  end 
+  end
 
   def ticket_urgence
     # binding.pry
@@ -229,23 +229,24 @@ class DeliveriesController < ApplicationController
       # @availible_urgence_options = Urgence.includes(:city_options)
       # @availible_volume_options = Volume.includes(:city_options)
       # binding.pry
-      email = params[:delivery][:user][:email]
-      bike = params[:bike].to_i
+      # email = params[:delivery][:user][:email]
+      # bike = params[:bike].to_i
 
-      urgence = Urgence.find(params[:delivery][:delivery_options_attributes]["0"][:option_id])
-      volume = Volume.find(params[:delivery][:delivery_options_attributes]["1"][:option_id])
-  
-      if email_check(email)
-        @user = User.find_by(email: email)
-      else
-        @user = User.create({
-          email: email,
-          password: Devise.friendly_token.first(8)
-        })
-      end
+      # urgence = Urgence.find(params[:delivery][:delivery_options_attributes]["0"][:option_id])
+      # volume = Volume.find(params[:delivery][:delivery_options_attributes]["1"][:option_id])
+
+      # if email_check(email)
+        # @user = User.find_by(email: email)
+      # else
+      #   @user = User.create({
+      #     email: email,
+      #     password: Devise.friendly_token.first(8)
+      #   })
+      # end
 
       @delivery = Delivery.new(delivery_params)
-      @delivery.user = @user
+      @delivery.save
+      # @delivery.user = @user
 
       # binding.pry
 
@@ -279,41 +280,41 @@ class DeliveriesController < ApplicationController
       # @delivery.tickets_distance = tick(@delivery.distance)
       # @delivery.ticket_nb = @delivery.tickets_distance.to_i + @delivery.tickets_volume.to_i + @delivery.tickets_urgence.to_i
       # @delivery.price_cents = price(@delivery.ticket_nb)
-      payement = params[:stripe]
-      if @delivery.save && (payement == "on") #STRIPE PAYEMENT
-        create_order_item
-        @delivery.update(order_item: @cart)
-        # raise
-        order  = Order.create!(order_item: @cart, amount: @delivery.price, state: 'pending', user: @user)
-        session = Stripe::Checkout::Session.create(
-          payment_method_types: ['card'],
-          line_items: [{
-            name: 'Nouvelle livraison',
-            # images: [order_item.photo_url], implémenter la carte google ?
-            amount: (@delivery.price_cents * 1.2).ceil.to_i,
-            currency: 'eur',
-            quantity: 1
-          }],
-          customer_email: @user.email,
-          success_url: "#{root_url}orders/success?session_id={CHECKOUT_SESSION_ID}",
-          cancel_url: "#{root_url}orders/cancel?session_id={CHECKOUT_SESSION_ID}",
-        )
-        order.update(checkout_session_id: session.id)
+      # payement = params[:stripe]
+      # if @delivery.save && (payement == "on") #STRIPE PAYEMENT
+      #   create_order_item
+      #   @delivery.update(order_item: @cart)
+      #   # raise
+      #   order  = Order.create!(order_item: @cart, amount: @delivery.price, state: 'pending', user: @user)
+      #   session = Stripe::Checkout::Session.create(
+      #     payment_method_types: ['card'],
+      #     line_items: [{
+      #       name: 'Nouvelle livraison',
+      #       # images: [order_item.photo_url], implémenter la carte google ?
+      #       amount: (@delivery.price_cents * 1.2).ceil.to_i,
+      #       currency: 'eur',
+      #       quantity: 1
+      #     }],
+      #     customer_email: @user.email,
+      #     success_url: "#{root_url}orders/success?session_id={CHECKOUT_SESSION_ID}",
+      #     cancel_url: "#{root_url}orders/cancel?session_id={CHECKOUT_SESSION_ID}",
+      #   )
+      #   order.update(checkout_session_id: session.id)
 
-        @checkout_id = order.checkout_session_id
+      #   @checkout_id = order.checkout_session_id
 
-        respond_to do |format|
-             # format.html
-             format.json { render json: { checkout_id: @checkout_id } }
-        end
+      #   respond_to do |format|
+      #        # format.html
+      #        format.json { render json: { checkout_id: @checkout_id } }
+      #   end
 
-      elsif @delivery.save && payement.nil?
-        redirect_to root_path, flash: {alert: 'Delivery bien envoyé à nos bureaux 😎​🚴​'}
-        # raise
-      else
-        render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}
-        # raise
-      end
+    #   elsif @delivery.save && payement.nil?
+    #     redirect_to root_path, flash: {alert: 'Delivery bien envoyé à nos bureaux 😎​🚴​'}
+    #     # raise
+    #   else
+    #     render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}
+    #     # raise
+    #   end
     end
   end
 
@@ -336,7 +337,7 @@ private
   # end
 
   def delivery_params
-    params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
+    params.require(:delivery).permit(abyme_attributes, :details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
                                     delivery_options_attributes:[ :option_id, :user_option])
@@ -547,23 +548,23 @@ private
 
   #______________________PARAMS AJAX______________________
   def distance_params
-    params.require(:addresses).permit(:puAddressName, :drAddressName)
+    params.require(:addresses).permit(abyme_attributes, :puAddressName, :drAddressName)
   end
 
   def urgence_params
-    params.require(:urgence).permit(:id, :puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
+    params.require(:urgence).permit(abyme_attributes, :id, :puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
   end
 
   def tickets_params
-    params.require(:distance).permit(:distanceM)
+    params.require(:distance).permit(abyme_attributes, :distanceM)
   end
 
   def volume_params
-    params.require(:volume).permit(:id)
+    params.require(:volume).permit(abyme_attributes, :id)
   end
 
   def mail_params
-    params.require(:request).permit(:mail)
+    params.require(:request).permit(abyme_attributes, :mail)
   end
 
 end

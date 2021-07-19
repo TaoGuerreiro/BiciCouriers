@@ -1,22 +1,15 @@
 <div class="z-50 bg-black h-screen w-screen h-100 py-40 px-40" data-controller="delivery">
-  <div class="bg-pink-bici m-auto h-full rounded-xl grid grid-cols-2">
-    <div class="bg-blue-100 w-full p-4">
-      <%= simple_form_for [@delivery, @pickup] do |f|%>
-        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_pickup', 'data-reflex': 'change->Delivery#distance', 'data-delivery_id': @delivery.id, 'data-delivery-target': "pickup" } %>
-        <%= f.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
-        <%= f.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
+    <div class="bg-pink-bici m-auto h-full rounded-xl">
+      <%= simple_form_for @delivery, data: {reflex: 'submit->Delivery#create'} do |field|%>
+      <div class="grid grid-cols-2 gap-4 p-4">
+        <%= render(PickupComponent.new(pickups: :pickups, field: field, city: @city)) %>
+        <%= render(DropComponent.new(drops: :drops, field: field, city: @city)) %>
+        <%= render(UrgenceComponent.new(delivery_options: :delivery_options, field: field)) %>
+        <%= render(VolumeComponent.new(delivery_options: :delivery_options, field: field)) %>
+        <%= render(TotalComponent.new(delivery: @delivery)) %>
+      </div>
+        <%= field.submit "Commander", class: 'btn-bici w-40' %>
       <% end %>
     </div>
-    <div class="bg-blue-300 w-full h-24 p-4">
-      <%= simple_form_for [@delivery, @drop] do |f|%>
-        <%= f.input :address, input_html: {'data-reflex': 'change->Delivery#create_drop', 'data-delivery_id': @delivery.id, 'data-delivery-target': "drop"  } %>
-        <%= f.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
-        <%= f.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
-      <% end %>
       <%= @delivery.distance %>
-    </div>
-
-
-
-  </div>
 </div>

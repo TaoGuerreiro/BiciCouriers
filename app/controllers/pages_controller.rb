@@ -9,10 +9,20 @@ class PagesController < ApplicationController
       cookies[:guest] = SecureRandom.hex(16)
     end
 
-    @pickup ||= Pickup.new
-    @drop ||= Drop.new
 
-    @delivery = Delivery.last
+    if @delivery
+      @pickups = @delivery.pickups.first
+      @drops = @delivery.drops.first
+      @delivery_options = @delivery.delivery_options
+    else
+      @delivery = Delivery.new
+      @pickups = @delivery.pickups.build
+      @drops = @delivery.drops.build
+      @delivery_options = @delivery.delivery_options.build
+    end
+
+    # @drop ||= Drop.new
+
 
   end
 

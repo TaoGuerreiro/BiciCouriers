@@ -11,7 +11,7 @@ export default class extends Controller {
   }
 
   beforeReflex() {
-    // console.log(this.pickupTarget.value)
+    console.log("coucou")
   }
 
   createPickupSuccess(element, reflex, noop, reflexId) {
@@ -21,7 +21,7 @@ export default class extends Controller {
     // this.calculDistance()
   }
   distanceSuccess() {
-    console.log('OUI')
+    // console.log('OUI')
   }
 
   calculDistance = () => {
