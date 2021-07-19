@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_202335) do
+ActiveRecord::Schema.define(version: 2021_07_19_214119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_202335) do
     t.integer "price_cents", default: 0, null: false
     t.boolean "tour", default: false
     t.bigint "urgence_id"
+    t.string "draft_id"
     t.index ["urgence_id"], name: "index_deliveries_on_urgence_id"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
   end

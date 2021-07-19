@@ -2,6 +2,7 @@
     <div class="bg-pink-bici m-auto h-full rounded-xl">
       <%= simple_form_for @delivery, data: {reflex: 'submit->Delivery#create'} do |field|%>
       <div class="grid grid-cols-2 gap-4 p-4">
+        <%= field.hidden_field :draft_id %>
         <%= render(PickupComponent.new(pickups: :pickups, field: field, city: @city)) %>
         <%= render(DropComponent.new(drops: :drops, field: field, city: @city)) %>
         <%= render(UrgenceComponent.new(delivery_options: :delivery_options, field: field)) %>

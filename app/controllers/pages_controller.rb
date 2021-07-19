@@ -11,6 +11,7 @@ class PagesController < ApplicationController
 
 
     if @delivery
+      # binding.pry
       @pickups = @delivery.pickups.first
       @drops = @delivery.drops.first
       @delivery_options = @delivery.delivery_options
@@ -18,10 +19,14 @@ class PagesController < ApplicationController
       @delivery = Delivery.new
       @pickups = @delivery.pickups.build
       @drops = @delivery.drops.build
-      @delivery_options = @delivery.delivery_options.build
+      urg = Urgence.find_by(name: 'Dans la journée')
+      @delivery.options << urg
+      @delivery.user = User.first
+      @delivery.draft_id = SecureRandom.hex(16)
+      # @delivery.save
+      # raise
     end
 
-    # @drop ||= Drop.new
 
 
   end
