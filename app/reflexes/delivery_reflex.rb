@@ -21,11 +21,7 @@ class DeliveryReflex < ApplicationReflex
   # end
 
   def distance
-    if @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
-      @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
-    else
-      @delivery = Delivery.new(delivery_params)
-    end
+    @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
     @delivery.user = User.first
     # binding.pry
     begin
@@ -44,18 +40,19 @@ class DeliveryReflex < ApplicationReflex
       @delivery.tickets_distance = ((@delivery.distance / 1000) / 3.5).ceil
     rescue NoMethodError
      end
+    #  binding.pry
      @delivery.save
-     morph "#total", render(TotalComponent.new(delivery: @delivery))
+     morph "#total_distance", render(TotalDistanceComponent.new(delivery: @delivery))
   end
 
   def urgence
-    if @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
-      @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
-    else
-      @delivery = Delivery.new(delivery_params)
-    end
-    # binding.pry
-    morph "#total", render(TotalComponent.new(delivery: @delivery))
+    @urgence = Urgence.find_by(id: params[:delivery][:delivery_options_attributes]["0"][:option_id])
+    morph "#total_urgence", render(TotalUrgenceComponent.new(urgence: @urgence))
+  end
+
+  def volume
+    @volume = Volume.find_by(id: params[:delivery][:delivery_options_attributes]["1"][:option_id])
+    morph "#total_volume", render(TotalVolumeComponent.new(volume: @volume))
   end
 
   def create

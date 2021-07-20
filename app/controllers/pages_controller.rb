@@ -19,12 +19,14 @@ class PagesController < ApplicationController
       @delivery = Delivery.new
       @pickups = @delivery.pickups.build
       @drops = @delivery.drops.build
-      urg = Urgence.find_by(name: 'Dans la journée')
-      @delivery.options << urg
+      @urgence = Urgence.find_by(name: 'Dans la journée')
+      @delivery.options << @urgence
+      @volume = Volume.find_by(name: '- de 6 kilos')
+      # @delivery.options << @volume
       @delivery.user = User.first
       @delivery.draft_id = SecureRandom.hex(16)
-      # @delivery.save
-      # raise
+      @delivery.status = 'draft'
+      @delivery.save
     end
 
 

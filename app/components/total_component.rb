@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class TotalComponent < ViewComponent::Base
-  def initialize(delivery:)
+  def initialize(delivery:, urgence:, volume:)
     @delivery = delivery
+    @urgence = urgence
+    @volume = volume
   end
 
   def distance
