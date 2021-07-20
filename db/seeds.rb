@@ -31,11 +31,16 @@ puts 'ShoppingCart'
 OrderItem.destroy_all
 puts 'Order'
 Order.destroy_all
+puts 'CityUrgence'
+CityUrgence.destroy_all
+puts 'CityVolume'
+CityVolume.destroy_all
 puts 'Cities'
 City.destroy_all
 puts 'Options'
 
-Option.destroy_all
+Urgence.destroy_all
+Volume.destroy_all
 
 puts 'UserOptions'
 UserOption.destroy_all
@@ -223,50 +228,29 @@ puts '___________CARNETS TEMPLATES => OK____________'
 
 puts '____________________BIKES_____________________'
 
-  bike_1 = Bike.create(
-    {
-      max_weight: 6000,
-      max_size: 20000
-    }
-  )
-
-  bike_2 = Bike.create(
-    {
-      max_weight: 80000,
-      max_size: 2000000
-    }
-  )
-
-puts '_________________BIKES => OK__________________'
 puts '____________________URGENCE___________________'
 
-urgence_1 = Option.create!(
+urgence_1 = Urgence.create!(
   {
-    max_value: 39600,
+    range: 39600,
     name: 'Dans la journée',
-    tickets: 0,
-    type: 'Urgence',
-    image: 'white-box.svg'
+    tickets: 0
   }
 )
 
-urgence_2 = Option.create!(
+urgence_2 = Urgence.create!(
   {
-    max_value: 14400,
+    range: 14400,
     name: 'Moins de 4 heures',
-    tickets: 1,
-    type: 'Urgence',
-    image: 'white-box.svg'
+    tickets: 1
   }
 )
 
-urgence_3 = Option.create!(
+urgence_3 = Urgence.create!(
   {
-    max_value: 2700,
+    range: 2700,
     name: "Moins de 45 minutes",
-    tickets: 2,
-    type: 'Urgence',
-    image: 'white-box.svg'
+    tickets: 2
   }
 )
 
@@ -274,42 +258,34 @@ urgence_3 = Option.create!(
 puts '_________________URGENCE => OK________________'
 puts '____________________VOLUME___________________'
 
-volume_1 = Option.create!(
+volume_1 = Volume.create!(
   {
-    max_value: 6000,
+    max_weight: 6000,
     name: "- de 6 kilos",
-    tickets: 0,
-    type: 'Volume',
-    image: 'white-box.svg'
+    tickets: 0
   }
 )
 
-volume_2 = Option.create!(
+volume_2 = Volume.create!(
   {
-    max_value: 15000,
+    max_weight: 15000,
     name: '- de 15 kilos',
-    tickets: 1,
-    type: 'Volume',
-    image: 'white-box.svg'
+    tickets: 1
   }
 )
 
-volume_3 = Option.create!(
+volume_3 = Volume.create!(
   {
-    max_value: 25000,
+    max_weight: 25000,
     name: '- de 25 kilos',
-    tickets: 2,
-    type: 'Volume',
-    image: 'white-box.svg'
+    tickets: 2
   }
 )
-volume_4 = Option.create!(
+volume_4 = Volume.create!(
   {
-    max_value: 35000,
+    max_weight: 35000,
     name: '- de 35 kilos',
-    tickets: 3,
-    type: 'Volume',
-    image: 'white-box.svg'
+    tickets: 3
   }
 )
 puts '_________________VOLUME => OK________________'
@@ -331,12 +307,12 @@ puts '________________CARNETS => OK_________________'
 
 puts '___________________CITY OPTIONS_____________________'
 
-option_1 = CityOption.create!({city_id: nantes.id, option_id: urgence_1.id, rank: 1})
-option_3 = CityOption.create!({city_id: nantes.id, option_id: urgence_2.id, rank: 2})
-option_2 = CityOption.create!({city_id: nantes.id, option_id: urgence_3.id, rank: 3})
-option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_1.id})
-option_4 = CityOption.create!({city_id: nantes.id, option_id: volume_2.id})
-option_5 = CityOption.create!({city_id: nantes.id, option_id: volume_3.id})
+option_1 = CityUrgence.create!({city_id: nantes.id, urgence_id: urgence_1.id, rank: 1})
+option_3 = CityUrgence.create!({city_id: nantes.id, urgence_id: urgence_2.id, rank: 2})
+option_2 = CityUrgence.create!({city_id: nantes.id, urgence_id: urgence_3.id, rank: 3})
+option_4 = CityVolume.create!({city_id: nantes.id, volume_id: volume_1.id})
+option_4 = CityVolume.create!({city_id: nantes.id, volume_id: volume_2.id})
+option_5 = CityVolume.create!({city_id: nantes.id, volume_id: volume_3.id})
 
 
 puts '________________CITY OPTIONS => OK__________________'

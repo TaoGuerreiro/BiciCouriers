@@ -4,6 +4,8 @@ class Delivery < ApplicationRecord
   has_many :pickups, dependent: :destroy
   has_many :delivery_options, dependent: :destroy
   has_many :options, through: :delivery_options
+  belongs_to :urgence
+  belongs_to :volume
 
   has_many :order_items, as: :orderable, dependent: :destroy
   has_many :delivery_books, dependent: :destroy
@@ -12,25 +14,21 @@ class Delivery < ApplicationRecord
   accepts_nested_attributes_for :pickups, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :drops, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :delivery_options, reject_if: :all_blank, allow_destroy: true
-  # abymize :pickups, permit: :all_attributes
-  # abymize :drops, permit: :all_attributes
 
-
-
-  def urgence
-    if new_record?
-      options.find { |option| option.is_a?(Urgence) }
-    else
-      options.find_by(type: 'Urgence')
-    end
-  end
-  def volume
-    if new_record?
-      options.find { |option| option.is_a?(Volume) }
-    else
-      options.find_by(type: 'Volume')
-    end
-  end
+  # def urgence
+  #   if new_record?
+  #     options.find { |option| option.is_a?(Urgence) }
+  #   else
+  #     options.find_by(type: 'Urgence')
+  #   end
+  # end
+  # def volume
+  #   if new_record?
+  #     options.find { |option| option.is_a?(Volume) }
+  #   else
+  #     options.find_by(type: 'Volume')
+  #   end
+  # end
 
   monetize :price_cents
 

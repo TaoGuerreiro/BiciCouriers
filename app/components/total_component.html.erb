@@ -1,11 +1,20 @@
 <div id="total" class="col-span-full flex">
   <div class="w-full">
-    <div id="total_distance"><%= render(TotalDistanceComponent.new(delivery: @delivery)) %></div>
-    <div id="total_urgence"></div>
-    <div id="total_volume"></div>
+    <div class="flex justify-between <%hidden_if_zero(distance_tickets)%> ">
+      <div><span><%= distance_display %></span> km</div>
+      <div><span data-delivery-target="distance"><%= distance_price %></span></div>
+    </div>
+    <div class="flex justify-between">
+      <div><span><%= urgence_display %></span></div>
+      <div><span data-delivery-target="urgence"><%= urgence_price %></span></div>
+    </div>
+    <div class="flex justify-between">
+      <div><span><%= volume_display %></span></div>
+      <div><span data-delivery-target="volume"><%= volume_price %></span></div>
+    </div>
   </div>
 </div>
 <div class="border-t col-span-full justify-between flex">
   <div>Total</div>
-  <div><span data-delivery-target="total">0</span><span> €</span></div>
+  <div><span data-delivery-target="total"><%= total_price  %></span></div>
 </div>

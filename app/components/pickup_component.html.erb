@@ -1,4 +1,4 @@
-<div class="bg-blue-100 w-full">
+<div class="w-full h-full">
   <%= @field.fields_for @pickups do |p|%>
     <%= p.input :address, input_html: {'data-reflex': 'change->Delivery#distance', 'data-delivery-target': "pickup" } %>
     <%= p.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>

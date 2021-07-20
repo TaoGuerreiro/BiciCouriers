@@ -21,8 +21,9 @@ class DeliveryReflex < ApplicationReflex
   # end
 
   def distance
-    binding.pry
     @delivery = Delivery.new(delivery_params)
+    @city = City.first
+    # binding.pry
     @delivery.user = User.first
     begin
       url = 'https://maps.googleapis.com/maps/api/directions/json?'
@@ -40,19 +41,19 @@ class DeliveryReflex < ApplicationReflex
       @delivery.tickets_distance = ((@delivery.distance / 1000) / 3.5).ceil
     rescue NoMethodError
      end
-    #  binding.pry
-    #  @delivery.save
-    #  morph "#total_distance", render(TotalDistanceComponent.new(delivery: @delivery))
-  end
+      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
+    end
 
   def urgence
-    @urgence = Urgence.find_by(id: params[:delivery][:delivery_options_attributes]["0"][:option_id])
-    morph "#total_urgence", render(TotalUrgenceComponent.new(urgence: @urgence))
+      @city = City.first
+      @delivery = Delivery.new(delivery_params)
+      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
   end
 
   def volume
-    @volume = Volume.find_by(id: params[:delivery][:delivery_options_attributes]["1"][:option_id])
-    morph "#total_volume", render(TotalVolumeComponent.new(volume: @volume))
+    @city = City.first
+    @delivery = Delivery.new(delivery_params)
+    morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
   end
 
   def create
@@ -65,7 +66,8 @@ class DeliveryReflex < ApplicationReflex
   private
 
   def delivery_params
-    params.require(:delivery).permit(:details, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user, :draft_id,
+    params.require(:delivery).permit(:details, :distance, :tickets_distance, :user, :draft_id,
+                                    :urgence_id, :volume_id,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
                                     delivery_options_attributes:[ :option_id, :user_option])
