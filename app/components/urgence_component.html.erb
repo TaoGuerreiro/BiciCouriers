@@ -1,5 +1,5 @@
 <div class="bg-blue-100 w-full">
-  <%= @field.fields_for @delivery_options do |option| %>
-    <%= option.association :option, label: 'Délais de livraison', collection: Urgence.all, selected: Urgence.first, input_html: {'data-reflex': 'change->Delivery#urgence'} %>
+  <%= @field.fields_for @urgence do |option| %>
+    <%= option.association :option, label: 'Délais de livraison', collection: Urgence.all, input_html: {'data-reflex': 'change->Delivery#urgence'} %>
   <% end %>
 </div>

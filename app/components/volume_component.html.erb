@@ -1,6 +1,6 @@
 
 <div class="bg-blue-100 w-full">
-  <%= @field.fields_for @delivery_options do |option| %>
+  <%= @field.fields_for @volume do |option| %>
     <%= option.association :option, label: 'Volume à transporter', collection: Volume.all, selected: Volume.first, input_html: {'data-reflex': 'change->Delivery#volume'}  %>
   <% end %>
 </div>

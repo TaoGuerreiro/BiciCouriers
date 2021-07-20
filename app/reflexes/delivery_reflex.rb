@@ -21,9 +21,9 @@ class DeliveryReflex < ApplicationReflex
   # end
 
   def distance
-    @delivery = Delivery.find_by(draft_id: params[:delivery][:draft_id])
+    binding.pry
+    @delivery = Delivery.new(delivery_params)
     @delivery.user = User.first
-    # binding.pry
     begin
       url = 'https://maps.googleapis.com/maps/api/directions/json?'
       query = {
@@ -41,8 +41,8 @@ class DeliveryReflex < ApplicationReflex
     rescue NoMethodError
      end
     #  binding.pry
-     @delivery.save
-     morph "#total_distance", render(TotalDistanceComponent.new(delivery: @delivery))
+    #  @delivery.save
+    #  morph "#total_distance", render(TotalDistanceComponent.new(delivery: @delivery))
   end
 
   def urgence

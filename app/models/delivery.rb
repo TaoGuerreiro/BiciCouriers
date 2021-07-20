@@ -37,11 +37,6 @@ class Delivery < ApplicationRecord
   # after_create :send_delivery_info_to_dispatch
   private
 
-  def add_default_options
-    urgence = Option.find_by(name: 'Dans la journée')
-    self.delivery_options = [urgence]
-  end
-
   def send_delivery_info_to_dispatch
     DispatchMailer.with(delivery: self).new_delivery.deliver_now
   end

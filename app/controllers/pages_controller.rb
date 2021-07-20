@@ -9,24 +9,30 @@ class PagesController < ApplicationController
       cookies[:guest] = SecureRandom.hex(16)
     end
 
-
+    p @delivery
     if @delivery
       # binding.pry
+      @urgence = @delivery.delivery_options.first
+      @volume = @delivery.delivery_options.last
+      # @delivery_options = @delivery.delivery_options
       @pickups = @delivery.pickups.first
       @drops = @delivery.drops.first
-      @delivery_options = @delivery.delivery_options
     else
       @delivery = Delivery.new
       @pickups = @delivery.pickups.build
       @drops = @delivery.drops.build
-      @urgence = Urgence.find_by(name: 'Dans la journée')
-      @delivery.options << @urgence
-      @volume = Volume.find_by(name: '- de 6 kilos')
-      # @delivery.options << @volume
+
+      urgence_optn = Urgence.find_by(name: 'Dans la journée')
+      @urgence = @delivery.delivery_options.new(option: urgence_optn )
+
+      volume_optn = Volume.find_by(name: '- de 6 kilos')
+      @volume = @delivery.delivery_options.new(option: volume_optn )
+
       @delivery.user = User.first
       @delivery.draft_id = SecureRandom.hex(16)
       @delivery.status = 'draft'
-      @delivery.save
+      # @delivery.save
+      raise
     end
 
 
