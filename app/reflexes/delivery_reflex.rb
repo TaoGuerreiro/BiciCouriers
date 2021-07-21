@@ -1,29 +1,22 @@
 class DeliveryReflex < ApplicationReflex
   include Pundit
+  include ApplicationHelper
   delegate :current_user, to: :connection
-  before_reflex :skip_authorization, only: [:create_pickup, :create_drop]
+  before_reflex :build, except: [:new]
+  after_reflex :morph_form, except: [:create]
 
-  # def create_pickup
-  #   delivery = Delivery.find(element.dataset.delivery_id)
-  #   @pickup = delivery.pickups.create!(delivery_params)
-  #   morph :nothing
-  # end
+  def new
+    @delivery = Delivery.new
+    @city = City.first
 
-  # def create_drop
-  #   # binding.pry
-  #   delivery = Delivery.find(element.dataset.delivery_id)
-  #   @drop = delivery.drops.first.update!({
-  #     address: params[:delivery][:drop][:address],
-  #     start_hour: params[:delivery][:drop][:start_hour],
-  #     end_hour: params[:delivery][:drop][:end_hour]
-  #   })
-  #   morph :nothing
-  # end
+    @pickups = @delivery.pickups.build
+    @drops = @delivery.drops.build
+
+    @delivery.urgence = Urgence.find_by(name: 'Dans la journée')
+    @delivery.volume = Volume.find_by(name: '- de 6 kilos')
+  end
 
   def distance
-    @delivery = Delivery.new(delivery_params)
-    @city = City.first
-    # binding.pry
     @delivery.user = User.first
     begin
       url = 'https://maps.googleapis.com/maps/api/directions/json?'
@@ -41,39 +34,42 @@ class DeliveryReflex < ApplicationReflex
       @delivery.tickets_distance = ((@delivery.distance / 1000) / 3.5).ceil
     rescue NoMethodError
      end
-      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
     end
 
   def urgence
-      @city = City.first
-      @delivery = Delivery.new(delivery_params)
-      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
+
   end
 
   def volume
-    @city = City.first
-    @delivery = Delivery.new(delivery_params)
-    morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
   end
 
   def create
-    # binding.pry
-    @delivery = Delivery.new(delivery_params)
-
-    @delivery.save
+    current_user == String ? @user = current_user : @user = User.first
+    @delivery.user = @user
+    if @delivery.save
+      # redirect_to '/', flash: {alert: 'OKKKKK'}
+    else
+      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
+      # throw :abort
+    end
   end
 
   private
 
+  def build
+    @delivery = Delivery.new(delivery_params)
+    @city = City.first
+  end
+
+  def morph_form
+    morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
+  end
+
   def delivery_params
     params.require(:delivery).permit(:details, :distance, :tickets_distance, :user, :draft_id,
-                                    :urgence_id, :volume_id,
+                                    :urgence_id, :volume_id, :phone, :email,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
                                     delivery_options_attributes:[ :option_id, :user_option])
-  end
-
-  def drop_params
-    params.require(:drop).permit(:address, :start_hour, :end_hour)
   end
 end

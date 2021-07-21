@@ -1,4 +1,6 @@
 class Delivery < ApplicationRecord
+  attr_accessor :email
+  attr_accessor :phone
 
   has_many :drops, dependent: :destroy
   has_many :pickups, dependent: :destroy
@@ -7,8 +9,14 @@ class Delivery < ApplicationRecord
   belongs_to :urgence
   belongs_to :volume
 
-  has_many :order_items, as: :orderable, dependent: :destroy
-  has_many :delivery_books, dependent: :destroy
+  validates :email, presence: true
+  validates :phone, presence: true
+  # validates_format_of :phone, with: /\d[0-9]\)*\z/
+
+  validates_associated :urgence, :volume
+
+  has_many :order_items, as: :orderable
+  has_many :delivery_books
   belongs_to :user, required: true
 
   accepts_nested_attributes_for :pickups, reject_if: :all_blank, allow_destroy: true

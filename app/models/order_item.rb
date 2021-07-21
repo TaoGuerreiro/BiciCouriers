@@ -5,6 +5,5 @@ class OrderItem < ApplicationRecord
 
   belongs_to :orderable, polymorphic: true
 
-  # after_save :create_new_cart, on: :update
 
 end

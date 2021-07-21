@@ -1,7 +1,7 @@
 <div class="w-full h-full">
   <%= @field.fields_for @pickups do |p|%>
-    <%= p.input :address, input_html: {'data-reflex': 'change->Delivery#distance', 'data-delivery-target': "pickup" } %>
-    <%= p.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M") } %>
-    <%= p.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour } %>
+    <%= p.input :address, label: 'Adresse de départ', placeholder: "Example: 8 Passage de la poule noire, 44000 Nantes",  input_html: {'data-reflex': 'change->Delivery#distance', 'data-delivery-target': "pickup", class: "address-input"  } %>
+    <%= p.input :start_hour, label: false, as: :string, input_html: { value: Time.now.strftime("%H:%M"), class: 'hiddden'  } %>
+    <%= p.input :end_hour,   label: false, as: :string, input_html: { value: @city.end_hour, class: 'hiddden'  } %>
   <% end %>
 </div>

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 puts "seeding"
 puts '______________DROPPING TABLES_________________'
-puts 'Services'
+puts 'Service'
 Service.destroy_all
 puts 'Avantage'
 Avantage.destroy_all
@@ -17,34 +17,34 @@ puts 'Pickup'
 Pickup.destroy_all
 puts 'Drop'
 Drop.destroy_all
-puts 'Favorite Addresses'
+puts 'FavoriteAddress'
 FavoriteAddress.destroy_all
+puts "OrderItem"
+OrderItem.destroy_all
 puts 'Delivery'
 Delivery.destroy_all
-puts 'Carnet'
+puts 'TicketBook'
 TicketsBook.destroy_all
 puts 'User'
 User.destroy_all
 puts 'CarnetTemplate'
 BookTemplate.destroy_all
-puts 'ShoppingCart'
-OrderItem.destroy_all
 puts 'Order'
 Order.destroy_all
 puts 'CityUrgence'
 CityUrgence.destroy_all
 puts 'CityVolume'
 CityVolume.destroy_all
-puts 'Cities'
+puts 'City'
 City.destroy_all
-puts 'Options'
-
+puts 'Option Urgence and Volume'
+Option.destroy_all
 Urgence.destroy_all
 Volume.destroy_all
 
-puts 'UserOptions'
+puts 'UserOption'
 UserOption.destroy_all
-puts 'CourseOptions'
+puts 'DeliveryOption'
 DeliveryOption.destroy_all
 
 puts '_________________DROPPING DONE________________'
@@ -255,6 +255,15 @@ urgence_3 = Urgence.create!(
 )
 
 
+urgence_4 = Urgence.create!(
+  {
+    range: 900,
+    name: "Moins de 15 minutes",
+    tickets: 4
+  }
+)
+
+
 puts '_________________URGENCE => OK________________'
 puts '____________________VOLUME___________________'
 
@@ -269,7 +278,7 @@ volume_1 = Volume.create!(
 volume_2 = Volume.create!(
   {
     max_weight: 15000,
-    name: '- de 15 kilos',
+    name: 'de 6 à 40 kilos',
     tickets: 1
   }
 )
@@ -277,15 +286,15 @@ volume_2 = Volume.create!(
 volume_3 = Volume.create!(
   {
     max_weight: 25000,
-    name: '- de 25 kilos',
+    name: 'de 15 à 25 kilos',
     tickets: 2
   }
 )
 volume_4 = Volume.create!(
   {
     max_weight: 35000,
-    name: '- de 35 kilos',
-    tickets: 3
+    name: '+ de 40 kilos',
+    tickets: 2
   }
 )
 puts '_________________VOLUME => OK________________'
@@ -312,7 +321,7 @@ option_3 = CityUrgence.create!({city_id: nantes.id, urgence_id: urgence_2.id, ra
 option_2 = CityUrgence.create!({city_id: nantes.id, urgence_id: urgence_3.id, rank: 3})
 option_4 = CityVolume.create!({city_id: nantes.id, volume_id: volume_1.id})
 option_4 = CityVolume.create!({city_id: nantes.id, volume_id: volume_2.id})
-option_5 = CityVolume.create!({city_id: nantes.id, volume_id: volume_3.id})
+option_5 = CityVolume.create!({city_id: nantes.id, volume_id: volume_4.id})
 
 
 puts '________________CITY OPTIONS => OK__________________'
