@@ -1,4 +1,10 @@
 # frozen_string_literal: true
+module LabelRequiredExt
+  def required_field?
+    options[:label_required] || super
+  end
+end
+SimpleForm::Components::Labels.prepend(LabelRequiredExt)
 #
 # Uncomment this and change the path if necessary to include your own
 # components.
@@ -74,7 +80,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'btn-bici'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.

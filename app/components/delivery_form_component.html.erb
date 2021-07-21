@@ -1,0 +1,36 @@
+<div class="z-50 h-screen w-screen pt-24 px-96 transition" data-delivery-target="form">
+    <div class="bg-white m-auto h-auto rounded-xl p-4">
+      <p class="text-right"><i data-action="click->delivery#abort" class="fas fa-times col-span-full hover:text-gray-400 text-lg mr-1"></i></p>
+      <%= simple_form_for @delivery, data: {reflex: 'submit->Delivery#create'} do |field|%>
+      <div class="grid grid-cols-2 gap-2 p-4">
+        <%= field.hidden_field :distance %>
+        <%= field.hidden_field :tickets_distance%>
+        <div class="w-full h-full">
+          <%= field.fields_for :pickups do |p|%>
+            <%= p.input :address, label: 'Adresse de départ', placeholder: "8 Passage de la poule noire, 44000 Nantes",  input_html: {'data-reflex': 'change->Delivery#distance', 'data-delivery-target': "pickup", class: "address-input"  } %>
+            <%= p.input :start_hour, label: false, as: :string, input_html: { value: start_hour, class: 'hidden'  } %>
+            <%= p.input :end_hour,   label: false, as: :string, input_html: { value: end_hour, class: 'hidden'  } %>
+          <% end %>
+        </div>
+        <div class="w-full h-full">
+          <%= field.fields_for :drops do |p|%>
+            <%= p.input :address, label: "Adresse d'arrivée", placeholder: "8 Passage de la poule noire, 44000 Nantes", input_html: {'data-reflex': 'change->Delivery#distance', 'data-delivery-target': "drop", class: "address-input"  } %>
+            <%= p.input :start_hour, label: false, as: :string, input_html: { value: start_hour, class: 'hidden' } %>
+            <%= p.input :end_hour,   label: false, as: :string, input_html: { value: end_hour, class: 'hidden'  } %>
+          <% end %>
+        </div>
+
+        <%= field.association :urgence, label: "Délai de livraison",    collection: Urgence.includes(:city_urgences).where(city_urgences: { city_id: @city.id }), include_blank: false, label_required: true, input_html: {'data-reflex': 'change->Delivery#urgence'} %>
+        <%= field.association :volume,  label: "Volume à transporter",  collection: Volume.includes(:city_volumes).where(city_volumes: { city_id: @city.id }),  include_blank: false, label_required: true, input_html: {'data-reflex': 'change->Delivery#volume'}  %>
+        <%= field.input :details, as: :text, placeholder: "Détails important pour la livraison (intephone, étage, etc.)", wrapper_html: {class: "col-span-full"}  %>
+        <%# <div class="h-40" id="map"></div> %>
+        <div class="col-span-full flex justify-between">
+          <%= field.input :phone, label: 'Téléphone', wrapper_html: { class: "w-1/2 pr-2" } %>
+          <%= field.input :email, label: 'Email', wrapper_html: { class: "w-1/2" } %>
+        </div>
+        <%= render(TotalComponent.new(delivery: @delivery, city: @city)) %>
+      </div>
+      <div class="flex justify-end"><%= field.submit "Commander", class: 'btn-bici w-40' %></div>
+      <% end %>
+    </div>
+</div>

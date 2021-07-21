@@ -1,5 +1,4 @@
-class Volume < Option
-    has_many :delivery_options
-    has_many :deliveries, through: :delivery_options
+class Volume < ApplicationRecord
+    has_many :delivery, inverse_of: :volume
+    has_many :city_volumes, inverse_of: :volume
 end
-

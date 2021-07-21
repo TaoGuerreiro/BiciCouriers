@@ -34,6 +34,10 @@ gem 'httparty'
 gem 'friendly_id', '~> 5.4.0'
 gem "breadcrumbs_on_rails"
 gem "stimulus_reflex", "~> 3.4"
+gem 'simple_form-tailwind'
+gem 'abyme'
+
+gem "view_component", require: "view_component/engine"
 
 # fix alert bot
 
@@ -62,4 +66,3 @@ group :development, :test do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
 end
-

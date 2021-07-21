@@ -10,6 +10,8 @@ module BiciCouriers
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0 # modified manueally after app:upgrade
+    config.time_zone = 'Paris'
+
 
     # Added manually to respect former custom configuration
     config.paths.add 'offending/file/parent/directory', eager_load: true #ajouté pour que le webhook stripe fonctionne

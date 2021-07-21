@@ -11,6 +11,7 @@ module.exports = {
         colors: {
           'blue-bici': '#153A7E',
           'pink-bici': '#FF016C',
+          'pink-bici-dark': '#D8005A',
           'yellow-bici': '#FFCC00',
         },
       },

@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" data-controller="delivery">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -36,22 +36,11 @@
       <p class="text-white text-lg pb-4">#fastandcouriers</p>
       <h1 class="text-white text-4xl md:text-7xl pb-6 font-bold">Les coursiers les plus rapides de Nantes !</h1>
       <p class="text-gray-100 text-lg md:text-xl">Imprévu ? Rush inattendu ? Vous ne devriez même pas prendre le temps de lire ceci ? Appelez-nous ou cliquez sur “Demander un coursier”, livraison effectuée en moins de <span class="text-white font-semibold">45 minutes !</span></p>
-
-
-      <div data-reflex-root="[forward],[backward]">
-        <input type="text" value="<%= @words %>" data-reflex="keyup->Example#words">
-        <div forward><%= @words %></div>
-        <div backward><%= @words&.reverse %></div>
-      </div>
-
-
     </div>
   </div>
   <%= video_tag "bicilanding.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "z-0 w-full h-full object-cover absolute" %>
-  <div class="z-50 absolute left-32 bottom-0 bg-pink-bici rounded-t-lg px-6 py-2" id="box">
-    <div class="text-center text-white font-bold mx-24"><h2 class="mb-2"><i class="fas fa-biking"></i>Demander un coursier</h2><p class="mb-4">02.85.52.64.80</p></div>
-    <div class="">
-      <%= render 'courses/new_course_invite', delivery: @delivery, user: @user %>
-    </div>
+  <div class="z-50 relative" id="delivery_form"></div>
+  <div class="z-50 absolute left-32 bottom-0 bg-pink-bici rounded-t-lg px-6 py-2 cursor-pointer" id="box" data-reflex='click->Delivery#new'>
+    <div class="text-center text-white font-bold mx-24"><h2 class="mb-2"><i class="fas fa-biking"></i>Demander un coursier</h2><p class="mb-4">07.81.66.03.50</p></div>
   </div>
 </div>
