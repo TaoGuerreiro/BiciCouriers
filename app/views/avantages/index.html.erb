@@ -10,7 +10,7 @@
   </svg>
 </div>
 
-<div class="w-screen h-auto" data-controller="avantage">
+<div class="w-screen h-auto select-none" data-controller="avantage">
 
     <div class="lg:grid flex flex-col lg:flex-none lg:grid-cols-2 h-auto lg:h-screen">
       <div class="mt-20 lg:my-64 lg:ml-64 mx-4">
@@ -30,16 +30,16 @@
           </div>
 
           <div class="mt-20 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
-            <div class="card-images"><%= image_tag "avantages/blue_2.svg", alt: "carte-design", class:"transition group-hover:transform group-hover:origin-center group-hover:-rotate-12" %></div>
+            <div class="card-images cursor-pointer"><%= image_tag "avantages/blue_2.svg", alt: "carte-design", class:"transition group-hover:transform group-hover:origin-center group-hover:-rotate-12", data: { action: "click->avantage#reset"} %></div>
           </div>
 
           <% @avantages.each do |avantage| %>
             <div class="mt-20 lg:mt-0 left-1/2 lg:top-1/2 transform lg:-translate-y-1/2 -translate-x-1/2 absolute">
-              <div data-avantage-target="card" class="cursor-pointer">
+              <div class="cursor-pointer">
                 <%= image_tag avantage.image_pour,
                   alt: "les-avantages-de-bicicouriers",
-                  class: " z-30 transition",
-                  data: { action: "click->avantage#fly"} %>
+                  class: " z-30 transition duration-500",
+                  data: { action: "click->avantage#fly", 'avantage-target': "card" } %>
               </div>
             </div>
           <% end %>

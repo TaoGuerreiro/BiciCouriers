@@ -6,7 +6,6 @@ import "controllers"
 import "../plugins/flatpickr"
 
 import  { movement } from '../shared/services.js';
-import  { cardsFly } from '../shared/avantages.js';
 import  { userLogo } from '../shared/navbar.js';
 import  { initAutocomplete } from '../shared/init_autocomplete.js';
 import  { initShowMap } from '../shared/init_show.js';
@@ -26,7 +25,6 @@ newCourseGuest();
 
 
 movement();
-cardsFly();
 userLogo();
 initAutocomplete();
 // bikeToggle();
