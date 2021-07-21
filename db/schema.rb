@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_03_211116) do
+ActiveRecord::Schema.define(version: 2021_07_20_194257) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.string "name"
     t.string "phone"
     t.string "email"
+    t.integer "base_ticket_price", default: 6
   end
 
   create_table "city_options", force: :cascade do |t|
@@ -59,6 +60,21 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.integer "rank"
     t.index ["city_id"], name: "index_city_options_on_city_id"
     t.index ["option_id"], name: "index_city_options_on_option_id"
+  end
+
+  create_table "city_urgences", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "urgence_id", null: false
+    t.integer "rank"
+    t.index ["city_id"], name: "index_city_urgences_on_city_id"
+    t.index ["urgence_id"], name: "index_city_urgences_on_urgence_id"
+  end
+
+  create_table "city_volumes", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.bigint "volume_id", null: false
+    t.index ["city_id"], name: "index_city_volumes_on_city_id"
+    t.index ["volume_id"], name: "index_city_volumes_on_volume_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -75,7 +91,7 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
   create_table "deliveries", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "tickets_count", default: 0
-    t.integer "distance"
+    t.integer "distance", default: 0
     t.string "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -84,8 +100,11 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.integer "price_cents", default: 0, null: false
     t.boolean "tour", default: false
     t.bigint "urgence_id"
+    t.string "draft_id"
+    t.bigint "volume_id", null: false
     t.index ["urgence_id"], name: "index_deliveries_on_urgence_id"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
+    t.index ["volume_id"], name: "index_deliveries_on_volume_id"
   end
 
   create_table "delivery_books", force: :cascade do |t|
@@ -218,6 +237,7 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tickets", default: 0
   end
 
   create_table "user_options", force: :cascade do |t|
@@ -227,6 +247,20 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.datetime "updated_at", null: false
     t.index ["option_id"], name: "index_user_options_on_option_id"
     t.index ["user_id"], name: "index_user_options_on_user_id"
+  end
+
+  create_table "user_urgences", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "urgence_id", null: false
+    t.index ["urgence_id"], name: "index_user_urgences_on_urgence_id"
+    t.index ["user_id"], name: "index_user_urgences_on_user_id"
+  end
+
+  create_table "user_volumes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "volume_id", null: false
+    t.index ["user_id"], name: "index_user_volumes_on_user_id"
+    t.index ["volume_id"], name: "index_user_volumes_on_volume_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -256,12 +290,18 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "tickets", default: 0
   end
 
   add_foreign_key "avantages", "cities"
   add_foreign_key "city_options", "cities"
   add_foreign_key "city_options", "options"
+  add_foreign_key "city_urgences", "cities"
+  add_foreign_key "city_urgences", "urgences"
+  add_foreign_key "city_volumes", "cities"
+  add_foreign_key "city_volumes", "volumes"
   add_foreign_key "deliveries", "users"
+  add_foreign_key "deliveries", "volumes"
   add_foreign_key "delivery_books", "deliveries"
   add_foreign_key "delivery_books", "tickets_books"
   add_foreign_key "delivery_options", "deliveries"
@@ -274,4 +314,8 @@ ActiveRecord::Schema.define(version: 2021_07_03_211116) do
   add_foreign_key "tickets_books", "users"
   add_foreign_key "user_options", "options"
   add_foreign_key "user_options", "users"
+  add_foreign_key "user_urgences", "urgences"
+  add_foreign_key "user_urgences", "users"
+  add_foreign_key "user_volumes", "users"
+  add_foreign_key "user_volumes", "volumes"
 end

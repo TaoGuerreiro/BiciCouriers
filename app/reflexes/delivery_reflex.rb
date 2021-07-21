@@ -1,58 +1,75 @@
 class DeliveryReflex < ApplicationReflex
   include Pundit
+  include ApplicationHelper
   delegate :current_user, to: :connection
-  before_reflex :skip_authorization, only: [:create]
-  
-  def adresses_validation
-    @delivery = Delivery.new(delivery_params)
-    @delivery.save
-    # binding.pry    
+  before_reflex :build, except: [:new]
+  after_reflex :morph_form, except: [:create]
+
+  def new
+    @delivery = Delivery.new
+    @city = City.first
+
+    @pickups = @delivery.pickups.build
+    @drops = @delivery.drops.build
+
+    @delivery.urgence = Urgence.find_by(name: 'Dans la journée')
+    @delivery.volume = Volume.find_by(name: '- de 6 kilos')
+  end
+
+  def distance
+    @delivery.user = User.first
+    begin
+      url = 'https://maps.googleapis.com/maps/api/directions/json?'
+      query = {
+        origin: @delivery.pickups.first.address,
+        destination: @delivery.drops.first.address,
+        mode: "walking",
+        key: ENV['GOOGLE_API_KEY']
+      }
+      distance = JSON.parse(HTTParty.get(
+        url,
+        query: query
+      ).body)
+      @delivery.distance = (distance['routes'][0]['legs'][0]['distance']['value'])
+      @delivery.tickets_distance = ((@delivery.distance / 1000) / 3.5).ceil
+    rescue NoMethodError
+     end
+    end
+
+  def urgence
+
+  end
+
+  def volume
   end
 
   def create
-    email = params[:delivery][:user][:email]
-    # bike = params[:bike].to_i
-
-    urgence = Urgence.find(params[:delivery][:delivery_options_attributes]["0"][:option_id])
-    volume = Volume.find(params[:delivery][:delivery_options_attributes]["1"][:option_id])
-
-    # binding.pry
-
-    # if email_check(email)
-      @user = User.first
-    # else
-    #   @user = User.new({
-    #     email: email,
-    #     password: Devise.friendly_token.first(8)
-    #   })
-    #   @user.save
-    # end
-
-    @delivery = Delivery.new(delivery_params)
+    current_user == String ? @user = current_user : @user = User.first
     @delivery.user = @user
-
-    # binding.pry 
-
-    if @delivery.save && payement.nil?
-      # redirect_to root_path, flash: {alert: 'Delivery bien envoyé à nos bureaux 😎​🚴​'}
-      # raise
+    if @delivery.save
+      # redirect_to '/', flash: {alert: 'OKKKKK'}
     else
-      # render "pages/home", flash: {error: "Une erreur s'est glissée dans le formulaire !"}
-      # raise
+      morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
+      # throw :abort
     end
-    
   end
 
   private
-  def email_check(email)
-    User.where(email: email).any?
+
+  def build
+    @delivery = Delivery.new(delivery_params)
+    @city = City.first
+  end
+
+  def morph_form
+    morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
   end
 
   def delivery_params
-    params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
+    params.require(:delivery).permit(:details, :distance, :tickets_distance, :user, :draft_id,
+                                    :urgence_id, :volume_id, :phone, :email,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
-                                    # user:[:email, :phone],
                                     delivery_options_attributes:[ :option_id, :user_option])
   end
 end

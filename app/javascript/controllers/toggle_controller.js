@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = [ 'page_1', 'page_2', 'previous', 'next', 'submit']
 
   connect() {
-    console.log("Connexion toggle") 
+    console.log("Connexion toggle")
   }
 
   toggle(event) {
@@ -19,4 +19,3 @@ export default class extends Controller {
 
 
 }
-

@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    abyme (0.6.4)
     actioncable (6.0.3.4)
       actionpack (= 6.0.3.4)
       nio4r (~> 2.0)
@@ -302,6 +303,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    view_component (2.35.0)
+      activesupport (>= 5.0.0, < 8.0)
+      method_source (~> 1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -323,6 +327,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  abyme
   autoprefixer-rails
   bootsnap
   breadcrumbs_on_rails
@@ -364,6 +369,7 @@ DEPENDENCIES
   turbolinks (~> 5.2.0)
   turbolinks_render
   uglifier
+  view_component
   web-console (>= 3.3.0)
   webpacker
 

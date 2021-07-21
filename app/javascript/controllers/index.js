@@ -13,3 +13,6 @@ application.load(definitionsFromContext(context))
 StimulusReflex.initialize(application, { consumer, controller, isolate: true })
 StimulusReflex.debug = process.env.RAILS_ENV === 'development'
 
+
+import { AbymeController } from 'abyme';
+application.register('abyme', AbymeController);
