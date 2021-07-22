@@ -2,19 +2,23 @@
   <div class="w-full">
     <div class="flex justify-between">
       <div class="text-gray-600 font-extralight"><span><%= distance_display %></span> km</div>
-      <div class="text-gray-600 font-extralight"><span data-delivery-target="distance"><%= distance_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight"><span data-delivery-target="distance"><%= distance_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight hidden"><span data-delivery-target="distance"><%= distance_tickets %></span></div>
     </div>
     <div class="flex justify-between">
       <div class="text-gray-600 font-extralight"><span><%= urgence_display %></span></div>
-      <div class="text-gray-600 font-extralight"><span data-delivery-target="urgence"><%= urgence_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight"><span data-delivery-target="urgence"><%= urgence_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight hidden"><span data-delivery-target="urgence"><%= urgence_tickets %></span></div>
     </div>
     <div class="flex justify-between">
       <div class="text-gray-600 font-extralight"><span><%= volume_display %></span></div>
-      <div class="text-gray-600 font-extralight"><span data-delivery-target="volume"><%= volume_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight"><span data-delivery-target="volume"><%= volume_price %></span></div>
+      <div data-delivery-target="switchable" class="text-gray-600 font-extralight hidden"><span data-delivery-target="volume"><%= volume_tickets %></span></div>
     </div>
   </div>
 </div>
 <div class="border-t col-span-full justify-between flex font-semibold">
   <div>Total</div>
-  <div><span data-delivery-target="total"><%= total_price  %></span></div>
+  <div><span data-delivery-target="switchable"><%= total_price  %></span></div>
+  <div data-delivery-target="switchable" class="hidden"><span><%= total_tickets  %></span></div>
 </div>

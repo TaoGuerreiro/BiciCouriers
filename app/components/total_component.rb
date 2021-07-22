@@ -12,7 +12,7 @@ class TotalComponent < ViewComponent::Base
   #TOTAL
 
   def total_tickets
-    @delivery.tickets_distance + @delivery.urgence.tickets + @delivery.volume.tickets
+    "#{(@delivery.tickets_distance + @delivery.urgence.tickets + @delivery.volume.tickets)} t"
   end
 
   def total_price
@@ -32,7 +32,7 @@ class TotalComponent < ViewComponent::Base
       if start_date == end_date
         "Livraison #{start_date} entre #{start_hour} et #{end_hour}"
       else
-        "Livraison #{start_date} entre #{start_hour} et #{end_date}"
+        "Livraison #{start_date} entre #{start_hour} et #{end_date} à #{end_hour}"
       end
     else
       "Livraison #{start_date} entre #{start_hour} et #{end_hour}"
@@ -46,14 +46,17 @@ class TotalComponent < ViewComponent::Base
   #TICKETS
   def distance_tickets
     @delivery.tickets_distance
+    "#{@delivery.tickets_distance} t"
   end
 
   def urgence_tickets
     @delivery.urgence.tickets
+    "#{@delivery.urgence.tickets} t"
   end
 
   def volume_tickets
     @delivery.volume.tickets
+    "#{@delivery.volume.tickets} t"
   end
 
   #€€€€
