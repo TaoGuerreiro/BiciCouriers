@@ -10,9 +10,11 @@ class TotalComponent < ViewComponent::Base
     "hidden" if tickets == 0
   end
   #TOTAL
+
   def total_tickets
     @delivery.tickets_distance + @delivery.urgence.tickets + @delivery.volume.tickets
   end
+
   def total_price
     number_to_currency(((@delivery.tickets_distance +
       @delivery.urgence.tickets +
@@ -26,8 +28,6 @@ class TotalComponent < ViewComponent::Base
   end
 
   def urgence_display
-    # max_hours(@city, @delivery.urgence).first
-    # start_date == "aujourd'hui" ? "oui" : "non"
     if start_date == "aujourd'hui"
       if start_date == end_date
         "Livraison #{start_date} entre #{start_hour} et #{end_hour}"
@@ -70,6 +70,7 @@ class TotalComponent < ViewComponent::Base
   end
 
   private
+
   #HELPER
   def start_hour
     max_hours(@city, @delivery.urgence).first.strftime("%H:%M")
@@ -79,7 +80,7 @@ class TotalComponent < ViewComponent::Base
   end
 
   def start_date
-    if max_hours(@city, @delivery.urgence).first.today?
+    if max_hours(@city, @delivery.urgence)
       "aujourd'hui"
     else
       "demain"
@@ -113,8 +114,9 @@ class TotalComponent < ViewComponent::Base
         start_hour = now
       else (now + urgence.range) > today_end                 # Si je depasse la fin de journée                     =
 
-        next_urgence =      Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank +1), city_id: city.id}).first
-        over_next_urgence = Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank +2), city_id: city.id}).first
+
+        next_urgence =      Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank + 1 ), city_id: city.id}).first
+        over_next_urgence = Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank + 2 ), city_id: city.id}).first
 
         if over_next_urgence.nil?
           if next_urgence.nil?

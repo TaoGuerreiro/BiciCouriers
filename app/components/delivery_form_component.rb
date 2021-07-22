@@ -32,8 +32,9 @@ class DeliveryFormComponent < ViewComponent::Base
         start_hour = now
       else (now + urgence.range) > today_end                 # Si je depasse la fin de journée                     =
 
-        next_urgence =      Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank +1), city_id: city.id}).first
-        over_next_urgence = Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank +2), city_id: city.id}).first
+
+        next_urgence =      Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank + 1 ), city_id: city.id}).first
+        over_next_urgence = Urgence.includes(:city_urgences).where(city_urgences: {rank: (urgence.city_urgences.first.rank + 2 ), city_id: city.id}).first
 
         if over_next_urgence.nil?
           if next_urgence.nil?

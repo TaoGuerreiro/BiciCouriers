@@ -1,6 +1,7 @@
 class Delivery < ApplicationRecord
   attr_accessor :email
   attr_accessor :phone
+  attr_accessor :switch
 
   has_many :drops, dependent: :destroy
   has_many :pickups, dependent: :destroy
