@@ -29,6 +29,7 @@
           <%= field.input :email, label: 'Email', wrapper_html: { class: "w-1/2" } %>
         </div>
         <%= render(TotalComponent.new(delivery: @delivery, city: @city)) %>
+        <%= field.input :switch, input_html: { class: "toggle" } %>
       </div>
       <div class="flex justify-end"><%= field.submit "Commander", class: 'btn-bici w-40' %></div>
       <% end %>
