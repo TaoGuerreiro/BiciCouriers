@@ -1,4 +1,4 @@
-<div class="z-50 h-screen w-screen pt-24 px-96 transition" data-delivery-target="form">
+<div class="z-50 h-screen w-screen pt-24 md:px-24 lg:px-48 xl:px-96 transition" data-delivery-target="form">
     <div class="bg-white m-auto h-auto rounded-xl p-4">
       <p class="text-right"><i data-action="click->delivery#abort" class="fas fa-times col-span-full hover:text-gray-400 text-lg mr-1"></i></p>
       <%= simple_form_for @delivery, data: {reflex: 'submit->Delivery#create'} do |field|%>
@@ -29,7 +29,16 @@
           <%= field.input :email, label: 'Email', wrapper_html: { class: "w-1/2" } %>
         </div>
         <%= render(TotalComponent.new(delivery: @delivery, city: @city)) %>
-        <%= field.input :switch, input_html: { class: "toggle" } %>
+        <%#= field.input :switch, input_html: { class: "toggle" } %>
+        <fieldset class="col-span-full flex justify-end form-group boolean optional snippet_archived">
+          <div class="form-check">
+            <label class="form-check-label boolean optional" for="snippet_archived">Euros</label>
+            <input name="snippet[archived]" type="hidden" value="0">
+            <input data-delivery-target="switch" data-action="click->delivery#switch" class="form-check-input boolean optional toggle" type="checkbox" value="1" name="snippet[archived]" id="snippet_archived">
+            <label class="form-check-label boolean optional" for="snippet_archived">Tickets</label>
+          </div>
+        </fieldset>
+
       </div>
       <div class="flex justify-end"><%= field.submit "Commander", class: 'btn-bici w-40' %></div>
       <% end %>

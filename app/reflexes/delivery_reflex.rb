@@ -47,14 +47,19 @@ class DeliveryReflex < ApplicationReflex
     current_user == String ? @user = current_user : @user = User.first
     @delivery.user = @user
     if @delivery.save
-      # redirect_to '/', flash: {alert: 'OKKKKK'}
+      morph "#notifications", render(NotificationComponent.new(type: 'success', data: {timeout: 10, title: 'Course enregistré !', body: "Nous avons pris note de la livraison, s'il nous manque des détails, nous vous recontacterons.", countdown: true }))
     else
       morph "#delivery_form", render(DeliveryFormComponent.new(delivery: @delivery, city: @city))
-      # throw :abort
+      morph "#notifications", render(NotificationComponent.new(type: 'error', data: {timeout: 10, title: 'Petite erreur ?', body: "Il semblerait qu'il manque quelque chose.", countdown: true }))
+      save_error
     end
   end
 
   private
+
+  def save_error
+
+  end
 
   def build
     @delivery = Delivery.new(delivery_params)

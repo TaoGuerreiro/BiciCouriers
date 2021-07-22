@@ -4,11 +4,18 @@ import places from 'places.js';
 
 
 export default class extends Controller {
-  static targets = ['pickup', 'drop', 'form']
+  static targets = ['pickup', 'drop', 'form', 'switch', 'switchable']
 
   connect() {
     StimulusReflex.register(this)
     // console.log(this.pickupTarget.value)
+  }
+
+  switch() {
+    console.log(this.switchTarget)
+    this.switchableTargets.forEach((target) => {
+      target.classList.toggle ('hidden');
+    });
   }
 
   afterNew() {
@@ -21,6 +28,10 @@ export default class extends Controller {
 
   finalizeDistance() {
     this.displayDirection();
+  }
+
+  save_errorSuccess() {
+    this.formTarget.classList.add('hidden')
   }
 
   displayDirection = () => {
