@@ -8,11 +8,6 @@ Rails.application.configure do
     Devise::UnlocksController.layout "application"
     Devise::PasswordsController.layout "application"
     UsersController.layout "commandes"
-    CoursesController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
-    CarnetsController.layout "commandes"
-    FavoriteAddressesController.layout "commandes"
-    ShoppingCartsController.layout "commandes"
-    PaymentsController.layout "commandes"
     OrdersController.layout proc{ |controller| user_signed_in? ? "commandes" : "application" }
   end
 
@@ -82,5 +77,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
-  
+
 end

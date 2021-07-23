@@ -1,5 +1,6 @@
 {
   "deploy": {
-    "rakegoals": ["assets:precompile", "db:migrate"]
+    "rakegoals": ["assets:precompile", "db:migrate"],
+    "stimulus_reflex": true
   }
 }
