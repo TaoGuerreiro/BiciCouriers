@@ -1,5 +1,12 @@
 module.exports = {
-    purge: [],
+    purge: {
+      // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
+      enabled: process.env.RAIL_ENV === 'production',
+      content: [
+        'app/**/*.html.erb',
+        'app/components/*.html.erb'
+      ]
+    },
     darkMode: false, // or 'media' or 'class'
     theme: {
       extend: {
