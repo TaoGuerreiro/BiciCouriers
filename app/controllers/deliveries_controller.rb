@@ -337,7 +337,7 @@ private
   # end
 
   def delivery_params
-    params.require(:delivery).permit(abyme_attributes, :details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
+    params.require(:delivery).permit(:details, :bike_id, :distance, :tickets_distance, :tickets_urgence, :tickets_volume, :user,
                                     drops_attributes:[:id, :date, :details, :address, :start_hour, :end_hour, :favorite_address],
                                     pickups_attributes:[:id, :details, :date, :address, :start_hour, :end_hour, :favorite_address],
                                     delivery_options_attributes:[ :option_id, :user_option])
@@ -548,23 +548,23 @@ private
 
   #______________________PARAMS AJAX______________________
   def distance_params
-    params.require(:addresses).permit(abyme_attributes, :puAddressName, :drAddressName)
+    params.require(:addresses).permit(:puAddressName, :drAddressName)
   end
 
   def urgence_params
-    params.require(:urgence).permit(abyme_attributes, :id, :puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
+    params.require(:urgence).permit(:id, :puStart, :puEnd, :drStart, :drEnd, :stDate, :ndDate)
   end
 
   def tickets_params
-    params.require(:distance).permit(abyme_attributes, :distanceM)
+    params.require(:distance).permit(:distanceM)
   end
 
   def volume_params
-    params.require(:volume).permit(abyme_attributes, :id)
+    params.require(:volume).permit(:id)
   end
 
   def mail_params
-    params.require(:request).permit(abyme_attributes, :mail)
+    params.require(:request).permit(:mail)
   end
 
 end

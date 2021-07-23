@@ -1,4 +1,4 @@
-// Load all the controllers within this directory and all subdirectories. 
+// Load all the controllers within this directory and all subdirectories.
 // Controller files must be named *_controller.js.
 
 import { Application } from "stimulus"
@@ -12,7 +12,3 @@ const context = require.context("controllers", true, /_controller\.js$/)
 application.load(definitionsFromContext(context))
 StimulusReflex.initialize(application, { consumer, controller, isolate: true })
 StimulusReflex.debug = process.env.RAILS_ENV === 'development'
-
-
-import { AbymeController } from 'abyme';
-application.register('abyme', AbymeController);
