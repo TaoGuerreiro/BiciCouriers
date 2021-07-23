@@ -5,15 +5,16 @@ class DispatchMailer < ApplicationMailer
   #
   #   en.user_mailer.welcome.subject
   #
-  def new_course
+  def new_delivery
+    binding.pry
     @stripe = params[:stripe]
-    @course = params[:course]
-    mail(to: 'contact@bicicouriers.fr', subject: "Nouvelle course pour #{@course.user.email}")
+    @delivery = params[:delivery]
+    mail(to: 'contact@bicicouriers.fr', subject: "Nouvelle course pour #{@delivery.user.email}")
   end
 
   def new_payement
-    @stripe = params[:stripe]
-    @course = params[:course]
-    mail(to: 'contact@bicicouriers.fr', subject: "Course reglée pour #{@course.user.email}")
+    # @stripe = params[:stripe]
+    # @course = params[:course]
+    # mail(to: 'contact@bicicouriers.fr', subject: "Course reglée pour #{@course.user.email}")
   end
 end
