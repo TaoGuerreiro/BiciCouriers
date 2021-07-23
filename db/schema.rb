@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_07_23_143726) do
     t.datetime "updated_at", null: false
     t.string "image_pour"
     t.string "image_contre"
-    t.bigint "city_id", null: false
+    t.bigint "city_id"
     t.index ["city_id"], name: "index_avantages_on_city_id"
   end
 
