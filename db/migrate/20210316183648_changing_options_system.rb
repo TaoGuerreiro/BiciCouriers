@@ -6,8 +6,8 @@ class ChangingOptionsSystem < ActiveRecord::Migration[6.0]
     remove_reference :user_options, :urgence
     remove_reference :user_options, :volume
 
-    drop_table :urgences
-    drop_table :volumes
+    # drop_table :urgences
+    # drop_table :volumes
 
     remove_column :options, :urgence
     remove_column :options, :volume

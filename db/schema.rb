@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_194257) do
+ActiveRecord::Schema.define(version: 2021_07_23_143726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,11 +233,12 @@ ActiveRecord::Schema.define(version: 2021_07_20_194257) do
   end
 
   create_table "urgences", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "ticket"
+    t.integer "tickets", default: 0
     t.integer "range"
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "tickets", default: 0
   end
 
   create_table "user_options", force: :cascade do |t|
@@ -286,11 +287,12 @@ ActiveRecord::Schema.define(version: 2021_07_20_194257) do
   end
 
   create_table "volumes", force: :cascade do |t|
-    t.integer "max_weight"
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "ticket"
+    t.integer "max_weight"
     t.integer "tickets", default: 0
+    t.string "name"
   end
 
   add_foreign_key "avantages", "cities"

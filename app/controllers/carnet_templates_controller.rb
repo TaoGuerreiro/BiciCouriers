@@ -1,0 +1,3 @@
+class CarnetTemplatesController < ApplicationController
+
+end

@@ -3,5 +3,6 @@ class CleaningDb < ActiveRecord::Migration[6.0]
     remove_column :carnets, :course_overflow
     remove_column :courses, :ticket_overflow
     rename_column :cities, :city_name, :name
+
   end
 end
